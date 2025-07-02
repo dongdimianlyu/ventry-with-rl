@@ -39,9 +39,21 @@ export interface TeamMember {
 export interface TeamTask {
   id: string
   title: string
+  description: string
   reason: string
   priority: 'low' | 'medium' | 'high'
   completed: boolean
+  dueDate: Date
+  assignedTo: string // TeamMember ID
+}
+
+export interface TeamSetup {
+  id: string
+  userId: string
+  members: TeamMember[]
+  isSetupComplete: boolean
+  createdAt: Date
+  updatedAt: Date
 }
 
 export interface KnowledgeBase {
