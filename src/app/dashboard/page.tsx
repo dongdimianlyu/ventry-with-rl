@@ -6,9 +6,11 @@ import { Goal, Task, User, TeamMember, TeamTask } from '@/types'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { TaskCard } from '@/components/dashboard/TaskCard'
-import { AddGoalForm } from '@/components/dashboard/AddGoalForm'
-import { Sparkles, LogOut, Calendar, Target, Brain, Users, TrendingUp } from 'lucide-react'
+import AddGoalForm from '@/components/dashboard/AddGoalForm'
+import { Sparkles, LogOut, Calendar, Target, Brain, Users, TrendingUp, Plus, AlertCircle } from 'lucide-react'
 import { formatDate } from '@/lib/utils'
+import { knowledgeBase } from '@/data/knowledge-base'
+import { KnowledgeBase } from '@/types'
 
 export default function DashboardPage() {
   const [user, setUser] = useState<User | null>(null)
@@ -17,6 +19,8 @@ export default function DashboardPage() {
   const [team, setTeam] = useState<TeamMember[]>([])
   const [teamTasks, setTeamTasks] = useState<Record<string, TeamTask[]>>({})
   const [isGeneratingTasks, setIsGeneratingTasks] = useState(false)
+  const [showAddGoal, setShowAddGoal] = useState(false)
+  const [taskError, setTaskError] = useState<string | null>(null)
   const router = useRouter()
 
   useEffect(() => {
@@ -69,285 +73,99 @@ export default function DashboardPage() {
     const updatedGoals = [...goals, newGoal]
     setGoals(updatedGoals)
     localStorage.setItem(`goals_${user.id}`, JSON.stringify(updatedGoals))
+    setShowAddGoal(false)
   }
 
   const generateDailyTasks = async () => {
-    if (!user || goals.length === 0) return
+    if (!user || goals.length === 0) {
+      alert('Please add at least one goal before generating tasks.')
+      return
+    }
 
     setIsGeneratingTasks(true)
+    setTaskError(null)
 
     try {
-      // Generate CEO tasks
-      const ceoResponse = await fetch('/api/tasks/generate', {
+      const response = await fetch('/api/tasks/generate', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({
           goals,
           previousTasks: tasks,
-          taskType: 'individual'
+          knowledgeBase: knowledgeBase as KnowledgeBase[],
+          timeframe: 'today'
         })
       })
 
-      const ceoData = await ceoResponse.json()
-      
-      // Transform API response to Task objects
-      const newTasks: Task[] = ceoData.tasks.map((task: Omit<Task, 'id' | 'userId' | 'createdAt'>, index: number) => ({
-        id: (Date.now() + index).toString(),
-        userId: user.id,
-        ...task,
-        dueDate: new Date(task.dueDate),
-        createdAt: new Date()
-      }))
-
-      // Generate team tasks if team exists
-      let newTeamTasks: Record<string, TeamTask[]> = {}
-      if (team.length > 0) {
+      if (!response.ok) {
+        const errorText = await response.text();
         try {
-          const teamResponse = await fetch('/api/tasks/generate', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              goals,
-              teamMembers: team,
-              taskType: 'team'
-            })
-          })
-
-          const teamData = await teamResponse.json()
-          newTeamTasks = teamData.teamTasks || {}
-        } catch (error) {
-          console.error('Failed to generate team tasks:', error)
-          // Fallback to local generation
-          team.forEach((member, index) => {
-            const memberKey = `${member.name} - ${member.role}`
-            newTeamTasks[memberKey] = generateTasksForRole(member.role, index)
-          })
+          // Try to parse it as JSON, as our API should return JSON errors
+          const errorData = JSON.parse(errorText);
+          throw new Error(errorData.details || errorData.error || 'Failed to generate tasks');
+        } catch (e) {
+          // If it's not JSON, it's likely an HTML error page or something else
+          console.error("Non-JSON error response:", errorText);
+          throw new Error('Received an invalid response from the server. Check the server logs for more details.');
         }
       }
 
-      // Update state
-      const updatedTasks = [...tasks, ...newTasks]
-      setTasks(updatedTasks)
-      localStorage.setItem(`tasks_${user.id}`, JSON.stringify(updatedTasks))
+      const data = await response.json()
       
-      if (Object.keys(newTeamTasks).length > 0) {
-        setTeamTasks(newTeamTasks)
-        localStorage.setItem(`employeeTasks_${user.id}`, JSON.stringify(newTeamTasks))
-      }
-      
-    } catch (error) {
-      console.error('Failed to generate tasks:', error)
-      
-      // Fallback to mock data
-      const fallbackTasks: Task[] = [
-        {
-          id: Date.now().toString(),
+      if (data.tasks && Array.isArray(data.tasks)) {
+        const newTasks = data.tasks.map((task: Omit<Task, 'id' | 'userId' | 'createdAt'>, index: number) => ({
+          ...task,
+          id: `task-${Date.now()}-${index}`,
           userId: user.id,
-          title: "Review quarterly objectives and key results",
-          description: "Assess progress on current OKRs and identify areas needing attention.",
-          explanation: "Regular OKR reviews ensure strategic alignment and help identify course corrections early.",
-          priority: 'high' as const,
-          completed: false,
-          dueDate: new Date(),
-          createdAt: new Date(),
-          relatedGoalIds: goals.map(g => g.id)
-        }
-      ]
-      
-      const updatedTasks = [...tasks, ...fallbackTasks]
-      setTasks(updatedTasks)
-      localStorage.setItem(`tasks_${user.id}`, JSON.stringify(updatedTasks))
-    }
+          createdAt: new Date()
+        }))
 
-    setIsGeneratingTasks(false)
-  }
+        const updatedTasks = [...tasks, ...newTasks]
+        setTasks(updatedTasks)
+        localStorage.setItem(`tasks_${user.id}`, JSON.stringify(updatedTasks))
+        
+        // Generate team tasks if team exists
+        let newTeamTasks: Record<string, TeamTask[]> = {}
+        if (team.length > 0) {
+          try {
+            const teamResponse = await fetch('/api/tasks/generate', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                goals,
+                teamMembers: team,
+                taskType: 'team'
+              })
+            })
 
-  const generateTasksForRole = (role: string, index: number): TeamTask[] => {
-    const roleTasks: Record<string, TeamTask[]> = {
-      'Marketing': [
-        { 
-          id: `marketing-${index}-1`, 
-          title: "Plan Instagram content for the week", 
-          description: "Create a detailed content calendar with posts, captions, and hashtags for the upcoming week",
-          reason: "Increase brand visibility and engagement", 
-          priority: 'high' as const, 
-          completed: false,
-          dueDate: new Date(Date.now() + 24 * 60 * 60 * 1000),
-          assignedTo: `member-${index}`
-        },
-        { 
-          id: `marketing-${index}-2`, 
-          title: "Draft monthly email newsletter", 
-          description: "Write and design the monthly newsletter with company updates and customer stories",
-          reason: "Improve customer retention through communication", 
-          priority: 'medium' as const, 
-          completed: false,
-          dueDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
-          assignedTo: `member-${index}`
-        },
-        { 
-          id: `marketing-${index}-3`, 
-          title: "Analyze social media performance metrics", 
-          description: "Review engagement rates, reach, and conversion metrics from last month's campaigns",
-          reason: "Optimize content strategy based on data", 
-          priority: 'low' as const, 
-          completed: false,
-          dueDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
-          assignedTo: `member-${index}`
+            if (teamResponse.ok) {
+              const teamData = await teamResponse.json()
+              newTeamTasks = teamData.teamTasks || {}
+            } else {
+              console.warn('Team task generation failed, continuing with individual tasks only')
+            }
+          } catch (error) {
+            console.warn('Failed to generate team tasks:', error)
+          }
         }
-      ],
-      'Sales': [
-        { 
-          id: `sales-${index}-1`, 
-          title: "Follow up with warm leads from last week", 
-          description: "Call or email prospects who showed interest in our product during demos",
-          reason: "Convert prospects into paying customers", 
-          priority: 'high' as const, 
-          completed: false,
-          dueDate: new Date(Date.now() + 24 * 60 * 60 * 1000),
-          assignedTo: `member-${index}`
-        },
-        { 
-          id: `sales-${index}-2`, 
-          title: "Update CRM with recent customer interactions", 
-          description: "Log all customer touchpoints and update deal stages in the CRM system",
-          reason: "Maintain accurate sales pipeline data", 
-          priority: 'medium' as const, 
-          completed: false,
-          dueDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
-          assignedTo: `member-${index}`
-        },
-        { 
-          id: `sales-${index}-3`, 
-          title: "Schedule demo calls for qualified prospects", 
-          description: "Book product demonstrations with leads who meet our ideal customer profile",
-          reason: "Move opportunities through the sales funnel", 
-          priority: 'high' as const, 
-          completed: false,
-          dueDate: new Date(Date.now() + 24 * 60 * 60 * 1000),
-          assignedTo: `member-${index}`
+        
+        if (Object.keys(newTeamTasks).length > 0) {
+          setTeamTasks(newTeamTasks)
+          localStorage.setItem(`employeeTasks_${user.id}`, JSON.stringify(newTeamTasks))
         }
-      ],
-      'Product': [
-        { 
-          id: `product-${index}-1`, 
-          title: "Review user feedback from latest feature release", 
-          description: "Analyze support tickets and user reviews to identify improvement opportunities",
-          reason: "Identify improvement opportunities", 
-          priority: 'high' as const, 
-          completed: false,
-          dueDate: new Date(Date.now() + 24 * 60 * 60 * 1000),
-          assignedTo: `member-${index}`
-        },
-        { 
-          id: `product-${index}-2`, 
-          title: "Update product roadmap based on customer requests", 
-          description: "Prioritize features based on customer feedback and business impact",
-          reason: "Align development with market needs", 
-          priority: 'medium' as const, 
-          completed: false,
-          dueDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
-          assignedTo: `member-${index}`
-        },
-        { 
-          id: `product-${index}-3`, 
-          title: "Conduct competitive analysis", 
-          description: "Research competitor features and pricing to inform our product strategy",
-          reason: "Stay ahead of market trends", 
-          priority: 'low' as const, 
-          completed: false,
-          dueDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
-          assignedTo: `member-${index}`
-        }
-      ],
-      'Design': [
-        { 
-          id: `design-${index}-1`, 
-          title: "Create wireframes for mobile app redesign", 
-          description: "Design low-fidelity wireframes for key user flows in the mobile app",
-          reason: "Improve user experience and engagement", 
-          priority: 'high' as const, 
-          completed: false,
-          dueDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
-          assignedTo: `member-${index}`
-        },
-        { 
-          id: `design-${index}-2`, 
-          title: "Update brand guidelines documentation", 
-          description: "Refine color palette, typography, and logo usage guidelines",
-          reason: "Ensure consistent visual identity", 
-          priority: 'medium' as const, 
-          completed: false,
-          dueDate: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000),
-          assignedTo: `member-${index}`
-        },
-        { 
-          id: `design-${index}-3`, 
-          title: "Design new landing page for campaign", 
-          description: "Create high-converting landing page designs for upcoming marketing campaign",
-          reason: "Support marketing conversion goals", 
-          priority: 'high' as const, 
-          completed: false,
-          dueDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
-          assignedTo: `member-${index}`
-        }
-      ],
-      'Ops': [
-        { 
-          id: `ops-${index}-1`, 
-          title: "Review and optimize current workflows", 
-          description: "Audit existing processes and identify bottlenecks or inefficiencies",
-          reason: "Increase operational efficiency", 
-          priority: 'high' as const, 
-          completed: false,
-          dueDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
-          assignedTo: `member-${index}`
-        },
-        { 
-          id: `ops-${index}-2`, 
-          title: "Analyze team productivity metrics", 
-          description: "Review team performance data and create improvement recommendations",
-          reason: "Identify bottlenecks and improvements", 
-          priority: 'medium' as const, 
-          completed: false,
-          dueDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
-          assignedTo: `member-${index}`
-        },
-        { 
-          id: `ops-${index}-3`, 
-          title: "Update company policies and procedures", 
-          description: "Review and update employee handbook and operational procedures",
-          reason: "Ensure compliance and clarity", 
-          priority: 'low' as const, 
-          completed: false,
-          dueDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
-          assignedTo: `member-${index}`
-        }
-      ]
-    }
-
-    return roleTasks[role] || [
-      { 
-        id: `custom-${index}-1`, 
-        title: "Review weekly objectives", 
-        description: "Go through weekly goals and adjust priorities based on current progress",
-        reason: "Stay aligned with team goals", 
-        priority: 'medium' as const, 
-        completed: false,
-        dueDate: new Date(Date.now() + 24 * 60 * 60 * 1000),
-        assignedTo: `member-${index}`
-      },
-      { 
-        id: `custom-${index}-2`, 
-        title: "Complete assigned project tasks", 
-        description: "Focus on highest-priority deliverables for current projects",
-        reason: "Meet project deadlines", 
-        priority: 'high' as const, 
-        completed: false,
-        dueDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
-        assignedTo: `member-${index}`
+      } else {
+        throw new Error('Invalid response format')
       }
-    ]
+
+    } catch (error: unknown) {
+      console.error('Error generating tasks:', error)
+      const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred'
+      setTaskError(errorMessage)
+    } finally {
+      setIsGeneratingTasks(false)
+    }
   }
 
   const handleToggleTaskComplete = (taskId: string) => {
@@ -405,12 +223,19 @@ export default function DashboardPage() {
             </div>
             <div className="flex items-center space-x-3">
               <Button
+                onClick={() => setShowAddGoal(true)}
+                className="brand-gradient text-white hover:opacity-90 smooth-transition shadow-sm accent-glow"
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                Add Goal
+              </Button>
+              <Button
                 onClick={generateDailyTasks}
                 disabled={isGeneratingTasks || goals.length === 0}
                 className="brand-gradient text-white hover:opacity-90 smooth-transition shadow-sm accent-glow"
               >
-                <Sparkles className="h-4 w-4 mr-2" />
-                <span>{isGeneratingTasks ? 'Generating...' : 'Generate Tasks'}</span>
+                <Brain className="h-4 w-4 mr-2" />
+                {isGeneratingTasks ? 'Generating...' : 'Generate Tasks'}
               </Button>
               <Button variant="outline" onClick={handleLogout} className="border-gray-200 hover:bg-gray-50">
                 <LogOut className="h-4 w-4" />
@@ -435,6 +260,19 @@ export default function DashboardPage() {
           <div className="subtle-divider mt-4" />
         </div>
 
+        {/* Error Alert */}
+        {taskError && (
+          <div className="bg-red-50 border border-red-200 rounded-md p-4 mb-6">
+            <div className="flex">
+              <AlertCircle className="h-5 w-5 text-red-400" />
+              <div className="ml-3">
+                <h3 className="text-sm font-medium text-red-800">Task Generation Error</h3>
+                <p className="text-sm text-red-700 mt-1">{taskError}</p>
+              </div>
+            </div>
+          </div>
+        )}
+
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Main Tasks Column */}
           <div className="lg:col-span-2 space-y-8">
@@ -444,7 +282,7 @@ export default function DashboardPage() {
                   <div className="w-8 h-8 bg-brand-primary rounded-lg flex items-center justify-center mr-3">
                     <Brain className="h-4 w-4 text-white" />
                   </div>
-                  Today's Priority Tasks
+                  Today&apos;s Priority Tasks
                 </h3>
                 <div className="flex items-center space-x-2 text-sm text-gray-500 bg-white rounded-full px-4 py-2 shadow-sm border border-gray-100">
                   <TrendingUp className="h-4 w-4" />
@@ -471,8 +309,8 @@ export default function DashboardPage() {
                         disabled={isGeneratingTasks}
                         className="brand-gradient text-white hover:opacity-90 smooth-transition shadow-sm accent-glow"
                       >
-                        <Sparkles className="h-4 w-4 mr-2" />
-                        <span>{isGeneratingTasks ? 'Generating...' : 'Generate Tasks'}</span>
+                        <Brain className="h-4 w-4 mr-2" />
+                        {isGeneratingTasks ? 'Generating...' : 'Generate Tasks'}
                       </Button>
                     )}
                   </CardContent>
@@ -592,7 +430,10 @@ export default function DashboardPage() {
               </CardContent>
             </Card>
 
-            <AddGoalForm onAddGoal={handleAddGoal} />
+            <AddGoalForm 
+              onSubmit={handleAddGoal}
+              onCancel={() => setShowAddGoal(false)}
+            />
 
             {/* Progress Overview */}
             <Card className="refined-card bg-gradient-to-br from-white to-purple-50 border-purple-100">
@@ -608,7 +449,7 @@ export default function DashboardPage() {
                 <div className="space-y-6">
                   <div className="space-y-3">
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-gray-600 font-medium">Today's Tasks</span>
+                      <span className="text-sm text-gray-600 font-medium">Today&apos;s Tasks</span>
                       <span className="font-bold text-brand-primary">{completedTasks.length}/{todaysTasks.length}</span>
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
@@ -639,6 +480,19 @@ export default function DashboardPage() {
           </div>
         </div>
       </div>
+
+      {/* Add Goal Modal */}
+      {showAddGoal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+            <h2 className="text-xl font-semibold mb-4">Add New Goal</h2>
+            <AddGoalForm 
+              onSubmit={handleAddGoal}
+              onCancel={() => setShowAddGoal(false)}
+            />
+          </div>
+        </div>
+      )}
     </div>
   )
 } 
