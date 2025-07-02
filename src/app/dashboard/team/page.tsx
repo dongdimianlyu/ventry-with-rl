@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { TeamMember, User, TeamTask, Goal } from '@/types'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Users, Eye, Check, Plus, Calendar, MoreVertical, Target } from 'lucide-react'
+import { Users, Eye, Check, Plus, Calendar, MoreVertical, Target, Sparkles, ArrowLeft, CheckCircle2 } from 'lucide-react'
 
 interface TeamSetupData {
   members: TeamMember[]
@@ -319,47 +319,60 @@ export default function TeamPage() {
 
   const getPriorityColor = (priority: 'low' | 'medium' | 'high') => {
     switch (priority) {
-      case 'high': return 'bg-red-100 text-red-800 border-red-200'
-      case 'medium': return 'bg-yellow-100 text-yellow-800 border-yellow-200'
-      case 'low': return 'bg-gray-100 text-gray-800 border-gray-200'
+      case 'high': return 'bg-red-100 text-red-700 border-red-200'
+      case 'medium': return 'bg-amber-100 text-amber-700 border-amber-200'
+      case 'low': return 'bg-gray-100 text-gray-700 border-gray-200'
     }
   }
 
   const isFormValid = teamMembers.some(member => member.name.trim() !== '')
 
   if (!user) {
-    return <div>Loading...</div>
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-12 h-12 brand-gradient rounded-xl flex items-center justify-center mx-auto mb-4">
+            <Sparkles className="h-6 w-6 text-white animate-pulse" />
+          </div>
+          <p className="text-gray-600">Loading your team...</p>
+        </div>
+      </div>
+    )
   }
 
   // If team setup is complete, show board view
   if (teamSetup?.isSetupComplete) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-slate-100 polka-background">
         {/* Header */}
-        <header className="bg-white shadow-sm border-b sticky top-0 z-10">
+        <header className="bg-white/80 backdrop-blur-sm shadow-sm border-b border-gray-100 sticky top-0 z-40">
           <div className="max-w-full mx-auto px-6">
-            <div className="flex justify-between items-center py-4">
+            <div className="flex justify-between items-center py-6">
               <div className="flex items-center space-x-4">
-                <Users className="h-6 w-6 text-blue-600" />
-                <h1 className="text-2xl font-bold text-gray-900">Team Board</h1>
-                <span className="text-sm text-gray-500">
-                  {teamSetup.members.length} member{teamSetup.members.length !== 1 ? 's' : ''}
-                </span>
+                <div className="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center shadow-sm">
+                  <Users className="h-5 w-5 text-white" />
+                </div>
+                <div>
+                  <h1 className="text-2xl font-bold text-brand-primary">Team Board</h1>
+                  <p className="text-sm text-gray-600">
+                    {teamSetup.members.length} member{teamSetup.members.length !== 1 ? 's' : ''} • Collaborative workspace
+                  </p>
+                </div>
               </div>
               <div className="flex items-center space-x-3">
                 <Button
                   onClick={generateTeamTasks}
                   disabled={isGeneratingTasks}
-                  className="flex items-center space-x-2"
+                  className="brand-gradient text-white hover:opacity-90 smooth-transition shadow-sm accent-glow"
                 >
                   {isGeneratingTasks ? (
                     <>
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
                       <span>Generating...</span>
                     </>
                   ) : (
                     <>
-                      <Plus className="h-4 w-4" />
+                      <Sparkles className="h-4 w-4 mr-2" />
                       <span>Generate Tasks</span>
                     </>
                   )}
@@ -367,8 +380,10 @@ export default function TeamPage() {
                 <Button
                   variant="outline"
                   onClick={() => router.push('/dashboard')}
+                  className="border-gray-200 hover:bg-gray-50"
                 >
-                  Back to Dashboard
+                  <ArrowLeft className="h-4 w-4 mr-2" />
+                  Dashboard
                 </Button>
               </div>
             </div>
@@ -377,82 +392,99 @@ export default function TeamPage() {
 
         {/* Board View */}
         <div className="p-6">
-          <div className="space-y-4">
+          <div className="space-y-6">
             {teamSetup.members.map(member => {
               const memberKey = `${member.name} - ${member.role === 'Custom' ? member.customRole : member.role}`
               const memberTasks = teamTasks[memberKey] || []
               const completedTasks = memberTasks.filter(task => task.completed).length
               
               return (
-                <div key={member.id} className="bg-white rounded-lg border shadow-sm">
+                <div key={member.id} className="refined-card bg-gradient-to-br from-white to-gray-50">
                   {/* Member Row Header */}
-                  <div className="flex items-center justify-between p-4 border-b bg-gray-50">
-                    <div className="flex items-center space-x-3">
-                      <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                        <span className="text-blue-600 font-medium">
+                  <div className="flex items-center justify-between p-6 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white">
+                    <div className="flex items-center space-x-4">
+                      <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center shadow-sm">
+                        <span className="text-emerald-600 font-bold text-lg">
                           {member.name.charAt(0)}
                         </span>
                       </div>
                       <div>
-                        <h3 className="font-semibold text-gray-900">{member.name}</h3>
-                        <p className="text-sm text-gray-500">
+                        <h3 className="font-bold text-gray-900 text-lg">{member.name}</h3>
+                        <p className="text-sm text-gray-600 accent-dot">
                           {member.role === 'Custom' ? member.customRole : member.role}
                         </p>
                       </div>
                     </div>
-                    <div className="flex items-center space-x-4 text-sm text-gray-500">
-                      <span>{completedTasks}/{memberTasks.length} completed</span>
-                      <div className="w-24 bg-gray-200 rounded-full h-2">
-                        <div 
-                          className="bg-green-500 h-2 rounded-full transition-all duration-300"
-                          style={{ width: `${memberTasks.length > 0 ? (completedTasks / memberTasks.length) * 100 : 0}%` }}
-                        />
+                    <div className="flex items-center space-x-6">
+                      <div className="text-right">
+                        <div className="text-sm font-semibold text-brand-primary">
+                          {completedTasks}/{memberTasks.length} completed
+                        </div>
+                        <div className="w-32 bg-gray-200 rounded-full h-2 mt-1">
+                          <div 
+                            className="brand-gradient h-2 rounded-full smooth-transition"
+                            style={{ width: `${memberTasks.length > 0 ? (completedTasks / memberTasks.length) * 100 : 0}%` }}
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
 
                   {/* Tasks Row - Horizontal Scroll */}
-                  <div className="p-4">
+                  <div className="p-6">
                     {memberTasks.length > 0 ? (
-                      <div className="flex space-x-4 overflow-x-auto pb-2" style={{ minHeight: '200px' }}>
+                      <div className="flex space-x-6 overflow-x-auto pb-4" style={{ minHeight: '240px' }}>
                         {memberTasks.map(task => (
                           <div 
                             key={task.id} 
-                            className={`w-80 flex-shrink-0 border rounded-lg p-4 bg-white transition-all duration-200 hover:shadow-md ${
-                              task.completed ? 'bg-gray-50 opacity-75' : ''
+                            className={`w-80 flex-shrink-0 refined-card smooth-transition ${
+                              task.completed ? 'bg-gradient-to-br from-gray-50 to-gray-100 opacity-75' : 'bg-gradient-to-br from-white to-gray-50'
                             }`}
                           >
                             {/* Task Header */}
-                            <div className="flex items-start justify-between mb-3">
-                              <div className="flex items-start space-x-2">
-                                <input
-                                  type="checkbox"
-                                  checked={task.completed}
-                                  onChange={() => toggleTaskComplete(memberKey, task.id)}
-                                  className="mt-1 h-4 w-4 text-blue-600 rounded focus:ring-blue-500"
-                                />
+                            <div className="flex items-start justify-between mb-4 p-4 pb-0">
+                              <div className="flex items-start space-x-3 flex-1">
+                                <button
+                                  onClick={() => toggleTaskComplete(memberKey, task.id)}
+                                  className="mt-0.5 smooth-transition hover:scale-110"
+                                >
+                                  {task.completed ? (
+                                    <CheckCircle2 className="h-5 w-5 text-brand-primary" />
+                                  ) : (
+                                    <div className="h-5 w-5 border-2 border-gray-300 rounded-full hover:border-brand-primary smooth-transition" />
+                                  )}
+                                </button>
                                 <div className="flex-1">
-                                  <h4 className={`font-medium ${task.completed ? 'line-through text-gray-500' : 'text-gray-900'}`}>
+                                  <h4 className={`font-semibold leading-tight ${task.completed ? 'line-through text-gray-500' : 'text-gray-900'}`}>
                                     {task.title}
                                   </h4>
                                 </div>
                               </div>
-                              <button className="text-gray-400 hover:text-gray-600">
+                              <button className="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-100 smooth-transition">
                                 <MoreVertical className="h-4 w-4" />
                               </button>
                             </div>
 
                             {/* Task Details */}
-                            <div className="space-y-3">
-                              <p className="text-sm text-gray-600">{task.description}</p>
+                            <div className="space-y-4 p-4 pt-0">
+                              <p className="text-sm text-gray-600 leading-relaxed">{task.description}</p>
+                              
+                              <div className="subtle-divider" />
                               
                               {/* Reason */}
-                              <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                              <div className="bg-gradient-to-r from-brand-accent-muted to-transparent border border-brand-accent/20 rounded-xl p-3 relative overflow-hidden">
+                                <div className="absolute top-2 right-2 flex space-x-1">
+                                  <div className="w-1 h-1 bg-brand-accent rounded-full opacity-40" />
+                                  <div className="w-1 h-1 bg-brand-accent rounded-full opacity-60" />
+                                  <div className="w-1 h-1 bg-brand-accent rounded-full opacity-40" />
+                                </div>
                                 <div className="flex items-start space-x-2">
-                                  <Target className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                                  <div className="w-6 h-6 bg-brand-primary rounded-lg flex items-center justify-center shrink-0 mt-0.5">
+                                    <Target className="h-3 w-3 text-white" />
+                                  </div>
                                   <div>
-                                    <p className="text-xs font-medium text-blue-800 mb-1">Why this matters</p>
-                                    <p className="text-sm text-blue-700">{task.reason}</p>
+                                    <p className="text-xs font-semibold text-brand-primary mb-1 accent-dot">Why this matters</p>
+                                    <p className="text-sm text-gray-700 leading-relaxed">{task.reason}</p>
                                   </div>
                                 </div>
                               </div>
@@ -460,10 +492,10 @@ export default function TeamPage() {
                               {/* Footer */}
                               <div className="flex items-center justify-between">
                                 <div className="flex items-center space-x-2 text-sm text-gray-500">
-                                  <Calendar className="h-4 w-4" />
-                                  <span>{formatDate(task.dueDate)}</span>
+                                  <Calendar className="h-3 w-3" />
+                                  <span className="font-medium">{formatDate(task.dueDate)}</span>
                                 </div>
-                                <span className={`px-2 py-1 rounded-full text-xs font-medium border ${getPriorityColor(task.priority)}`}>
+                                <span className={`px-3 py-1 rounded-full text-xs font-medium border ${getPriorityColor(task.priority)}`}>
                                   {task.priority}
                                 </span>
                               </div>
@@ -472,9 +504,11 @@ export default function TeamPage() {
                         ))}
                       </div>
                     ) : (
-                      <div className="text-center py-8 text-gray-500">
-                        <Target className="h-8 w-8 mx-auto mb-2 opacity-50" />
-                        <p>No tasks assigned yet</p>
+                      <div className="text-center py-12 text-gray-500">
+                        <div className="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                          <Target className="h-8 w-8 text-gray-400" />
+                        </div>
+                        <p className="font-medium text-gray-900 mb-2">No tasks assigned yet</p>
                         <p className="text-sm">Click "Generate Tasks" to get started</p>
                       </div>
                     )}
@@ -490,20 +524,27 @@ export default function TeamPage() {
 
   // Setup flow UI
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-slate-100 polka-background">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b">
+      <header className="bg-white/80 backdrop-blur-sm shadow-sm border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
+          <div className="flex justify-between items-center py-6">
             <div className="flex items-center space-x-4">
-              <Users className="h-6 w-6 text-blue-600" />
-              <h1 className="text-2xl font-bold text-gray-900">Team Setup</h1>
+              <div className="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center shadow-sm">
+                <Users className="h-5 w-5 text-white" />
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold text-brand-primary">Team Setup</h1>
+                <p className="text-sm text-gray-600">Configure your team structure</p>
+              </div>
             </div>
             <Button
               variant="outline"
               onClick={() => router.push('/dashboard')}
+              className="border-gray-200 hover:bg-gray-50"
             >
-              Back to Dashboard
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Dashboard
             </Button>
           </div>
         </div>
@@ -511,13 +552,18 @@ export default function TeamPage() {
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Team Size Selection */}
-        <Card className="mb-8">
+        <Card className="refined-card mb-8 bg-gradient-to-br from-white to-blue-50 border-blue-100">
           <CardHeader>
-            <CardTitle>How many people are on your team?</CardTitle>
+            <CardTitle className="flex items-center text-lg">
+              <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center mr-3">
+                <Users className="h-4 w-4 text-white" />
+              </div>
+              How many people are on your team?
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-center space-x-4">
-              <label htmlFor="teamSize" className="text-sm font-medium text-gray-700">
+              <label htmlFor="teamSize" className="text-sm font-semibold text-gray-700">
                 Team size:
               </label>
               <input
@@ -527,7 +573,7 @@ export default function TeamPage() {
                 max="10"
                 value={teamSize}
                 onChange={(e) => setTeamSize(Math.min(10, Math.max(1, parseInt(e.target.value) || 1)))}
-                className="w-20 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                className="w-20 rounded-lg border-gray-200 shadow-sm focus:border-brand-primary focus:ring-brand-primary smooth-transition"
               />
               <span className="text-sm text-gray-500">(max 10)</span>
             </div>
@@ -535,20 +581,27 @@ export default function TeamPage() {
         </Card>
 
         {/* Team Member Forms */}
-        <Card className="mb-8">
+        <Card className="refined-card mb-8 bg-gradient-to-br from-white to-gray-50">
           <CardHeader>
-            <CardTitle>Team Member Details</CardTitle>
+            <CardTitle className="text-lg">Team Member Details</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-6">
               {teamMembers.map((member, index) => (
-                <div key={index} className="border rounded-lg p-4 bg-gray-50">
-                  <h4 className="text-lg font-medium text-gray-900 mb-4">
-                    Member {index + 1}
-                  </h4>
+                <div key={index} className="border border-gray-100 rounded-xl p-6 bg-white shadow-sm">
+                  <div className="flex items-center space-x-3 mb-4">
+                    <div className="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center">
+                      <span className="text-emerald-600 font-bold text-sm">
+                        {member.name.charAt(0) || (index + 1)}
+                      </span>
+                    </div>
+                    <h4 className="text-lg font-semibold text-gray-900">
+                      Member {index + 1}
+                    </h4>
+                  </div>
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
                         Name
                       </label>
                       <input
@@ -556,17 +609,17 @@ export default function TeamPage() {
                         value={member.name}
                         onChange={(e) => handleMemberChange(index, 'name', e.target.value)}
                         placeholder="Enter team member name"
-                        className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        className="w-full rounded-lg border-gray-200 shadow-sm focus:border-brand-primary focus:ring-brand-primary smooth-transition"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
                         Role
                       </label>
                       <select
                         value={member.role}
                         onChange={(e) => handleMemberChange(index, 'role', e.target.value as TeamMember['role'])}
-                        className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        className="w-full rounded-lg border-gray-200 shadow-sm focus:border-brand-primary focus:ring-brand-primary smooth-transition"
                       >
                         <option value="Marketing">Marketing</option>
                         <option value="Sales">Sales</option>
@@ -578,7 +631,7 @@ export default function TeamPage() {
                     </div>
                     {member.role === 'Custom' && (
                       <div className="sm:col-span-2">
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                        <label className="block text-sm font-semibold text-gray-700 mb-2">
                           Custom Role
                         </label>
                         <input
@@ -586,7 +639,7 @@ export default function TeamPage() {
                           value={member.customRole || ''}
                           onChange={(e) => handleMemberChange(index, 'customRole', e.target.value)}
                           placeholder="Enter custom role"
-                          className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                          className="w-full rounded-lg border-gray-200 shadow-sm focus:border-brand-primary focus:ring-brand-primary smooth-transition"
                         />
                       </div>
                     )}
@@ -598,16 +651,21 @@ export default function TeamPage() {
         </Card>
 
         {/* Preview Section */}
-        <Card className="mb-8">
+        <Card className="refined-card mb-8 bg-gradient-to-br from-white to-purple-50 border-purple-100">
           <CardHeader>
-            <CardTitle>Preview Team Board</CardTitle>
+            <CardTitle className="flex items-center text-lg">
+              <div className="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center mr-3">
+                <Eye className="h-4 w-4 text-white" />
+              </div>
+              Preview Team Board
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               <Button
                 variant="outline"
                 onClick={() => setShowPreview(!showPreview)}
-                className="flex items-center space-x-2"
+                className="flex items-center space-x-2 border-purple-200 hover:bg-purple-50"
               >
                 <Eye className="h-4 w-4" />
                 <span>{showPreview ? 'Hide' : 'Show'} Preview</span>
@@ -615,52 +673,46 @@ export default function TeamPage() {
 
               {showPreview && (
                 <div>
-                  <p className="text-sm text-gray-600 mb-4">
+                  <p className="text-sm text-gray-600 mb-4 leading-relaxed">
                     Preview how your team board will look with sample tasks
                   </p>
-                  <div className="space-y-4 border rounded-lg p-4 bg-gray-50">
+                  <div className="space-y-4 border border-purple-100 rounded-xl p-6 bg-gradient-to-br from-purple-50 to-white">
                     {teamMembers
                       .filter(member => member.name.trim() !== '')
                       .map((member, index) => {
                         const mockTasks = getMockTasks(member.role === 'Custom' ? member.customRole || 'Marketing' : member.role)
                         return (
-                          <div key={index} className="bg-white rounded-lg border">
+                          <div key={index} className="bg-white rounded-xl border border-gray-100 shadow-sm">
                             {/* Member Row Header */}
-                            <div className="flex items-center justify-between p-4 border-b bg-gray-50">
+                            <div className="flex items-center justify-between p-4 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white rounded-t-xl">
                               <div className="flex items-center space-x-3">
-                                <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                                  <span className="text-blue-600 text-sm font-medium">
+                                <div className="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center">
+                                  <span className="text-emerald-600 font-bold">
                                     {member.name.charAt(0)}
                                   </span>
                                 </div>
                                 <div>
-                                  <h3 className="font-medium text-gray-900">{member.name}</h3>
-                                  <p className="text-sm text-gray-500">
+                                  <h3 className="font-semibold text-gray-900">{member.name}</h3>
+                                  <p className="text-sm text-gray-600">
                                     {member.role === 'Custom' ? member.customRole : member.role}
                                   </p>
                                 </div>
                               </div>
-                              <div className="text-sm text-gray-500">
+                              <div className="text-sm text-gray-500 font-medium">
                                 0/{mockTasks.length} completed
                               </div>
                             </div>
 
                             {/* Sample Tasks */}
                             <div className="p-4">
-                              <div className="flex space-x-3 overflow-x-auto">
-                                {mockTasks.slice(0, 2).map(task => (
-                                  <div key={task.id} className="w-64 flex-shrink-0 border rounded-lg p-3 bg-white">
+                              <div className="flex space-x-4 overflow-x-auto">
+                                {mockTasks.slice(0, 3).map((task, taskIndex) => (
+                                  <div key={taskIndex} className="w-64 flex-shrink-0 border border-gray-100 rounded-lg p-3 bg-gray-50">
                                     <h4 className="font-medium text-gray-900 text-sm mb-2">{task.title}</h4>
                                     <p className="text-xs text-gray-600 mb-2">{task.description}</p>
-                                    <div className="bg-blue-50 border border-blue-200 rounded p-2 mb-2">
-                                      <p className="text-xs text-blue-700">{task.reason}</p>
-                                    </div>
-                                    <div className="flex justify-between items-center">
-                                      <span className="text-xs text-gray-500">{formatDate(task.dueDate)}</span>
-                                      <span className={`px-2 py-1 rounded-full text-xs ${getPriorityColor(task.priority)}`}>
-                                        {task.priority}
-                                      </span>
-                                    </div>
+                                    <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getPriorityColor(task.priority)}`}>
+                                      {task.priority}
+                                    </span>
                                   </div>
                                 ))}
                               </div>
@@ -675,26 +727,28 @@ export default function TeamPage() {
           </CardContent>
         </Card>
 
-        {/* Confirm Team */}
-        <div className="flex justify-center">
+        {/* Confirm Button */}
+        <div className="text-center">
           <Button
             onClick={handleConfirmTeam}
             disabled={!isFormValid || isConfirming}
-            className="flex items-center space-x-2 px-8 py-3"
-            size="lg"
+            className="brand-gradient text-white hover:opacity-90 smooth-transition shadow-sm accent-glow px-8 py-3"
           >
             {isConfirming ? (
               <>
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
                 <span>Setting up team...</span>
               </>
             ) : (
               <>
-                <Check className="h-4 w-4" />
+                <CheckCircle2 className="h-4 w-4 mr-2" />
                 <span>Confirm Team Setup</span>
               </>
             )}
           </Button>
+          {!isFormValid && (
+            <p className="text-sm text-gray-500 mt-2">Please add at least one team member with a name</p>
+          )}
         </div>
       </div>
     </div>

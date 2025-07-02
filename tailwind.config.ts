@@ -14,6 +14,15 @@ const config: Config = {
         ring: 'hsl(var(--ring))',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
+        // Custom brand colors
+        brand: {
+          primary: '#1A4231', // Deep green
+          accent: 'rgb(201, 242, 35)', // Lime yellow
+          'primary-light': '#2D5A44',
+          'primary-dark': '#143529',
+          'accent-muted': 'rgba(201, 242, 35, 0.1)',
+          'accent-soft': 'rgba(201, 242, 35, 0.2)',
+        },
         primary: {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
@@ -47,6 +56,13 @@ const config: Config = {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
+      },
+      backgroundImage: {
+        'polka-dots': 'radial-gradient(circle, rgba(26, 66, 49, 0.05) 1px, transparent 1px)',
+        'subtle-gradient': 'linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(248, 250, 252, 0.9) 100%)',
+      },
+      backgroundSize: {
+        'polka': '20px 20px',
       },
     },
   },

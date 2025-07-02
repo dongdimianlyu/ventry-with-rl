@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { Goal } from '@/types'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Plus } from 'lucide-react'
+import { Plus, Target, Sparkles } from 'lucide-react'
 
 interface AddGoalFormProps {
   onAddGoal: (goal: Omit<Goal, 'id' | 'userId' | 'createdAt' | 'updatedAt'>) => void
@@ -38,12 +38,22 @@ export function AddGoalForm({ onAddGoal }: AddGoalFormProps) {
 
   if (!isOpen) {
     return (
-      <Card className="border-dashed border-2 border-gray-300 hover:border-gray-400 transition-colors cursor-pointer" onClick={() => setIsOpen(true)}>
-        <CardContent className="flex items-center justify-center py-12">
+      <Card 
+        className="border-dashed border-2 border-gray-200 hover:border-brand-primary smooth-transition cursor-pointer bg-gradient-to-br from-white to-gray-50 hover:from-brand-accent-muted hover:to-white" 
+        onClick={() => setIsOpen(true)}
+      >
+        <CardContent className="flex items-center justify-center py-16">
           <div className="text-center">
-            <Plus className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2">Add New Goal</h3>
-            <p className="text-gray-500">Tell Ventry what you want to achieve</p>
+            <div className="w-16 h-16 bg-brand-accent/20 rounded-2xl flex items-center justify-center mx-auto mb-4 relative overflow-hidden">
+              <div className="absolute top-2 right-2 flex space-x-1">
+                <div className="w-1 h-1 bg-brand-accent rounded-full opacity-40" />
+                <div className="w-1 h-1 bg-brand-accent rounded-full opacity-60" />
+                <div className="w-1 h-1 bg-brand-accent rounded-full opacity-40" />
+              </div>
+              <Plus className="h-8 w-8 text-brand-primary" />
+            </div>
+            <h3 className="text-xl font-bold text-gray-900 mb-2">Add New Goal</h3>
+            <p className="text-gray-600 accent-dot">Tell Ventry what you want to achieve</p>
           </div>
         </CardContent>
       </Card>
@@ -51,17 +61,22 @@ export function AddGoalForm({ onAddGoal }: AddGoalFormProps) {
   }
 
   return (
-    <Card>
+    <Card className="refined-card bg-gradient-to-br from-white to-blue-50 border-blue-100">
       <CardHeader>
-        <CardTitle>Add New Goal</CardTitle>
-        <CardDescription>
-          Tell us what you&apos;re trying to achieve, and we&apos;ll generate daily tasks to help you get there.
+        <CardTitle className="flex items-center text-lg">
+          <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center mr-3">
+            <Target className="h-4 w-4 text-white" />
+          </div>
+          Add New Goal
+        </CardTitle>
+        <CardDescription className="leading-relaxed">
+          Tell us what you're trying to achieve, and we'll generate daily tasks to help you get there.
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
-            <label htmlFor="title" className="text-sm font-medium">
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="space-y-3">
+            <label htmlFor="title" className="text-sm font-semibold text-gray-700">
               Goal Title
             </label>
             <input
@@ -69,36 +84,36 @@ export function AddGoalForm({ onAddGoal }: AddGoalFormProps) {
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-4 py-3 border border-gray-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary smooth-transition"
               placeholder="e.g., Grow revenue by 20% this quarter"
               required
             />
           </div>
 
-          <div className="space-y-2">
-            <label htmlFor="description" className="text-sm font-medium">
+          <div className="space-y-3">
+            <label htmlFor="description" className="text-sm font-semibold text-gray-700">
               Description
             </label>
             <textarea
               id="description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-4 py-3 border border-gray-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary smooth-transition resize-none"
               placeholder="Provide more context about this goal..."
               rows={3}
             />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <label htmlFor="timeframe" className="text-sm font-medium">
+            <div className="space-y-3">
+              <label htmlFor="timeframe" className="text-sm font-semibold text-gray-700">
                 Timeframe
               </label>
               <select
                 id="timeframe"
                 value={timeframe}
                 onChange={(e) => setTimeframe(e.target.value as 'week' | 'month' | 'quarter' | 'year')}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-4 py-3 border border-gray-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary smooth-transition"
               >
                 <option value="week">This Week</option>
                 <option value="month">This Month</option>
@@ -107,15 +122,15 @@ export function AddGoalForm({ onAddGoal }: AddGoalFormProps) {
               </select>
             </div>
 
-            <div className="space-y-2">
-              <label htmlFor="priority" className="text-sm font-medium">
+            <div className="space-y-3">
+              <label htmlFor="priority" className="text-sm font-semibold text-gray-700">
                 Priority
               </label>
               <select
                 id="priority"
                 value={priority}
                 onChange={(e) => setPriority(e.target.value as 'low' | 'medium' | 'high')}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-4 py-3 border border-gray-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary smooth-transition"
               >
                 <option value="low">Low</option>
                 <option value="medium">Medium</option>
@@ -124,9 +139,22 @@ export function AddGoalForm({ onAddGoal }: AddGoalFormProps) {
             </div>
           </div>
 
+          <div className="subtle-divider" />
+
           <div className="flex space-x-3">
-            <Button type="submit">Add Goal</Button>
-            <Button type="button" variant="outline" onClick={() => setIsOpen(false)}>
+            <Button 
+              type="submit" 
+              className="brand-gradient text-white hover:opacity-90 smooth-transition shadow-sm accent-glow"
+            >
+              <Sparkles className="h-4 w-4 mr-2" />
+              Add Goal
+            </Button>
+            <Button 
+              type="button" 
+              variant="outline" 
+              onClick={() => setIsOpen(false)}
+              className="border-gray-200 hover:bg-gray-50"
+            >
               Cancel
             </Button>
           </div>
