@@ -29,6 +29,21 @@ export interface Task {
   relatedGoalIds: string[]
 }
 
+export interface TeamMember {
+  id: string
+  name: string
+  role: 'Marketing' | 'Sales' | 'Product' | 'Design' | 'Ops' | 'Custom'
+  customRole?: string
+}
+
+export interface TeamTask {
+  id: string
+  title: string
+  reason: string
+  priority: 'low' | 'medium' | 'high'
+  completed: boolean
+}
+
 export interface KnowledgeBase {
   id: string
   title: string

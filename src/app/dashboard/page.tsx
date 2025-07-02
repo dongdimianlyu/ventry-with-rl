@@ -2,18 +2,20 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Goal, Task, User } from '@/types'
+import { Goal, Task, User, TeamMember, TeamTask } from '@/types'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { TaskCard } from '@/components/dashboard/TaskCard'
 import { AddGoalForm } from '@/components/dashboard/AddGoalForm'
-import { Sparkles, LogOut, Calendar, Target, Brain } from 'lucide-react'
+import { Sparkles, LogOut, Calendar, Target, Brain, Users } from 'lucide-react'
 import { formatDate } from '@/lib/utils'
 
 export default function DashboardPage() {
   const [user, setUser] = useState<User | null>(null)
   const [goals, setGoals] = useState<Goal[]>([])
   const [tasks, setTasks] = useState<Task[]>([])
+  const [team, setTeam] = useState<TeamMember[]>([])
+  const [teamTasks, setTeamTasks] = useState<Record<string, TeamTask[]>>({})
   const [isGeneratingTasks, setIsGeneratingTasks] = useState(false)
   const router = useRouter()
 
@@ -28,9 +30,11 @@ export default function DashboardPage() {
     const parsedUser = JSON.parse(userData)
     setUser(parsedUser)
 
-    // Load goals and tasks from localStorage
+    // Load goals, tasks, team, and team tasks from localStorage
     const savedGoals = localStorage.getItem(`goals_${parsedUser.id}`)
     const savedTasks = localStorage.getItem(`tasks_${parsedUser.id}`)
+    const savedTeam = localStorage.getItem(`team_${parsedUser.id}`)
+    const savedTeamTasks = localStorage.getItem(`employeeTasks_${parsedUser.id}`)
 
     if (savedGoals) {
       setGoals(JSON.parse(savedGoals))
@@ -42,6 +46,12 @@ export default function DashboardPage() {
         createdAt: new Date(task.createdAt)
       }))
       setTasks(parsedTasks)
+    }
+    if (savedTeam) {
+      setTeam(JSON.parse(savedTeam))
+    }
+    if (savedTeamTasks) {
+      setTeamTasks(JSON.parse(savedTeamTasks))
     }
   }, [router])
 
@@ -66,52 +76,125 @@ export default function DashboardPage() {
 
     setIsGeneratingTasks(true)
 
-    // Simulate AI task generation with realistic delay
-    setTimeout(() => {
-      const newTasks: Task[] = [
+    try {
+      // Generate CEO tasks
+      const ceoResponse = await fetch('/api/tasks/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          goals,
+          previousTasks: tasks,
+          taskType: 'individual'
+        })
+      })
+
+      const ceoData = await ceoResponse.json()
+      
+      // Transform API response to Task objects
+      const newTasks: Task[] = ceoData.tasks.map((task: Omit<Task, 'id' | 'userId' | 'createdAt'>, index: number) => ({
+        id: (Date.now() + index).toString(),
+        userId: user.id,
+        ...task,
+        dueDate: new Date(task.dueDate),
+        createdAt: new Date()
+      }))
+
+      // Generate team tasks if team exists
+      let newTeamTasks: Record<string, TeamTask[]> = {}
+      if (team.length > 0) {
+        try {
+          const teamResponse = await fetch('/api/tasks/generate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              goals,
+              teamMembers: team,
+              taskType: 'team'
+            })
+          })
+
+          const teamData = await teamResponse.json()
+          newTeamTasks = teamData.teamTasks || {}
+        } catch (error) {
+          console.error('Failed to generate team tasks:', error)
+          // Fallback to local generation
+          team.forEach((member, index) => {
+            const memberKey = `${member.name} - ${member.role}`
+            newTeamTasks[memberKey] = generateTasksForRole(member.role, index)
+          })
+        }
+      }
+
+      // Update state
+      const updatedTasks = [...tasks, ...newTasks]
+      setTasks(updatedTasks)
+      localStorage.setItem(`tasks_${user.id}`, JSON.stringify(updatedTasks))
+      
+      if (Object.keys(newTeamTasks).length > 0) {
+        setTeamTasks(newTeamTasks)
+        localStorage.setItem(`employeeTasks_${user.id}`, JSON.stringify(newTeamTasks))
+      }
+      
+    } catch (error) {
+      console.error('Failed to generate tasks:', error)
+      
+      // Fallback to mock data
+      const fallbackTasks: Task[] = [
         {
           id: Date.now().toString(),
           userId: user.id,
-          title: "Review Q4 sales pipeline and identify top 5 leads",
-          description: "Analyze current pipeline, prioritize high-value prospects, and create follow-up plan for this week.",
-          explanation: "Based on your revenue growth goal, focusing on pipeline acceleration is critical. Sales data shows that concentrated follow-up efforts increase close rates by 35%.",
+          title: "Review quarterly objectives and key results",
+          description: "Assess progress on current OKRs and identify areas needing attention.",
+          explanation: "Regular OKR reviews ensure strategic alignment and help identify course corrections early.",
           priority: 'high' as const,
-          completed: false,
-          dueDate: new Date(),
-          createdAt: new Date(),
-          relatedGoalIds: goals.filter(g => g.title.toLowerCase().includes('revenue') || g.title.toLowerCase().includes('sales')).map(g => g.id)
-        },
-        {
-          id: (Date.now() + 1).toString(),
-          userId: user.id,
-          title: "Conduct customer retention analysis",
-          description: "Review churn data from last month, identify patterns, and create action plan for at-risk customers.",
-          explanation: "Your retention goals align with industry best practices showing that reducing churn by 5% can increase profitability by 25-95%. Early intervention is key.",
-          priority: 'high' as const,
-          completed: false,
-          dueDate: new Date(),
-          createdAt: new Date(),
-          relatedGoalIds: goals.filter(g => g.title.toLowerCase().includes('retention')).map(g => g.id)
-        },
-        {
-          id: (Date.now() + 2).toString(),
-          userId: user.id,
-          title: "Schedule team 1:1s for goal alignment",
-          description: "Book individual meetings with each team member to discuss quarterly objectives and address any blockers.",
-          explanation: "Strategic planning research shows teams with clear goal alignment achieve 2.5x better performance. This directly supports your operational efficiency goals.",
-          priority: 'medium' as const,
           completed: false,
           dueDate: new Date(),
           createdAt: new Date(),
           relatedGoalIds: goals.map(g => g.id)
         }
       ]
-
-      const updatedTasks = [...tasks, ...newTasks]
+      
+      const updatedTasks = [...tasks, ...fallbackTasks]
       setTasks(updatedTasks)
       localStorage.setItem(`tasks_${user.id}`, JSON.stringify(updatedTasks))
-      setIsGeneratingTasks(false)
-    }, 2000)
+    }
+
+    setIsGeneratingTasks(false)
+  }
+
+  const generateTasksForRole = (role: string, index: number): TeamTask[] => {
+    const roleTasks: Record<string, TeamTask[]> = {
+      'Marketing': [
+        { id: `marketing-${index}-1`, title: "Plan Instagram content for the week", reason: "Increase brand visibility and engagement", priority: 'high' as const, completed: false },
+        { id: `marketing-${index}-2`, title: "Draft monthly email newsletter", reason: "Improve customer retention through communication", priority: 'medium' as const, completed: false },
+        { id: `marketing-${index}-3`, title: "Analyze social media performance metrics", reason: "Optimize content strategy based on data", priority: 'low' as const, completed: false }
+      ],
+      'Sales': [
+        { id: `sales-${index}-1`, title: "Follow up with warm leads from last week", reason: "Convert prospects into paying customers", priority: 'high' as const, completed: false },
+        { id: `sales-${index}-2`, title: "Update CRM with recent customer interactions", reason: "Maintain accurate sales pipeline data", priority: 'medium' as const, completed: false },
+        { id: `sales-${index}-3`, title: "Schedule demo calls for qualified prospects", reason: "Move opportunities through the sales funnel", priority: 'high' as const, completed: false }
+      ],
+      'Product': [
+        { id: `product-${index}-1`, title: "Review user feedback from latest feature release", reason: "Identify improvement opportunities", priority: 'high' as const, completed: false },
+        { id: `product-${index}-2`, title: "Update product roadmap based on customer requests", reason: "Align development with market needs", priority: 'medium' as const, completed: false },
+        { id: `product-${index}-3`, title: "Conduct competitive analysis", reason: "Stay ahead of market trends", priority: 'low' as const, completed: false }
+      ],
+      'Design': [
+        { id: `design-${index}-1`, title: "Create wireframes for mobile app redesign", reason: "Improve user experience and engagement", priority: 'high' as const, completed: false },
+        { id: `design-${index}-2`, title: "Update brand guidelines documentation", reason: "Ensure consistent visual identity", priority: 'medium' as const, completed: false },
+        { id: `design-${index}-3`, title: "Design new landing page for campaign", reason: "Support marketing conversion goals", priority: 'high' as const, completed: false }
+      ],
+      'Ops': [
+        { id: `ops-${index}-1`, title: "Review and optimize current workflows", reason: "Increase operational efficiency", priority: 'high' as const, completed: false },
+        { id: `ops-${index}-2`, title: "Analyze team productivity metrics", reason: "Identify bottlenecks and improvements", priority: 'medium' as const, completed: false },
+        { id: `ops-${index}-3`, title: "Update company policies and procedures", reason: "Ensure compliance and clarity", priority: 'low' as const, completed: false }
+      ]
+    }
+
+    return roleTasks[role] || [
+      { id: `custom-${index}-1`, title: "Review weekly objectives", reason: "Stay aligned with team goals", priority: 'medium' as const, completed: false },
+      { id: `custom-${index}-2`, title: "Complete assigned project tasks", reason: "Meet project deadlines", priority: 'high' as const, completed: false }
+    ]
   }
 
   const handleToggleTaskComplete = (taskId: string) => {
@@ -140,7 +223,6 @@ export default function DashboardPage() {
   })
 
   const completedTasks = todaysTasks.filter(task => task.completed)
-  const pendingTasks = todaysTasks.filter(task => !task.completed)
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -149,9 +231,7 @@ export default function DashboardPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-4">
-              <h1 className="text-2xl font-bold text-gray-900">Ventry</h1>
-              <div className="hidden sm:block text-gray-500">|</div>
-              <div className="hidden sm:block">
+              <div>
                 <p className="text-sm text-gray-500">Welcome back, {user.name}</p>
               </div>
             </div>
@@ -199,101 +279,160 @@ export default function DashboardPage() {
               {todaysTasks.length === 0 ? (
                 <Card className="text-center py-12">
                   <CardContent>
-                    <Sparkles className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                    <h3 className="text-lg font-medium text-gray-900 mb-2">No tasks yet</h3>
-                    <p className="text-gray-500 mb-4">
+                    <Brain className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                    <h3 className="text-lg font-medium text-gray-900 mb-2">No tasks generated yet</h3>
+                    <p className="text-gray-500 mb-6">
                       {goals.length === 0 
                         ? "Add some goals first, then generate your daily tasks"
-                        : "Click &apos;Generate Tasks&apos; to get your AI-powered daily priorities"
+                        : "Click 'Generate Tasks' to get your AI-powered daily focus"
                       }
                     </p>
+                    {goals.length > 0 && (
+                      <Button 
+                        onClick={generateDailyTasks}
+                        disabled={isGeneratingTasks}
+                        className="flex items-center space-x-2 mx-auto"
+                      >
+                        <Sparkles className="h-4 w-4" />
+                        <span>{isGeneratingTasks ? 'Generating...' : 'Generate Tasks'}</span>
+                      </Button>
+                    )}
                   </CardContent>
                 </Card>
               ) : (
                 <div className="space-y-4">
-                  {pendingTasks.map(task => (
-                    <TaskCard
-                      key={task.id}
-                      task={task}
-                      onToggleComplete={handleToggleTaskComplete}
+                  {todaysTasks.map((task) => (
+                    <TaskCard 
+                      key={task.id} 
+                      task={task} 
+                      onToggleComplete={() => handleToggleTaskComplete(task.id)}
                     />
                   ))}
-                  
-                  {completedTasks.length > 0 && (
-                    <div className="mt-8">
-                      <h4 className="text-md font-medium text-gray-700 mb-3">Completed Today</h4>
-                      <div className="space-y-3">
-                        {completedTasks.map(task => (
-                          <TaskCard
-                            key={task.id}
-                            task={task}
-                            onToggleComplete={handleToggleTaskComplete}
-                          />
-                        ))}
-                      </div>
-                    </div>
-                  )}
                 </div>
               )}
             </div>
+
+            {/* Team Tasks Section */}
+            {team.length > 0 && Object.keys(teamTasks).length > 0 && (
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-xl font-semibold text-gray-900 flex items-center">
+                    <Users className="h-5 w-5 text-green-600 mr-2" />
+                    Team Tasks
+                  </h3>
+                </div>
+                <div className="grid gap-6">
+                  {Object.entries(teamTasks).map(([memberKey, tasks]) => {
+                    const [name, role] = memberKey.split(' - ')
+                    return (
+                      <Card key={memberKey}>
+                        <CardHeader>
+                          <CardTitle className="flex items-center text-lg">
+                            <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mr-3">
+                              <span className="text-green-600 text-sm font-medium">
+                                {name.charAt(0)}
+                              </span>
+                            </div>
+                            <div>
+                              <div className="text-gray-900">{name}</div>
+                              <div className="text-sm text-gray-500 font-normal">{role}</div>
+                            </div>
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <div className="space-y-3">
+                            {tasks.map((task) => (
+                              <div key={task.id} className="border rounded-lg p-3 bg-gray-50">
+                                <div className="flex items-start justify-between">
+                                  <div className="flex-1">
+                                    <h4 className="font-medium text-gray-900">{task.title}</h4>
+                                    <p className="text-sm text-gray-600 mt-1">{task.reason}</p>
+                                  </div>
+                                  <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ml-3 ${
+                                    task.priority === 'high' ? 'bg-red-100 text-red-800' :
+                                    task.priority === 'medium' ? 'bg-yellow-100 text-yellow-800' :
+                                    'bg-gray-100 text-gray-800'
+                                  }`}>
+                                    {task.priority}
+                                  </span>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </CardContent>
+                      </Card>
+                    )
+                  })}
+                </div>
+              </div>
+            )}
           </div>
 
-          {/* Sidebar */}
+          {/* Goals Sidebar */}
           <div className="space-y-6">
-            {/* Goals Section */}
-            <div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
-                <Target className="h-5 w-5 text-green-600 mr-2" />
-                Your Goals
-              </h3>
-              
-              <div className="space-y-4">
-                {goals.map(goal => (
-                  <Card key={goal.id}>
-                    <CardContent className="p-4">
-                      <div className="flex items-start justify-between mb-2">
-                        <h4 className="font-medium text-gray-900">{goal.title}</h4>
-                        <span className={`px-2 py-1 text-xs rounded-full ${
-                          goal.priority === 'high' ? 'bg-red-100 text-red-800' :
-                          goal.priority === 'medium' ? 'bg-yellow-100 text-yellow-800' :
-                          'bg-green-100 text-green-800'
-                        }`}>
-                          {goal.priority}
-                        </span>
-                      </div>
-                      <p className="text-sm text-gray-600 mb-2">{goal.description}</p>
-                      <div className="text-xs text-gray-500 capitalize">{goal.timeframe}</div>
-                    </CardContent>
-                  </Card>
-                ))}
-                
-                <AddGoalForm onAddGoal={handleAddGoal} />
-              </div>
-            </div>
-
-            {/* Stats Card */}
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg">Progress Overview</CardTitle>
+                <CardTitle className="flex items-center">
+                  <Target className="h-5 w-5 text-blue-600 mr-2" />
+                  Your Goals
+                </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="space-y-3">
-                  <div className="flex justify-between">
+                <div className="space-y-4">
+                  {goals.length === 0 ? (
+                    <p className="text-gray-500 text-sm">No goals set yet. Add your first goal to get started.</p>
+                  ) : (
+                    goals.map((goal) => (
+                      <div key={goal.id} className="border rounded-lg p-3 bg-gray-50">
+                        <h4 className="font-medium text-gray-900">{goal.title}</h4>
+                        <p className="text-sm text-gray-600 mt-1">{goal.description}</p>
+                        <div className="flex items-center mt-2 space-x-2">
+                          <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
+                            {goal.timeframe}
+                          </span>
+                          <span className={`text-xs px-2 py-1 rounded ${
+                            goal.priority === 'high' ? 'bg-red-100 text-red-800' :
+                            goal.priority === 'medium' ? 'bg-yellow-100 text-yellow-800' :
+                            'bg-gray-100 text-gray-800'
+                          }`}>
+                            {goal.priority} priority
+                          </span>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+
+            <AddGoalForm onAddGoal={handleAddGoal} />
+
+            {/* Progress Overview */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Progress Overview</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-600">Today&apos;s Tasks</span>
+                    <span className="font-medium">{completedTasks.length}/{todaysTasks.length}</span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div 
+                      className="bg-blue-600 h-2 rounded-full transition-all duration-300" 
+                      style={{ 
+                        width: todaysTasks.length > 0 ? `${(completedTasks.length / todaysTasks.length) * 100}%` : '0%' 
+                      }}
+                    ></div>
+                  </div>
+                  <div className="flex justify-between items-center">
                     <span className="text-sm text-gray-600">Active Goals</span>
                     <span className="font-medium">{goals.length}</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-sm text-gray-600">Tasks Completed Today</span>
-                    <span className="font-medium">{completedTasks.length}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-sm text-gray-600">Completion Rate</span>
-                    <span className="font-medium">
-                      {todaysTasks.length > 0 
-                        ? Math.round((completedTasks.length / todaysTasks.length) * 100)
-                        : 0
-                      }%
-                    </span>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-600">Team Members</span>
+                    <span className="font-medium">{team.length}</span>
                   </div>
                 </div>
               </CardContent>
@@ -303,4 +442,4 @@ export default function DashboardPage() {
       </div>
     </div>
   )
-}
+} 
