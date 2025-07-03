@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { TaskCard } from '@/components/dashboard/TaskCard'
 import AddGoalForm from '@/components/dashboard/AddGoalForm'
-import { Sparkles, LogOut, Calendar, Target, Brain, Users, TrendingUp, Plus, AlertCircle } from 'lucide-react'
+import { Sparkles, LogOut, Calendar, Target, Brain, TrendingUp, Plus, AlertCircle } from 'lucide-react'
 import { formatDate } from '@/lib/utils'
 import { knowledgeBase } from '@/data/knowledge-base'
 import { KnowledgeBase } from '@/types'
@@ -17,7 +17,7 @@ export default function DashboardPage() {
   const [goals, setGoals] = useState<Goal[]>([])
   const [tasks, setTasks] = useState<Task[]>([])
   const [team, setTeam] = useState<TeamMember[]>([])
-  const [teamTasks, setTeamTasks] = useState<Record<string, TeamTask[]>>({})
+  const [, setTeamTasks] = useState<Record<string, TeamTask[]>>({})
   const [isGeneratingTasks, setIsGeneratingTasks] = useState(false)
   const [showAddGoal, setShowAddGoal] = useState(false)
   const [taskError, setTaskError] = useState<string | null>(null)

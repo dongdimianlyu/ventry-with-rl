@@ -93,7 +93,7 @@ export default function TeamPage() {
         try {
           const errorData = JSON.parse(errorText);
           throw new Error(errorData.details || errorData.error || 'Failed to generate team tasks');
-        } catch (e) {
+        } catch {
           console.error("Non-JSON error response:", errorText);
           throw new Error('Received an invalid response from the server when generating team tasks.');
         }

@@ -115,7 +115,7 @@ export default function AnalyticsPage() {
           try {
             const errorData = JSON.parse(errorText);
             throw new Error(errorData.details || errorData.error || 'Failed to fetch analytics');
-          } catch(e) {
+          } catch {
              console.error("Non-JSON error response:", errorText);
              throw new Error('Received an invalid response from the server.');
           }

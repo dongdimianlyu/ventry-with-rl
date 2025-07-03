@@ -333,7 +333,7 @@ Ensure balanced workload and create synergies between team members' tasks.`
           estimatedHours?: number;
           collaborationNeeded?: string;
           successMetrics?: string;
-        }, index: number) => {
+        }, taskIndex: number) => {
           // Set all team tasks for today so they appear immediately in the dashboard
           // For a daily task dashboard, tasks should be due today for immediate action
           const dueDate = new Date()
@@ -341,7 +341,7 @@ Ensure balanced workload and create synergies between team members' tasks.`
           dueDate.setHours(dueDate.getHours() + Math.floor(Math.random() * 6) + 1)
           
           return {
-            id: `ai-${memberKey.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase()}-${index}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+            id: `ai-${memberKey.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase()}-${taskIndex}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
             title: task.title,
             description: task.description || task.title,
             reason: task.reason,

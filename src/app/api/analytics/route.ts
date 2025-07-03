@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { Task, Goal, TeamTask } from '@/types'
+import { Task, Goal } from '@/types'
 
 // A simplified version of the AnalyticsData type expected by the frontend
 interface AnalyticsData {
@@ -57,10 +57,10 @@ export async function POST(request: NextRequest) {
     let teamMetrics;
     if (teamTasks && Array.isArray(teamTasks) && teamTasks.length > 0) {
         const totalTeamTasks = teamTasks.length;
-        const completedTeamTasks = teamTasks.filter((t: any) => t.completed).length;
+        const completedTeamTasks = teamTasks.filter((t: Task) => t.completed).length;
         const collaboration = totalTeamTasks > 0 ? Math.round((completedTeamTasks / totalTeamTasks) * 100) : 0;
         
-        const taskDistribution = teamTasks.reduce((acc: Record<string, number>, task: any) => {
+        const taskDistribution = teamTasks.reduce((acc: Record<string, number>, task: Task & { memberRole?: string }) => {
             const role = task.memberRole || 'Unassigned';
             acc[role] = (acc[role] || 0) + 1;
             return acc;
