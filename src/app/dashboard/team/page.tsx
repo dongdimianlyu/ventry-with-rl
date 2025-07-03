@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Card } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { 
   Users, 
@@ -14,16 +14,13 @@ import {
   TrendingUp
 } from 'lucide-react'
 import { TeamMember, Goal, TeamTask } from '@/types'
-
-interface TeamTaskWithMember extends TeamTask {
-  memberName: string
-  memberRole: string
-}
+import { TeamTaskCard } from '@/components/dashboard/TeamTaskCard'
+import { knowledgeBase } from '@/data/knowledge-base'
 
 export default function TeamPage() {
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([])
   const [goals, setGoals] = useState<Goal[]>([])
-  const [teamTasks, setTeamTasks] = useState<TeamTaskWithMember[]>([])
+  const [teamTasks, setTeamTasks] = useState<Record<string, TeamTask[]>>({})
   const [showAddMember, setShowAddMember] = useState(false)
   const [generatingTasks, setGeneratingTasks] = useState(false)
   const [taskError, setTaskError] = useState<string | null>(null)
@@ -34,24 +31,27 @@ export default function TeamPage() {
     customRole: ''
   })
 
-  // Mock user ID - in a real app, this would come from authentication
-  // const userId = 'user-123'
-
+  // Load data from localStorage
   useEffect(() => {
-    // Load team members from localStorage
-    const savedTeamMembers = localStorage.getItem('ventry-team-members')
+    const userData = localStorage.getItem('user')
+    if (!userData) return
+
+    const user = JSON.parse(userData)
+    
+    // Load team members
+    const savedTeamMembers = localStorage.getItem(`team_${user.id}`)
     if (savedTeamMembers) {
       setTeamMembers(JSON.parse(savedTeamMembers))
     }
 
-    // Load goals from localStorage
-    const savedGoals = localStorage.getItem('ventry-goals')
+    // Load goals
+    const savedGoals = localStorage.getItem(`goals_${user.id}`)
     if (savedGoals) {
       setGoals(JSON.parse(savedGoals))
     }
 
-    // Load team tasks from localStorage
-    const savedTeamTasks = localStorage.getItem('ventry-team-tasks')
+    // Load team tasks
+    const savedTeamTasks = localStorage.getItem(`employeeTasks_${user.id}`)
     if (savedTeamTasks) {
       setTeamTasks(JSON.parse(savedTeamTasks))
     }
@@ -72,14 +72,19 @@ export default function TeamPage() {
     setTaskError(null)
 
     try {
-      const response = await fetch('/api/tasks/team', {
+      // Use unified API endpoint
+      const response = await fetch('/api/tasks/generate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          goals,
+          previousTasks: [],
+          knowledgeBase,
+          timeframe: 'today',
           teamMembers,
-          goals
+          generateForTeam: true
         })
       })
 
@@ -97,28 +102,12 @@ export default function TeamPage() {
       const data = await response.json()
       
       if (data.teamTasks) {
-        // Transform the nested task structure to flat array with member info
-        const flatTasks: TeamTaskWithMember[] = []
-        
-        Object.entries(data.teamTasks).forEach(([memberKey, tasks]) => {
-          const member = teamMembers.find(m => memberKey.includes(m.name))
-          if (member && Array.isArray(tasks)) {
-            (tasks as TeamTask[]).forEach((task: TeamTask, index: number) => {
-              flatTasks.push({
-                ...task,
-                id: `team-task-${Date.now()}-${index}`,
-                assignedTo: member.id,
-                memberName: member.name,
-                memberRole: member.role === 'Custom' ? member.customRole || 'Custom' : member.role,
-                dueDate: new Date(Date.now() + 24 * 60 * 60 * 1000), // Tomorrow
-                completed: false
-              })
-            })
-          }
-        })
-
-        setTeamTasks(flatTasks)
-        localStorage.setItem('ventry-team-tasks', JSON.stringify(flatTasks))
+        setTeamTasks(data.teamTasks)
+        const userData = localStorage.getItem('user')
+        if (userData) {
+          const user = JSON.parse(userData)
+          localStorage.setItem(`employeeTasks_${user.id}`, JSON.stringify(data.teamTasks))
+        }
       } else {
         throw new Error('Invalid response format')
       }
@@ -152,7 +141,12 @@ export default function TeamPage() {
 
     const updatedMembers = [...teamMembers, member]
     setTeamMembers(updatedMembers)
-    localStorage.setItem('ventry-team-members', JSON.stringify(updatedMembers))
+    
+    const userData = localStorage.getItem('user')
+    if (userData) {
+      const user = JSON.parse(userData)
+      localStorage.setItem(`team_${user.id}`, JSON.stringify(updatedMembers))
+    }
 
     // Reset form
     setNewMember({
@@ -164,39 +158,64 @@ export default function TeamPage() {
   }
 
   const removeTeamMember = (memberId: string) => {
+    const memberToRemove = teamMembers.find(m => m.id === memberId)
+    if (!memberToRemove) return
+
     const updatedMembers = teamMembers.filter(member => member.id !== memberId)
     setTeamMembers(updatedMembers)
-    localStorage.setItem('ventry-team-members', JSON.stringify(updatedMembers))
+    
+    const userData = localStorage.getItem('user')
+    if (userData) {
+      const user = JSON.parse(userData)
+      localStorage.setItem(`team_${user.id}`, JSON.stringify(updatedMembers))
+    }
 
     // Remove tasks assigned to this member
-    const updatedTasks = teamTasks.filter(task => task.assignedTo !== memberId)
+    const memberKey = `${memberToRemove.name} - ${memberToRemove.role === 'Custom' ? memberToRemove.customRole : memberToRemove.role}`
+    const updatedTasks = { ...teamTasks }
+    delete updatedTasks[memberKey]
     setTeamTasks(updatedTasks)
-    localStorage.setItem('ventry-team-tasks', JSON.stringify(updatedTasks))
+    
+    if (userData) {
+      const user = JSON.parse(userData)
+      localStorage.setItem(`employeeTasks_${user.id}`, JSON.stringify(updatedTasks))
+    }
   }
 
   const toggleTaskCompletion = (taskId: string) => {
-    const updatedTasks = teamTasks.map(task =>
-      task.id === taskId ? { ...task, completed: !task.completed } : task
-    )
+    const updatedTasks = { ...teamTasks }
+    Object.keys(updatedTasks).forEach(memberKey => {
+      updatedTasks[memberKey] = updatedTasks[memberKey].map(task =>
+        task.id === taskId ? { ...task, completed: !task.completed } : task
+      )
+    })
     setTeamTasks(updatedTasks)
-    localStorage.setItem('ventry-team-tasks', JSON.stringify(updatedTasks))
+    
+    const userData = localStorage.getItem('user')
+    if (userData) {
+      const user = JSON.parse(userData)
+      localStorage.setItem(`employeeTasks_${user.id}`, JSON.stringify(updatedTasks))
+    }
   }
 
-  const completedTasks = teamTasks.filter(task => task.completed)
-  const pendingTasks = teamTasks.filter(task => !task.completed)
+  // Calculate stats
+  const allTasks = Object.values(teamTasks).flat()
+  const completedTasks = allTasks.filter(task => task.completed)
+  const pendingTasks = allTasks.filter(task => !task.completed)
 
   return (
     <div className="p-6 space-y-6">
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Team Management</h1>
-          <p className="mt-2 text-gray-600">Manage your team and generate AI-powered collaborative tasks</p>
+          <h1 className="text-3xl font-bold text-gray-900">Team Dashboard</h1>
+          <p className="mt-2 text-gray-600">Manage your team and track collaborative tasks</p>
         </div>
         <div className="flex gap-3">
           <Button
             onClick={() => setShowAddMember(true)}
             className="flex items-center gap-2"
+            variant="outline"
           >
             <UserPlus className="h-4 w-4" />
             Add Member
@@ -204,11 +223,10 @@ export default function TeamPage() {
           <Button
             onClick={generateTeamTasks}
             disabled={generatingTasks || teamMembers.length === 0 || goals.length === 0}
-            className="flex items-center gap-2"
-            variant="outline"
+            className="brand-gradient text-white hover:opacity-90 flex items-center gap-2"
           >
             <Brain className="h-4 w-4" />
-            {generatingTasks ? 'Generating...' : 'Generate Team Tasks'}
+            {generatingTasks ? 'Generating...' : 'Generate Tasks'}
           </Button>
         </div>
       </div>
@@ -228,177 +246,145 @@ export default function TeamPage() {
 
       {/* Team Stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <Card className="p-6">
-          <div className="flex items-center">
-            <div className="flex-shrink-0">
-              <Users className="h-8 w-8 text-blue-600" />
+        <Card className="refined-card">
+          <CardContent className="p-6">
+            <div className="flex items-center">
+              <div className="flex-shrink-0">
+                <Users className="h-8 w-8 text-blue-600" />
+              </div>
+              <div className="ml-4">
+                <p className="text-sm font-medium text-gray-500">Team Members</p>
+                <p className="text-2xl font-semibold text-gray-900">{teamMembers.length}</p>
+              </div>
             </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-500">Team Members</p>
-              <p className="text-2xl font-semibold text-gray-900">{teamMembers.length}</p>
-            </div>
-          </div>
+          </CardContent>
         </Card>
 
-        <Card className="p-6">
-          <div className="flex items-center">
-            <div className="flex-shrink-0">
-              <Target className="h-8 w-8 text-green-600" />
+        <Card className="refined-card">
+          <CardContent className="p-6">
+            <div className="flex items-center">
+              <div className="flex-shrink-0">
+                <Target className="h-8 w-8 text-green-600" />
+              </div>
+              <div className="ml-4">
+                <p className="text-sm font-medium text-gray-500">Total Tasks</p>
+                <p className="text-2xl font-semibold text-gray-900">{allTasks.length}</p>
+              </div>
             </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-500">Total Tasks</p>
-              <p className="text-2xl font-semibold text-gray-900">{teamTasks.length}</p>
-            </div>
-          </div>
+          </CardContent>
         </Card>
 
-        <Card className="p-6">
-          <div className="flex items-center">
-            <div className="flex-shrink-0">
-              <Clock className="h-8 w-8 text-yellow-600" />
+        <Card className="refined-card">
+          <CardContent className="p-6">
+            <div className="flex items-center">
+              <div className="flex-shrink-0">
+                <Clock className="h-8 w-8 text-yellow-600" />
+              </div>
+              <div className="ml-4">
+                <p className="text-sm font-medium text-gray-500">Pending Tasks</p>
+                <p className="text-2xl font-semibold text-gray-900">{pendingTasks.length}</p>
+              </div>
             </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-500">Pending Tasks</p>
-              <p className="text-2xl font-semibold text-gray-900">{pendingTasks.length}</p>
-            </div>
-          </div>
+          </CardContent>
         </Card>
 
-        <Card className="p-6">
-          <div className="flex items-center">
-            <div className="flex-shrink-0">
-              <TrendingUp className="h-8 w-8 text-purple-600" />
+        <Card className="refined-card">
+          <CardContent className="p-6">
+            <div className="flex items-center">
+              <div className="flex-shrink-0">
+                <TrendingUp className="h-8 w-8 text-purple-600" />
+              </div>
+              <div className="ml-4">
+                <p className="text-sm font-medium text-gray-500">Completion Rate</p>
+                <p className="text-2xl font-semibold text-gray-900">
+                  {allTasks.length > 0 ? Math.round((completedTasks.length / allTasks.length) * 100) : 0}%
+                </p>
+              </div>
             </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-500">Completion Rate</p>
-              <p className="text-2xl font-semibold text-gray-900">
-                {teamTasks.length > 0 ? Math.round((completedTasks.length / teamTasks.length) * 100) : 0}%
-              </p>
-            </div>
-          </div>
+          </CardContent>
         </Card>
       </div>
 
-      {/* Main Content */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Team Members */}
-        <Card className="p-6">
-          <h2 className="text-xl font-semibold text-gray-900 mb-6">Team Members</h2>
-          
-          {teamMembers.length === 0 ? (
-            <div className="text-center py-12">
-              <Users className="mx-auto h-12 w-12 text-gray-400" />
-              <h3 className="mt-2 text-sm font-medium text-gray-900">No team members yet</h3>
-              <p className="mt-1 text-sm text-gray-500">Start building your team to generate collaborative tasks.</p>
-              <div className="mt-6">
-                <Button onClick={() => setShowAddMember(true)} className="flex items-center gap-2">
-                  <UserPlus className="h-4 w-4" />
-                  Add First Team Member
-                </Button>
-              </div>
+      {/* Monday.com Style Team Layout */}
+      {teamMembers.length === 0 ? (
+        <Card className="refined-card text-center py-16 bg-gradient-to-br from-white to-gray-50">
+          <CardContent>
+            <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+              <Users className="h-8 w-8 text-blue-600" />
             </div>
-          ) : (
-            <div className="space-y-4">
-              {teamMembers.map(member => (
-                <div key={member.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                  <div>
-                    <h3 className="font-medium text-gray-900">{member.name}</h3>
-                    <p className="text-sm text-gray-600">
-                      {member.role === 'Custom' ? member.customRole : member.role}
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm text-gray-500">
-                      {teamTasks.filter(task => task.assignedTo === member.id).length} tasks
-                    </span>
+            <h3 className="text-xl font-semibold text-gray-900 mb-3">No team members yet</h3>
+            <p className="text-gray-600 mb-8 max-w-md mx-auto leading-relaxed">
+              Start building your team to generate collaborative tasks and track progress.
+            </p>
+            <Button onClick={() => setShowAddMember(true)} className="flex items-center gap-2">
+              <UserPlus className="h-4 w-4" />
+              Add First Team Member
+            </Button>
+          </CardContent>
+        </Card>
+      ) : (
+        <div className="space-y-6">
+          {teamMembers.map(member => {
+            const memberKey = `${member.name} - ${member.role === 'Custom' ? member.customRole : member.role}`
+            const memberTasks = teamTasks[memberKey] || []
+            
+            return (
+              <Card key={member.id} className="refined-card bg-gradient-to-br from-white to-gray-50">
+                <CardHeader className="border-b border-gray-100">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-4">
+                      <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
+                        <span className="text-white text-lg font-bold">
+                          {member.name.charAt(0).toUpperCase()}
+                        </span>
+                      </div>
+                      <div>
+                        <CardTitle className="text-xl font-semibold text-gray-900">{member.name}</CardTitle>
+                        <p className="text-sm text-gray-600">{member.role === 'Custom' ? member.customRole : member.role}</p>
+                      </div>
+                      <div className="flex items-center space-x-4 text-sm text-gray-500">
+                        <span>{memberTasks.length} tasks</span>
+                        <span>•</span>
+                        <span>{memberTasks.filter(t => t.completed).length} completed</span>
+                      </div>
+                    </div>
                     <Button
                       onClick={() => removeTeamMember(member.id)}
-                      variant="outline"
+                      variant="ghost"
                       size="sm"
-                      className="text-red-600 hover:text-red-700"
+                      className="text-red-600 hover:text-red-700 hover:bg-red-50"
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>
                   </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </Card>
-
-        {/* Team Tasks */}
-        <Card className="p-6">
-          <h2 className="text-xl font-semibold text-gray-900 mb-6">Team Tasks</h2>
-          
-          {teamTasks.length === 0 ? (
-            <div className="text-center py-12">
-              <Brain className="mx-auto h-12 w-12 text-gray-400" />
-              <h3 className="mt-2 text-sm font-medium text-gray-900">No team tasks yet</h3>
-              <p className="mt-1 text-sm text-gray-500">
-                {teamMembers.length === 0 
-                  ? "Add team members first, then generate collaborative tasks." 
-                  : goals.length === 0
-                  ? "Add goals first, then generate team tasks."
-                  : "Generate AI-powered team tasks to boost collaboration."
-                }
-              </p>
-              <div className="mt-6">
-                {teamMembers.length === 0 ? (
-                  <Button onClick={() => setShowAddMember(true)} className="flex items-center gap-2">
-                    <UserPlus className="h-4 w-4" />
-                    Add Team Members
-                  </Button>
-                ) : (
-                  <Button 
-                    onClick={generateTeamTasks} 
-                    disabled={generatingTasks || goals.length === 0}
-                    className="flex items-center gap-2"
-                  >
-                    <Brain className="h-4 w-4" />
-                    {generatingTasks ? 'Generating...' : 'Generate Team Tasks'}
-                  </Button>
-                )}
-              </div>
-            </div>
-          ) : (
-            <div className="space-y-4">
-              {teamTasks.map(task => (
-                <div key={task.id} className="p-4 border border-gray-200 rounded-lg">
-                  <div className="flex items-start justify-between mb-2">
-                    <div className="flex-1">
-                      <h3 className="font-medium text-gray-900">{task.title}</h3>
-                      <p className="text-sm text-gray-600 mt-1">{task.description}</p>
-                      <div className="flex items-center gap-4 mt-2">
-                        <span className="text-xs text-gray-500">
-                          Assigned to: {task.memberName} ({task.memberRole})
-                        </span>
-                        <span className={`text-xs px-2 py-1 rounded-full ${
-                          task.priority === 'high' ? 'bg-red-100 text-red-700' :
-                          task.priority === 'medium' ? 'bg-yellow-100 text-yellow-700' :
-                          'bg-green-100 text-green-700'
-                        }`}>
-                          {task.priority}
-                        </span>
-                      </div>
+                </CardHeader>
+                
+                <CardContent className="p-6">
+                  {memberTasks.length === 0 ? (
+                    <div className="text-center py-8 text-gray-500">
+                      <Target className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                      <p className="text-sm">No tasks assigned yet</p>
+                      {goals.length > 0 && (
+                        <p className="text-xs mt-1">Generate tasks to assign work to {member.name}</p>
+                      )}
                     </div>
-                    <Button
-                      onClick={() => toggleTaskCompletion(task.id)}
-                      variant={task.completed ? "default" : "outline"}
-                      size="sm"
-                      className={task.completed ? "bg-green-600 hover:bg-green-700" : ""}
-                    >
-                      {task.completed ? 'Completed' : 'Mark Complete'}
-                    </Button>
-                  </div>
-                  {task.reason && (
-                    <p className="text-xs text-gray-500 italic mt-2">{task.reason}</p>
+                  ) : (
+                    <div className="flex space-x-4 overflow-x-auto pb-2">
+                      {memberTasks.map(task => (
+                        <TeamTaskCard
+                          key={task.id}
+                          task={{ ...task, memberName: member.name, memberRole: member.role === 'Custom' ? member.customRole || 'Custom' : member.role }}
+                          onToggleComplete={toggleTaskCompletion}
+                        />
+                      ))}
+                    </div>
                   )}
-                </div>
-              ))}
-            </div>
-          )}
-        </Card>
-      </div>
+                </CardContent>
+              </Card>
+            )
+          })}
+        </div>
+      )}
 
       {/* Add Member Modal */}
       {showAddMember && (

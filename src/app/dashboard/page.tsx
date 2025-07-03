@@ -95,7 +95,9 @@ export default function DashboardPage() {
           goals,
           previousTasks: tasks,
           knowledgeBase: knowledgeBase as KnowledgeBase[],
-          timeframe: 'today'
+          timeframe: 'today',
+          teamMembers: team,
+          generateForTeam: team.length > 0
         })
       })
 
@@ -117,7 +119,7 @@ export default function DashboardPage() {
       if (data.tasks && Array.isArray(data.tasks)) {
         const newTasks = data.tasks.map((task: Omit<Task, 'id' | 'userId' | 'createdAt'>, index: number) => ({
           ...task,
-          id: `task-${Date.now()}-${index}`,
+          id: `task-${Date.now()}-${Math.random().toString(36).substr(2, 9)}-${index}`,
           userId: user.id,
           createdAt: new Date()
         }))
@@ -126,34 +128,10 @@ export default function DashboardPage() {
         setTasks(updatedTasks)
         localStorage.setItem(`tasks_${user.id}`, JSON.stringify(updatedTasks))
         
-        // Generate team tasks if team exists
-        let newTeamTasks: Record<string, TeamTask[]> = {}
-        if (team.length > 0) {
-          try {
-            const teamResponse = await fetch('/api/tasks/generate', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                goals,
-                teamMembers: team,
-                taskType: 'team'
-              })
-            })
-
-            if (teamResponse.ok) {
-              const teamData = await teamResponse.json()
-              newTeamTasks = teamData.teamTasks || {}
-            } else {
-              console.warn('Team task generation failed, continuing with individual tasks only')
-            }
-          } catch (error) {
-            console.warn('Failed to generate team tasks:', error)
-          }
-        }
-        
-        if (Object.keys(newTeamTasks).length > 0) {
-          setTeamTasks(newTeamTasks)
-          localStorage.setItem(`employeeTasks_${user.id}`, JSON.stringify(newTeamTasks))
+        // Generate team tasks if team exists (unified generation)
+        if (data.teamTasks && Object.keys(data.teamTasks).length > 0) {
+          setTeamTasks(data.teamTasks)
+          localStorage.setItem(`employeeTasks_${user.id}`, JSON.stringify(data.teamTasks))
         }
       } else {
         throw new Error('Invalid response format')
@@ -199,8 +177,11 @@ export default function DashboardPage() {
   const todaysTasks = tasks.filter(task => {
     const taskDate = new Date(task.dueDate)
     const today = new Date()
-    return taskDate.toDateString() === today.toDateString()
+    const isToday = taskDate.toDateString() === today.toDateString()
+    return isToday
   })
+  
+
 
   const completedTasks = todaysTasks.filter(task => task.completed)
 
@@ -282,7 +263,7 @@ export default function DashboardPage() {
                   <div className="w-8 h-8 bg-brand-primary rounded-lg flex items-center justify-center mr-3">
                     <Brain className="h-4 w-4 text-white" />
                   </div>
-                  Today&apos;s Priority Tasks
+                  CEO Tasks
                 </h3>
                 <div className="flex items-center space-x-2 text-sm text-gray-500 bg-white rounded-full px-4 py-2 shadow-sm border border-gray-100">
                   <TrendingUp className="h-4 w-4" />
@@ -307,9 +288,9 @@ export default function DashboardPage() {
                       <Button 
                         onClick={generateDailyTasks}
                         disabled={isGeneratingTasks}
-                        className="brand-gradient text-white hover:opacity-90 smooth-transition shadow-sm accent-glow"
+                        className="brand-gradient text-white hover:opacity-90 flex items-center gap-2"
                       >
-                        <Brain className="h-4 w-4 mr-2" />
+                        <Brain className="h-4 w-4" />
                         {isGeneratingTasks ? 'Generating...' : 'Generate Tasks'}
                       </Button>
                     )}
@@ -328,62 +309,7 @@ export default function DashboardPage() {
               )}
             </div>
 
-            {/* Team Tasks Section */}
-            {team.length > 0 && Object.keys(teamTasks).length > 0 && (
-              <div>
-                <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-2xl font-bold text-gray-900 flex items-center">
-                    <div className="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center mr-3">
-                      <Users className="h-4 w-4 text-white" />
-                    </div>
-                    Team Tasks
-                  </h3>
-                </div>
-                <div className="grid gap-6">
-                  {Object.entries(teamTasks).map(([memberKey, tasks]) => {
-                    const [name, role] = memberKey.split(' - ')
-                    return (
-                      <Card key={memberKey} className="refined-card bg-gradient-to-br from-emerald-50 to-green-50 border-emerald-100">
-                        <CardHeader className="pb-4">
-                          <CardTitle className="flex items-center text-lg">
-                            <div className="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center mr-4">
-                              <span className="text-emerald-600 text-sm font-bold">
-                                {name.charAt(0)}
-                              </span>
-                            </div>
-                            <div>
-                              <div className="text-gray-900 font-semibold">{name}</div>
-                              <div className="text-sm text-gray-600 font-normal">{role}</div>
-                            </div>
-                          </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                          <div className="space-y-4">
-                            {tasks.map((task) => (
-                              <div key={task.id} className="border border-white/50 rounded-xl p-4 bg-white/60 backdrop-blur-sm">
-                                <div className="flex items-start justify-between">
-                                  <div className="flex-1">
-                                    <h4 className="font-semibold text-gray-900 mb-2">{task.title}</h4>
-                                    <p className="text-sm text-gray-600 leading-relaxed">{task.reason}</p>
-                                  </div>
-                                  <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ml-4 shrink-0 ${
-                                    task.priority === 'high' ? 'bg-red-100 text-red-700 border border-red-200' :
-                                    task.priority === 'medium' ? 'bg-amber-100 text-amber-700 border border-amber-200' :
-                                    'bg-gray-100 text-gray-700 border border-gray-200'
-                                  }`}>
-                                    {task.priority}
-                                  </span>
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        </CardContent>
-                      </Card>
-                    )
-                  })}
-                </div>
-              </div>
-            )}
+
           </div>
 
           {/* Goals Sidebar */}

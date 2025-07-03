@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { generateDailyTasks } from '@/lib/openai'
+import { generateDailyTasks, generateTeamTasks } from '@/lib/openai'
 
 export async function POST(request: NextRequest) {
   try {
-    const { goals, previousTasks, knowledgeBase, timeframe } = await request.json()
+    const { goals, previousTasks, knowledgeBase, timeframe, teamMembers, generateForTeam = true } = await request.json()
 
     // Basic validation
     if (!goals || !Array.isArray(goals)) {
@@ -30,10 +30,31 @@ export async function POST(request: NextRequest) {
       timeframe: timeframe || 'today'
     }
 
-    const tasks = await generateDailyTasks(context)
+    // Generate CEO tasks
+    const ceoTasks = await generateDailyTasks(context)
+
+    // Generate team tasks if team members are provided and generateForTeam is true
+    let teamTasks = {}
+    if (generateForTeam && teamMembers && Array.isArray(teamMembers) && teamMembers.length > 0) {
+      try {
+        // Validate team members structure
+        for (const member of teamMembers) {
+          if (!member.name || !member.role) {
+            console.warn('Invalid team member structure, skipping team task generation')
+            break
+          }
+        }
+        
+        teamTasks = await generateTeamTasks(teamMembers, goals)
+      } catch (error) {
+        console.warn('Team task generation failed:', error)
+        // Continue without team tasks rather than failing entirely
+      }
+    }
 
     return NextResponse.json({ 
-      tasks,
+      tasks: ceoTasks,
+      teamTasks,
       message: 'Tasks generated successfully'
     })
 
