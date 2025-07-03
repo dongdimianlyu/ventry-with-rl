@@ -284,16 +284,7 @@ export default function DashboardPage() {
                         : "Click 'Generate Tasks' to get your AI-powered daily focus"
                       }
                     </p>
-                    {goals.length > 0 && (
-                      <Button 
-                        onClick={generateDailyTasks}
-                        disabled={isGeneratingTasks}
-                        className="brand-gradient text-white hover:opacity-90 flex items-center gap-2"
-                      >
-                        <Brain className="h-4 w-4" />
-                        {isGeneratingTasks ? 'Generating...' : 'Generate Tasks'}
-                      </Button>
-                    )}
+
                   </CardContent>
                 </Card>
               ) : (

@@ -108,7 +108,32 @@ export default function TeamPage() {
           const user = JSON.parse(userData)
           localStorage.setItem(`employeeTasks_${user.id}`, JSON.stringify(data.teamTasks))
         }
-      } else {
+      }
+      
+      // Also save CEO tasks if they were generated
+      if (data.tasks && Array.isArray(data.tasks)) {
+        const userData = localStorage.getItem('user')
+        if (userData) {
+          const user = JSON.parse(userData)
+          
+          // Load existing CEO tasks and add new ones
+          const existingTasks = localStorage.getItem(`tasks_${user.id}`)
+          const currentTasks = existingTasks ? JSON.parse(existingTasks) : []
+          
+          const newCeoTasks = data.tasks.map((task: any, index: number) => ({
+            ...task,
+            id: `task-${Date.now()}-${Math.random().toString(36).substr(2, 9)}-${index}`,
+            userId: user.id,
+            createdAt: new Date(),
+            dueDate: new Date(task.dueDate) // Ensure dueDate is properly converted
+          }))
+          
+          const updatedTasks = [...currentTasks, ...newCeoTasks]
+          localStorage.setItem(`tasks_${user.id}`, JSON.stringify(updatedTasks))
+        }
+      }
+      
+      if (!data.teamTasks && !data.tasks) {
         throw new Error('Invalid response format')
       }
 
@@ -316,10 +341,7 @@ export default function TeamPage() {
             <p className="text-gray-600 mb-8 max-w-md mx-auto leading-relaxed">
               Start building your team to generate collaborative tasks and track progress.
             </p>
-            <Button onClick={() => setShowAddMember(true)} className="flex items-center gap-2">
-              <UserPlus className="h-4 w-4" />
-              Add First Team Member
-            </Button>
+
           </CardContent>
         </Card>
       ) : (
