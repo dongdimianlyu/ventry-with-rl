@@ -60,8 +60,24 @@ export interface KnowledgeBase {
   id: string
   title: string
   content: string
-  category: 'strategy' | 'operations' | 'growth' | 'retention' | 'sales'
+  category: 'strategy' | 'operations' | 'growth' | 'retention' | 'sales' | 'role-templates' | 'frameworks' | 'planning' | 'workflows' | 'time-estimates' | 'best-practices' | 'operational-context'
   tags: string[]
+}
+
+export interface CompanyProfile {
+  id: string
+  userId: string
+  userRole: 'founder' | 'ceo' | 'coo' | 'manager' | 'lead' | 'other'
+  customRole?: string
+  companySize: number
+  businessDescription: string
+  teamExperience: 'beginner' | 'intermediate' | 'advanced' | 'balanced'
+  primaryFocus: 'growth' | 'operations' | 'product' | 'sales' | 'other'
+  customFocus?: string
+  workingStyle: 'structured' | 'flexible' | 'urgent'
+  weeklyCommitment: number
+  createdAt: Date
+  updatedAt: Date
 }
 
 export interface TaskGenerationContext {
