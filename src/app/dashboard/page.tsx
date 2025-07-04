@@ -121,7 +121,8 @@ export default function DashboardPage() {
           ...task,
           id: `task-${Date.now()}-${Math.random().toString(36).substr(2, 9)}-${index}`,
           userId: user.id,
-          createdAt: new Date()
+          createdAt: new Date(),
+          dueDate: new Date(task.dueDate) // Ensure dueDate is properly converted to Date object
         }))
 
         const updatedTasks = [...tasks, ...newTasks]
@@ -174,16 +175,7 @@ export default function DashboardPage() {
     )
   }
 
-  const todaysTasks = tasks.filter(task => {
-    const taskDate = new Date(task.dueDate)
-    const today = new Date()
-    const isToday = taskDate.toDateString() === today.toDateString()
-    return isToday
-  })
-  
-
-
-  const completedTasks = todaysTasks.filter(task => task.completed)
+  const completedTasks = tasks.filter(task => task.completed)
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-slate-100 polka-background">
@@ -267,11 +259,11 @@ export default function DashboardPage() {
                 </h3>
                 <div className="flex items-center space-x-2 text-sm text-gray-500 bg-white rounded-full px-4 py-2 shadow-sm border border-gray-100">
                   <TrendingUp className="h-4 w-4" />
-                  <span>{completedTasks.length} of {todaysTasks.length} completed</span>
+                  <span>{completedTasks.length} of {tasks.length} completed</span>
                 </div>
               </div>
 
-              {todaysTasks.length === 0 ? (
+              {tasks.length === 0 ? (
                 <Card className="refined-card text-center py-16 bg-gradient-to-br from-white to-gray-50">
                   <CardContent>
                     <div className="w-16 h-16 bg-brand-accent/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
@@ -289,7 +281,7 @@ export default function DashboardPage() {
                 </Card>
               ) : (
                 <div className="space-y-6">
-                  {todaysTasks.map((task) => (
+                  {tasks.map((task) => (
                     <TaskCard 
                       key={task.id} 
                       task={task} 
@@ -367,13 +359,13 @@ export default function DashboardPage() {
                   <div className="space-y-3">
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-gray-600 font-medium">Today&apos;s Tasks</span>
-                      <span className="font-bold text-brand-primary">{completedTasks.length}/{todaysTasks.length}</span>
+                      <span className="font-bold text-brand-primary">{completedTasks.length}/{tasks.length}</span>
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
                       <div 
                         className="brand-gradient h-3 rounded-full smooth-transition shadow-sm" 
                         style={{ 
-                          width: todaysTasks.length > 0 ? `${(completedTasks.length / todaysTasks.length) * 100}%` : '0%' 
+                          width: tasks.length > 0 ? `${(completedTasks.length / tasks.length) * 100}%` : '0%' 
                         }}
                       ></div>
                     </div>
