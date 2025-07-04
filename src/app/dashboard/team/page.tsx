@@ -13,8 +13,10 @@ import {
   Brain,
   TrendingUp
 } from 'lucide-react'
-import { TeamMember, Goal, TeamTask } from '@/types'
+import { TeamMember, Goal, TeamTask, TaskSuggestion, TeamTaskSuggestion, AutoModeSettings } from '@/types'
 import { TeamTaskCard } from '@/components/dashboard/TeamTaskCard'
+import { TaskSuggestionModal } from '@/components/dashboard/TaskSuggestionModal'
+import { AutoModeToggle } from '@/components/ui/AutoModeToggle'
 import { knowledgeBase } from '@/data/knowledge-base'
 
 export default function TeamPage() {
@@ -24,6 +26,17 @@ export default function TeamPage() {
   const [showAddMember, setShowAddMember] = useState(false)
   const [generatingTasks, setGeneratingTasks] = useState(false)
   const [taskError, setTaskError] = useState<string | null>(null)
+  
+  // New states for task suggestion modal
+  const [showTaskSuggestionModal, setShowTaskSuggestionModal] = useState(false)
+  const [taskSuggestions, setTaskSuggestions] = useState<TaskSuggestion[]>([])
+  const [teamTaskSuggestions, setTeamTaskSuggestions] = useState<Record<string, TeamTaskSuggestion[]>>({})
+  const [autoModeSettings, setAutoModeSettings] = useState<AutoModeSettings>({
+    enabled: false,
+    maxTasksPerPerson: 3,
+    prioritizeHighImpact: true,
+    ensureDiversity: true
+  })
   
   const [newMember, setNewMember] = useState({
     name: '',
@@ -57,7 +70,7 @@ export default function TeamPage() {
     }
   }, [])
 
-  const generateTeamTasks = async () => {
+  const generateTaskSuggestions = async () => {
     if (teamMembers.length === 0) {
       setTaskError('Please add team members before generating tasks.')
       return
@@ -70,9 +83,10 @@ export default function TeamPage() {
 
     setGeneratingTasks(true)
     setTaskError(null)
+    setShowTaskSuggestionModal(true)
 
     try {
-      // Use unified API endpoint
+      // Use unified API endpoint for suggestions
       const response = await fetch('/api/tasks/generate', {
         method: 'POST',
         headers: {
@@ -84,7 +98,8 @@ export default function TeamPage() {
           knowledgeBase,
           timeframe: 'today',
           teamMembers,
-          generateForTeam: true
+          generateForTeam: true,
+          suggestionMode: true
         })
       })
 
@@ -92,58 +107,90 @@ export default function TeamPage() {
         const errorText = await response.text();
         try {
           const errorData = JSON.parse(errorText);
-          throw new Error(errorData.details || errorData.error || 'Failed to generate team tasks');
+          throw new Error(errorData.details || errorData.error || 'Failed to generate task suggestions');
         } catch {
           console.error("Non-JSON error response:", errorText);
-          throw new Error('Received an invalid response from the server when generating team tasks.');
+          throw new Error('Received an invalid response from the server when generating task suggestions.');
         }
       }
 
       const data = await response.json()
       
-      if (data.teamTasks) {
-        setTeamTasks(data.teamTasks)
-        const userData = localStorage.getItem('user')
-        if (userData) {
-          const user = JSON.parse(userData)
-          localStorage.setItem(`employeeTasks_${user.id}`, JSON.stringify(data.teamTasks))
+      if (data.ceoSuggestions && Array.isArray(data.ceoSuggestions)) {
+        setTaskSuggestions(data.ceoSuggestions)
+        
+        if (data.teamSuggestions && Object.keys(data.teamSuggestions).length > 0) {
+          setTeamTaskSuggestions(data.teamSuggestions)
         }
-      }
-      
-      // Also save CEO tasks if they were generated
-      if (data.tasks && Array.isArray(data.tasks)) {
-        const userData = localStorage.getItem('user')
-        if (userData) {
-          const user = JSON.parse(userData)
-          
-          // Load existing CEO tasks and add new ones
-          const existingTasks = localStorage.getItem(`tasks_${user.id}`)
-          const currentTasks = existingTasks ? JSON.parse(existingTasks) : []
-          
-          const newCeoTasks = data.tasks.map((task: any, index: number) => ({
-            ...task,
-            id: `task-${Date.now()}-${Math.random().toString(36).substr(2, 9)}-${index}`,
-            userId: user.id,
-            createdAt: new Date(),
-            dueDate: new Date(task.dueDate) // Ensure dueDate is properly converted
-          }))
-          
-          const updatedTasks = [...currentTasks, ...newCeoTasks]
-          localStorage.setItem(`tasks_${user.id}`, JSON.stringify(updatedTasks))
-        }
-      }
-      
-      if (!data.teamTasks && !data.tasks) {
+      } else {
         throw new Error('Invalid response format')
       }
 
     } catch (error: unknown) {
-      console.error('Error generating team tasks:', error)
+      console.error('Error generating task suggestions:', error)
       const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred'
       setTaskError(errorMessage)
+      setShowTaskSuggestionModal(false)
     } finally {
       setGeneratingTasks(false)
     }
+  }
+
+  const handleTaskSelectionConfirm = (selectedCeoTasks: TaskSuggestion[], selectedTeamTasks: Record<string, TeamTaskSuggestion[]>) => {
+    const userData = localStorage.getItem('user')
+    if (!userData) return
+
+    const user = JSON.parse(userData)
+
+    // Convert selected CEO tasks to actual tasks
+    if (selectedCeoTasks.length > 0) {
+      const newCeoTasks = selectedCeoTasks.map((suggestion, index) => ({
+        id: `task-${Date.now()}-${Math.random().toString(36).substr(2, 9)}-${index}`,
+        userId: user.id,
+        title: suggestion.title,
+        description: suggestion.description,
+        explanation: suggestion.explanation,
+        priority: suggestion.priority,
+        completed: false,
+        dueDate: new Date(),
+        createdAt: new Date(),
+        relatedGoalIds: suggestion.relatedGoalIds
+      }))
+
+      // Add CEO tasks to existing tasks
+      const existingTasks = localStorage.getItem(`tasks_${user.id}`)
+      const currentTasks = existingTasks ? JSON.parse(existingTasks) : []
+      const updatedTasks = [...currentTasks, ...newCeoTasks]
+      localStorage.setItem(`tasks_${user.id}`, JSON.stringify(updatedTasks))
+    }
+
+    // Convert selected team tasks to actual team tasks
+    const newTeamTasks: Record<string, TeamTask[]> = {}
+    Object.entries(selectedTeamTasks).forEach(([memberKey, memberTasks]) => {
+      newTeamTasks[memberKey] = memberTasks.map((suggestion, index) => ({
+        id: `team-task-${Date.now()}-${Math.random().toString(36).substr(2, 9)}-${index}`,
+        title: suggestion.title,
+        description: suggestion.description,
+        reason: suggestion.reason,
+        priority: suggestion.priority,
+        completed: false,
+        dueDate: new Date(),
+        assignedTo: suggestion.assignedTo
+      }))
+    })
+
+    // Merge with existing team tasks
+    const existingTeamTasks = localStorage.getItem(`employeeTasks_${user.id}`)
+    const currentTeamTasks = existingTeamTasks ? JSON.parse(existingTeamTasks) : {}
+    const updatedTeamTasks = { ...currentTeamTasks, ...newTeamTasks }
+    
+    setTeamTasks(updatedTeamTasks)
+    localStorage.setItem(`employeeTasks_${user.id}`, JSON.stringify(updatedTeamTasks))
+
+    // Reset modal state
+    setShowTaskSuggestionModal(false)
+    setTaskSuggestions([])
+    setTeamTaskSuggestions({})
   }
 
   const addTeamMember = () => {
@@ -237,6 +284,12 @@ export default function TeamPage() {
           <p className="mt-2 text-gray-600">Manage your team and track collaborative tasks</p>
         </div>
         <div className="flex gap-3">
+          <div className="relative">
+            <AutoModeToggle 
+              onSettingsChange={setAutoModeSettings}
+              className="mr-3"
+            />
+          </div>
           <Button
             onClick={() => setShowAddMember(true)}
             className="flex items-center gap-2"
@@ -246,7 +299,7 @@ export default function TeamPage() {
             Add Member
           </Button>
           <Button
-            onClick={generateTeamTasks}
+            onClick={generateTaskSuggestions}
             disabled={generatingTasks || teamMembers.length === 0 || goals.length === 0}
             className="brand-gradient text-white hover:opacity-90 flex items-center gap-2"
           >
@@ -482,6 +535,18 @@ export default function TeamPage() {
           </div>
         </div>
       )}
+
+      {/* Task Suggestion Modal */}
+      <TaskSuggestionModal
+        isOpen={showTaskSuggestionModal}
+        onClose={() => setShowTaskSuggestionModal(false)}
+        ceoSuggestions={taskSuggestions}
+        teamSuggestions={teamTaskSuggestions}
+        teamMembers={teamMembers}
+        autoModeSettings={autoModeSettings}
+        onConfirm={handleTaskSelectionConfirm}
+        isLoading={generatingTasks}
+      />
     </div>
   )
 } 

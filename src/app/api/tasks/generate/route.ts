@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { generateDailyTasks, generateTeamTasks } from '@/lib/openai'
+import { generateDailyTasks, generateTeamTasks, generateTaskSuggestions, generateTeamTaskSuggestions } from '@/lib/openai'
 
 export async function POST(request: NextRequest) {
   try {
-    const { goals, previousTasks, knowledgeBase, timeframe, teamMembers, generateForTeam = true } = await request.json()
+    const { goals, previousTasks, knowledgeBase, timeframe, teamMembers, generateForTeam = true, suggestionMode = false } = await request.json()
 
     // Basic validation
     if (!goals || !Array.isArray(goals)) {
@@ -30,33 +30,63 @@ export async function POST(request: NextRequest) {
       timeframe: timeframe || 'today'
     }
 
-    // Generate CEO tasks
-    const ceoTasks = await generateDailyTasks(context)
+    if (suggestionMode) {
+      // Generate task suggestions for modal selection
+      const ceoSuggestions = await generateTaskSuggestions(context)
 
-    // Generate team tasks if team members are provided and generateForTeam is true
-    let teamTasks = {}
-    if (generateForTeam && teamMembers && Array.isArray(teamMembers) && teamMembers.length > 0) {
-      try {
-        // Validate team members structure
-        for (const member of teamMembers) {
-          if (!member.name || !member.role) {
-            console.warn('Invalid team member structure, skipping team task generation')
-            break
+      // Generate team task suggestions if team members are provided and generateForTeam is true
+      let teamSuggestions = {}
+      if (generateForTeam && teamMembers && Array.isArray(teamMembers) && teamMembers.length > 0) {
+        try {
+          // Validate team members structure
+          for (const member of teamMembers) {
+            if (!member.name || !member.role) {
+              console.warn('Invalid team member structure, skipping team task suggestion generation')
+              break
+            }
           }
+          
+          teamSuggestions = await generateTeamTaskSuggestions(teamMembers, goals)
+        } catch (error) {
+          console.warn('Team task suggestion generation failed:', error)
+          // Continue without team suggestions rather than failing entirely
         }
-        
-        teamTasks = await generateTeamTasks(teamMembers, goals)
-      } catch (error) {
-        console.warn('Team task generation failed:', error)
-        // Continue without team tasks rather than failing entirely
       }
-    }
 
-    return NextResponse.json({ 
-      tasks: ceoTasks,
-      teamTasks,
-      message: 'Tasks generated successfully'
-    })
+      return NextResponse.json({ 
+        ceoSuggestions,
+        teamSuggestions,
+        message: 'Task suggestions generated successfully'
+      })
+    } else {
+      // Generate actual tasks (original behavior)
+      const ceoTasks = await generateDailyTasks(context)
+
+      // Generate team tasks if team members are provided and generateForTeam is true
+      let teamTasks = {}
+      if (generateForTeam && teamMembers && Array.isArray(teamMembers) && teamMembers.length > 0) {
+        try {
+          // Validate team members structure
+          for (const member of teamMembers) {
+            if (!member.name || !member.role) {
+              console.warn('Invalid team member structure, skipping team task generation')
+              break
+            }
+          }
+          
+          teamTasks = await generateTeamTasks(teamMembers, goals)
+        } catch (error) {
+          console.warn('Team task generation failed:', error)
+          // Continue without team tasks rather than failing entirely
+        }
+      }
+
+      return NextResponse.json({ 
+        tasks: ceoTasks,
+        teamTasks,
+        message: 'Tasks generated successfully'
+      })
+    }
 
   } catch (error: unknown) {
     console.error('Error in task generation:', error)

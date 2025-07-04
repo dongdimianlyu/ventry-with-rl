@@ -85,4 +85,50 @@ export interface TaskGenerationContext {
   previousTasks: Task[]
   knowledgeBase: KnowledgeBase[]
   timeframe: 'today' | 'week'
+}
+
+// New types for task suggestion system
+export interface TaskSuggestion {
+  id: string
+  title: string
+  description: string
+  explanation: string
+  priority: 'low' | 'medium' | 'high'
+  estimatedHours?: number
+  relatedGoalIds: string[]
+  selected: boolean
+  rank: number // For auto-mode priority ranking
+}
+
+export interface TeamTaskSuggestion {
+  id: string
+  title: string
+  description: string
+  reason: string
+  priority: 'low' | 'medium' | 'high'
+  estimatedHours?: number
+  collaborationNeeded?: string
+  successMetrics?: string
+  selected: boolean
+  rank: number // For auto-mode priority ranking
+  assignedTo: string
+}
+
+export interface TaskSuggestionResponse {
+  ceoSuggestions: TaskSuggestion[]
+  teamSuggestions: Record<string, TeamTaskSuggestion[]>
+  message: string
+}
+
+export interface AutoModeSettings {
+  enabled: boolean
+  maxTasksPerPerson: number // Default 3
+  prioritizeHighImpact: boolean
+  ensureDiversity: boolean
+}
+
+export interface TaskSelectionState {
+  ceoSelected: TaskSuggestion[]
+  teamSelected: Record<string, TeamTaskSuggestion[]>
+  autoMode: AutoModeSettings
 } 

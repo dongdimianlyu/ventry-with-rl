@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { ArrowRight, Brain, Users, Target, TrendingUp, Zap, Clock, Shield, Sparkles, Star, ChevronLeft, ChevronRight, Menu, X, CheckCircle } from "lucide-react"
+import { ArrowRight, Brain, Users, Target, TrendingUp, Zap, Clock, Shield, Sparkles, Star, ChevronLeft, ChevronRight, Menu, X } from "lucide-react"
 import Link from "next/link"
 import { useState, useEffect } from "react"
 

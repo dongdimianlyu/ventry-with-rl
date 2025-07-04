@@ -2,11 +2,13 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Goal, Task, User, TeamMember, TeamTask } from '@/types'
+import { Goal, Task, User, TeamMember, TeamTask, TaskSuggestion, TeamTaskSuggestion, AutoModeSettings } from '@/types'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { TaskCard } from '@/components/dashboard/TaskCard'
 import AddGoalForm from '@/components/dashboard/AddGoalForm'
+import { TaskSuggestionModal } from '@/components/dashboard/TaskSuggestionModal'
+import { AutoModeToggle } from '@/components/ui/AutoModeToggle'
 import { Sparkles, LogOut, Calendar, Target, Brain, TrendingUp, Plus, AlertCircle } from 'lucide-react'
 import { formatDate } from '@/lib/utils'
 import { knowledgeBase } from '@/data/knowledge-base'
@@ -21,6 +23,18 @@ export default function DashboardPage() {
   const [isGeneratingTasks, setIsGeneratingTasks] = useState(false)
   const [showAddGoal, setShowAddGoal] = useState(false)
   const [taskError, setTaskError] = useState<string | null>(null)
+  
+  // New states for task suggestion modal
+  const [showTaskSuggestionModal, setShowTaskSuggestionModal] = useState(false)
+  const [taskSuggestions, setTaskSuggestions] = useState<TaskSuggestion[]>([])
+  const [teamTaskSuggestions, setTeamTaskSuggestions] = useState<Record<string, TeamTaskSuggestion[]>>({})
+  const [autoModeSettings, setAutoModeSettings] = useState<AutoModeSettings>({
+    enabled: false,
+    maxTasksPerPerson: 3,
+    prioritizeHighImpact: true,
+    ensureDiversity: true
+  })
+  
   const router = useRouter()
 
   useEffect(() => {
@@ -76,7 +90,7 @@ export default function DashboardPage() {
     setShowAddGoal(false)
   }
 
-  const generateDailyTasks = async () => {
+  const generateTaskSuggestions = async () => {
     if (!user || goals.length === 0) {
       alert('Please add at least one goal before generating tasks.')
       return
@@ -84,6 +98,7 @@ export default function DashboardPage() {
 
     setIsGeneratingTasks(true)
     setTaskError(null)
+    setShowTaskSuggestionModal(true)
 
     try {
       const response = await fetch('/api/tasks/generate', {
@@ -97,18 +112,17 @@ export default function DashboardPage() {
           knowledgeBase: knowledgeBase as KnowledgeBase[],
           timeframe: 'today',
           teamMembers: team,
-          generateForTeam: team.length > 0
+          generateForTeam: team.length > 0,
+          suggestionMode: true
         })
       })
 
       if (!response.ok) {
         const errorText = await response.text();
         try {
-          // Try to parse it as JSON, as our API should return JSON errors
           const errorData = JSON.parse(errorText);
-          throw new Error(errorData.details || errorData.error || 'Failed to generate tasks');
-        } catch (e) {
-          // If it's not JSON, it's likely an HTML error page or something else
+          throw new Error(errorData.details || errorData.error || 'Failed to generate task suggestions');
+        } catch {
           console.error("Non-JSON error response:", errorText);
           throw new Error('Received an invalid response from the server. Check the server logs for more details.');
         }
@@ -116,35 +130,73 @@ export default function DashboardPage() {
 
       const data = await response.json()
       
-      if (data.tasks && Array.isArray(data.tasks)) {
-        const newTasks = data.tasks.map((task: Omit<Task, 'id' | 'userId' | 'createdAt'>, index: number) => ({
-          ...task,
-          id: `task-${Date.now()}-${Math.random().toString(36).substr(2, 9)}-${index}`,
-          userId: user.id,
-          createdAt: new Date(),
-          dueDate: new Date(task.dueDate) // Ensure dueDate is properly converted to Date object
-        }))
-
-        const updatedTasks = [...tasks, ...newTasks]
-        setTasks(updatedTasks)
-        localStorage.setItem(`tasks_${user.id}`, JSON.stringify(updatedTasks))
+      if (data.ceoSuggestions && Array.isArray(data.ceoSuggestions)) {
+        setTaskSuggestions(data.ceoSuggestions)
         
-        // Generate team tasks if team exists (unified generation)
-        if (data.teamTasks && Object.keys(data.teamTasks).length > 0) {
-          setTeamTasks(data.teamTasks)
-          localStorage.setItem(`employeeTasks_${user.id}`, JSON.stringify(data.teamTasks))
+        if (data.teamSuggestions && Object.keys(data.teamSuggestions).length > 0) {
+          setTeamTaskSuggestions(data.teamSuggestions)
         }
       } else {
         throw new Error('Invalid response format')
       }
 
     } catch (error: unknown) {
-      console.error('Error generating tasks:', error)
+      console.error('Error generating task suggestions:', error)
       const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred'
       setTaskError(errorMessage)
+      setShowTaskSuggestionModal(false)
     } finally {
       setIsGeneratingTasks(false)
     }
+  }
+
+  const handleTaskSelectionConfirm = (selectedCeoTasks: TaskSuggestion[], selectedTeamTasks: Record<string, TeamTaskSuggestion[]>) => {
+    if (!user) return
+
+    // Convert selected CEO tasks to actual tasks
+    const newCeoTasks = selectedCeoTasks.map((suggestion, index) => ({
+      id: `task-${Date.now()}-${Math.random().toString(36).substr(2, 9)}-${index}`,
+      userId: user.id,
+      title: suggestion.title,
+      description: suggestion.description,
+      explanation: suggestion.explanation,
+      priority: suggestion.priority,
+      completed: false,
+      dueDate: new Date(),
+      createdAt: new Date(),
+      relatedGoalIds: suggestion.relatedGoalIds
+    }))
+
+    // Add new CEO tasks to existing tasks
+    const updatedTasks = [...tasks, ...newCeoTasks]
+    setTasks(updatedTasks)
+    localStorage.setItem(`tasks_${user.id}`, JSON.stringify(updatedTasks))
+
+    // Convert selected team tasks to actual team tasks
+    const newTeamTasks: Record<string, TeamTask[]> = {}
+    Object.entries(selectedTeamTasks).forEach(([memberKey, memberTasks]) => {
+      newTeamTasks[memberKey] = memberTasks.map((suggestion, index) => ({
+        id: `team-task-${Date.now()}-${Math.random().toString(36).substr(2, 9)}-${index}`,
+        title: suggestion.title,
+        description: suggestion.description,
+        reason: suggestion.reason,
+        priority: suggestion.priority,
+        completed: false,
+        dueDate: new Date(),
+        assignedTo: suggestion.assignedTo
+      }))
+    })
+
+    // Save new team tasks
+    if (Object.keys(newTeamTasks).length > 0) {
+      setTeamTasks(newTeamTasks)
+      localStorage.setItem(`employeeTasks_${user.id}`, JSON.stringify(newTeamTasks))
+    }
+
+    // Reset modal state
+    setShowTaskSuggestionModal(false)
+    setTaskSuggestions([])
+    setTeamTaskSuggestions({})
   }
 
   const handleToggleTaskComplete = (taskId: string) => {
@@ -195,6 +247,12 @@ export default function DashboardPage() {
               </div>
             </div>
             <div className="flex items-center space-x-3">
+              <div className="relative">
+                <AutoModeToggle 
+                  onSettingsChange={setAutoModeSettings}
+                  className="mr-3"
+                />
+              </div>
               <Button
                 onClick={() => setShowAddGoal(true)}
                 className="brand-gradient text-white hover:opacity-90 smooth-transition shadow-sm accent-glow"
@@ -203,7 +261,7 @@ export default function DashboardPage() {
                 Add Goal
               </Button>
               <Button
-                onClick={generateDailyTasks}
+                onClick={generateTaskSuggestions}
                 disabled={isGeneratingTasks || goals.length === 0}
                 className="brand-gradient text-white hover:opacity-90 smooth-transition shadow-sm accent-glow"
               >
@@ -402,6 +460,18 @@ export default function DashboardPage() {
           </div>
         </div>
       )}
+
+      {/* Task Suggestion Modal */}
+      <TaskSuggestionModal
+        isOpen={showTaskSuggestionModal}
+        onClose={() => setShowTaskSuggestionModal(false)}
+        ceoSuggestions={taskSuggestions}
+        teamSuggestions={teamTaskSuggestions}
+        teamMembers={team}
+        autoModeSettings={autoModeSettings}
+        onConfirm={handleTaskSelectionConfirm}
+        isLoading={isGeneratingTasks}
+      />
     </div>
   )
 } 
