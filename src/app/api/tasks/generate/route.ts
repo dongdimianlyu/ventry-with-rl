@@ -3,7 +3,7 @@ import { generateDailyTasks, generateTeamTasks, generateTaskSuggestions, generat
 
 export async function POST(request: NextRequest) {
   try {
-    const { goals, previousTasks, knowledgeBase, timeframe, teamMembers, generateForTeam = true, suggestionMode = false } = await request.json()
+    const { goals, previousTasks, knowledgeBase, timeframe, teamMembers, generateForTeam = true, suggestionMode = false, previousTeamTasks } = await request.json()
 
     // Basic validation
     if (!goals || !Array.isArray(goals)) {
@@ -74,7 +74,7 @@ export async function POST(request: NextRequest) {
             }
           }
           
-          teamTasks = await generateTeamTasks(teamMembers, goals)
+          teamTasks = await generateTeamTasks(teamMembers, goals, previousTeamTasks)
         } catch (error) {
           console.warn('Team task generation failed:', error)
           // Continue without team tasks rather than failing entirely

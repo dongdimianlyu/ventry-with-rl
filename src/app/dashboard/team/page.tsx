@@ -99,7 +99,8 @@ export default function TeamPage() {
           timeframe: 'today',
           teamMembers,
           generateForTeam: true,
-          suggestionMode: true
+          suggestionMode: true,
+          previousTeamTasks: teamTasks
         })
       })
 

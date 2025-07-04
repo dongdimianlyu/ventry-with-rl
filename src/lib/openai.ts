@@ -12,75 +12,90 @@ export async function generateDailyTasks(context: TaskGenerationContext): Promis
 
   const goalsText = goals.map(g => `${g.title} (${g.timeframe}, ${g.priority} priority): ${g.description}`).join('\n')
   const knowledgeText = knowledgeBase.map(kb => `${kb.category}: ${kb.content}`).join('\n')
-  const recentTasksText = previousTasks.slice(-10).map(t => `${t.title}: ${t.explanation} (Priority: ${t.priority}, Completed: ${t.completed})`).join('\n')
   
-  // Calculate completion patterns and bottlenecks
-  const completionRate = previousTasks.length > 0 ? (previousTasks.filter(t => t.completed).length / previousTasks.length * 100).toFixed(1) : '0'
-  const highPriorityTasks = previousTasks.filter(t => t.priority === 'high')
-  const highPriorityCompletion = highPriorityTasks.length > 0 ? (highPriorityTasks.filter(t => t.completed).length / highPriorityTasks.length * 100).toFixed(1) : '0'
+  // Enhanced context analysis using previous tasks
+  const recentTasksText = previousTasks.slice(-15).map(t => `${t.title}: ${t.description} (Priority: ${t.priority}, Completed: ${t.completed}, Why: ${t.explanation})`).join('\n')
+  
+  // Analyze completion patterns and identify what's working
+  const completedTasks = previousTasks.filter(t => t.completed)
+  const incompleteTasks = previousTasks.filter(t => !t.completed)
+  const completionRate = previousTasks.length > 0 ? (completedTasks.length / previousTasks.length * 100).toFixed(1) : '0'
+  
+  // Identify successful task patterns
+  const successfulTaskTypes = completedTasks.map(t => t.title).slice(-5)
+  const stuckAreas = incompleteTasks.filter(t => {
+    const daysSinceCreated = Math.floor((Date.now() - new Date(t.dueDate).getTime()) / (1000 * 60 * 60 * 24))
+    return daysSinceCreated > 2
+  }).map(t => t.title)
 
-  const prompt = `You are an AI COO with expertise in predictive business analytics and tactical execution. Analyze the user's goals, historical performance, and business context to generate 3-5 high-impact daily tasks that predict and prevent future bottlenecks while accelerating goal achievement.
+  const prompt = `You are an AI COO with expertise in tactical execution and progressive task management. Generate 3-4 highly practical, directly actionable tasks that build on previous progress and move the business forward in measurable ways.
 
-USER GOALS & STRATEGY:
+COMPANY STRATEGIC GOALS:
 ${goalsText}
 
 BUSINESS INTELLIGENCE & BEST PRACTICES:
 ${knowledgeText}
 
-RECENT TASK HISTORY & PERFORMANCE:
+RECENT TASK HISTORY & PROGRESS ANALYSIS:
 ${recentTasksText}
 
-PERFORMANCE METRICS:
+PERFORMANCE INSIGHTS:
 - Overall completion rate: ${completionRate}%
-- High-priority task completion: ${highPriorityCompletion}%
+- Recently completed tasks: ${successfulTaskTypes.join(', ') || 'None yet'}
+- Areas needing attention: ${stuckAreas.join(', ') || 'None identified'}
 - Total tasks tracked: ${previousTasks.length}
 
-TACTICAL REQUIREMENTS:
-1. Generate tasks that are predictive of future challenges and opportunities
-2. Include specific metrics, numbers, and measurable outcomes
-3. Prioritize tasks that compound over time (network effects, process improvements)
-4. Consider lead times - what needs to start today to meet future deadlines
-5. Include one task that addresses a potential bottleneck before it occurs
-6. Focus on leverage points that multiply impact across multiple goals
+PROGRESSIVE TASK GENERATION REQUIREMENTS:
+1. Build on completed tasks - reference and advance previous wins
+2. Address stuck areas with fresh, more specific approaches
+3. Generate tasks that are 100% actionable - specific WHO, WHAT, WHEN
+4. Include realistic time estimates and measurable success criteria
+5. Focus on immediate business value - efficiency, growth, clarity
+6. Avoid repetitive, vague, or generic tasks
+7. Each task should have clear next steps and completion criteria
+8. Use insights from successful task patterns to inform new tasks
 
-TASK GENERATION CRITERIA:
-- Be specific about WHO, WHAT, WHEN, and measurable SUCCESS CRITERIA
-- Include industry benchmarks where relevant (e.g., "industry average is X%, aim for Y%")
-- Combine analytical insights with actionable next steps
-- Vary difficulty levels to maintain momentum while driving growth
-- Each task should have clear business justification tied to financial or strategic outcomes
-- CRITICAL: For tasks with meaningful business impact, include specific businessImpact object with realistic estimates
-- Only include businessImpact when the task has clear, measurable potential for cost reduction, revenue growth, profit increase, time savings, efficiency gains, risk mitigation, customer satisfaction improvement, or strategic advantage
-- Be conservative but specific with impact estimates - use real industry data when possible
+TASK QUALITY STANDARDS:
+- Be specific about deliverables, tools, timelines, and success metrics
+- Include realistic difficulty spread (mix of quick wins and meaningful work)
+- Create tasks that compound value and set up future wins
+- Focus on what directly moves the business forward - NO FILLER OR FLUFF
+- Every task must have clear completion criteria and next steps
+- Prioritize tasks that create momentum and compound value
+- CRITICAL: For tasks with meaningful business impact, include specific businessImpact object
+- Only include businessImpact when the task has clear, measurable potential for business value
+- Be conservative but specific with impact estimates
+
+EXECUTION FOCUS:
+- Each task should be something that can be completed and checked off
+- Avoid "research" or "explore" tasks unless they lead to specific decisions
+- Focus on creating, building, implementing, optimizing, or completing
+- Tasks should produce tangible outputs that advance business goals
+- Prioritize work that increases efficiency, growth, or clarity
+
+For each task, generate specific details that enable immediate action and measurable results.
 
 Return JSON array with this exact structure:
 [
   {
-    "title": "Specific, action-oriented task with clear deliverable",
-    "description": "Detailed step-by-step description including tools, metrics, and success criteria",
-    "explanation": "Strategic reasoning connecting task to goals with specific business impact prediction (e.g., 'This typically increases X by Y% within Z timeframe based on industry data')",
+    "title": "Specific, actionable task with clear deliverable",
+    "description": "Detailed step-by-step instructions with tools, timelines, success criteria, and next steps",
+    "explanation": "Strategic reasoning explaining how this builds on previous progress and drives specific business outcomes",
     "priority": "high|medium|low",
     "completed": false,
     "estimatedHours": 1-8,
-    "daysFromNow": 1-7,
+    "daysFromNow": 0-2,
     "relatedGoalIds": ["array of relevant goal IDs"],
     "businessImpact": {
       "type": "cost_reduction|revenue_growth|profit_increase|time_savings|efficiency_gain|risk_mitigation|customer_satisfaction|strategic_advantage",
       "description": "Clear, specific explanation of the measurable business value this task could deliver",
-      "estimatedValue": "Optional: specific dollar amount, percentage improvement, or time saved (e.g., '$10K savings', '15% efficiency gain', '2 hours/week saved')",
-      "timeframe": "Optional: when the impact would be realized (e.g., 'within 2 weeks', 'by end of quarter')"
+      "estimatedValue": "Optional: specific dollar amount, percentage improvement, or time saved",
+      "timeframe": "Optional: when the impact would be realized"
     }
   }
 ]
 
-IMPORTANT: Set realistic daysFromNow based on estimatedHours and task complexity:
-- Quick tasks (1-2 hours): 1 day
-- Medium tasks (3-4 hours): 1-2 days  
-- Complex tasks (5-8 hours): 2-3 days
-- High priority tasks should have shorter deadlines
-- Consider dependencies and sequential work
-
-Focus on tasks that move the needle significantly and set up future wins.`
+IMPORTANT: Generate progressive, intelligent tasks that learn from what's working and address what isn't. Focus on practical execution over abstract planning.`
 
   if (!openai) {
     // Return fallback tasks for testing when OpenAI is not configured
@@ -211,7 +226,8 @@ Focus on tasks that move the needle significantly and set up future wins.`
 
 export async function generateTeamTasks(
   teamMembers: TeamMember[], 
-  goals: Goal[]
+  goals: Goal[],
+  previousTeamTasks?: Record<string, TeamTask[]>
 ): Promise<Record<string, TeamTask[]>> {
   const goalsText = goals.map(g => `${g.title} (${g.timeframe}, ${g.priority} priority): ${g.description}`).join('\n')
   
@@ -225,7 +241,34 @@ export async function generateTeamTasks(
   const teamSize = teamMembers.length
   const rolesText = Object.entries(roleDistribution).map(([role, count]) => `${role}: ${count} members`).join(', ')
 
-  const prompt = `You are an AI COO with expertise in team optimization and cross-functional collaboration. Generate intelligent, balanced task assignments that maximize team productivity while ensuring equitable workload distribution.
+  // Enhanced team task context analysis
+  const allPreviousTasks = previousTeamTasks ? Object.values(previousTeamTasks).flat() : []
+  const completedTeamTasks = allPreviousTasks.filter(t => t.completed)
+  const incompleteTeamTasks = allPreviousTasks.filter(t => !t.completed)
+  const teamCompletionRate = allPreviousTasks.length > 0 ? (completedTeamTasks.length / allPreviousTasks.length * 100).toFixed(1) : '0'
+
+  // Analyze patterns by member
+  const memberPerformance = teamMembers.map(member => {
+    const memberKey = `${member.name} - ${member.role === 'Custom' ? member.customRole : member.role}`
+    const memberTasks = previousTeamTasks?.[memberKey] || []
+    const completed = memberTasks.filter(t => t.completed)
+    const pending = memberTasks.filter(t => !t.completed)
+    
+    return {
+      member: memberKey,
+      totalTasks: memberTasks.length,
+      completed: completed.length,
+      pending: pending.length,
+      completionRate: memberTasks.length > 0 ? (completed.length / memberTasks.length * 100).toFixed(1) : '0',
+      recentTasks: memberTasks.slice(-3).map(t => `${t.title} (${t.completed ? 'completed' : 'pending'})`)
+    }
+  })
+
+  const teamHistoryText = memberPerformance.map(p => 
+    `${p.member}: ${p.totalTasks} tasks (${p.completionRate}% completion), Recent: ${p.recentTasks.join(', ') || 'No previous tasks'}`
+  ).join('\n')
+
+  const prompt = `You are an AI COO with expertise in tactical execution and team optimization. Generate 2-3 highly practical, directly actionable tasks per team member that build on previous progress and move the business forward in measurable ways.
 
 COMPANY STRATEGIC GOALS:
 ${goalsText}
@@ -236,28 +279,50 @@ ${rolesText}
 INDIVIDUAL TEAM MEMBERS:
 ${teamMembers.map((member, idx) => `${idx + 1}. ${member.name} - ${member.role === 'Custom' ? member.customRole : member.role}`).join('\n')}
 
+TEAM PERFORMANCE HISTORY:
+${teamHistoryText || 'No previous team tasks yet - this is the first task generation'}
+
+TEAM METRICS:
+- Overall team completion rate: ${teamCompletionRate}%
+- Total previous tasks: ${allPreviousTasks.length}
+- Completed tasks: ${completedTeamTasks.length}
+- Pending tasks: ${incompleteTeamTasks.length}
+
 REQUIRED: Return tasks using EXACT member keys in format: "Name - Role" (e.g., "John Doe - Marketing", "Jane Smith - Sales")
 
-TACTICAL REQUIREMENTS:
-1. Distribute tasks fairly - no single person should get all high-priority tasks
-2. Create interdependencies that encourage collaboration between roles
-3. Generate tasks with reasonable difficulty spread (mix of quick wins and challenging work)
-4. Include specific metrics and success criteria for each task
-5. Ensure tasks leverage each person's unique expertise while supporting company goals
-6. Include at least one collaborative task that requires 2+ team members
-7. Consider realistic time constraints - tasks should be achievable in 1-2 days
+PROGRESSIVE TASK GENERATION REQUIREMENTS:
+1. Build on completed tasks - reference and advance previous wins for each member
+2. Address pending tasks with fresh approaches or complementary work
+3. Generate tasks that are 100% actionable - specific WHO, WHAT, WHEN, HOW
+4. Focus on immediate business value - efficiency, growth, clarity
+5. Avoid repetitive, vague, or generic tasks
+6. Create tasks that compound value and set up future wins
+7. Distribute fairly - balanced workload across team members
+8. Include realistic time estimates and measurable success criteria
+9. Each task should have clear completion criteria and next steps
+10. Leverage each person's unique expertise while supporting company goals
+11. Use individual performance patterns to optimize task assignment
 
 TASK QUALITY STANDARDS:
-- Be specific about deliverables, tools, and success metrics
-- Include industry benchmarks where relevant
-- Create tasks that compound value over time
-- Address both urgent needs and strategic initiatives
-- Ensure reasonable difficulty distribution across team members
-- CRITICAL: For tasks with meaningful business impact, include specific businessImpact object with realistic estimates
+- Be specific about deliverables, tools, timelines, and success metrics
+- Include realistic difficulty spread (mix of quick wins and meaningful work)
+- Focus on what directly moves the business forward - NO FILLER OR FLUFF
+- Encourage natural collaboration between complementary roles
+- Avoid abstract planning - focus on concrete execution that produces results
+- Every task must have clear completion criteria and next steps
+- Prioritize tasks that create momentum and compound value
+- CRITICAL: For tasks with meaningful business impact, include specific businessImpact object
 - Only include businessImpact when the task has clear, measurable potential for business value
-- Be conservative but specific with impact estimates - use real industry data when possible
+- Be conservative but specific with impact estimates
 
-For each team member, generate 2-3 specific tasks that align with their role and expertise while supporting company goals.
+EXECUTION FOCUS:
+- Each task should be something that can be completed and checked off
+- Avoid "research" or "explore" tasks unless they lead to specific decisions
+- Focus on creating, building, implementing, optimizing, or completing
+- Tasks should produce tangible outputs that advance business goals
+- Prioritize work that increases efficiency, growth, or clarity
+
+For each team member, generate specific tasks that enable immediate action and clear business outcomes.
 
 Return JSON object with this exact structure:
 {
