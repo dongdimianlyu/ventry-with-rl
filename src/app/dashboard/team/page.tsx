@@ -446,13 +446,18 @@ export default function TeamPage() {
                     </div>
                   ) : (
                     <div className="flex space-x-4 overflow-x-auto pb-2">
-                      {memberTasks.map(task => (
-                        <TeamTaskCard
-                          key={task.id}
-                          task={{ ...task, memberName: member.name, memberRole: member.role === 'Custom' ? member.customRole || 'Custom' : member.role }}
-                          onToggleComplete={toggleTaskCompletion}
-                        />
-                      ))}
+                      {memberTasks
+                        .sort((a, b) => {
+                          const priorityOrder = { high: 0, medium: 1, low: 2 }
+                          return priorityOrder[a.priority] - priorityOrder[b.priority]
+                        })
+                        .map(task => (
+                          <TeamTaskCard
+                            key={task.id}
+                            task={{ ...task, memberName: member.name, memberRole: member.role === 'Custom' ? member.customRole || 'Custom' : member.role }}
+                            onToggleComplete={toggleTaskCompletion}
+                          />
+                        ))}
                     </div>
                   )}
                 </CardContent>
