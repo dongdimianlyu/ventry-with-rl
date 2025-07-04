@@ -1,7 +1,7 @@
 import { Task } from '@/types'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { CheckCircle, Circle, X, Lightbulb } from 'lucide-react'
+import { CheckCircle, Circle, X, Lightbulb, TrendingUp, DollarSign, Clock } from 'lucide-react'
 import { formatCompactDateTime } from '@/lib/utils'
 import { useState } from 'react'
 
@@ -171,6 +171,51 @@ export function TaskCard({ task, onToggleComplete }: TaskCardProps) {
                     </div>
                   </div>
                 </div>
+
+                {/* Business Impact Section */}
+                {task.businessImpact && (
+                  <>
+                    <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
+                    
+                    <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-100 rounded-xl p-6">
+                      <div className="flex items-start space-x-4">
+                        <div className="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center shrink-0">
+                          <TrendingUp className="h-5 w-5 text-white" />
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="text-lg font-semibold text-green-900 mb-3">Business Impact</h3>
+                          <p className="text-base text-green-800 leading-relaxed mb-4">{task.businessImpact.description}</p>
+                          
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {task.businessImpact.estimatedValue && (
+                              <div className="flex items-center space-x-3">
+                                <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                                  <DollarSign className="h-4 w-4 text-green-700" />
+                                </div>
+                                <div>
+                                  <p className="text-sm font-medium text-green-900">Estimated Value</p>
+                                  <p className="text-sm text-green-700">{task.businessImpact.estimatedValue}</p>
+                                </div>
+                              </div>
+                            )}
+                            
+                            {task.businessImpact.timeframe && (
+                              <div className="flex items-center space-x-3">
+                                <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                                  <Clock className="h-4 w-4 text-green-700" />
+                                </div>
+                                <div>
+                                  <p className="text-sm font-medium text-green-900">Expected Timeframe</p>
+                                  <p className="text-sm text-green-700">{task.businessImpact.timeframe}</p>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                )}
               </CardContent>
             </Card>
           </div>

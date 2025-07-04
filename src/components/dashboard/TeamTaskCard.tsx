@@ -1,7 +1,7 @@
 import { TeamTask } from '@/types'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { CheckCircle, Circle, Target } from 'lucide-react'
+import { CheckCircle, Circle, Target, TrendingUp, DollarSign, Clock } from 'lucide-react'
 import { formatCompactDateTime } from '@/lib/utils'
 
 interface TeamTaskCardProps {
@@ -37,7 +37,7 @@ export function TeamTaskCard({ task, onToggleComplete }: TeamTaskCardProps) {
   const config = priorityConfig[task.priority]
 
   return (
-    <Card className={`relative min-w-[320px] max-w-[380px] h-[280px] flex flex-col ${task.completed ? 'opacity-60' : ''} ${config.cardBorder} ${config.cardBackground} border rounded-xl hover:shadow-lg transition-all duration-200 hover:-translate-y-1`}>
+    <Card className={`relative min-w-[320px] max-w-[380px] ${task.businessImpact ? 'h-[320px]' : 'h-[280px]'} flex flex-col ${task.completed ? 'opacity-60' : ''} ${config.cardBorder} ${config.cardBackground} border rounded-xl hover:shadow-lg transition-all duration-200 hover:-translate-y-1`}>
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between">
           <div className="flex-1 min-w-0">
@@ -84,6 +84,34 @@ export function TeamTaskCard({ task, onToggleComplete }: TeamTaskCardProps) {
             <div className="flex items-start space-x-2">
               <Target className="h-3 w-3 text-blue-600 mt-0.5 shrink-0" />
               <p className="text-xs text-blue-800 leading-relaxed font-medium line-clamp-2">{task.reason}</p>
+            </div>
+          </div>
+        )}
+
+        {/* Business Impact */}
+        {task.businessImpact && (
+          <div className="bg-green-50 border border-green-100 rounded-lg p-3 mt-2">
+            <div className="flex items-start space-x-2">
+              <TrendingUp className="h-3 w-3 text-green-600 mt-0.5 shrink-0" />
+              <div className="flex-1">
+                <p className="text-xs text-green-800 leading-relaxed font-medium line-clamp-2 mb-2">{task.businessImpact.description}</p>
+                
+                <div className="flex items-center justify-between text-xs text-green-700">
+                  {task.businessImpact.estimatedValue && (
+                    <div className="flex items-center space-x-1">
+                      <DollarSign className="h-3 w-3" />
+                      <span className="font-medium">{task.businessImpact.estimatedValue}</span>
+                    </div>
+                  )}
+                  
+                  {task.businessImpact.timeframe && (
+                    <div className="flex items-center space-x-1">
+                      <Clock className="h-3 w-3" />
+                      <span>{task.businessImpact.timeframe}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         )}

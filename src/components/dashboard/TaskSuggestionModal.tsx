@@ -12,7 +12,9 @@ import {
   Sparkles,
   Brain,
   Zap,
-  User
+  User,
+  TrendingUp,
+  DollarSign
 } from 'lucide-react'
 import { TaskSuggestion, TeamTaskSuggestion, AutoModeSettings, TeamMember } from '@/types'
 
@@ -283,13 +285,43 @@ export function TaskSuggestionModal({
                           <p className="text-sm text-gray-600 mb-3 line-clamp-2">
                             {task.description}
                           </p>
-                          <div className="bg-blue-50 border border-blue-100 rounded-lg p-3">
-                            <div className="flex items-start gap-2">
-                              <Target className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
-                              <p className="text-xs text-blue-800 font-medium line-clamp-2">
-                                {task.explanation}
-                              </p>
+                          <div className="space-y-3">
+                            <div className="bg-blue-50 border border-blue-100 rounded-lg p-3">
+                              <div className="flex items-start gap-2">
+                                <Target className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                                <p className="text-xs text-blue-800 font-medium line-clamp-2">
+                                  {task.explanation}
+                                </p>
+                              </div>
                             </div>
+                            
+                            {/* Business Impact */}
+                            {task.businessImpact && (
+                              <div className="bg-green-50 border border-green-100 rounded-lg p-3">
+                                <div className="flex items-start gap-2">
+                                  <TrendingUp className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
+                                  <div className="flex-1">
+                                    <p className="text-xs text-green-800 font-medium line-clamp-2 mb-2">
+                                      {task.businessImpact.description}
+                                    </p>
+                                    <div className="flex items-center justify-between text-xs text-green-700">
+                                      {task.businessImpact.estimatedValue && (
+                                        <div className="flex items-center gap-1">
+                                          <DollarSign className="h-3 w-3" />
+                                          <span className="font-medium">{task.businessImpact.estimatedValue}</span>
+                                        </div>
+                                      )}
+                                      {task.businessImpact.timeframe && (
+                                        <div className="flex items-center gap-1">
+                                          <Clock className="h-3 w-3" />
+                                          <span>{task.businessImpact.timeframe}</span>
+                                        </div>
+                                      )}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            )}
                           </div>
                         </CardContent>
                       </Card>
@@ -345,13 +377,43 @@ export function TaskSuggestionModal({
                           <p className="text-sm text-gray-600 mb-3 line-clamp-2">
                             {task.description}
                           </p>
-                          <div className="bg-blue-50 border border-blue-100 rounded-lg p-3">
-                            <div className="flex items-start gap-2">
-                              <Target className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
-                              <p className="text-xs text-blue-800 font-medium line-clamp-2">
-                                {task.reason}
-                              </p>
+                          <div className="space-y-3">
+                            <div className="bg-blue-50 border border-blue-100 rounded-lg p-3">
+                              <div className="flex items-start gap-2">
+                                <Target className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                                <p className="text-xs text-blue-800 font-medium line-clamp-2">
+                                  {task.reason}
+                                </p>
+                              </div>
                             </div>
+                            
+                            {/* Business Impact */}
+                            {task.businessImpact && (
+                              <div className="bg-green-50 border border-green-100 rounded-lg p-3">
+                                <div className="flex items-start gap-2">
+                                  <TrendingUp className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
+                                  <div className="flex-1">
+                                    <p className="text-xs text-green-800 font-medium line-clamp-2 mb-2">
+                                      {task.businessImpact.description}
+                                    </p>
+                                    <div className="flex items-center justify-between text-xs text-green-700">
+                                      {task.businessImpact.estimatedValue && (
+                                        <div className="flex items-center gap-1">
+                                          <DollarSign className="h-3 w-3" />
+                                          <span className="font-medium">{task.businessImpact.estimatedValue}</span>
+                                        </div>
+                                      )}
+                                      {task.businessImpact.timeframe && (
+                                        <div className="flex items-center gap-1">
+                                          <Clock className="h-3 w-3" />
+                                          <span>{task.businessImpact.timeframe}</span>
+                                        </div>
+                                      )}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            )}
                           </div>
                         </CardContent>
                       </Card>

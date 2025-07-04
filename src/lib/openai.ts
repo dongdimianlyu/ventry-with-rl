@@ -1,6 +1,8 @@
 import OpenAI from 'openai'
 import { Goal, Task, TaskGenerationContext, TeamMember, TeamTask, TaskSuggestion, TeamTaskSuggestion } from '@/types'
 
+type BusinessImpactType = 'cost_reduction' | 'revenue_growth' | 'profit_increase' | 'time_savings' | 'efficiency_gain' | 'risk_mitigation' | 'customer_satisfaction' | 'strategic_advantage'
+
 const openai = process.env.OPENAI_API_KEY ? new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 }) : null
@@ -47,6 +49,9 @@ TASK GENERATION CRITERIA:
 - Combine analytical insights with actionable next steps
 - Vary difficulty levels to maintain momentum while driving growth
 - Each task should have clear business justification tied to financial or strategic outcomes
+- CRITICAL: For tasks with meaningful business impact, include specific businessImpact object with realistic estimates
+- Only include businessImpact when the task has clear, measurable potential for cost reduction, revenue growth, profit increase, time savings, efficiency gains, risk mitigation, customer satisfaction improvement, or strategic advantage
+- Be conservative but specific with impact estimates - use real industry data when possible
 
 Return JSON array with this exact structure:
 [
@@ -58,7 +63,13 @@ Return JSON array with this exact structure:
     "completed": false,
     "estimatedHours": 1-8,
     "daysFromNow": 1-7,
-    "relatedGoalIds": ["array of relevant goal IDs"]
+    "relatedGoalIds": ["array of relevant goal IDs"],
+    "businessImpact": {
+      "type": "cost_reduction|revenue_growth|profit_increase|time_savings|efficiency_gain|risk_mitigation|customer_satisfaction|strategic_advantage",
+      "description": "Clear, specific explanation of the measurable business value this task could deliver",
+      "estimatedValue": "Optional: specific dollar amount, percentage improvement, or time saved (e.g., '$10K savings', '15% efficiency gain', '2 hours/week saved')",
+      "timeframe": "Optional: when the impact would be realized (e.g., 'within 2 weeks', 'by end of quarter')"
+    }
   }
 ]
 
@@ -80,8 +91,14 @@ Focus on tasks that move the needle significantly and set up future wins.`
         explanation: "This task helps ensure Q4 targets are met and positions the company for strong Q1 performance. Financial review at this stage can identify bottlenecks before they impact cash flow.",
         priority: "high" as const,
         completed: false,
-                 dueDate: new Date(), // Set to today so it appears in the dashboard
-        relatedGoalIds: goals.map(g => g.id)
+        dueDate: new Date(), // Set to today so it appears in the dashboard
+        relatedGoalIds: goals.map(g => g.id),
+        businessImpact: {
+          type: 'cost_reduction' as const,
+          description: 'Identifying optimization opportunities could reduce operational costs by 10-15% and improve cash flow',
+          estimatedValue: '10-15% cost reduction',
+          timeframe: 'within 6 weeks'
+        }
       },
       {
         title: "Conduct strategic planning session for next quarter initiatives",
@@ -89,8 +106,14 @@ Focus on tasks that move the needle significantly and set up future wins.`
         explanation: "Strategic planning ensures alignment across teams and prevents reactive decision-making. Early planning typically increases execution success rates by 40%.",
         priority: "medium" as const,
         completed: false,
-                 dueDate: new Date(), // Set to today so it appears in the dashboard
-        relatedGoalIds: goals.map(g => g.id)
+        dueDate: new Date(), // Set to today so it appears in the dashboard
+        relatedGoalIds: goals.map(g => g.id),
+        businessImpact: {
+          type: 'efficiency_gain' as const,
+          description: 'Proper strategic planning increases team execution success rates and reduces wasted resources',
+          estimatedValue: '40% higher success rate',
+          timeframe: 'next quarter'
+        }
       },
       {
         title: "Schedule one-on-one meetings with direct reports",
@@ -98,8 +121,14 @@ Focus on tasks that move the needle significantly and set up future wins.`
         explanation: "Regular one-on-ones improve employee engagement by 30% and help identify issues before they escalate. This also strengthens leadership relationships and team performance.",
         priority: "medium" as const,
         completed: false,
-                 dueDate: new Date(), // Set to today so it appears in the dashboard
-        relatedGoalIds: goals.map(g => g.id)
+        dueDate: new Date(), // Set to today so it appears in the dashboard
+        relatedGoalIds: goals.map(g => g.id),
+        businessImpact: {
+          type: 'efficiency_gain' as const,
+          description: 'Improved employee engagement leads to higher productivity and lower turnover costs',
+          estimatedValue: '30% engagement increase',
+          timeframe: 'within 1 month'
+        }
       }
     ]
   }
@@ -143,7 +172,13 @@ Focus on tasks that move the needle significantly and set up future wins.`
       priority: string; 
       estimatedHours?: number;
       daysFromNow?: number;
-      relatedGoalIds?: string[] 
+      relatedGoalIds?: string[]
+      businessImpact?: {
+        type: string;
+        description: string;
+        estimatedValue?: string;
+        timeframe?: string;
+      }
     }) => {
       // Set all tasks for today so they appear immediately in the dashboard
       // For a daily task dashboard, tasks should be due today for immediate action
@@ -158,7 +193,13 @@ Focus on tasks that move the needle significantly and set up future wins.`
         priority: ['high', 'medium', 'low'].includes(task.priority) ? task.priority : 'medium',
         completed: false,
         dueDate,
-        relatedGoalIds: task.relatedGoalIds || []
+        relatedGoalIds: task.relatedGoalIds || [],
+        businessImpact: task.businessImpact ? {
+          type: task.businessImpact.type as BusinessImpactType,
+          description: task.businessImpact.description,
+          estimatedValue: task.businessImpact.estimatedValue,
+          timeframe: task.businessImpact.timeframe
+        } : undefined
       }
     })
 
@@ -212,6 +253,9 @@ TASK QUALITY STANDARDS:
 - Create tasks that compound value over time
 - Address both urgent needs and strategic initiatives
 - Ensure reasonable difficulty distribution across team members
+- CRITICAL: For tasks with meaningful business impact, include specific businessImpact object with realistic estimates
+- Only include businessImpact when the task has clear, measurable potential for business value
+- Be conservative but specific with impact estimates - use real industry data when possible
 
 For each team member, generate 2-3 specific tasks that align with their role and expertise while supporting company goals.
 
@@ -225,7 +269,13 @@ Return JSON object with this exact structure:
       "priority": "high|medium|low",
       "estimatedHours": 2-8,
       "collaborationNeeded": "Optional: which other team members this task involves",
-      "successMetrics": "Specific, measurable outcomes expected"
+      "successMetrics": "Specific, measurable outcomes expected",
+      "businessImpact": {
+        "type": "cost_reduction|revenue_growth|profit_increase|time_savings|efficiency_gain|risk_mitigation|customer_satisfaction|strategic_advantage",
+        "description": "Clear, specific explanation of the measurable business value this task could deliver",
+        "estimatedValue": "Optional: specific dollar amount, percentage improvement, or time saved",
+        "timeframe": "Optional: when the impact would be realized"
+      }
     }
   ]
 }
@@ -247,7 +297,13 @@ Ensure balanced workload and create synergies between team members' tasks.`
           priority: 'medium' as const,
           completed: false,
           dueDate: new Date(), // Set to today so tasks appear immediately
-          assignedTo: member.id
+          assignedTo: member.id,
+          businessImpact: {
+            type: 'strategic_advantage' as const,
+            description: 'Market insights can identify new opportunities and competitive advantages',
+            estimatedValue: 'Potential 20% improvement in strategic positioning',
+            timeframe: 'within 2 weeks'
+          }
         },
         {
           id: `fallback-${member.id}-2`,
@@ -257,7 +313,13 @@ Ensure balanced workload and create synergies between team members' tasks.`
           priority: 'high' as const,
           completed: false,
           dueDate: new Date(), // Set to today so tasks appear immediately
-          assignedTo: member.id
+          assignedTo: member.id,
+          businessImpact: {
+            type: 'efficiency_gain' as const,
+            description: 'Process improvements can significantly boost individual and team productivity',
+            estimatedValue: '25% productivity increase',
+            timeframe: 'within 1 month'
+          }
         }
       ]
     })
@@ -333,6 +395,12 @@ Ensure balanced workload and create synergies between team members' tasks.`
           estimatedHours?: number;
           collaborationNeeded?: string;
           successMetrics?: string;
+          businessImpact?: {
+            type: string;
+            description: string;
+            estimatedValue?: string;
+            timeframe?: string;
+          }
         }, taskIndex: number) => {
           // Set all team tasks for today so they appear immediately in the dashboard
           // For a daily task dashboard, tasks should be due today for immediate action
@@ -348,7 +416,13 @@ Ensure balanced workload and create synergies between team members' tasks.`
             priority: (['high', 'medium', 'low'].includes(task.priority || '') ? task.priority : 'medium') as 'low' | 'medium' | 'high',
             completed: false,
             dueDate,
-            assignedTo: memberKey.split(' - ')[0] || 'unknown'
+            assignedTo: memberKey.split(' - ')[0] || 'unknown',
+            businessImpact: task.businessImpact ? {
+              type: task.businessImpact.type as BusinessImpactType,
+              description: task.businessImpact.description,
+              estimatedValue: task.businessImpact.estimatedValue,
+              timeframe: task.businessImpact.timeframe
+            } : undefined
           }
         })
       }
@@ -530,6 +604,9 @@ TASK GENERATION CRITERIA:
 - Vary difficulty levels to maintain momentum while driving growth
 - Each task should have clear business justification tied to financial or strategic outcomes
 - Rank tasks by importance (1-6, where 1 is highest priority)
+- CRITICAL: For tasks with meaningful business impact, include specific businessImpact object with realistic estimates
+- Only include businessImpact when the task has clear, measurable potential for business value
+- Be conservative but specific with impact estimates - use real industry data when possible
 
 Return JSON array with this exact structure:
 [
@@ -540,7 +617,13 @@ Return JSON array with this exact structure:
     "priority": "high|medium|low",
     "estimatedHours": 1-8,
     "rank": 1-6,
-    "relatedGoalIds": ["array of relevant goal IDs"]
+    "relatedGoalIds": ["array of relevant goal IDs"],
+    "businessImpact": {
+      "type": "cost_reduction|revenue_growth|profit_increase|time_savings|efficiency_gain|risk_mitigation|customer_satisfaction|strategic_advantage",
+      "description": "Clear, specific explanation of the measurable business value this task could deliver",
+      "estimatedValue": "Optional: specific dollar amount, percentage improvement, or time saved",
+      "timeframe": "Optional: when the impact would be realized"
+    }
   }
 ]
 
@@ -558,7 +641,13 @@ IMPORTANT: Generate exactly 6 tasks with diverse priorities and approaches. Focu
         estimatedHours: 3,
         rank: 1,
         selected: false,
-        relatedGoalIds: goals.map(g => g.id)
+        relatedGoalIds: goals.map(g => g.id),
+        businessImpact: {
+          type: 'cost_reduction' as const,
+          description: 'Identifying optimization opportunities could reduce operational costs and improve cash flow',
+          estimatedValue: '10-15% cost reduction',
+          timeframe: 'within 6 weeks'
+        }
       },
       {
         id: `suggestion-ceo-2-${Date.now()}`,
@@ -569,7 +658,13 @@ IMPORTANT: Generate exactly 6 tasks with diverse priorities and approaches. Focu
         estimatedHours: 4,
         rank: 2,
         selected: false,
-        relatedGoalIds: goals.map(g => g.id)
+        relatedGoalIds: goals.map(g => g.id),
+        businessImpact: {
+          type: 'efficiency_gain' as const,
+          description: 'Proper strategic planning increases team execution success rates and reduces wasted resources',
+          estimatedValue: '40% higher success rate',
+          timeframe: 'next quarter'
+        }
       },
       {
         id: `suggestion-ceo-3-${Date.now()}`,
@@ -580,7 +675,13 @@ IMPORTANT: Generate exactly 6 tasks with diverse priorities and approaches. Focu
         estimatedHours: 2,
         rank: 3,
         selected: false,
-        relatedGoalIds: goals.map(g => g.id)
+        relatedGoalIds: goals.map(g => g.id),
+        businessImpact: {
+          type: 'efficiency_gain' as const,
+          description: 'Improved employee engagement leads to higher productivity and lower turnover costs',
+          estimatedValue: '30% engagement increase',
+          timeframe: 'within 1 month'
+        }
       },
       {
         id: `suggestion-ceo-4-${Date.now()}`,
@@ -591,7 +692,13 @@ IMPORTANT: Generate exactly 6 tasks with diverse priorities and approaches. Focu
         estimatedHours: 3,
         rank: 4,
         selected: false,
-        relatedGoalIds: goals.map(g => g.id)
+        relatedGoalIds: goals.map(g => g.id),
+        businessImpact: {
+          type: 'strategic_advantage' as const,
+          description: 'Competitive analysis can identify market opportunities and strategic positioning improvements',
+          estimatedValue: '23% higher performance vs peers',
+          timeframe: 'within 2 months'
+        }
       },
       {
         id: `suggestion-ceo-5-${Date.now()}`,
@@ -602,7 +709,13 @@ IMPORTANT: Generate exactly 6 tasks with diverse priorities and approaches. Focu
         estimatedHours: 4,
         rank: 5,
         selected: false,
-        relatedGoalIds: goals.map(g => g.id)
+        relatedGoalIds: goals.map(g => g.id),
+        businessImpact: {
+          type: 'efficiency_gain' as const,
+          description: 'Process optimization creates scalable efficiency improvements that compound over time',
+          estimatedValue: '15-25% efficiency improvement',
+          timeframe: 'within 3 months'
+        }
       },
       {
         id: `suggestion-ceo-6-${Date.now()}`,
@@ -613,7 +726,13 @@ IMPORTANT: Generate exactly 6 tasks with diverse priorities and approaches. Focu
         estimatedHours: 2,
         rank: 6,
         selected: false,
-        relatedGoalIds: goals.map(g => g.id)
+        relatedGoalIds: goals.map(g => g.id),
+        businessImpact: {
+          type: 'customer_satisfaction' as const,
+          description: 'Systematic customer feedback collection improves satisfaction and retention rates',
+          estimatedValue: '25% higher satisfaction, 20% better retention',
+          timeframe: 'within 2 months'
+        }
       }
     ]
   }
@@ -657,7 +776,13 @@ IMPORTANT: Generate exactly 6 tasks with diverse priorities and approaches. Focu
       priority: string; 
       estimatedHours?: number;
       rank?: number;
-      relatedGoalIds?: string[] 
+      relatedGoalIds?: string[]
+      businessImpact?: {
+        type: string;
+        description: string;
+        estimatedValue?: string;
+        timeframe?: string;
+      }
     }, taskIndex: number) => {
       return {
         id: `suggestion-ceo-${taskIndex + 1}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
@@ -668,7 +793,13 @@ IMPORTANT: Generate exactly 6 tasks with diverse priorities and approaches. Focu
         estimatedHours: task.estimatedHours || 3,
         rank: task.rank || (taskIndex + 1),
         selected: false,
-        relatedGoalIds: task.relatedGoalIds || []
+        relatedGoalIds: task.relatedGoalIds || [],
+        businessImpact: task.businessImpact ? {
+          type: task.businessImpact.type as BusinessImpactType,
+          description: task.businessImpact.description,
+          estimatedValue: task.businessImpact.estimatedValue,
+          timeframe: task.businessImpact.timeframe
+        } : undefined
       }
     })
 
@@ -724,6 +855,9 @@ TASK QUALITY STANDARDS:
 - Address both urgent needs and strategic initiatives
 - Ensure reasonable difficulty distribution across team members
 - Vary task types and approaches for diversity
+- CRITICAL: For tasks with meaningful business impact, include specific businessImpact object with realistic estimates
+- Only include businessImpact when the task has clear, measurable potential for business value
+- Be conservative but specific with impact estimates - use real industry data when possible
 
 For each team member, generate exactly 6 specific task suggestions that align with their role and expertise while supporting company goals.
 
@@ -738,7 +872,13 @@ Return JSON object with this exact structure:
       "estimatedHours": 1-8,
       "rank": 1-6,
       "collaborationNeeded": "Optional: which other team members this task involves",
-      "successMetrics": "Specific, measurable outcomes expected"
+      "successMetrics": "Specific, measurable outcomes expected",
+      "businessImpact": {
+        "type": "cost_reduction|revenue_growth|profit_increase|time_savings|efficiency_gain|risk_mitigation|customer_satisfaction|strategic_advantage",
+        "description": "Clear, specific explanation of the measurable business value this task could deliver",
+        "estimatedValue": "Optional: specific dollar amount, percentage improvement, or time saved",
+        "timeframe": "Optional: when the impact would be realized"
+      }
     }
   ]
 }
@@ -762,7 +902,15 @@ Ensure balanced workload and create synergies between team members' tasks. Gener
         selected: false,
         assignedTo: member.id,
         collaborationNeeded: index === 0 ? 'Cross-functional team input needed' : undefined,
-        successMetrics: `Deliver comprehensive analysis with 3-5 actionable recommendations within ${2 + (index % 4)} hours`
+        successMetrics: `Deliver comprehensive analysis with 3-5 actionable recommendations within ${2 + (index % 4)} hours`,
+        businessImpact: {
+          type: index % 2 === 0 ? 'strategic_advantage' : 'efficiency_gain',
+          description: index % 2 === 0 
+            ? 'Strategic insights can identify new opportunities and competitive advantages'
+            : 'Process improvements can significantly boost individual and team productivity',
+          estimatedValue: index % 2 === 0 ? 'Potential 15-20% strategic improvement' : '20-25% efficiency gain',
+          timeframe: 'within 2-4 weeks'
+        }
       }))
     })
     
@@ -838,6 +986,12 @@ Ensure balanced workload and create synergies between team members' tasks. Gener
           rank?: number;
           collaborationNeeded?: string;
           successMetrics?: string;
+          businessImpact?: {
+            type: string;
+            description: string;
+            estimatedValue?: string;
+            timeframe?: string;
+          }
         }, taskIndex: number) => {
           return {
             id: `suggestion-${memberKey.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase()}-${taskIndex + 1}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
@@ -850,7 +1004,13 @@ Ensure balanced workload and create synergies between team members' tasks. Gener
             selected: false,
             assignedTo: memberKey.split(' - ')[0] || 'unknown',
             collaborationNeeded: task.collaborationNeeded,
-            successMetrics: task.successMetrics
+            successMetrics: task.successMetrics,
+            businessImpact: task.businessImpact ? {
+              type: task.businessImpact.type as BusinessImpactType,
+              description: task.businessImpact.description,
+              estimatedValue: task.businessImpact.estimatedValue,
+              timeframe: task.businessImpact.timeframe
+            } : undefined
           }
         })
       }

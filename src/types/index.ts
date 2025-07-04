@@ -27,6 +27,12 @@ export interface Task {
   dueDate: Date
   createdAt: Date
   relatedGoalIds: string[]
+  businessImpact?: {
+    type: 'cost_reduction' | 'revenue_growth' | 'profit_increase' | 'time_savings' | 'efficiency_gain' | 'risk_mitigation' | 'customer_satisfaction' | 'strategic_advantage'
+    description: string
+    estimatedValue?: string
+    timeframe?: string
+  }
 }
 
 export interface TeamMember {
@@ -45,6 +51,12 @@ export interface TeamTask {
   completed: boolean
   dueDate: Date
   assignedTo: string // TeamMember ID
+  businessImpact?: {
+    type: 'cost_reduction' | 'revenue_growth' | 'profit_increase' | 'time_savings' | 'efficiency_gain' | 'risk_mitigation' | 'customer_satisfaction' | 'strategic_advantage'
+    description: string
+    estimatedValue?: string
+    timeframe?: string
+  }
 }
 
 export interface TeamSetup {
@@ -98,6 +110,12 @@ export interface TaskSuggestion {
   relatedGoalIds: string[]
   selected: boolean
   rank: number // For auto-mode priority ranking
+  businessImpact?: {
+    type: 'cost_reduction' | 'revenue_growth' | 'profit_increase' | 'time_savings' | 'efficiency_gain' | 'risk_mitigation' | 'customer_satisfaction' | 'strategic_advantage'
+    description: string
+    estimatedValue?: string
+    timeframe?: string
+  }
 }
 
 export interface TeamTaskSuggestion {
@@ -112,6 +130,12 @@ export interface TeamTaskSuggestion {
   selected: boolean
   rank: number // For auto-mode priority ranking
   assignedTo: string
+  businessImpact?: {
+    type: 'cost_reduction' | 'revenue_growth' | 'profit_increase' | 'time_savings' | 'efficiency_gain' | 'risk_mitigation' | 'customer_satisfaction' | 'strategic_advantage'
+    description: string
+    estimatedValue?: string
+    timeframe?: string
+  }
 }
 
 export interface TaskSuggestionResponse {
