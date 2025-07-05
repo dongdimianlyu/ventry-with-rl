@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { 
   Building2, 
@@ -15,70 +14,73 @@ import {
   Briefcase,
   TrendingUp,
   Settings,
-  User
+  User,
+  X,
+  ArrowRight
 } from 'lucide-react'
 import { CompanyProfile, User as UserType } from '@/types'
 
 interface OnboardingFlowProps {
   user: UserType
   onComplete: (profile: CompanyProfile) => void
+  onSkip?: () => void
 }
 
-export default function OnboardingFlow({ user, onComplete }: OnboardingFlowProps) {
+export default function OnboardingFlow({ user, onComplete, onSkip }: OnboardingFlowProps) {
   const [currentStep, setCurrentStep] = useState(0)
   const [profile, setProfile] = useState<Partial<CompanyProfile>>({
     userId: user.id,
-    userRole: 'founder',
-    companySize: 5,
+    userRole: undefined,
+    companySize: undefined,
     businessDescription: '',
-    teamExperience: 'balanced',
-    primaryFocus: 'growth',
-    workingStyle: 'structured',
-    weeklyCommitment: 40
+    teamExperience: undefined,
+    primaryFocus: undefined,
+    workingStyle: undefined,
+    weeklyCommitment: undefined
   })
 
   const steps = [
     {
       id: 'role',
-      title: 'Your Role',
-      description: 'What\'s your position in the company?',
-      icon: <User className="h-6 w-6" />
+      title: 'What\'s your role?',
+      subtitle: 'Help us understand your position so we can tailor the experience',
+      icon: <User className="h-8 w-8" />
     },
     {
       id: 'company',
-      title: 'Company Size',
-      description: 'How many people are on your team?',
-      icon: <Users className="h-6 w-6" />
+      title: 'How big is your team?',
+      subtitle: 'This helps us recommend the right level of task complexity',
+      icon: <Users className="h-8 w-8" />
     },
     {
       id: 'business',
-      title: 'Business Context',
-      description: 'Tell us about your company',
-      icon: <Building2 className="h-6 w-6" />
+      title: 'Tell us about your company',
+      subtitle: 'A brief description helps us generate relevant, actionable tasks',
+      icon: <Building2 className="h-8 w-8" />
     },
     {
       id: 'experience',
-      title: 'Team Experience',
-      description: 'How should the AI work with your team?',
-      icon: <Briefcase className="h-6 w-6" />
+      title: 'How should we work with your team?',
+      subtitle: 'We can provide detailed guidance or assume more independence',
+      icon: <Briefcase className="h-8 w-8" />
     },
     {
       id: 'focus',
-      title: 'Primary Focus',
-      description: 'What\'s your main priority right now?',
-      icon: <Target className="h-6 w-6" />
+      title: 'What\'s your primary focus right now?',
+      subtitle: 'This helps us prioritize the most relevant tasks for your current stage',
+      icon: <Target className="h-8 w-8" />
     },
     {
       id: 'style',
-      title: 'Working Style',
-      description: 'How do you prefer to work?',
-      icon: <Settings className="h-6 w-6" />
+      title: 'What\'s your preferred working style?',
+      subtitle: 'We\'ll adapt our recommendations to match how you like to work',
+      icon: <Settings className="h-8 w-8" />
     },
     {
       id: 'commitment',
-      title: 'Time Commitment',
-      description: 'How many hours per week can your team commit?',
-      icon: <Clock className="h-6 w-6" />
+      title: 'How much time can your team commit?',
+      subtitle: 'We\'ll set realistic deadlines based on your available capacity',
+      icon: <Clock className="h-8 w-8" />
     }
   ]
 
@@ -100,7 +102,9 @@ export default function OnboardingFlow({ user, onComplete }: OnboardingFlowProps
         workingStyle: profile.workingStyle!,
         weeklyCommitment: profile.weeklyCommitment!,
         createdAt: new Date(),
-        updatedAt: new Date()
+        updatedAt: new Date(),
+        isOnboardingComplete: true,
+        onboardingCompletedAt: new Date()
       }
       onComplete(completeProfile)
     }
@@ -112,6 +116,12 @@ export default function OnboardingFlow({ user, onComplete }: OnboardingFlowProps
     }
   }
 
+  const handleSkip = () => {
+    if (onSkip) {
+      onSkip()
+    }
+  }
+
   const isStepValid = () => {
     const step = steps[currentStep]
     switch (step.id) {
@@ -120,7 +130,7 @@ export default function OnboardingFlow({ user, onComplete }: OnboardingFlowProps
       case 'company':
         return profile.companySize && profile.companySize > 0
       case 'business':
-        return profile.businessDescription?.trim() && profile.businessDescription.length >= 10
+        return profile.businessDescription?.trim() && profile.businessDescription.length >= 20
       case 'experience':
         return profile.teamExperience
       case 'focus':
@@ -128,7 +138,7 @@ export default function OnboardingFlow({ user, onComplete }: OnboardingFlowProps
       case 'style':
         return profile.workingStyle
       case 'commitment':
-        return profile.weeklyCommitment && profile.weeklyCommitment >= 5 && profile.weeklyCommitment <= 100
+        return profile.weeklyCommitment && profile.weeklyCommitment >= 5 && profile.weeklyCommitment <= 80
       default:
         return true
     }
@@ -140,69 +150,80 @@ export default function OnboardingFlow({ user, onComplete }: OnboardingFlowProps
     switch (step.id) {
       case 'role':
         return (
-          <div className="space-y-4">
-            <div className="grid grid-cols-2 gap-3">
+          <div className="space-y-6">
+            <div className="grid grid-cols-2 gap-4">
               {[
-                { value: 'founder', label: 'Founder' },
-                { value: 'ceo', label: 'CEO' },
-                { value: 'coo', label: 'COO' },
-                { value: 'manager', label: 'Manager' },
-                { value: 'lead', label: 'Team Lead' },
-                { value: 'other', label: 'Other' }
+                { value: 'founder', label: 'Founder', desc: 'Building and leading the company' },
+                { value: 'ceo', label: 'CEO', desc: 'Chief Executive Officer' },
+                { value: 'coo', label: 'COO', desc: 'Chief Operating Officer' },
+                { value: 'manager', label: 'Manager', desc: 'Managing teams and operations' },
+                { value: 'lead', label: 'Team Lead', desc: 'Leading specific teams or projects' },
+                { value: 'other', label: 'Other Role', desc: 'Something else' }
               ].map(role => (
                 <button
                   key={role.value}
                   onClick={() => setProfile({ ...profile, userRole: role.value as CompanyProfile['userRole'] })}
-                  className={`p-4 rounded-lg border-2 transition-all text-left ${
+                  className={`p-6 rounded-xl border-2 transition-all duration-200 text-left group hover:shadow-lg ${
                     profile.userRole === role.value
-                      ? 'border-blue-500 bg-blue-50 text-blue-700'
-                      : 'border-gray-200 hover:border-gray-300 bg-white'
+                      ? 'border-[#1A4231] bg-[#1A4231] text-white shadow-lg'
+                      : 'border-gray-200 bg-white hover:border-[#1A4231] hover:bg-[#1A4231]/5'
                   }`}
                 >
-                  <div className="font-medium">{role.label}</div>
+                  <div className="font-semibold text-lg">{role.label}</div>
+                  <div className={`text-sm mt-1 ${
+                    profile.userRole === role.value ? 'text-white/80' : 'text-gray-500'
+                  }`}>
+                    {role.desc}
+                  </div>
                 </button>
               ))}
             </div>
             {profile.userRole === 'other' && (
-              <input
-                type="text"
-                placeholder="Please specify your role"
-                value={profile.customRole || ''}
-                onChange={(e) => setProfile({ ...profile, customRole: e.target.value })}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
+              <div className="mt-6">
+                <input
+                  type="text"
+                  placeholder="Please specify your role"
+                  value={profile.customRole || ''}
+                  onChange={(e) => setProfile({ ...profile, customRole: e.target.value })}
+                  className="w-full px-6 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-[#1A4231] focus:ring-4 focus:ring-[#1A4231]/10 text-lg"
+                />
+              </div>
             )}
           </div>
         )
 
       case 'company':
         return (
-          <div className="space-y-6">
-            <div className="grid grid-cols-3 gap-3">
+          <div className="space-y-8">
+            <div className="grid grid-cols-3 gap-4">
               {[
                 { value: 1, label: 'Just me', desc: 'Solo founder' },
                 { value: 5, label: '2-5 people', desc: 'Small team' },
                 { value: 15, label: '6-15 people', desc: 'Growing team' },
                 { value: 50, label: '16-50 people', desc: 'Medium company' },
                 { value: 100, label: '51-100 people', desc: 'Large company' },
-                { value: 500, label: '100+ people', desc: 'Enterprise' }
+                { value: 200, label: '100+ people', desc: 'Enterprise' }
               ].map(size => (
                 <button
                   key={size.value}
                   onClick={() => setProfile({ ...profile, companySize: size.value })}
-                  className={`p-4 rounded-lg border-2 transition-all text-center ${
+                  className={`p-6 rounded-xl border-2 transition-all duration-200 text-center group hover:shadow-lg ${
                     profile.companySize === size.value
-                      ? 'border-blue-500 bg-blue-50 text-blue-700'
-                      : 'border-gray-200 hover:border-gray-300 bg-white'
+                      ? 'border-[#1A4231] bg-[#1A4231] text-white shadow-lg'
+                      : 'border-gray-200 bg-white hover:border-[#1A4231] hover:bg-[#1A4231]/5'
                   }`}
                 >
-                  <div className="font-medium text-sm">{size.label}</div>
-                  <div className="text-xs text-gray-500 mt-1">{size.desc}</div>
+                  <div className="font-semibold text-lg">{size.label}</div>
+                  <div className={`text-sm mt-1 ${
+                    profile.companySize === size.value ? 'text-white/80' : 'text-gray-500'
+                  }`}>
+                    {size.desc}
+                  </div>
                 </button>
               ))}
             </div>
-            <div className="mt-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+            <div className="max-w-md mx-auto">
+              <label className="block text-sm font-medium text-gray-700 mb-3">
                 Or enter exact number:
               </label>
               <input
@@ -211,7 +232,7 @@ export default function OnboardingFlow({ user, onComplete }: OnboardingFlowProps
                 max="10000"
                 value={profile.companySize || ''}
                 onChange={(e) => setProfile({ ...profile, companySize: parseInt(e.target.value) || 1 })}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-6 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-[#1A4231] focus:ring-4 focus:ring-[#1A4231]/10 text-lg text-center"
                 placeholder="Number of team members"
               />
             </div>
@@ -220,52 +241,72 @@ export default function OnboardingFlow({ user, onComplete }: OnboardingFlowProps
 
       case 'business':
         return (
-          <div className="space-y-4">
-            <textarea
-              placeholder="Describe what your company does and where you're headed. This helps us create relevant tasks."
-              value={profile.businessDescription || ''}
-              onChange={(e) => setProfile({ ...profile, businessDescription: e.target.value })}
-              className="w-full px-4 py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[120px] resize-none"
-              maxLength={500}
-            />
-            <div className="flex justify-between text-sm text-gray-500">
-              <span>Be specific about your industry, target market, and current goals</span>
-              <span>{profile.businessDescription?.length || 0}/500</span>
+          <div className="space-y-6 max-w-2xl mx-auto">
+            <div className="space-y-4">
+              <textarea
+                placeholder="Describe what your company does, your target market, and current stage. For example: 'We're a B2B SaaS company providing project management tools for remote teams. We're in early growth stage with 50 customers and focusing on product-market fit.'"
+                value={profile.businessDescription || ''}
+                onChange={(e) => setProfile({ ...profile, businessDescription: e.target.value })}
+                className="w-full px-6 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-[#1A4231] focus:ring-4 focus:ring-[#1A4231]/10 min-h-[160px] resize-none text-lg leading-relaxed"
+                maxLength={800}
+              />
+              <div className="flex justify-between text-sm text-gray-500">
+                <span>Be specific about your industry, target market, and current goals</span>
+                                 <span className={(profile.businessDescription?.length || 0) >= 20 ? 'text-[#1A4231]' : 'text-gray-400'}>
+                   {profile.businessDescription?.length || 0}/800
+                 </span>
+              </div>
             </div>
           </div>
         )
 
       case 'experience':
         return (
-          <div className="space-y-4">
+          <div className="space-y-6 max-w-3xl mx-auto">
             {[
               {
                 value: 'guided',
                 title: 'Provide detailed guidance',
-                desc: 'The AI should give step-by-step instructions and close oversight'
+                desc: 'Give us step-by-step instructions and close oversight. We\'re still learning the ropes.',
+                icon: <Users className="h-6 w-6" />
               },
               {
                 value: 'balanced',
                 title: 'Mix of guidance and independence',
-                desc: 'The AI should provide clear direction but trust the team to execute'
+                desc: 'Give us clear direction but trust us to execute. We know our stuff but appreciate context.',
+                icon: <Target className="h-6 w-6" />
               },
               {
                 value: 'independent',
-                title: 'Assume high independence',
-                desc: 'The AI should focus on high-level strategy and let the team handle details'
+                title: 'Assume we\'re self-sufficient',
+                desc: 'Just tell us what needs to be done. We\'ll figure out the how. We\'re experienced operators.',
+                icon: <TrendingUp className="h-6 w-6" />
               }
             ].map(option => (
               <button
                 key={option.value}
                 onClick={() => setProfile({ ...profile, teamExperience: option.value as CompanyProfile['teamExperience'] })}
-                className={`w-full p-4 rounded-lg border-2 transition-all text-left ${
+                className={`w-full p-6 rounded-xl border-2 transition-all duration-200 text-left group hover:shadow-lg ${
                   profile.teamExperience === option.value
-                    ? 'border-blue-500 bg-blue-50 text-blue-700'
-                    : 'border-gray-200 hover:border-gray-300 bg-white'
+                    ? 'border-[#1A4231] bg-[#1A4231] text-white shadow-lg'
+                    : 'border-gray-200 bg-white hover:border-[#1A4231] hover:bg-[#1A4231]/5'
                 }`}
               >
-                <div className="font-medium">{option.title}</div>
-                <div className="text-sm text-gray-600 mt-1">{option.desc}</div>
+                <div className="flex items-start space-x-4">
+                  <div className={`mt-1 ${
+                    profile.teamExperience === option.value ? 'text-white' : 'text-[#1A4231]'
+                  }`}>
+                    {option.icon}
+                  </div>
+                  <div className="flex-1">
+                    <div className="font-semibold text-lg">{option.title}</div>
+                    <div className={`text-sm mt-2 leading-relaxed ${
+                      profile.teamExperience === option.value ? 'text-white/80' : 'text-gray-600'
+                    }`}>
+                      {option.desc}
+                    </div>
+                  </div>
+                </div>
               </button>
             ))}
           </div>
@@ -273,85 +314,94 @@ export default function OnboardingFlow({ user, onComplete }: OnboardingFlowProps
 
       case 'focus':
         return (
-          <div className="space-y-4">
-            <div className="grid grid-cols-2 gap-3">
+          <div className="space-y-6">
+            <div className="grid grid-cols-2 gap-4">
               {[
-                { value: 'growth', label: 'Growth & Scaling', icon: <TrendingUp className="h-4 w-4" /> },
-                { value: 'fundraising', label: 'Fundraising', icon: <Target className="h-4 w-4" /> },
-                { value: 'product', label: 'Product Development', icon: <Settings className="h-4 w-4" /> },
-                { value: 'operations', label: 'Operations', icon: <Briefcase className="h-4 w-4" /> },
-                { value: 'hiring', label: 'Team Building', icon: <Users className="h-4 w-4" /> },
-                { value: 'sales', label: 'Sales & Revenue', icon: <Target className="h-4 w-4" /> }
+                { value: 'growth', label: 'Growth', desc: 'Scaling revenue and expanding market reach' },
+                { value: 'fundraising', label: 'Fundraising', desc: 'Raising capital and investor relations' },
+                { value: 'product', label: 'Product Development', desc: 'Building and improving the product' },
+                { value: 'operations', label: 'Operations', desc: 'Optimizing processes and efficiency' },
+                { value: 'other', label: 'Other Focus', desc: 'Something else' }
               ].map(focus => (
                 <button
                   key={focus.value}
                   onClick={() => setProfile({ ...profile, primaryFocus: focus.value as CompanyProfile['primaryFocus'] })}
-                  className={`p-4 rounded-lg border-2 transition-all text-left ${
+                  className={`p-6 rounded-xl border-2 transition-all duration-200 text-left group hover:shadow-lg ${
                     profile.primaryFocus === focus.value
-                      ? 'border-blue-500 bg-blue-50 text-blue-700'
-                      : 'border-gray-200 hover:border-gray-300 bg-white'
+                      ? 'border-[#1A4231] bg-[#1A4231] text-white shadow-lg'
+                      : 'border-gray-200 bg-white hover:border-[#1A4231] hover:bg-[#1A4231]/5'
                   }`}
                 >
-                  <div className="flex items-center gap-2 font-medium">
-                    {focus.icon}
-                    {focus.label}
+                  <div className="font-semibold text-lg">{focus.label}</div>
+                  <div className={`text-sm mt-1 ${
+                    profile.primaryFocus === focus.value ? 'text-white/80' : 'text-gray-500'
+                  }`}>
+                    {focus.desc}
                   </div>
                 </button>
               ))}
             </div>
-            <button
-              onClick={() => setProfile({ ...profile, primaryFocus: 'other' })}
-              className={`w-full p-4 rounded-lg border-2 transition-all text-left ${
-                profile.primaryFocus === 'other'
-                  ? 'border-blue-500 bg-blue-50 text-blue-700'
-                  : 'border-gray-200 hover:border-gray-300 bg-white'
-              }`}
-            >
-              <div className="font-medium">Other</div>
-            </button>
             {profile.primaryFocus === 'other' && (
-              <input
-                type="text"
-                placeholder="What's your primary focus?"
-                value={profile.customFocus || ''}
-                onChange={(e) => setProfile({ ...profile, customFocus: e.target.value })}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
+              <div className="mt-6">
+                <input
+                  type="text"
+                  placeholder="Please specify your primary focus"
+                  value={profile.customFocus || ''}
+                  onChange={(e) => setProfile({ ...profile, customFocus: e.target.value })}
+                  className="w-full px-6 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-[#1A4231] focus:ring-4 focus:ring-[#1A4231]/10 text-lg"
+                />
+              </div>
             )}
           </div>
         )
 
       case 'style':
         return (
-          <div className="space-y-4">
+          <div className="space-y-6 max-w-3xl mx-auto">
             {[
               {
                 value: 'structured',
-                title: 'Structured Plans',
-                desc: 'Clear roadmaps with defined milestones and deadlines'
+                title: 'Structured plans',
+                desc: 'I prefer detailed roadmaps, clear timelines, and systematic approaches to getting things done.',
+                icon: <Settings className="h-6 w-6" />
               },
               {
-                value: 'suggestive',
-                title: 'Suggestive Advice',
-                desc: 'Recommendations and ideas that you can adapt as needed'
+                value: 'flexible',
+                title: 'Flexible suggestions',
+                desc: 'I like options and adaptability. Give me ideas I can modify and adjust as needed.',
+                icon: <Sparkles className="h-6 w-6" />
               },
               {
                 value: 'agile',
-                title: 'Agile & Iterative',
-                desc: 'Flexible approach with short cycles and quick pivots'
+                title: 'Agile collaboration',
+                desc: 'I work in sprints, iterate quickly, and prefer continuous feedback and adjustment.',
+                icon: <TrendingUp className="h-6 w-6" />
               }
             ].map(style => (
               <button
                 key={style.value}
                 onClick={() => setProfile({ ...profile, workingStyle: style.value as CompanyProfile['workingStyle'] })}
-                className={`w-full p-4 rounded-lg border-2 transition-all text-left ${
+                className={`w-full p-6 rounded-xl border-2 transition-all duration-200 text-left group hover:shadow-lg ${
                   profile.workingStyle === style.value
-                    ? 'border-blue-500 bg-blue-50 text-blue-700'
-                    : 'border-gray-200 hover:border-gray-300 bg-white'
+                    ? 'border-[#1A4231] bg-[#1A4231] text-white shadow-lg'
+                    : 'border-gray-200 bg-white hover:border-[#1A4231] hover:bg-[#1A4231]/5'
                 }`}
               >
-                <div className="font-medium">{style.title}</div>
-                <div className="text-sm text-gray-600 mt-1">{style.desc}</div>
+                <div className="flex items-start space-x-4">
+                  <div className={`mt-1 ${
+                    profile.workingStyle === style.value ? 'text-white' : 'text-[#1A4231]'
+                  }`}>
+                    {style.icon}
+                  </div>
+                  <div className="flex-1">
+                    <div className="font-semibold text-lg">{style.title}</div>
+                    <div className={`text-sm mt-2 leading-relaxed ${
+                      profile.workingStyle === style.value ? 'text-white/80' : 'text-gray-600'
+                    }`}>
+                      {style.desc}
+                    </div>
+                  </div>
+                </div>
               </button>
             ))}
           </div>
@@ -359,41 +409,52 @@ export default function OnboardingFlow({ user, onComplete }: OnboardingFlowProps
 
       case 'commitment':
         return (
-          <div className="space-y-6">
-            <div className="grid grid-cols-2 gap-3">
+          <div className="space-y-8 max-w-2xl mx-auto">
+            <div className="grid grid-cols-2 gap-4">
               {[
-                { value: 10, label: '10 hours/week', desc: 'Part-time focus' },
-                { value: 25, label: '25 hours/week', desc: 'Balanced approach' },
-                { value: 40, label: '40 hours/week', desc: 'Full-time dedication' },
-                { value: 60, label: '60+ hours/week', desc: 'Intense sprint mode' }
+                { value: 10, label: '5-10 hours', desc: 'Light commitment' },
+                { value: 20, label: '10-20 hours', desc: 'Part-time focus' },
+                { value: 40, label: '20-40 hours', desc: 'Significant focus' },
+                { value: 60, label: '40-60 hours', desc: 'High intensity' }
               ].map(commitment => (
                 <button
                   key={commitment.value}
                   onClick={() => setProfile({ ...profile, weeklyCommitment: commitment.value })}
-                  className={`p-4 rounded-lg border-2 transition-all text-center ${
+                  className={`p-6 rounded-xl border-2 transition-all duration-200 text-center group hover:shadow-lg ${
                     profile.weeklyCommitment === commitment.value
-                      ? 'border-blue-500 bg-blue-50 text-blue-700'
-                      : 'border-gray-200 hover:border-gray-300 bg-white'
+                      ? 'border-[#1A4231] bg-[#1A4231] text-white shadow-lg'
+                      : 'border-gray-200 bg-white hover:border-[#1A4231] hover:bg-[#1A4231]/5'
                   }`}
                 >
-                  <div className="font-medium text-sm">{commitment.label}</div>
-                  <div className="text-xs text-gray-500 mt-1">{commitment.desc}</div>
+                  <div className="font-semibold text-lg">{commitment.label}</div>
+                  <div className={`text-sm mt-1 ${
+                    profile.weeklyCommitment === commitment.value ? 'text-white/80' : 'text-gray-500'
+                  }`}>
+                    {commitment.desc}
+                  </div>
                 </button>
               ))}
             </div>
-            <div className="mt-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Custom hours per week:
+            <div className="space-y-4">
+              <label className="block text-sm font-medium text-gray-700 text-center">
+                Or enter exact hours per week:
               </label>
-              <input
-                type="number"
-                min="5"
-                max="100"
-                value={profile.weeklyCommitment || ''}
-                onChange={(e) => setProfile({ ...profile, weeklyCommitment: parseInt(e.target.value) || 40 })}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Hours per week"
-              />
+              <div className="flex items-center space-x-4">
+                <input
+                  type="range"
+                  min="5"
+                  max="80"
+                  value={profile.weeklyCommitment || 40}
+                  onChange={(e) => setProfile({ ...profile, weeklyCommitment: parseInt(e.target.value) })}
+                  className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
+                  style={{
+                    background: `linear-gradient(to right, #1A4231 0%, #1A4231 ${((profile.weeklyCommitment || 40) - 5) / 75 * 100}%, #e5e7eb ${((profile.weeklyCommitment || 40) - 5) / 75 * 100}%, #e5e7eb 100%)`
+                  }}
+                />
+                <div className="bg-[#1A4231] text-white px-4 py-2 rounded-lg font-semibold min-w-[80px] text-center">
+                  {profile.weeklyCommitment || 40}h
+                </div>
+              </div>
             </div>
           </div>
         )
@@ -403,82 +464,120 @@ export default function OnboardingFlow({ user, onComplete }: OnboardingFlowProps
     }
   }
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
-      <Card className="w-full max-w-2xl shadow-xl">
-        <CardHeader className="text-center pb-8">
-          <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Sparkles className="h-8 w-8 text-white" />
-          </div>
-          <CardTitle className="text-2xl font-bold text-gray-900">
-            Welcome to VEntry
-          </CardTitle>
-          <p className="text-gray-600 mt-2">
-            Let&apos;s personalize your experience to generate the most relevant tasks for your company
-          </p>
-          
-          {/* Progress Bar */}
-          <div className="flex items-center justify-center mt-6 space-x-2">
-            {steps.map((_, index) => (
-              <div
-                key={index}
-                className={`w-3 h-3 rounded-full transition-all ${
-                  index <= currentStep ? 'bg-blue-600' : 'bg-gray-200'
-                }`}
-              />
-            ))}
-          </div>
-          <p className="text-sm text-gray-500 mt-2">
-            Step {currentStep + 1} of {steps.length}
-          </p>
-        </CardHeader>
+  const currentStepData = steps[currentStep]
+  const progress = ((currentStep + 1) / steps.length) * 100
 
-        <CardContent className="px-8 pb-8">
-          <div className="text-center mb-8">
-            <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-              {steps[currentStep].icon}
+  return (
+    <div className="min-h-screen bg-white flex flex-col">
+      {/* Header */}
+      <header className="bg-white border-b border-gray-100 px-6 py-4">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <div className="flex items-center space-x-3">
+            <div className="w-10 h-10 bg-[#1A4231] rounded-xl flex items-center justify-center">
+              <Sparkles className="h-5 w-5 text-[#c9f223]" />
             </div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">
-              {steps[currentStep].title}
-            </h3>
-            <p className="text-gray-600">
-              {steps[currentStep].description}
+            <span className="text-2xl font-bold text-[#1A4231]">Ventry</span>
+          </div>
+          {onSkip && (
+            <button
+              onClick={handleSkip}
+              className="text-gray-500 hover:text-gray-700 transition-colors flex items-center space-x-2"
+            >
+              <span>Skip for now</span>
+              <X className="h-4 w-4" />
+            </button>
+          )}
+        </div>
+      </header>
+
+      {/* Progress Bar */}
+      <div className="bg-gray-50 px-6 py-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm font-medium text-gray-600">
+              Step {currentStep + 1} of {steps.length}
+            </span>
+            <span className="text-sm font-medium text-[#1A4231]">
+              {Math.round(progress)}% Complete
+            </span>
+          </div>
+          <div className="w-full bg-gray-200 rounded-full h-2">
+            <div
+              className="bg-[#1A4231] h-2 rounded-full transition-all duration-300 ease-out"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <main className="flex-1 flex items-center justify-center px-6 py-12">
+        <div className="w-full max-w-4xl">
+          {/* Step Header */}
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-[#1A4231] rounded-2xl mb-6">
+              <div className="text-[#c9f223]">
+                {currentStepData.icon}
+              </div>
+            </div>
+            <h1 className="text-4xl font-bold text-[#1A4231] mb-4">
+              {currentStepData.title}
+            </h1>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+              {currentStepData.subtitle}
             </p>
           </div>
 
-          {renderStepContent()}
+          {/* Step Content */}
+          <div className="mb-12">
+            {renderStepContent()}
+          </div>
 
-          <div className="flex justify-between mt-8">
+          {/* Navigation */}
+          <div className="flex items-center justify-between max-w-2xl mx-auto">
             <Button
+              variant="outline"
               onClick={handlePrevious}
               disabled={currentStep === 0}
-              variant="outline"
-              className="flex items-center gap-2"
+              className="flex items-center space-x-2 px-6 py-3 border-2 border-gray-200 hover:border-[#1A4231] hover:bg-[#1A4231]/5 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <ChevronLeft className="h-4 w-4" />
-              Previous
+              <span>Previous</span>
             </Button>
+
+            <div className="flex space-x-2">
+              {steps.map((_, index) => (
+                <div
+                  key={index}
+                  className={`w-3 h-3 rounded-full transition-all duration-200 ${
+                    index <= currentStep ? 'bg-[#1A4231]' : 'bg-gray-200'
+                  }`}
+                />
+              ))}
+            </div>
 
             <Button
               onClick={handleNext}
               disabled={!isStepValid()}
-              className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+              className="flex items-center space-x-2 px-6 py-3 bg-[#1A4231] hover:bg-[#1A4231]/90 text-white disabled:opacity-50 disabled:cursor-not-allowed"
             >
+              <span>{currentStep === steps.length - 1 ? 'Complete Setup' : 'Next'}</span>
               {currentStep === steps.length - 1 ? (
-                <>
-                  <Check className="h-4 w-4" />
-                  Complete Setup
-                </>
+                <Check className="h-4 w-4" />
               ) : (
-                <>
-                  Next
-                  <ChevronRight className="h-4 w-4" />
-                </>
+                <ChevronRight className="h-4 w-4" />
               )}
             </Button>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-gray-50 px-6 py-4 border-t border-gray-100">
+        <div className="max-w-7xl mx-auto text-center text-sm text-gray-500">
+          Your responses help us create personalized, actionable tasks that drive real business results.
+        </div>
+      </footer>
     </div>
   )
 } 

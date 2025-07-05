@@ -114,7 +114,8 @@ export default function DashboardPage() {
           teamMembers: team,
           generateForTeam: team.length > 0,
           suggestionMode: true,
-          previousTeamTasks: localStorage.getItem(`employeeTasks_${user.id}`) ? JSON.parse(localStorage.getItem(`employeeTasks_${user.id}`) || '{}') : {}
+          previousTeamTasks: localStorage.getItem(`employeeTasks_${user.id}`) ? JSON.parse(localStorage.getItem(`employeeTasks_${user.id}`) || '{}') : {},
+          userId: user.id
         })
       })
 

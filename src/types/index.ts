@@ -83,13 +83,15 @@ export interface CompanyProfile {
   customRole?: string
   companySize: number
   businessDescription: string
-  teamExperience: 'beginner' | 'intermediate' | 'advanced' | 'balanced'
-  primaryFocus: 'growth' | 'operations' | 'product' | 'sales' | 'other'
+  teamExperience: 'guided' | 'balanced' | 'independent'
+  primaryFocus: 'growth' | 'fundraising' | 'product' | 'operations' | 'other'
   customFocus?: string
-  workingStyle: 'structured' | 'flexible' | 'urgent'
+  workingStyle: 'structured' | 'flexible' | 'agile'
   weeklyCommitment: number
   createdAt: Date
   updatedAt: Date
+  isOnboardingComplete: boolean
+  onboardingCompletedAt?: Date
 }
 
 export interface TaskGenerationContext {
@@ -155,4 +157,13 @@ export interface TaskSelectionState {
   ceoSelected: TaskSuggestion[]
   teamSelected: Record<string, TeamTaskSuggestion[]>
   autoMode: AutoModeSettings
+}
+
+export interface OnboardingStatus {
+  userId: string
+  isComplete: boolean
+  completedAt?: Date
+  currentStep: number
+  totalSteps: number
+  canSkip: boolean
 } 

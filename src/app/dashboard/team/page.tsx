@@ -100,7 +100,8 @@ export default function TeamPage() {
           teamMembers,
           generateForTeam: true,
           suggestionMode: true,
-          previousTeamTasks: teamTasks
+          previousTeamTasks: teamTasks,
+          userId: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') || '{}').id : null
         })
       })
 

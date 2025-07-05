@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { generateDailyTasks, generateTeamTasks, generateTaskSuggestions, generateTeamTaskSuggestions } from '@/lib/openai'
+import { getOnboardingProfile, generateTaskContext } from '@/lib/utils'
 
 export async function POST(request: NextRequest) {
   try {
-    const { goals, previousTasks, knowledgeBase, timeframe, teamMembers, generateForTeam = true, suggestionMode = false, previousTeamTasks } = await request.json()
+    const { goals, previousTasks, knowledgeBase, timeframe, teamMembers, generateForTeam = true, suggestionMode = false, previousTeamTasks, userId } = await request.json()
 
     // Basic validation
     if (!goals || !Array.isArray(goals)) {
@@ -23,10 +24,33 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    // Get onboarding profile for personalized context
+    let onboardingContext = ''
+    if (userId) {
+      const profile = getOnboardingProfile(userId)
+      if (profile && profile.isOnboardingComplete) {
+        onboardingContext = generateTaskContext(profile)
+      }
+    }
+
+    // Enhanced knowledge base with onboarding context
+    const enhancedKnowledgeBase = onboardingContext 
+      ? [
+          {
+            id: 'onboarding-profile',
+            title: 'Company Profile & Preferences',
+            content: onboardingContext,
+            category: 'operational-context' as const,
+            tags: ['profile', 'context', 'personalization']
+          },
+          ...(knowledgeBase || [])
+        ]
+      : (knowledgeBase || [])
+
     const context = {
       goals: goals || [],
       previousTasks: previousTasks || [],
-      knowledgeBase: knowledgeBase || [],
+      knowledgeBase: enhancedKnowledgeBase,
       timeframe: timeframe || 'today'
     }
 
@@ -56,7 +80,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ 
         ceoSuggestions,
         teamSuggestions,
-        message: 'Task suggestions generated successfully'
+        message: 'Task suggestions generated successfully',
+        onboardingContext: onboardingContext ? 'Personalized based on your profile' : 'Using default context'
       })
     } else {
       // Generate actual tasks (original behavior)
@@ -84,7 +109,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ 
         tasks: ceoTasks,
         teamTasks,
-        message: 'Tasks generated successfully'
+        message: 'Tasks generated successfully',
+        onboardingContext: onboardingContext ? 'Personalized based on your profile' : 'Using default context'
       })
     }
 
