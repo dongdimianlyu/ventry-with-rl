@@ -8,10 +8,25 @@ const openai = process.env.OPENAI_API_KEY ? new OpenAI({
 }) : null
 
 export async function generateDailyTasks(context: TaskGenerationContext): Promise<Omit<Task, 'id' | 'userId' | 'createdAt'>[]> {
-  const { goals, previousTasks, knowledgeBase } = context
+  const { goals, previousTasks, knowledgeBase, shopifyContext } = context
 
   const goalsText = goals.map(g => `${g.title} (${g.timeframe}, ${g.priority} priority): ${g.description}`).join('\n')
   const knowledgeText = knowledgeBase.map(kb => `${kb.category}: ${kb.content}`).join('\n')
+  
+  // Include Shopify business context if available
+  const shopifyContextText = shopifyContext ? `
+SHOPIFY BUSINESS INTELLIGENCE:
+${shopifyContext.businessContext}
+
+CURRENT INSIGHTS:
+${shopifyContext.insights.map((insight: any) => `- ${insight.summary} (${insight.urgencyLevel} urgency)`).join('\n')}
+
+URGENT ALERTS:
+${shopifyContext.urgentAlerts.join('\n')}
+
+OPPORTUNITIES:
+${shopifyContext.opportunities.join('\n')}
+  `.trim() : ''
   
   // Enhanced context analysis using previous tasks
   const recentTasksText = previousTasks.slice(-15).map(t => `${t.title}: ${t.description} (Priority: ${t.priority}, Completed: ${t.completed}, Why: ${t.explanation})`).join('\n')
@@ -35,6 +50,8 @@ ${goalsText}
 
 BUSINESS INTELLIGENCE & BEST PRACTICES:
 ${knowledgeText}
+
+${shopifyContextText}
 
 RECENT TASK HISTORY & PROGRESS ANALYSIS:
 ${recentTasksText}

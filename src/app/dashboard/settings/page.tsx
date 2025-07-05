@@ -1,17 +1,26 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Settings, RefreshCw, User, CheckCircle, AlertCircle } from 'lucide-react'
+import { Settings, RefreshCw, User, CheckCircle, AlertCircle, ShoppingBag, Plus } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { getOnboardingProfile, resetOnboarding, formatDate } from '@/lib/utils'
-import { CompanyProfile } from '@/types'
+import { CompanyProfile, ShopifyConnection, ShopifyIntegrationStatus } from '@/types'
+import { ShopifyConnectionModal, ShopifyConnectionStatus } from '@/components/shopify/ShopifyConnectionModal'
+import { getShopifyConnection } from '@/lib/shopify'
 
 export default function SettingsPage() {
   const [onboardingProfile, setOnboardingProfile] = useState<CompanyProfile | null>(null)
   const [isResetting, setIsResetting] = useState(false)
   const [showResetConfirm, setShowResetConfirm] = useState(false)
   const [user, setUser] = useState<{ id: string; name?: string; email: string } | null>(null)
+  
+  // Shopify integration state
+  const [shopifyConnection, setShopifyConnection] = useState<ShopifyConnection | null>(null)
+  const [shopifyStatus, setShopifyStatus] = useState<ShopifyIntegrationStatus | null>(null)
+  const [showShopifyModal, setShowShopifyModal] = useState(false)
+  const [isConnecting, setIsConnecting] = useState(false)
+  const [shopifyError, setShopifyError] = useState<string | null>(null)
 
   useEffect(() => {
     const userData = localStorage.getItem('user')
@@ -22,6 +31,28 @@ export default function SettingsPage() {
       // Load onboarding profile
       const profile = getOnboardingProfile(parsedUser.id)
       setOnboardingProfile(profile)
+      
+      // Load Shopify connection
+      loadShopifyConnection(parsedUser.id)
+    }
+
+    // Check for Shopify connection success/error from URL params
+    const urlParams = new URLSearchParams(window.location.search)
+    if (urlParams.get('shopify_connected') === 'true') {
+      const shopName = urlParams.get('shop_name')
+      setShopifyError(null)
+      // Reload connection data
+      if (userData) {
+        const parsedUser = JSON.parse(userData)
+        loadShopifyConnection(parsedUser.id)
+      }
+      // Clear URL params
+      window.history.replaceState({}, '', '/dashboard/settings')
+    }
+    if (urlParams.get('error')) {
+      setShopifyError(urlParams.get('error'))
+      // Clear URL params
+      window.history.replaceState({}, '', '/dashboard/settings')
     }
   }, [])
 
@@ -49,6 +80,107 @@ export default function SettingsPage() {
 
   const getFocusDisplay = (profile: CompanyProfile) => {
     return profile.primaryFocus === 'other' ? profile.customFocus || 'Other' : profile.primaryFocus
+  }
+
+  // Shopify connection management functions
+  const loadShopifyConnection = async (userId: string) => {
+    try {
+      const connection = getShopifyConnection(userId)
+      setShopifyConnection(connection)
+      
+      if (connection) {
+        // Load connection status
+        const response = await fetch(`/api/shopify/sync?userId=${userId}`)
+        const data = await response.json()
+        
+        if (data.connected) {
+          setShopifyStatus({
+            isConnected: true,
+            connectionHealth: data.status.isHealthy ? 'healthy' : 'warning',
+            lastSuccessfulSync: new Date(data.status.lastSyncAt),
+            apiCallsUsed: 0, // Would need to track this
+            apiCallsLimit: 1000, // Shopify default
+            webhooksActive: 0, // Would need to track this
+            webhooksTotal: 0,
+            dataFreshness: data.status.dataAge < 6 * 60 * 60 * 1000 ? 'fresh' : 'stale'
+          })
+        }
+      }
+    } catch (error) {
+      console.error('Error loading Shopify connection:', error)
+    }
+  }
+
+  const handleShopifyConnect = async (shopDomain: string) => {
+    if (!user) return
+    
+    setIsConnecting(true)
+    setShopifyError(null)
+    
+    try {
+      const response = await fetch('/api/shopify/connect', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          shopDomain,
+          userId: user.id,
+          returnUrl: '/dashboard/settings'
+        })
+      })
+      
+      const data = await response.json()
+      
+      if (data.success) {
+        // Redirect to Shopify OAuth
+        window.location.href = data.oauthUrl
+      } else {
+        setShopifyError(data.error || 'Failed to initiate connection')
+        setIsConnecting(false)
+      }
+    } catch (error) {
+      setShopifyError('Failed to connect to Shopify')
+      setIsConnecting(false)
+    }
+  }
+
+  const handleShopifyDisconnect = async () => {
+    if (!user || !shopifyConnection) return
+    
+    try {
+      const response = await fetch('/api/shopify/disconnect', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: user.id })
+      })
+      
+      if (response.ok) {
+        setShopifyConnection(null)
+        setShopifyStatus(null)
+        setShopifyError(null)
+      } else {
+        setShopifyError('Failed to disconnect')
+      }
+    } catch (error) {
+      setShopifyError('Failed to disconnect')
+    }
+  }
+
+  const handleShopifyRefresh = async () => {
+    if (!user) return
+    
+    try {
+      const response = await fetch('/api/shopify/sync', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: user.id })
+      })
+      
+      if (response.ok) {
+        await loadShopifyConnection(user.id)
+      }
+    } catch (error) {
+      console.error('Error refreshing Shopify data:', error)
+    }
   }
 
   return (
@@ -187,26 +319,58 @@ export default function SettingsPage() {
             </CardContent>
           </Card>
 
-          {/* Additional Settings Card */}
+          {/* Shopify Integration Card */}
           <Card className="shadow-sm">
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
-                <Settings className="h-5 w-5 text-[#1A4231]" />
-                <span>Application Settings</span>
+                <ShoppingBag className="h-5 w-5 text-green-600" />
+                <span>Shopify Integration</span>
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-center py-8">
-                <Settings className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-gray-900 mb-2">More Settings Coming Soon</h3>
-                <p className="text-gray-500">
-                  Additional preferences, notifications, and team settings will be available here.
-                </p>
-              </div>
+              {shopifyConnection && shopifyStatus ? (
+                <ShopifyConnectionStatus
+                  connection={shopifyConnection}
+                  integrationStatus={shopifyStatus}
+                  onDisconnect={handleShopifyDisconnect}
+                  onRefresh={handleShopifyRefresh}
+                />
+              ) : (
+                <div className="text-center py-8">
+                  <ShoppingBag className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                  <h3 className="text-lg font-medium text-gray-900 mb-2">Connect Your Shopify Store</h3>
+                  <p className="text-gray-500 mb-4">
+                    Get AI-powered task recommendations based on your store's performance and business insights.
+                  </p>
+                  {shopifyError && (
+                    <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                      <p className="text-sm text-red-700">{shopifyError}</p>
+                    </div>
+                  )}
+                  <Button
+                    onClick={() => setShowShopifyModal(true)}
+                    className="bg-green-600 hover:bg-green-700 text-white"
+                    disabled={isConnecting}
+                  >
+                    <Plus className="h-4 w-4 mr-2" />
+                    Connect Shopify Store
+                  </Button>
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>
       </div>
+
+      {/* Shopify Connection Modal */}
+      <ShopifyConnectionModal
+        isOpen={showShopifyModal}
+        onClose={() => setShowShopifyModal(false)}
+        onConnect={handleShopifyConnect}
+        existingConnection={shopifyConnection}
+        integrationStatus={shopifyStatus}
+        isConnecting={isConnecting}
+      />
     </div>
   )
 } 

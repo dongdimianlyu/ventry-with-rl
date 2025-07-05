@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { generateDailyTasks, generateTeamTasks, generateTaskSuggestions, generateTeamTaskSuggestions } from '@/lib/openai'
 import { getOnboardingProfile, generateTaskContext } from '@/lib/utils'
+import { generateShopifyTaskContext, isShopifyDataFresh } from '@/lib/shopify-task-integration'
 
 export async function POST(request: NextRequest) {
   try {
@@ -47,11 +48,22 @@ export async function POST(request: NextRequest) {
         ]
       : (knowledgeBase || [])
 
+    // Generate Shopify context if available and fresh
+    let shopifyContext = undefined
+    if (userId && isShopifyDataFresh(userId)) {
+      const context = await generateShopifyTaskContext(userId)
+      if (context) {
+        shopifyContext = context
+        console.log('🛍️ Including Shopify business intelligence in task generation')
+      }
+    }
+
     const context = {
       goals: goals || [],
       previousTasks: previousTasks || [],
       knowledgeBase: enhancedKnowledgeBase,
-      timeframe: timeframe || 'today'
+      timeframe: timeframe || 'today',
+      shopifyContext
     }
 
     if (suggestionMode) {
