@@ -72,7 +72,7 @@ export interface KnowledgeBase {
   id: string
   title: string
   content: string
-  category: 'strategy' | 'operations' | 'growth' | 'retention' | 'sales' | 'role-templates' | 'frameworks' | 'planning' | 'workflows' | 'time-estimates' | 'best-practices' | 'operational-context'
+  category: 'strategy' | 'operations' | 'growth' | 'retention' | 'sales' | 'marketing' | 'finance' | 'customer-success' | 'role-templates' | 'frameworks' | 'planning' | 'workflows' | 'time-estimates' | 'best-practices' | 'operational-context'
   tags: string[]
 }
 

@@ -1,7 +1,7 @@
 import { TeamTask } from '@/types'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { CheckCircle, Circle, Target, TrendingUp, DollarSign, Clock, X, Lightbulb } from 'lucide-react'
+import { CheckCircle, Circle, Target, TrendingUp, DollarSign, Clock, X } from 'lucide-react'
 import { formatCompactDateTime } from '@/lib/utils'
 import { useState } from 'react'
 
