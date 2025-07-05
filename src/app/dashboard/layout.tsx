@@ -58,30 +58,6 @@ export default function DashboardLayout({
     setShowOnboarding(false)
   }
 
-  const handleSkipOnboarding = () => {
-    if (!user) return
-    
-    // Create a minimal profile to indicate onboarding was skipped
-    const skippedProfile: CompanyProfile = {
-      id: `profile-${Date.now()}`,
-      userId: user.id,
-      userRole: 'founder',
-      companySize: 5,
-      businessDescription: 'Onboarding skipped',
-      teamExperience: 'balanced',
-      primaryFocus: 'growth',
-      workingStyle: 'flexible',
-      weeklyCommitment: 40,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      isOnboardingComplete: false,
-      onboardingCompletedAt: undefined
-    }
-    
-    localStorage.setItem(`onboarding_${user.id}`, JSON.stringify(skippedProfile))
-    setShowOnboarding(false)
-  }
-
   if (loading) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
@@ -100,7 +76,6 @@ export default function DashboardLayout({
       <OnboardingFlow
         user={user}
         onComplete={handleOnboardingComplete}
-        onSkip={handleSkipOnboarding}
       />
     )
   }

@@ -6,24 +6,55 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export function formatDate(date: Date): string {
+export function formatDate(date: Date | null | undefined): string {
+  if (!date) {
+    return 'Not set'
+  }
+  
+  const dateObj = date instanceof Date ? date : new Date(date)
+  
+  // Check if the date is valid
+  if (isNaN(dateObj.getTime())) {
+    return 'Invalid date'
+  }
+  
   return new Intl.DateTimeFormat('en-US', {
     year: 'numeric',
     month: 'short',
     day: 'numeric'
-  }).format(date)
+  }).format(dateObj)
 }
 
-export function formatTime(date: Date | string): string {
+export function formatTime(date: Date | string | null | undefined): string {
+  if (!date) {
+    return 'Not set'
+  }
+  
   const dateObj = typeof date === 'string' ? new Date(date) : date
+  
+  // Check if the date is valid
+  if (isNaN(dateObj.getTime())) {
+    return 'Invalid time'
+  }
+  
   return dateObj.toLocaleTimeString('en-US', {
     hour: '2-digit',
     minute: '2-digit'
   })
 }
 
-export function formatCompactDateTime(date: Date | string): string {
+export function formatCompactDateTime(date: Date | string | null | undefined): string {
+  if (!date) {
+    return 'Not set'
+  }
+  
   const dateObj = typeof date === 'string' ? new Date(date) : date
+  
+  // Check if the date is valid
+  if (isNaN(dateObj.getTime())) {
+    return 'Invalid date'
+  }
+  
   const now = new Date()
   const isToday = dateObj.toDateString() === now.toDateString()
   

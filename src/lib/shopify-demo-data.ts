@@ -242,15 +242,7 @@ export function generateDemoCustomers(): ShopifyCustomer[] {
       totalSpent,
       tags: ordersCount > 5 ? ['vip', 'loyal'] : ordersCount > 2 ? ['returning'] : ['new'],
       acceptsMarketing: Math.random() > 0.3,
-      defaultAddress: {
-        firstName: `Customer${i}`,
-        lastName: 'Demo',
-        address1: `${100 + i} Demo Street`,
-        city: ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix'][Math.floor(Math.random() * 5)],
-        province: ['NY', 'CA', 'IL', 'TX', 'AZ'][Math.floor(Math.random() * 5)],
-        country: 'United States',
-        zip: `${10000 + i}`
-      }
+      marketingOptInLevel: Math.random() > 0.3 ? 'confirmed_opt_in' : 'not_opted_in'
     })
   }
   

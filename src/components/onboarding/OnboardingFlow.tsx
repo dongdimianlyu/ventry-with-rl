@@ -15,7 +15,6 @@ import {
   TrendingUp,
   Settings,
   User,
-  X,
   ArrowRight
 } from 'lucide-react'
 import { CompanyProfile, User as UserType } from '@/types'
@@ -23,10 +22,9 @@ import { CompanyProfile, User as UserType } from '@/types'
 interface OnboardingFlowProps {
   user: UserType
   onComplete: (profile: CompanyProfile) => void
-  onSkip?: () => void
 }
 
-export default function OnboardingFlow({ user, onComplete, onSkip }: OnboardingFlowProps) {
+export default function OnboardingFlow({ user, onComplete }: OnboardingFlowProps) {
   const [currentStep, setCurrentStep] = useState(0)
   const [profile, setProfile] = useState<Partial<CompanyProfile>>({
     userId: user.id,
@@ -117,8 +115,55 @@ export default function OnboardingFlow({ user, onComplete, onSkip }: OnboardingF
   }
 
   const handleSkip = () => {
-    if (onSkip) {
-      onSkip()
+    // Skip current step by providing default values
+    const step = steps[currentStep]
+    switch (step.id) {
+      case 'role':
+        setProfile({ ...profile, userRole: 'founder' })
+        break
+      case 'company':
+        setProfile({ ...profile, companySize: 5 })
+        break
+      case 'business':
+        setProfile({ ...profile, businessDescription: 'Business description skipped' })
+        break
+      case 'experience':
+        setProfile({ ...profile, teamExperience: 'balanced' })
+        break
+      case 'focus':
+        setProfile({ ...profile, primaryFocus: 'growth' })
+        break
+      case 'style':
+        setProfile({ ...profile, workingStyle: 'flexible' })
+        break
+      case 'commitment':
+        setProfile({ ...profile, weeklyCommitment: 40 })
+        break
+    }
+    
+    // Move to next step
+    if (currentStep < steps.length - 1) {
+      setCurrentStep(currentStep + 1)
+    } else {
+      // Complete onboarding with skipped values
+      const completeProfile: CompanyProfile = {
+        id: `profile-${Date.now()}`,
+        userId: user.id,
+        userRole: profile.userRole || 'founder',
+        customRole: profile.customRole,
+        companySize: profile.companySize || 5,
+        businessDescription: profile.businessDescription || 'Business description skipped',
+        teamExperience: profile.teamExperience || 'balanced',
+        primaryFocus: profile.primaryFocus || 'growth',
+        customFocus: profile.customFocus,
+        workingStyle: profile.workingStyle || 'flexible',
+        weeklyCommitment: profile.weeklyCommitment || 40,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        isOnboardingComplete: true,
+        onboardingCompletedAt: new Date()
+      }
+      onComplete(completeProfile)
     }
   }
 
@@ -230,8 +275,18 @@ export default function OnboardingFlow({ user, onComplete, onSkip }: OnboardingF
                 type="number"
                 min="1"
                 max="10000"
-                value={profile.companySize || ''}
-                onChange={(e) => setProfile({ ...profile, companySize: parseInt(e.target.value) || 1 })}
+                value={profile.companySize === undefined ? '' : profile.companySize}
+                onChange={(e) => {
+                  const value = e.target.value
+                  if (value === '') {
+                    setProfile({ ...profile, companySize: undefined })
+                  } else {
+                    const numValue = parseInt(value)
+                    if (!isNaN(numValue) && numValue >= 1) {
+                      setProfile({ ...profile, companySize: numValue })
+                    }
+                  }
+                }}
                 className="w-full px-6 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-[#1A4231] focus:ring-4 focus:ring-[#1A4231]/10 text-lg text-center"
                 placeholder="Number of team members"
               />
@@ -478,15 +533,13 @@ export default function OnboardingFlow({ user, onComplete, onSkip }: OnboardingF
             </div>
             <span className="text-2xl font-bold text-[#1A4231]">Ventry</span>
           </div>
-          {onSkip && (
-            <button
-              onClick={handleSkip}
-              className="text-gray-500 hover:text-gray-700 transition-colors flex items-center space-x-2"
-            >
-              <span>Skip for now</span>
-              <X className="h-4 w-4" />
-            </button>
-          )}
+          <button
+            onClick={handleSkip}
+            className="text-gray-500 hover:text-gray-700 transition-colors flex items-center space-x-2"
+          >
+            <span>Skip this step</span>
+            <ArrowRight className="h-4 w-4" />
+          </button>
         </div>
       </header>
 

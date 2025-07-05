@@ -24,8 +24,6 @@ interface ShopifyConnectionModalProps {
   isOpen: boolean
   onClose: () => void
   onConnect: (shopDomain: string) => void
-  existingConnection?: ShopifyConnection | null
-  integrationStatus?: ShopifyIntegrationStatus | null
   isConnecting?: boolean
 }
 
@@ -33,8 +31,6 @@ export function ShopifyConnectionModal({
   isOpen, 
   onClose, 
   onConnect, 
-  existingConnection,
-  integrationStatus,
   isConnecting = false 
 }: ShopifyConnectionModalProps) {
   const [shopDomain, setShopDomain] = useState('')
@@ -272,17 +268,17 @@ export function ShopifyConnectionModal({
             <p className="mt-1 text-sm text-red-600">{domainError}</p>
           )}
           <p className="mt-2 text-xs text-gray-500">
-            Enter just the shop name (e.g., "my-store" for my-store.myshopify.com)
+            Enter just the shop name (e.g., &quot;my-store&quot; for my-store.myshopify.com)
           </p>
         </div>
 
         <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
           <h4 className="font-semibold text-gray-900 mb-2">What happens next?</h4>
           <ol className="text-sm text-gray-600 space-y-1">
-            <li>1. You'll be redirected to Shopify to authorize the connection</li>
+            <li>1. You&apos;ll be redirected to Shopify to authorize the connection</li>
             <li>2. Review and approve the requested permissions</li>
-            <li>3. You'll be brought back to Ventry with your store connected</li>
-            <li>4. We'll immediately start analyzing your data for insights</li>
+            <li>3. You&apos;ll be brought back to Ventry with your store connected</li>
+            <li>4. We&apos;ll immediately start analyzing your data for insights</li>
           </ol>
         </div>
       </div>

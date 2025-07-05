@@ -39,7 +39,6 @@ export default function SettingsPage() {
     // Check for Shopify connection success/error from URL params
     const urlParams = new URLSearchParams(window.location.search)
     if (urlParams.get('shopify_connected') === 'true') {
-      const shopName = urlParams.get('shop_name')
       setShopifyError(null)
       // Reload connection data
       if (userData) {
@@ -137,7 +136,7 @@ export default function SettingsPage() {
         setShopifyError(data.error || 'Failed to initiate connection')
         setIsConnecting(false)
       }
-    } catch (error) {
+    } catch {
       setShopifyError('Failed to connect to Shopify')
       setIsConnecting(false)
     }
@@ -160,7 +159,7 @@ export default function SettingsPage() {
       } else {
         setShopifyError('Failed to disconnect')
       }
-    } catch (error) {
+    } catch {
       setShopifyError('Failed to disconnect')
     }
   }
@@ -178,8 +177,8 @@ export default function SettingsPage() {
       if (response.ok) {
         await loadShopifyConnection(user.id)
       }
-    } catch (error) {
-      console.error('Error refreshing Shopify data:', error)
+    } catch {
+      console.error('Error refreshing Shopify data')
     }
   }
 
@@ -340,7 +339,7 @@ export default function SettingsPage() {
                   <ShoppingBag className="h-12 w-12 text-gray-400 mx-auto mb-4" />
                   <h3 className="text-lg font-medium text-gray-900 mb-2">Connect Your Shopify Store</h3>
                   <p className="text-gray-500 mb-4">
-                    Get AI-powered task recommendations based on your store's performance and business insights.
+                    Get AI-powered task recommendations based on your store&apos;s performance and business insights.
                   </p>
                   {shopifyError && (
                     <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
@@ -367,8 +366,6 @@ export default function SettingsPage() {
         isOpen={showShopifyModal}
         onClose={() => setShowShopifyModal(false)}
         onConnect={handleShopifyConnect}
-        existingConnection={shopifyConnection}
-        integrationStatus={shopifyStatus}
         isConnecting={isConnecting}
       />
     </div>

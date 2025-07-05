@@ -7,11 +7,11 @@ A production-ready task management platform that uses OpenAI's GPT-4 to generate
 ### ✅ **Fully Implemented** (Production Ready)
 
 - **🧠 AI-Powered Task Generation**: Advanced OpenAI integration that generates tactical, predictive tasks
-- **📊 Real-Time Analytics**: Live performance tracking with AI-generated insights
+
 - **👥 Team Management**: Intelligent task distribution across team members
 - **🎯 Goal Tracking**: Strategic goal management with progress analytics
 - **📈 Performance Insights**: Historical analysis and future predictions
-- **🔄 Live Data Flow**: Real-time updates across dashboard, team view, and analytics
+- **🔄 Live Data Flow**: Real-time updates across dashboard and team view
 
 ### 🎯 **AI Task Generation Quality**
 
@@ -81,7 +81,7 @@ Our AI generates tasks that are:
 2. **Add Business Goals** - Set strategic objectives with priorities and timeframes
 3. **Generate AI Tasks** - Click "Generate Daily Tasks" for intelligent recommendations
 4. **Set Up Team** - Add team members and generate role-specific tasks
-5. **View Analytics** - See real-time performance insights and AI recommendations
+
 
 ## 🏗 Architecture
 
@@ -89,14 +89,13 @@ Our AI generates tasks that are:
 
 - `POST /api/tasks/generate` - Advanced AI task generation with context analysis
 - `POST /api/tasks/team` - Intelligent team task distribution 
-- `POST /api/analytics` - Real-time performance analytics with AI insights
-- `GET /api/analytics?demo=true` - Demo analytics data
+
 
 ### Key Components
 
 - **Dashboard** (`/dashboard`) - CEO task management with AI generation
 - **Team View** (`/dashboard/team`) - Team setup and collaborative task management  
-- **Analytics** (`/dashboard/analytics`) - Performance tracking and AI insights
+
 - **Settings** (`/dashboard/settings`) - User preferences and configuration
 
 ### AI Integration (`/src/lib/openai.ts`)
@@ -131,7 +130,7 @@ Our AI generates tasks that are:
 ```
 User Goals → AI Analysis → Strategic Tasks → Real-time Tracking → Performance Insights
      ↓              ↓              ↓              ↓               ↓
-Business Context → Team Structure → Task Distribution → Analytics → AI Recommendations
+Business Context → Team Structure → Task Distribution → AI Recommendations
 ```
 
 ## 🚀 Production Deployment
@@ -168,9 +167,8 @@ npm start
    - Verify balanced task allocation
    - Check role-specific task relevance
 
-3. **Test Analytics**:
+3. **Test Task Management**:
    - Complete/mark various tasks as done
-   - View real-time analytics updates
    - Check AI recommendations accuracy
 
 ## 📈 Performance Metrics
@@ -218,7 +216,7 @@ This project is available for demonstration and portfolio purposes.
 This is a portfolio project demonstrating advanced AI integration in business applications. The codebase showcases production-ready patterns for:
 
 - AI-powered task generation
-- Real-time analytics processing  
+  
 - Team collaboration workflows
 - Predictive business insights
 

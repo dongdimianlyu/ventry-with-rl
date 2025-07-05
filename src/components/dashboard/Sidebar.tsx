@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { CheckSquare, Users, Target, Settings, Sparkles } from 'lucide-react'
+import { CheckSquare, Users, Settings, Sparkles } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const navigation = [
@@ -16,11 +16,7 @@ const navigation = [
     href: '/dashboard/team',
     icon: Users,
   },
-  {
-    name: 'Analytics',
-    href: '/dashboard/analytics',
-    icon: Target,
-  },
+
   {
     name: 'Settings',
     href: '/dashboard/settings',
