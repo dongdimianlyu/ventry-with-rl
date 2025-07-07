@@ -1,0 +1,9 @@
+2025-07-07 12:02:49,386 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 12:03:50,109 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 12:03:50,109 - __main__ - INFO - Loaded 4 pending tasks from 4 total
+2025-07-07 12:03:50,109 - __main__ - INFO - Dry run: Would execute 4 tasks
+2025-07-07 12:04:31,133 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 12:04:31,133 - __main__ - INFO - Initializing QuickBooks client...
+2025-07-07 12:04:31,133 - __main__ - ERROR - ❌ QuickBooks connection test failed: QB Exception 0: No session manager
+
+2025-07-07 12:04:31,134 - __main__ - ERROR - ❌ Could not initialize QuickBooks client

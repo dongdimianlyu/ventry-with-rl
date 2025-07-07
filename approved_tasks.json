@@ -1,0 +1,58 @@
+[
+  {
+    "id": "task_20250106_140000",
+    "approved_at": "2025-01-06T14:00:00.000000",
+    "status": "approved",
+    "executed": false,
+    "recommendation": {
+      "action": "restock",
+      "quantity": 50,
+      "expected_roi": "25.5%",
+      "confidence": "high",
+      "reasoning": "Based on demand analysis - need to restock Product X inventory",
+      "timestamp": "2025-01-06T13:55:00.000000"
+    }
+  },
+  {
+    "id": "task_20250106_140001",
+    "approved_at": "2025-01-06T14:00:01.000000",
+    "status": "approved",
+    "executed": false,
+    "recommendation": {
+      "action": "invoice",
+      "quantity": 1,
+      "expected_roi": "100.0%",
+      "confidence": "high",
+      "reasoning": "Send invoice for $500 to Client ABC for consulting services",
+      "timestamp": "2025-01-06T13:55:01.000000"
+    }
+  },
+  {
+    "id": "task_20250106_140002",
+    "approved_at": "2025-01-06T14:00:02.000000",
+    "status": "approved",
+    "executed": false,
+    "recommendation": {
+      "action": "expense",
+      "quantity": 200,
+      "expected_roi": "15.0%",
+      "confidence": "medium",
+      "reasoning": "Log expense for $200 marketing spend on social media advertising",
+      "timestamp": "2025-01-06T13:55:02.000000"
+    }
+  },
+  {
+    "id": "task_20250106_140003",
+    "approved_at": "2025-01-06T14:00:03.000000",
+    "status": "approved",
+    "executed": false,
+    "recommendation": {
+      "action": "restock",
+      "quantity": 75,
+      "expected_roi": "30.2%",
+      "confidence": "high",
+      "reasoning": "Restock 75 units of Office Supplies based on inventory analysis",
+      "timestamp": "2025-01-06T13:55:03.000000"
+    }
+  }
+]
