@@ -22,10 +22,10 @@ This integration automatically executes approved tasks in QuickBooks Online:
 
 ```bash
 # Install QuickBooks SDK
-pip install -r requirements_quickbooks.txt
+pip3 install -r requirements_quickbooks.txt
 
 # Or install manually
-pip install python-quickbooks intuitlib requests python-dotenv
+pip3 install python-quickbooks intuitlib requests python-dotenv
 ```
 
 ### 2. Create QuickBooks App
@@ -84,11 +84,11 @@ print(f"Visit: {auth_url}")
 
 **Option A: Environment Variables**
 ```bash
-export QB_CLIENT_ID="your-client-id"
-export QB_CLIENT_SECRET="your-client-secret"
-export QB_ACCESS_TOKEN="your-access-token"
-export QB_COMPANY_ID="your-company-id"
-export QB_SANDBOX="true"  # false for production
+export QB_CLIENT_ID=ABIbhWe0pBXQfPzbu16e9OhU599bhFent0kEDNPpX2DgZvUi40
+export QB_CLIENT_SECRET=KvtfwQzhzthxGs35XKAw4DKOi29R18FTH6eVCQLV
+export QB_ACCESS_TOKEN=eyJhbGciOiJkaXIiLCJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwieC5vcmciOiJIMCJ9..7Dlb5EcU8ojLTi3Gafad3A.mBK1mEq6I6uztKFSdrL_k8vJO6WI2zhEFXPpTBFgkTcuO7DcD2t3MSFC_2Nvanp5Ft5meggxohgvaFiAtD9qfXAnfJ4W6JtOMlWAJCgCGwxJBvZm_YUXoAu_yhn3npckY1bTwBNpWOx6rFbD0tVa25e6ljHd06ituUqvh48HB1FH7HHZYV8VvBmgvNfzH05Xd2njL7rre2gKMYic1meHojfeYZocxPYp9YfEBes5x2RFWpgMYTG40xYeS8n-hSz9NIAoCVxlrjTviArEVH4-tnEMlCesRaCudd2ACU8Aaa3NKF3isGr4q7A5iflSa_E-eTmytz0YNjw2fUC_tnsjLFjAmagcaAgjHaC4Tg8XbVOm7ikGk06p-Lkasa4vGvKZKRuzYag1gGsqF6HTVU92bNOQ05eI15_rb9BITWsU5kD3flXziXymfm1qNWFYLHKkjw_28xrMTmZSax59o8wYkGFjzFscnKcl5Qtff9V1zko.hyXWaEq47hkEcB6CPORshw
+export QB_COMPANY_ID=9341454967406675
+export QB_SANDBOX=true  # false for production
 ```
 
 **Option B: Configuration File**

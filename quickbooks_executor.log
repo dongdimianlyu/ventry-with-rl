@@ -7,3 +7,200 @@
 2025-07-07 12:04:31,133 - __main__ - ERROR - ❌ QuickBooks connection test failed: QB Exception 0: No session manager
 
 2025-07-07 12:04:31,134 - __main__ - ERROR - ❌ Could not initialize QuickBooks client
+2025-07-07 12:12:53,984 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 12:12:53,984 - __main__ - INFO - Initializing QuickBooks client...
+2025-07-07 12:12:53,984 - __main__ - ERROR - ❌ QuickBooks connection test failed: QB Exception 0: No session manager
+
+2025-07-07 12:24:03,556 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 12:24:03,557 - __main__ - INFO - Initializing QuickBooks client...
+2025-07-07 12:24:03,557 - __main__ - ERROR - ❌ QuickBooks connection test failed: QB Exception 0: No session manager
+
+2025-07-07 12:24:20,124 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 12:24:20,125 - __main__ - INFO - Initializing QuickBooks client...
+2025-07-07 12:24:20,125 - __main__ - ERROR - ❌ QuickBooks connection test failed: QB Exception 0: No session manager
+
+2025-07-07 12:30:05,165 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 12:30:05,166 - __main__ - INFO - Initializing QuickBooks client...
+2025-07-07 12:30:05,166 - __main__ - ERROR - ❌ QuickBooks connection test failed: QB Exception 0: No session manager
+
+2025-07-07 12:55:39,859 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 12:55:39,859 - __main__ - INFO - Initializing QuickBooks client...
+2025-07-07 12:55:39,859 - __main__ - ERROR - ❌ QuickBooks connection test failed: QB Exception 0: No session manager
+
+2025-07-07 12:55:40,004 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 12:55:40,004 - __main__ - INFO - Loaded 4 pending tasks from 5 total
+2025-07-07 12:55:40,005 - __main__ - INFO - Dry run: Would execute 4 tasks
+2025-07-07 12:57:54,264 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 12:57:54,264 - __main__ - INFO - Initializing QuickBooks client...
+2025-07-07 12:57:54,264 - __main__ - ERROR - ❌ QuickBooks connection test failed: QB Exception 0: No session manager
+
+2025-07-07 12:57:54,406 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 12:57:54,406 - __main__ - INFO - Loaded 4 pending tasks from 6 total
+2025-07-07 12:57:54,406 - __main__ - INFO - Dry run: Would execute 4 tasks
+2025-07-07 12:59:48,317 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 12:59:48,317 - __main__ - INFO - Initializing QuickBooks client...
+2025-07-07 12:59:48,317 - __main__ - ERROR - ❌ QuickBooks connection test failed: QB Exception 0: No session manager
+
+2025-07-07 12:59:48,484 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 12:59:48,484 - __main__ - INFO - Loaded 4 pending tasks from 7 total
+2025-07-07 12:59:48,484 - __main__ - INFO - Dry run: Would execute 4 tasks
+2025-07-07 13:01:48,717 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 13:01:48,717 - __main__ - INFO - Initializing QuickBooks client...
+2025-07-07 13:01:48,717 - __main__ - ERROR - ❌ QuickBooks connection test failed: QB Exception 0: No session manager
+
+2025-07-07 13:01:48,882 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 13:01:48,882 - __main__ - INFO - Loaded 4 pending tasks from 8 total
+2025-07-07 13:01:48,882 - __main__ - INFO - Dry run: Would execute 4 tasks
+2025-07-07 13:03:22,077 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 13:03:22,078 - __main__ - INFO - Initializing QuickBooks client...
+2025-07-07 13:03:22,078 - __main__ - ERROR - ❌ QuickBooks connection test failed: QB Exception 0: No session manager
+
+2025-07-07 13:03:22,224 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 13:03:22,224 - __main__ - INFO - Loaded 4 pending tasks from 9 total
+2025-07-07 13:03:22,224 - __main__ - INFO - Dry run: Would execute 4 tasks
+2025-07-07 13:03:49,564 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 13:03:49,564 - __main__ - INFO - Initializing QuickBooks client...
+2025-07-07 13:03:49,564 - __main__ - ERROR - ❌ QuickBooks connection test failed: QB Exception 0: No session manager
+
+2025-07-07 13:06:37,615 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 13:06:37,615 - __main__ - INFO - Loaded 4 pending tasks from 4 total
+2025-07-07 13:06:37,615 - __main__ - INFO - Dry run: Would execute 4 tasks
+2025-07-07 13:36:10,372 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 13:36:10,373 - __main__ - INFO - Initializing QuickBooks client...
+2025-07-07 13:36:10,373 - __main__ - ERROR - ❌ QuickBooks connection test failed: QB Exception 0: No session manager
+
+2025-07-07 13:36:10,513 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 13:36:10,514 - __main__ - INFO - Loaded 4 pending tasks from 5 total
+2025-07-07 13:36:10,514 - __main__ - INFO - Dry run: Would execute 4 tasks
+2025-07-07 13:38:18,208 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 13:38:18,209 - __main__ - INFO - Initializing QuickBooks client...
+2025-07-07 13:38:18,209 - __main__ - ERROR - ❌ QuickBooks connection test failed: QB Exception 0: No session manager
+
+2025-07-07 13:38:18,497 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 13:38:18,497 - __main__ - INFO - Loaded 4 pending tasks from 6 total
+2025-07-07 13:38:18,497 - __main__ - INFO - Dry run: Would execute 4 tasks
+2025-07-07 13:38:31,788 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 13:38:31,791 - __main__ - INFO - Initializing QuickBooks client...
+2025-07-07 13:38:31,791 - __main__ - ERROR - ❌ QuickBooks connection test failed: QB Exception 0: No session manager
+
+2025-07-07 13:40:06,163 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 13:40:06,164 - __main__ - INFO - Initializing QuickBooks client...
+2025-07-07 13:40:06,164 - __main__ - ERROR - ❌ Error initializing QuickBooks client: Session.__init__() got an unexpected keyword argument 'client_secret'
+2025-07-07 13:40:26,212 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 13:40:26,212 - __main__ - INFO - Initializing QuickBooks client...
+2025-07-07 13:40:26,212 - __main__ - ERROR - ❌ QuickBooks connection test failed: QB Exception 0: No session manager
+
+2025-07-07 14:29:50,030 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 14:29:50,030 - __main__ - INFO - Initializing QuickBooks client...
+2025-07-07 14:29:51,713 - quickbooks_simple_client - INFO - ✅ Connected to QuickBooks company: Unknown
+2025-07-07 14:30:51,501 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 14:30:51,502 - __main__ - INFO - Loaded 4 pending tasks from 6 total
+2025-07-07 14:30:51,502 - __main__ - INFO - Dry run: Would execute 4 tasks
+2025-07-07 14:31:36,750 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 14:31:36,751 - __main__ - INFO - Loaded 4 pending tasks from 6 total
+2025-07-07 14:31:36,751 - __main__ - INFO - Dry run: Would execute 4 tasks
+2025-07-07 14:32:07,572 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 14:32:07,572 - __main__ - INFO - Loaded 4 pending tasks from 6 total
+2025-07-07 14:32:07,572 - __main__ - INFO - Dry run: Would execute 4 tasks
+2025-07-07 14:32:15,512 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 14:32:15,512 - __main__ - INFO - Initializing QuickBooks client...
+2025-07-07 14:32:16,813 - quickbooks_simple_client - INFO - ✅ Connected to QuickBooks company: Unknown
+2025-07-07 14:32:16,814 - __main__ - INFO - Loaded 4 pending tasks from 6 total
+2025-07-07 14:32:16,814 - __main__ - INFO - Executing 4 tasks
+2025-07-07 14:32:16,814 - __main__ - INFO - Executing inventory update: {'action': 'restock', 'quantity': 50, 'item_name': 'X Inventory', 'description': 'Restock 50 units based on RL recommendation'}
+2025-07-07 14:32:19,999 - quickbooks_simple_client - ERROR - ❌ Create Account failed: 400 - {"Fault":{"Error":[{"Message":"Request has invalid or unsupported property","Detail":"Property Name:failed to parse json object; a property specified is unsupported or invalid","code":"2010"}],"type":"ValidationFault"},"time":"2025-07-06T23:32:19.932-07:00"}
+2025-07-07 14:32:20,000 - quickbooks_simple_client - ERROR - ❌ Could not get/create income account
+2025-07-07 14:32:20,000 - quickbooks_simple_client - ERROR - ❌ Could not get/create item
+2025-07-07 14:32:20,000 - __main__ - ERROR - ❌ Failed to update inventory for X Inventory
+2025-07-07 14:32:20,000 - __main__ - INFO - Executing invoice creation: {'amount': 500.0, 'customer': 'Abc For Consulting Services', 'description': 'Invoice based on RL recommendation - send invoice for $500 to client abc for consulting services', 'quantity': 1}
+2025-07-07 14:32:20,913 - quickbooks_simple_client - ERROR - ❌ Query failed: 400 - {"Fault":{"Error":[{"Message":"Invalid query","Detail":"QueryValidationError: Property Name not found for Entity Customer","code":"4001"}],"type":"ValidationFault"},"time":"2025-07-06T23:32:20.860-07:00"}
+2025-07-07 14:32:21,842 - quickbooks_simple_client - ERROR - ❌ Create Customer failed: 400 - {"Fault":{"Error":[{"Message":"Request has invalid or unsupported property","Detail":"Property Name:failed to parse json object; a property specified is unsupported or invalid","code":"2010"}],"type":"ValidationFault"},"time":"2025-07-06T23:32:21.790-07:00"}
+2025-07-07 14:32:21,843 - quickbooks_simple_client - ERROR - ❌ Could not get/create customer
+2025-07-07 14:32:21,843 - __main__ - ERROR - ❌ Failed to create invoice for Abc For Consulting Services
+2025-07-07 14:32:21,843 - __main__ - INFO - Executing expense recording: {'amount': 200.0, 'category': 'Marketing', 'description': 'Expense based on RL recommendation - log expense for $200 marketing spend on social media advertising', 'vendor': 'AI Recommended Purchase'}
+2025-07-07 14:32:22,837 - quickbooks_simple_client - ERROR - ❌ Query failed: 400 - {"Fault":{"Error":[{"Message":"Invalid query","Detail":"QueryValidationError: Property Name not found for Entity Vendor","code":"4001"}],"type":"ValidationFault"},"time":"2025-07-06T23:32:22.774-07:00"}
+2025-07-07 14:32:23,883 - quickbooks_simple_client - ERROR - ❌ Create Vendor failed: 400 - {"Fault":{"Error":[{"Message":"Request has invalid or unsupported property","Detail":"Property Name:failed to parse json object; a property specified is unsupported or invalid","code":"2010"}],"type":"ValidationFault"},"time":"2025-07-06T23:32:23.816-07:00"}
+2025-07-07 14:32:23,884 - quickbooks_simple_client - ERROR - ❌ Could not get/create vendor
+2025-07-07 14:32:23,884 - __main__ - ERROR - ❌ Failed to record expense for AI Recommended Purchase
+2025-07-07 14:32:23,885 - __main__ - INFO - Executing inventory update: {'action': 'restock', 'quantity': 75, 'item_name': 'Office Supplies Based On Inventory Analysis', 'description': 'Restock 75 units based on RL recommendation'}
+2025-07-07 14:32:26,723 - quickbooks_simple_client - ERROR - ❌ Create Account failed: 400 - {"Fault":{"Error":[{"Message":"Request has invalid or unsupported property","Detail":"Property Name:failed to parse json object; a property specified is unsupported or invalid","code":"2010"}],"type":"ValidationFault"},"time":"2025-07-06T23:32:26.670-07:00"}
+2025-07-07 14:32:26,725 - quickbooks_simple_client - ERROR - ❌ Could not get/create income account
+2025-07-07 14:32:26,725 - quickbooks_simple_client - ERROR - ❌ Could not get/create item
+2025-07-07 14:32:26,725 - __main__ - ERROR - ❌ Failed to update inventory for Office Supplies Based On Inventory Analysis
+2025-07-07 14:32:26,727 - __main__ - INFO - Execution logged to quickbooks_execution_log.json
+2025-07-07 14:33:34,616 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 14:33:34,617 - __main__ - INFO - Initializing QuickBooks client...
+2025-07-07 14:33:35,940 - quickbooks_simple_client - INFO - ✅ Connected to QuickBooks company: Unknown
+2025-07-07 14:33:36,103 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 14:33:36,103 - __main__ - INFO - Loaded 4 pending tasks from 7 total
+2025-07-07 14:33:36,103 - __main__ - INFO - Dry run: Would execute 4 tasks
+2025-07-07 14:33:48,130 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 14:33:48,133 - __main__ - INFO - Initializing QuickBooks client...
+2025-07-07 14:33:49,559 - quickbooks_simple_client - INFO - ✅ Connected to QuickBooks company: Unknown
+2025-07-07 14:33:49,561 - __main__ - INFO - Loaded 4 pending tasks from 7 total
+2025-07-07 14:33:49,561 - __main__ - INFO - Executing 4 tasks
+2025-07-07 14:33:49,561 - __main__ - INFO - Executing inventory update: {'action': 'restock', 'quantity': 50, 'item_name': 'X Inventory', 'description': 'Restock 50 units based on RL recommendation'}
+2025-07-07 14:33:51,475 - quickbooks_simple_client - ERROR - ❌ Create Item failed: 400 - {"Fault":{"Error":[{"Message":"Request has invalid or unsupported property","Detail":"Property Name:failed to parse json object; a property specified is unsupported or invalid","code":"2010"}],"type":"ValidationFault"},"time":"2025-07-06T23:33:51.421-07:00"}
+2025-07-07 14:33:51,476 - quickbooks_simple_client - ERROR - ❌ Could not get/create item
+2025-07-07 14:33:51,476 - __main__ - ERROR - ❌ Failed to update inventory for X Inventory
+2025-07-07 14:33:51,476 - __main__ - INFO - Executing invoice creation: {'amount': 500.0, 'customer': 'Abc For Consulting Services', 'description': 'Invoice based on RL recommendation - send invoice for $500 to client abc for consulting services', 'quantity': 1}
+2025-07-07 14:33:53,869 - quickbooks_simple_client - ERROR - ❌ Create Customer failed: 400 - {"Fault":{"Error":[{"Message":"Request has invalid or unsupported property","Detail":"Property Name:failed to parse json object; a property specified is unsupported or invalid","code":"2010"}],"type":"ValidationFault"},"time":"2025-07-06T23:33:53.803-07:00"}
+2025-07-07 14:33:53,869 - quickbooks_simple_client - ERROR - ❌ Could not get/create customer
+2025-07-07 14:33:53,869 - __main__ - ERROR - ❌ Failed to create invoice for Abc For Consulting Services
+2025-07-07 14:33:53,869 - __main__ - INFO - Executing expense recording: {'amount': 200.0, 'category': 'Marketing', 'description': 'Expense based on RL recommendation - log expense for $200 marketing spend on social media advertising', 'vendor': 'AI Recommended Purchase'}
+2025-07-07 14:33:55,823 - quickbooks_simple_client - ERROR - ❌ Create Vendor failed: 400 - {"Fault":{"Error":[{"Message":"Request has invalid or unsupported property","Detail":"Property Name:failed to parse json object; a property specified is unsupported or invalid","code":"2010"}],"type":"ValidationFault"},"time":"2025-07-06T23:33:55.767-07:00"}
+2025-07-07 14:33:55,824 - quickbooks_simple_client - ERROR - ❌ Could not get/create vendor
+2025-07-07 14:33:55,824 - __main__ - ERROR - ❌ Failed to record expense for AI Recommended Purchase
+2025-07-07 14:33:55,825 - __main__ - INFO - Executing inventory update: {'action': 'restock', 'quantity': 75, 'item_name': 'Office Supplies Based On Inventory Analysis', 'description': 'Restock 75 units based on RL recommendation'}
+2025-07-07 14:33:57,936 - quickbooks_simple_client - ERROR - ❌ Create Item failed: 400 - {"Fault":{"Error":[{"Message":"Request has invalid or unsupported property","Detail":"Property Name:failed to parse json object; a property specified is unsupported or invalid","code":"2010"}],"type":"ValidationFault"},"time":"2025-07-06T23:33:57.876-07:00"}
+2025-07-07 14:33:57,936 - quickbooks_simple_client - ERROR - ❌ Could not get/create item
+2025-07-07 14:33:57,936 - __main__ - ERROR - ❌ Failed to update inventory for Office Supplies Based On Inventory Analysis
+2025-07-07 14:33:57,938 - __main__ - INFO - Execution logged to quickbooks_execution_log.json
+2025-07-07 14:35:28,090 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 14:35:28,090 - __main__ - INFO - Initializing QuickBooks client...
+2025-07-07 14:35:29,528 - quickbooks_simple_client - INFO - ✅ Connected to QuickBooks company: Unknown
+2025-07-07 14:35:29,528 - __main__ - INFO - Loaded 4 pending tasks from 7 total
+2025-07-07 14:35:29,528 - __main__ - INFO - Executing 4 tasks
+2025-07-07 14:35:29,529 - __main__ - INFO - Executing inventory update: {'action': 'restock', 'quantity': 50, 'item_name': 'X Inventory', 'description': 'Restock 50 units based on RL recommendation'}
+2025-07-07 14:35:31,385 - quickbooks_simple_client - ERROR - ❌ Create Item failed: 400 - {"Fault":{"Error":[{"Message":"Request has invalid or unsupported property","Detail":"Property Name:failed to parse json object; a property specified is unsupported or invalid","code":"2010"}],"type":"ValidationFault"},"time":"2025-07-06T23:35:31.336-07:00"}
+2025-07-07 14:35:31,385 - quickbooks_simple_client - ERROR - ❌ Could not get/create item
+2025-07-07 14:35:31,385 - __main__ - ERROR - ❌ Failed to update inventory for X Inventory
+2025-07-07 14:35:31,386 - __main__ - INFO - Executing invoice creation: {'amount': 500.0, 'customer': 'Abc For Consulting Services', 'description': 'Invoice based on RL recommendation - send invoice for $500 to client abc for consulting services', 'quantity': 1}
+2025-07-07 14:35:33,514 - quickbooks_simple_client - ERROR - ❌ Create Customer failed: 400 - {"Fault":{"Error":[{"Message":"Request has invalid or unsupported property","Detail":"Property Name:failed to parse json object; a property specified is unsupported or invalid","code":"2010"}],"type":"ValidationFault"},"time":"2025-07-06T23:35:33.454-07:00"}
+2025-07-07 14:35:33,515 - quickbooks_simple_client - ERROR - ❌ Could not get/create customer
+2025-07-07 14:35:33,515 - __main__ - ERROR - ❌ Failed to create invoice for Abc For Consulting Services
+2025-07-07 14:35:33,515 - __main__ - INFO - Executing expense recording: {'amount': 200.0, 'category': 'Marketing', 'description': 'Expense based on RL recommendation - log expense for $200 marketing spend on social media advertising', 'vendor': 'AI Recommended Purchase'}
+2025-07-07 14:35:35,533 - quickbooks_simple_client - ERROR - ❌ Create Vendor failed: 400 - {"Fault":{"Error":[{"Message":"Request has invalid or unsupported property","Detail":"Property Name:failed to parse json object; a property specified is unsupported or invalid","code":"2010"}],"type":"ValidationFault"},"time":"2025-07-06T23:35:35.463-07:00"}
+2025-07-07 14:35:35,534 - quickbooks_simple_client - ERROR - ❌ Could not get/create vendor
+2025-07-07 14:35:35,534 - __main__ - ERROR - ❌ Failed to record expense for AI Recommended Purchase
+2025-07-07 14:35:35,535 - __main__ - INFO - Executing inventory update: {'action': 'restock', 'quantity': 75, 'item_name': 'Office Supplies Based On Inventory Analysis', 'description': 'Restock 75 units based on RL recommendation'}
+2025-07-07 14:35:37,415 - quickbooks_simple_client - ERROR - ❌ Create Item failed: 400 - {"Fault":{"Error":[{"Message":"Request has invalid or unsupported property","Detail":"Property Name:failed to parse json object; a property specified is unsupported or invalid","code":"2010"}],"type":"ValidationFault"},"time":"2025-07-06T23:35:37.358-07:00"}
+2025-07-07 14:35:37,416 - quickbooks_simple_client - ERROR - ❌ Could not get/create item
+2025-07-07 14:35:37,416 - __main__ - ERROR - ❌ Failed to update inventory for Office Supplies Based On Inventory Analysis
+2025-07-07 14:35:37,418 - __main__ - INFO - Execution logged to quickbooks_execution_log.json
+2025-07-07 14:38:50,095 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 14:38:50,095 - __main__ - INFO - Initializing QuickBooks client...
+2025-07-07 14:38:51,845 - quickbooks_simple_client - INFO - ✅ Connected to QuickBooks company: Unknown
+2025-07-07 14:38:51,848 - __main__ - INFO - Loaded 4 pending tasks from 7 total
+2025-07-07 14:38:51,848 - __main__ - INFO - Executing 4 tasks
+2025-07-07 14:38:51,849 - __main__ - INFO - Executing inventory update: {'action': 'restock', 'quantity': 50, 'item_name': 'X Inventory', 'description': 'Restock 50 units based on RL recommendation'}
+2025-07-07 14:38:55,023 - quickbooks_simple_client - INFO - ⚠️ Using existing item 'Concrete' instead of creating 'X Inventory'
+2025-07-07 14:38:55,033 - quickbooks_simple_client - INFO - 📦 Would update inventory for X Inventory: restock 50 units
+2025-07-07 14:38:55,037 - __main__ - INFO - ✅ Updated X Inventory: restock 50 units
+2025-07-07 14:38:55,045 - __main__ - INFO - Marked task task_20250106_140000 as executed
+2025-07-07 14:38:55,048 - __main__ - INFO - Executing invoice creation: {'amount': 500.0, 'customer': 'Abc For Consulting Services', 'description': 'Invoice based on RL recommendation - send invoice for $500 to client abc for consulting services', 'quantity': 1}
+2025-07-07 14:38:57,814 - quickbooks_simple_client - INFO - ⚠️ Using existing customer 'Amy's Bird Sanctuary' instead of creating 'Abc For Consulting Services'
+2025-07-07 14:38:59,913 - quickbooks_simple_client - INFO - ⚠️ Using existing item 'Concrete' instead of creating 'General Service'
+2025-07-07 14:39:00,842 - quickbooks_simple_client - ERROR - ❌ Create Invoice failed: 400 - {"Fault":{"Error":[{"Message":"Request has invalid or unsupported property","Detail":"Property Name:failed to parse json object; a property specified is unsupported or invalid","code":"2010"}],"type":"ValidationFault"},"time":"2025-07-06T23:39:00.796-07:00"}
+2025-07-07 14:39:00,843 - __main__ - ERROR - ❌ Failed to create invoice for Abc For Consulting Services
+2025-07-07 14:39:00,843 - __main__ - INFO - Executing expense recording: {'amount': 200.0, 'category': 'Marketing', 'description': 'Expense based on RL recommendation - log expense for $200 marketing spend on social media advertising', 'vendor': 'AI Recommended Purchase'}
+2025-07-07 14:39:03,103 - quickbooks_simple_client - INFO - ⚠️ Using existing vendor 'Bob's Burger Joint' instead of creating 'AI Recommended Purchase'
+2025-07-07 14:39:05,000 - quickbooks_simple_client - ERROR - ❌ Create Account failed: 400 - {"Fault":{"Error":[{"Message":"Request has invalid or unsupported property","Detail":"Property Name:failed to parse json object; a property specified is unsupported or invalid","code":"2010"}],"type":"ValidationFault"},"time":"2025-07-06T23:39:04.942-07:00"}
+2025-07-07 14:39:05,001 - quickbooks_simple_client - ERROR - ❌ Could not get/create expense account
+2025-07-07 14:39:05,001 - __main__ - ERROR - ❌ Failed to record expense for AI Recommended Purchase
+2025-07-07 14:39:05,003 - __main__ - INFO - Executing inventory update: {'action': 'restock', 'quantity': 75, 'item_name': 'Office Supplies Based On Inventory Analysis', 'description': 'Restock 75 units based on RL recommendation'}
+2025-07-07 14:39:07,002 - quickbooks_simple_client - INFO - ⚠️ Using existing item 'Concrete' instead of creating 'Office Supplies Based On Inventory Analysis'
+2025-07-07 14:39:07,002 - quickbooks_simple_client - INFO - 📦 Would update inventory for Office Supplies Based On Inventory Analysis: restock 75 units
+2025-07-07 14:39:07,002 - __main__ - INFO - ✅ Updated Office Supplies Based On Inventory Analysis: restock 75 units
+2025-07-07 14:39:07,003 - __main__ - INFO - Marked task task_20250106_140003 as executed
+2025-07-07 14:39:07,004 - __main__ - INFO - Execution logged to quickbooks_execution_log.json

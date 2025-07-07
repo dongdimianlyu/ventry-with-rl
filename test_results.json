@@ -1,0 +1,55 @@
+{
+  "status": "ready",
+  "passed": 8,
+  "total": 8,
+  "results": [
+    {
+      "test": "Config file exists and readable",
+      "passed": true,
+      "message": "Found 10 configuration items",
+      "timestamp": "2025-07-07T14:33:31.749317"
+    },
+    {
+      "test": "Dependencies installed",
+      "passed": true,
+      "message": "All required dependencies available",
+      "timestamp": "2025-07-07T14:33:31.927733"
+    },
+    {
+      "test": "Required config fields present",
+      "passed": true,
+      "message": "All required fields configured",
+      "timestamp": "2025-07-07T14:33:31.927814"
+    },
+    {
+      "test": "Refresh token available",
+      "passed": true,
+      "message": "Refresh token present (RT1-174-H0-1760590455hpvw8ye4t...)",
+      "timestamp": "2025-07-07T14:33:31.927848"
+    },
+    {
+      "test": "Approved tasks file",
+      "passed": true,
+      "message": "Found 6 approved tasks",
+      "timestamp": "2025-07-07T14:33:31.928157"
+    },
+    {
+      "test": "Token refresh functionality",
+      "passed": true,
+      "message": "Token refresh script executed successfully",
+      "timestamp": "2025-07-07T14:33:34.426827"
+    },
+    {
+      "test": "QuickBooks connection",
+      "passed": true,
+      "message": "Connection test passed",
+      "timestamp": "2025-07-07T14:33:35.962272"
+    },
+    {
+      "test": "Dry-run execution",
+      "passed": true,
+      "message": "Dry-run completed successfully",
+      "timestamp": "2025-07-07T14:33:36.125545"
+    }
+  ]
+}

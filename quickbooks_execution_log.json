@@ -1,0 +1,280 @@
+[
+  {
+    "session_id": "20250707_143226",
+    "executed_at": "2025-07-07T14:32:26.726396",
+    "results": [
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for X Inventory",
+        "task_id": "task_20250106_140000",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 50,
+          "item_name": "X Inventory",
+          "description": "Restock 50 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-07T14:32:20.000253"
+      },
+      {
+        "success": false,
+        "action": "create_invoice",
+        "error": "Failed to create invoice for Abc For Consulting Services",
+        "task_id": "task_20250106_140001",
+        "intent": "create_invoice",
+        "params": {
+          "amount": 500.0,
+          "customer": "Abc For Consulting Services",
+          "description": "Invoice based on RL recommendation - send invoice for $500 to client abc for consulting services",
+          "quantity": 1
+        },
+        "executed_at": "2025-07-07T14:32:21.843279"
+      },
+      {
+        "success": false,
+        "action": "record_expense",
+        "error": "Failed to record expense for AI Recommended Purchase",
+        "task_id": "task_20250106_140002",
+        "intent": "record_expense",
+        "params": {
+          "amount": 200.0,
+          "category": "Marketing",
+          "description": "Expense based on RL recommendation - log expense for $200 marketing spend on social media advertising",
+          "vendor": "AI Recommended Purchase"
+        },
+        "executed_at": "2025-07-07T14:32:23.884289"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Office Supplies Based On Inventory Analysis",
+        "task_id": "task_20250106_140003",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 75,
+          "item_name": "Office Supplies Based On Inventory Analysis",
+          "description": "Restock 75 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-07T14:32:26.725397"
+      }
+    ],
+    "statistics": {
+      "total_processed": 4,
+      "successful": 0,
+      "failed": 4,
+      "skipped": 0
+    }
+  },
+  {
+    "session_id": "20250707_143357",
+    "executed_at": "2025-07-07T14:33:57.937514",
+    "results": [
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for X Inventory",
+        "task_id": "task_20250106_140000",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 50,
+          "item_name": "X Inventory",
+          "description": "Restock 50 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-07T14:33:51.476388"
+      },
+      {
+        "success": false,
+        "action": "create_invoice",
+        "error": "Failed to create invoice for Abc For Consulting Services",
+        "task_id": "task_20250106_140001",
+        "intent": "create_invoice",
+        "params": {
+          "amount": 500.0,
+          "customer": "Abc For Consulting Services",
+          "description": "Invoice based on RL recommendation - send invoice for $500 to client abc for consulting services",
+          "quantity": 1
+        },
+        "executed_at": "2025-07-07T14:33:53.869805"
+      },
+      {
+        "success": false,
+        "action": "record_expense",
+        "error": "Failed to record expense for AI Recommended Purchase",
+        "task_id": "task_20250106_140002",
+        "intent": "record_expense",
+        "params": {
+          "amount": 200.0,
+          "category": "Marketing",
+          "description": "Expense based on RL recommendation - log expense for $200 marketing spend on social media advertising",
+          "vendor": "AI Recommended Purchase"
+        },
+        "executed_at": "2025-07-07T14:33:55.824629"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Office Supplies Based On Inventory Analysis",
+        "task_id": "task_20250106_140003",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 75,
+          "item_name": "Office Supplies Based On Inventory Analysis",
+          "description": "Restock 75 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-07T14:33:57.936469"
+      }
+    ],
+    "statistics": {
+      "total_processed": 4,
+      "successful": 0,
+      "failed": 4,
+      "skipped": 0
+    }
+  },
+  {
+    "session_id": "20250707_143537",
+    "executed_at": "2025-07-07T14:35:37.417461",
+    "results": [
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for X Inventory",
+        "task_id": "task_20250106_140000",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 50,
+          "item_name": "X Inventory",
+          "description": "Restock 50 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-07T14:35:31.385988"
+      },
+      {
+        "success": false,
+        "action": "create_invoice",
+        "error": "Failed to create invoice for Abc For Consulting Services",
+        "task_id": "task_20250106_140001",
+        "intent": "create_invoice",
+        "params": {
+          "amount": 500.0,
+          "customer": "Abc For Consulting Services",
+          "description": "Invoice based on RL recommendation - send invoice for $500 to client abc for consulting services",
+          "quantity": 1
+        },
+        "executed_at": "2025-07-07T14:35:33.515471"
+      },
+      {
+        "success": false,
+        "action": "record_expense",
+        "error": "Failed to record expense for AI Recommended Purchase",
+        "task_id": "task_20250106_140002",
+        "intent": "record_expense",
+        "params": {
+          "amount": 200.0,
+          "category": "Marketing",
+          "description": "Expense based on RL recommendation - log expense for $200 marketing spend on social media advertising",
+          "vendor": "AI Recommended Purchase"
+        },
+        "executed_at": "2025-07-07T14:35:35.534397"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Office Supplies Based On Inventory Analysis",
+        "task_id": "task_20250106_140003",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 75,
+          "item_name": "Office Supplies Based On Inventory Analysis",
+          "description": "Restock 75 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-07T14:35:37.416176"
+      }
+    ],
+    "statistics": {
+      "total_processed": 4,
+      "successful": 0,
+      "failed": 4,
+      "skipped": 0
+    }
+  },
+  {
+    "session_id": "20250707_143907",
+    "executed_at": "2025-07-07T14:39:07.003943",
+    "results": [
+      {
+        "success": true,
+        "action": "inventory_update",
+        "message": "Updated X Inventory: restock 50 units",
+        "item_id": "3",
+        "item_name": "X Inventory",
+        "quantity": 50,
+        "task_id": "task_20250106_140000",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 50,
+          "item_name": "X Inventory",
+          "description": "Restock 50 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-07T14:38:55.037176"
+      },
+      {
+        "success": false,
+        "action": "create_invoice",
+        "error": "Failed to create invoice for Abc For Consulting Services",
+        "task_id": "task_20250106_140001",
+        "intent": "create_invoice",
+        "params": {
+          "amount": 500.0,
+          "customer": "Abc For Consulting Services",
+          "description": "Invoice based on RL recommendation - send invoice for $500 to client abc for consulting services",
+          "quantity": 1
+        },
+        "executed_at": "2025-07-07T14:39:00.843125"
+      },
+      {
+        "success": false,
+        "action": "record_expense",
+        "error": "Failed to record expense for AI Recommended Purchase",
+        "task_id": "task_20250106_140002",
+        "intent": "record_expense",
+        "params": {
+          "amount": 200.0,
+          "category": "Marketing",
+          "description": "Expense based on RL recommendation - log expense for $200 marketing spend on social media advertising",
+          "vendor": "AI Recommended Purchase"
+        },
+        "executed_at": "2025-07-07T14:39:05.001525"
+      },
+      {
+        "success": true,
+        "action": "inventory_update",
+        "message": "Updated Office Supplies Based On Inventory Analysis: restock 75 units",
+        "item_id": "3",
+        "item_name": "Office Supplies Based On Inventory Analysis",
+        "quantity": 75,
+        "task_id": "task_20250106_140003",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 75,
+          "item_name": "Office Supplies Based On Inventory Analysis",
+          "description": "Restock 75 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-07T14:39:07.002556"
+      }
+    ],
+    "statistics": {
+      "total_processed": 4,
+      "successful": 2,
+      "failed": 2,
+      "skipped": 0
+    }
+  }
+]

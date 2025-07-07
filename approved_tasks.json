@@ -3,7 +3,7 @@
     "id": "task_20250106_140000",
     "approved_at": "2025-01-06T14:00:00.000000",
     "status": "approved",
-    "executed": false,
+    "executed": true,
     "recommendation": {
       "action": "restock",
       "quantity": 50,
@@ -11,6 +11,24 @@
       "confidence": "high",
       "reasoning": "Based on demand analysis - need to restock Product X inventory",
       "timestamp": "2025-01-06T13:55:00.000000"
+    },
+    "executed_at": "2025-07-07T14:38:55.039654",
+    "execution_result": {
+      "success": true,
+      "action": "inventory_update",
+      "message": "Updated X Inventory: restock 50 units",
+      "item_id": "3",
+      "item_name": "X Inventory",
+      "quantity": 50,
+      "task_id": "task_20250106_140000",
+      "intent": "inventory_update",
+      "params": {
+        "action": "restock",
+        "quantity": 50,
+        "item_name": "X Inventory",
+        "description": "Restock 50 units based on RL recommendation"
+      },
+      "executed_at": "2025-07-07T14:38:55.037176"
     }
   },
   {
@@ -45,7 +63,7 @@
     "id": "task_20250106_140003",
     "approved_at": "2025-01-06T14:00:03.000000",
     "status": "approved",
-    "executed": false,
+    "executed": true,
     "recommendation": {
       "action": "restock",
       "quantity": 75,
@@ -53,6 +71,51 @@
       "confidence": "high",
       "reasoning": "Restock 75 units of Office Supplies based on inventory analysis",
       "timestamp": "2025-01-06T13:55:03.000000"
+    },
+    "executed_at": "2025-07-07T14:39:07.002935",
+    "execution_result": {
+      "success": true,
+      "action": "inventory_update",
+      "message": "Updated Office Supplies Based On Inventory Analysis: restock 75 units",
+      "item_id": "3",
+      "item_name": "Office Supplies Based On Inventory Analysis",
+      "quantity": 75,
+      "task_id": "task_20250106_140003",
+      "intent": "inventory_update",
+      "params": {
+        "action": "restock",
+        "quantity": 75,
+        "item_name": "Office Supplies Based On Inventory Analysis",
+        "description": "Restock 75 units based on RL recommendation"
+      },
+      "executed_at": "2025-07-07T14:39:07.002556"
     }
+  },
+  {
+    "task_id": "test_task_20250707_133610",
+    "action": "restock 10 units",
+    "reasoning": "Test task for system verification",
+    "confidence": "High",
+    "expected_roi": "100%",
+    "approved_at": "2025-07-07T13:36:10.387717",
+    "executed": false
+  },
+  {
+    "task_id": "test_task_20250707_133818",
+    "action": "restock 10 units",
+    "reasoning": "Test task for system verification",
+    "confidence": "High",
+    "expected_roi": "100%",
+    "approved_at": "2025-07-07T13:38:18.282206",
+    "executed": false
+  },
+  {
+    "task_id": "test_task_20250707_143335",
+    "action": "restock 10 units",
+    "reasoning": "Test task for system verification",
+    "confidence": "High",
+    "expected_roi": "100%",
+    "approved_at": "2025-07-07T14:33:35.962370",
+    "executed": false
   }
 ]

@@ -147,37 +147,22 @@ class QuickBooksExecutor:
         self.logger = logging.getLogger(__name__)
     
     def initialize_quickbooks_client(self) -> bool:
-        """Initialize QuickBooks client with OAuth"""
+        """Initialize QuickBooks client with direct API calls"""
         try:
             self.logger.info("Initializing QuickBooks client...")
             
-            # Set up sandbox or production
-            sandbox = self.config.get("QB_SANDBOX", "false").lower() == "true"
+            # Import the simple client
+            from quickbooks_simple_client import SimpleQuickBooksClient
             
-            # Initialize QuickBooks client
-            self.qb_client = QuickBooks(
-                sandbox=sandbox,
-                consumer_key=self.config["QB_CLIENT_ID"],
-                consumer_secret=self.config["QB_CLIENT_SECRET"],
-                access_token=self.config["QB_ACCESS_TOKEN"],
-                access_token_secret=self.config.get("QB_REFRESH_TOKEN", ""),
-                company_id=self.config["QB_COMPANY_ID"]
-            )
-            
+            # Initialize simple client
+            self.qb_client = SimpleQuickBooksClient(self.config)
             self.company_id = self.config["QB_COMPANY_ID"]
             
             # Test connection
-            try:
-                company_info = self.qb_client.get('CompanyInfo', self.company_id)
-                if company_info:
-                    company_name = company_info[0].CompanyName if company_info else "Unknown"
-                    self.logger.info(f"✅ Connected to QuickBooks company: {company_name}")
-                    return True
-                else:
-                    self.logger.error("❌ Could not retrieve company info")
-                    return False
-            except Exception as e:
-                self.logger.error(f"❌ QuickBooks connection test failed: {e}")
+            if self.qb_client.test_connection():
+                return True
+            else:
+                self.logger.error("❌ QuickBooks connection test failed")
                 return False
                 
         except Exception as e:
@@ -327,56 +312,31 @@ class QuickBooksExecutor:
             
             item_name = params["item_name"]
             quantity = params["quantity"]
-            description = params["description"]
+            action = params.get("action", "restock")
             
-            # First, try to find existing item
-            items = self.qb_client.query("SELECT * FROM Item WHERE Name = '{}'".format(item_name))
+            # Use simple client to update inventory
+            result = self.qb_client.update_inventory(item_name, quantity, action)
             
-            if items:
-                # Update existing item
-                item = items[0]
-                current_qty = getattr(item, 'QtyOnHand', 0) or 0
-                new_qty = current_qty + quantity
-                
-                # Update quantity
-                item.QtyOnHand = new_qty
-                updated_item = item.save(qb=self.qb_client)
-                
-                result = {
+            if result:
+                success_result = {
                     "success": True,
                     "action": "inventory_update",
-                    "message": f"Updated {item_name}: {current_qty} → {new_qty} units",
-                    "item_id": str(updated_item.Id),
-                    "previous_quantity": current_qty,
-                    "new_quantity": new_qty
-                }
-                
-            else:
-                # Create new item
-                new_item = Item()
-                new_item.Name = item_name
-                new_item.Type = "Inventory"
-                new_item.TrackQtyOnHand = True
-                new_item.QtyOnHand = quantity
-                new_item.InvStartDate = date.today()
-                
-                # Set default accounts (you may need to adjust these)
-                new_item.IncomeAccountRef = self._get_or_create_account("Sales", "Income")
-                new_item.ExpenseAccountRef = self._get_or_create_account("Cost of Goods Sold", "Cost of Goods Sold")
-                new_item.AssetAccountRef = self._get_or_create_account("Inventory Asset", "Other Current Assets")
-                
-                created_item = new_item.save(qb=self.qb_client)
-                
-                result = {
-                    "success": True,
-                    "action": "inventory_create",
-                    "message": f"Created new item {item_name} with {quantity} units",
-                    "item_id": str(created_item.Id),
+                    "message": f"Updated {item_name}: {action} {quantity} units",
+                    "item_id": result.get("Id"),
+                    "item_name": item_name,
                     "quantity": quantity
                 }
-            
-            self.logger.info(f"✅ {result['message']}")
-            return result
+                
+                self.logger.info(f"✅ {success_result['message']}")
+                return success_result
+            else:
+                error_msg = f"Failed to update inventory for {item_name}"
+                self.logger.error(f"❌ {error_msg}")
+                return {
+                    "success": False,
+                    "action": "inventory_update",
+                    "error": error_msg
+                }
             
         except Exception as e:
             error_msg = f"Failed to update inventory: {str(e)}"
@@ -397,41 +357,29 @@ class QuickBooksExecutor:
             description = params["description"]
             quantity = params.get("quantity", 1)
             
-            # Get or create customer
-            customer = self._get_or_create_customer(customer_name)
+            # Use simple client to create invoice
+            result = self.qb_client.create_invoice(customer_name, amount, description, quantity)
             
-            # Create invoice
-            invoice = Invoice()
-            invoice.CustomerRef = customer.to_ref()
-            
-            # Create line item
-            line = invoice.Line.add()
-            line.Amount = amount
-            line.DetailType = "SalesItemLineDetail"
-            
-            # Get or create a service item for the invoice
-            service_item = self._get_or_create_service_item("AI Recommended Service")
-            line.SalesItemLineDetail.ItemRef = service_item.to_ref()
-            line.SalesItemLineDetail.Qty = quantity
-            line.SalesItemLineDetail.UnitPrice = amount / quantity if quantity > 0 else amount
-            
-            line.Description = description
-            
-            # Save invoice
-            created_invoice = invoice.save(qb=self.qb_client)
-            
-            result = {
-                "success": True,
-                "action": "create_invoice",
-                "message": f"Created invoice for {customer_name}: ${amount}",
-                "invoice_id": str(created_invoice.Id),
-                "invoice_number": created_invoice.DocNumber,
-                "customer": customer_name,
-                "amount": amount
-            }
-            
-            self.logger.info(f"✅ {result['message']}")
-            return result
+            if result:
+                success_result = {
+                    "success": True,
+                    "action": "create_invoice",
+                    "message": f"Created invoice for {customer_name}: ${amount}",
+                    "invoice_id": result.get("Id"),
+                    "customer": customer_name,
+                    "amount": amount
+                }
+                
+                self.logger.info(f"✅ {success_result['message']}")
+                return success_result
+            else:
+                error_msg = f"Failed to create invoice for {customer_name}"
+                self.logger.error(f"❌ {error_msg}")
+                return {
+                    "success": False,
+                    "action": "create_invoice",
+                    "error": error_msg
+                }
             
         except Exception as e:
             error_msg = f"Failed to create invoice: {str(e)}"
@@ -452,40 +400,30 @@ class QuickBooksExecutor:
             description = params["description"]
             vendor_name = params["vendor"]
             
-            # Get or create vendor
-            vendor = self._get_or_create_vendor(vendor_name)
+            # Use simple client to create bill/expense
+            result = self.qb_client.create_bill(vendor_name, amount, description, category)
             
-            # Get or create expense account
-            expense_account = self._get_or_create_account(category, "Expense")
-            
-            # Create bill (expense)
-            bill = Bill()
-            bill.VendorRef = vendor.to_ref()
-            bill.TotalAmt = amount
-            
-            # Create line item
-            line = bill.Line.add()
-            line.Amount = amount
-            line.DetailType = "AccountBasedExpenseLineDetail"
-            line.AccountBasedExpenseLineDetail.AccountRef = expense_account.to_ref()
-            line.Description = description
-            
-            # Save bill
-            created_bill = bill.save(qb=self.qb_client)
-            
-            result = {
-                "success": True,
-                "action": "record_expense",
-                "message": f"Recorded expense: ${amount} for {category}",
-                "bill_id": str(created_bill.Id),
-                "bill_number": created_bill.DocNumber,
-                "vendor": vendor_name,
-                "amount": amount,
-                "category": category
-            }
-            
-            self.logger.info(f"✅ {result['message']}")
-            return result
+            if result:
+                success_result = {
+                    "success": True,
+                    "action": "record_expense",
+                    "message": f"Recorded expense: ${amount} for {category}",
+                    "bill_id": result.get("Id"),
+                    "vendor": vendor_name,
+                    "amount": amount,
+                    "category": category
+                }
+                
+                self.logger.info(f"✅ {success_result['message']}")
+                return success_result
+            else:
+                error_msg = f"Failed to record expense for {vendor_name}"
+                self.logger.error(f"❌ {error_msg}")
+                return {
+                    "success": False,
+                    "action": "record_expense",
+                    "error": error_msg
+                }
             
         except Exception as e:
             error_msg = f"Failed to record expense: {str(e)}"
@@ -601,6 +539,7 @@ class QuickBooksExecutor:
                     "intent": intent,
                     "params": params,
                     "dry_run": True,
+                    "success": True,
                     "message": f"Would execute {intent} with params: {params}"
                 }
             
