@@ -1,0 +1,17 @@
+# Slack Bot Configuration
+# Copy this to .env and fill in your actual values
+
+# Required: Your Slack Bot Token (starts with xoxb-)
+SLACK_BOT_TOKEN=xoxb-your-bot-token-here
+
+# Required: Channel ID (starts with C) or User ID (starts with U) for DMs
+SLACK_CHANNEL_ID=C1234567890
+
+# Optional: For full async bot with Socket Mode
+SLACK_APP_TOKEN=xapp-your-app-token-here
+SLACK_SIGNING_SECRET=your-signing-secret-here
+
+# Optional: File paths (defaults work fine)
+RECOMMENDATIONS_FILE=recommendations.json
+APPROVED_TASKS_FILE=approved_tasks.json
+RL_AGENT_PATH=rl-agent 

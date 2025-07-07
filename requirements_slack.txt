@@ -1,0 +1,22 @@
+# Slack Approval Bot Requirements
+# Install with: pip install -r requirements_slack.txt
+
+# Core Slack SDK
+slack-bolt>=1.18.0
+slack-sdk>=3.23.0
+
+# Async support
+aiohttp>=3.8.0
+
+# WebSocket support for Socket Mode
+websockets>=11.0
+
+# JSON handling (built-in, but explicit for clarity)
+# json - built-in
+
+# Logging and utilities
+python-dotenv>=1.0.0  # For .env file support
+
+# Development/Testing (optional)
+pytest>=7.0.0
+pytest-asyncio>=0.21.0 

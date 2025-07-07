@@ -1,0 +1,38 @@
+{
+  "timestamp": "2025-07-06T20:23:48.344037",
+  "performance": {
+    "mean_reward": 57.69850000000001,
+    "std_reward": 20.84447625271502,
+    "mean_profit": 5769.85,
+    "std_profit": 2084.447625271501,
+    "max_profit": 8994.5,
+    "min_profit": 1763.5
+  },
+  "recommendations": {
+    "action": "restock",
+    "quantity": 20,
+    "expected_roi": "280.0%",
+    "confidence": "high",
+    "reasoning": "Based on 5 simulation episodes with average profit of $5046.80",
+    "timestamp": "2025-07-06T20:23:48.343610",
+    "alternative_actions": [
+      {
+        "day": 2,
+        "action": "restock",
+        "quantity": 20,
+        "expected_roi": "280.0%",
+        "inventory_level": 38,
+        "daily_demand": 38
+      },
+      {
+        "day": 8,
+        "action": "restock",
+        "quantity": 20,
+        "expected_roi": "270.0%",
+        "inventory_level": 39,
+        "daily_demand": 37
+      }
+    ]
+  },
+  "training_timesteps": 1000
+}

@@ -1,0 +1,10 @@
+{
+  "action": "restock",
+  "quantity": 60,
+  "expected_roi": "15.2%",
+  "confidence": "medium",
+  "reasoning": "Based on environment simulation with simple heuristic",
+  "timestamp": "2025-07-06T20:22:59.652154",
+  "model_type": "heuristic",
+  "simulation_episodes": 1
+}
