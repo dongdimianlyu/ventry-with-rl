@@ -204,3 +204,60 @@
 2025-07-07 14:39:07,002 - __main__ - INFO - ✅ Updated Office Supplies Based On Inventory Analysis: restock 75 units
 2025-07-07 14:39:07,003 - __main__ - INFO - Marked task task_20250106_140003 as executed
 2025-07-07 14:39:07,004 - __main__ - INFO - Execution logged to quickbooks_execution_log.json
+2025-07-07 15:13:26,546 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 15:13:26,546 - __main__ - INFO - Initializing QuickBooks client...
+2025-07-07 15:13:28,268 - quickbooks_simple_client - INFO - ✅ Connected to QuickBooks company: Unknown
+2025-07-07 15:13:28,269 - __main__ - INFO - Loaded 2 pending tasks from 7 total
+2025-07-07 15:13:28,269 - __main__ - INFO - Executing 2 tasks
+2025-07-07 15:13:28,269 - __main__ - INFO - Executing invoice creation: {'amount': 500.0, 'customer': 'Abc For Consulting Services', 'description': 'Invoice based on RL recommendation - send invoice for $500 to client abc for consulting services', 'quantity': 1}
+2025-07-07 15:13:30,541 - quickbooks_simple_client - INFO - ⚠️ Using existing customer 'Amy's Bird Sanctuary' instead of creating 'Abc For Consulting Services'
+2025-07-07 15:13:32,514 - quickbooks_simple_client - INFO - ⚠️ Using existing item 'Concrete' instead of creating 'General Service'
+2025-07-07 15:13:32,514 - quickbooks_simple_client - INFO - 🧾 Would create invoice for Abc For Consulting Services: $500.0 (Invoice based on RL recommendation - send invoice for $500 to client abc for consulting services)
+2025-07-07 15:13:32,514 - __main__ - INFO - ✅ Created invoice for Abc For Consulting Services: $500.0
+2025-07-07 15:13:32,515 - __main__ - INFO - Marked task task_20250106_140001 as executed
+2025-07-07 15:13:32,516 - __main__ - INFO - Executing expense recording: {'amount': 200.0, 'category': 'Marketing', 'description': 'Expense based on RL recommendation - log expense for $200 marketing spend on social media advertising', 'vendor': 'AI Recommended Purchase'}
+2025-07-07 15:13:34,820 - quickbooks_simple_client - INFO - ⚠️ Using existing vendor 'Bob's Burger Joint' instead of creating 'AI Recommended Purchase'
+2025-07-07 15:13:34,821 - quickbooks_simple_client - INFO - 💰 Would create bill for AI Recommended Purchase: $200.0 (Marketing - Expense based on RL recommendation - log expense for $200 marketing spend on social media advertising)
+2025-07-07 15:13:34,821 - __main__ - INFO - ✅ Recorded expense: $200.0 for Marketing
+2025-07-07 15:13:34,823 - __main__ - INFO - Marked task task_20250106_140002 as executed
+2025-07-07 15:13:34,825 - __main__ - INFO - Execution logged to quickbooks_execution_log.json
+2025-07-07 15:13:40,653 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 15:13:40,653 - __main__ - INFO - Initializing QuickBooks client...
+2025-07-07 15:13:42,195 - quickbooks_simple_client - INFO - ✅ Connected to QuickBooks company: Unknown
+2025-07-07 15:14:31,472 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 15:14:31,472 - __main__ - INFO - Initializing QuickBooks client...
+2025-07-07 15:14:32,694 - quickbooks_simple_client - INFO - ✅ Connected to QuickBooks company: Unknown
+2025-07-07 15:14:38,251 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 15:14:38,251 - __main__ - INFO - Loaded 3 pending tasks from 7 total
+2025-07-07 15:14:38,251 - __main__ - INFO - Dry run: Would execute 3 tasks
+2025-07-07 15:14:43,480 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 15:14:43,480 - __main__ - INFO - Initializing QuickBooks client...
+2025-07-07 15:14:44,967 - quickbooks_simple_client - INFO - ✅ Connected to QuickBooks company: Unknown
+2025-07-07 15:14:44,968 - __main__ - INFO - Loaded 3 pending tasks from 7 total
+2025-07-07 15:14:44,968 - __main__ - INFO - Executing 3 tasks
+2025-07-07 15:14:44,969 - __main__ - INFO - Executing inventory update: {'action': 'restock', 'quantity': 30, 'item_name': 'Laptops Based On Sales Forecast', 'description': 'Restock 30 units based on RL recommendation'}
+2025-07-07 15:14:46,876 - quickbooks_simple_client - INFO - ⚠️ Using existing item 'Concrete' instead of creating 'Laptops Based On Sales Forecast'
+2025-07-07 15:14:46,876 - quickbooks_simple_client - INFO - 📦 Would update inventory for Laptops Based On Sales Forecast: restock 30 units
+2025-07-07 15:14:46,876 - __main__ - INFO - ✅ Updated Laptops Based On Sales Forecast: restock 30 units
+2025-07-07 15:14:46,877 - __main__ - INFO - Marked task task_20250707_150000 as executed
+2025-07-07 15:14:46,879 - __main__ - INFO - Executing invoice creation: {'amount': 750.0, 'customer': 'Techcorp For Software Development Services', 'description': 'Invoice based on RL recommendation - send invoice for $750 to techcorp for software development services', 'quantity': 1}
+2025-07-07 15:14:49,088 - quickbooks_simple_client - INFO - ⚠️ Using existing customer 'Amy's Bird Sanctuary' instead of creating 'Techcorp For Software Development Services'
+2025-07-07 15:14:50,998 - quickbooks_simple_client - INFO - ⚠️ Using existing item 'Concrete' instead of creating 'General Service'
+2025-07-07 15:14:50,998 - quickbooks_simple_client - INFO - 🧾 Would create invoice for Techcorp For Software Development Services: $750.0 (Invoice based on RL recommendation - send invoice for $750 to techcorp for software development services)
+2025-07-07 15:14:50,998 - __main__ - INFO - ✅ Created invoice for Techcorp For Software Development Services: $750.0
+2025-07-07 15:14:51,000 - __main__ - INFO - Marked task task_20250707_150001 as executed
+2025-07-07 15:14:51,000 - __main__ - INFO - Executing expense recording: {'amount': 150.0, 'category': 'Office', 'description': 'Expense based on RL recommendation - log expense for $150 office supplies purchase from officemax', 'vendor': 'AI Recommended Purchase'}
+2025-07-07 15:14:53,364 - quickbooks_simple_client - INFO - ⚠️ Using existing vendor 'Bob's Burger Joint' instead of creating 'AI Recommended Purchase'
+2025-07-07 15:14:53,364 - quickbooks_simple_client - INFO - 💰 Would create bill for AI Recommended Purchase: $150.0 (Office - Expense based on RL recommendation - log expense for $150 office supplies purchase from officemax)
+2025-07-07 15:14:53,365 - __main__ - INFO - ✅ Recorded expense: $150.0 for Office
+2025-07-07 15:14:53,366 - __main__ - INFO - Marked task task_20250707_150002 as executed
+2025-07-07 15:14:53,368 - __main__ - INFO - Execution logged to quickbooks_execution_log.json
+2025-07-07 15:15:01,192 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 15:15:01,193 - __main__ - INFO - Initializing QuickBooks client...
+2025-07-07 15:15:02,612 - quickbooks_simple_client - INFO - ✅ Connected to QuickBooks company: Unknown
+2025-07-07 15:15:10,543 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 15:15:10,543 - __main__ - INFO - Initializing QuickBooks client...
+2025-07-07 15:15:11,792 - quickbooks_simple_client - INFO - ✅ Connected to QuickBooks company: Unknown
+2025-07-07 15:15:12,131 - __main__ - INFO - QuickBooks Executor initialized
+2025-07-07 15:15:12,131 - __main__ - INFO - Loaded 0 pending tasks from 8 total
+2025-07-07 15:15:12,132 - __main__ - INFO - No pending tasks to execute

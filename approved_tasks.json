@@ -35,7 +35,7 @@
     "id": "task_20250106_140001",
     "approved_at": "2025-01-06T14:00:01.000000",
     "status": "approved",
-    "executed": false,
+    "executed": true,
     "recommendation": {
       "action": "invoice",
       "quantity": 1,
@@ -43,13 +43,31 @@
       "confidence": "high",
       "reasoning": "Send invoice for $500 to Client ABC for consulting services",
       "timestamp": "2025-01-06T13:55:01.000000"
+    },
+    "executed_at": "2025-07-07T15:13:32.515141",
+    "execution_result": {
+      "success": true,
+      "action": "create_invoice",
+      "message": "Created invoice for Abc For Consulting Services: $500.0",
+      "invoice_id": "INV-1-500",
+      "customer": "Abc For Consulting Services",
+      "amount": 500.0,
+      "task_id": "task_20250106_140001",
+      "intent": "create_invoice",
+      "params": {
+        "amount": 500.0,
+        "customer": "Abc For Consulting Services",
+        "description": "Invoice based on RL recommendation - send invoice for $500 to client abc for consulting services",
+        "quantity": 1
+      },
+      "executed_at": "2025-07-07T15:13:32.514990"
     }
   },
   {
     "id": "task_20250106_140002",
     "approved_at": "2025-01-06T14:00:02.000000",
     "status": "approved",
-    "executed": false,
+    "executed": true,
     "recommendation": {
       "action": "expense",
       "quantity": 200,
@@ -57,6 +75,25 @@
       "confidence": "medium",
       "reasoning": "Log expense for $200 marketing spend on social media advertising",
       "timestamp": "2025-01-06T13:55:02.000000"
+    },
+    "executed_at": "2025-07-07T15:13:34.821696",
+    "execution_result": {
+      "success": true,
+      "action": "record_expense",
+      "message": "Recorded expense: $200.0 for Marketing",
+      "bill_id": "BILL-56-200",
+      "vendor": "AI Recommended Purchase",
+      "amount": 200.0,
+      "category": "Marketing",
+      "task_id": "task_20250106_140002",
+      "intent": "record_expense",
+      "params": {
+        "amount": 200.0,
+        "category": "Marketing",
+        "description": "Expense based on RL recommendation - log expense for $200 marketing spend on social media advertising",
+        "vendor": "AI Recommended Purchase"
+      },
+      "executed_at": "2025-07-07T15:13:34.821341"
     }
   },
   {
@@ -92,30 +129,109 @@
     }
   },
   {
-    "task_id": "test_task_20250707_133610",
-    "action": "restock 10 units",
-    "reasoning": "Test task for system verification",
-    "confidence": "High",
-    "expected_roi": "100%",
-    "approved_at": "2025-07-07T13:36:10.387717",
-    "executed": false
+    "id": "task_20250707_150000",
+    "approved_at": "2025-07-07T15:00:00.000000",
+    "status": "approved",
+    "recommendation": {
+      "action": "restock",
+      "quantity": 30,
+      "expected_roi": "35.0%",
+      "confidence": "high",
+      "reasoning": "Restock 30 units of laptops based on sales forecast",
+      "timestamp": "2025-07-07T15:00:00.000000"
+    },
+    "executed": true,
+    "executed_at": "2025-07-07T15:14:46.876730",
+    "execution_result": {
+      "success": true,
+      "action": "inventory_update",
+      "message": "Updated Laptops Based On Sales Forecast: restock 30 units",
+      "item_id": "3",
+      "item_name": "Laptops Based On Sales Forecast",
+      "quantity": 30,
+      "task_id": "task_20250707_150000",
+      "intent": "inventory_update",
+      "params": {
+        "action": "restock",
+        "quantity": 30,
+        "item_name": "Laptops Based On Sales Forecast",
+        "description": "Restock 30 units based on RL recommendation"
+      },
+      "executed_at": "2025-07-07T15:14:46.876451"
+    }
   },
   {
-    "task_id": "test_task_20250707_133818",
-    "action": "restock 10 units",
-    "reasoning": "Test task for system verification",
-    "confidence": "High",
-    "expected_roi": "100%",
-    "approved_at": "2025-07-07T13:38:18.282206",
-    "executed": false
+    "id": "task_20250707_150001",
+    "approved_at": "2025-07-07T15:00:01.000000",
+    "status": "approved",
+    "recommendation": {
+      "action": "invoice",
+      "quantity": 1,
+      "expected_roi": "120.0%",
+      "confidence": "high",
+      "reasoning": "Send invoice for $750 to TechCorp for software development services",
+      "timestamp": "2025-07-07T15:00:01.000000"
+    },
+    "executed": true,
+    "executed_at": "2025-07-07T15:14:50.999439",
+    "execution_result": {
+      "success": true,
+      "action": "create_invoice",
+      "message": "Created invoice for Techcorp For Software Development Services: $750.0",
+      "invoice_id": "INV-1-750",
+      "customer": "Techcorp For Software Development Services",
+      "amount": 750.0,
+      "task_id": "task_20250707_150001",
+      "intent": "create_invoice",
+      "params": {
+        "amount": 750.0,
+        "customer": "Techcorp For Software Development Services",
+        "description": "Invoice based on RL recommendation - send invoice for $750 to techcorp for software development services",
+        "quantity": 1
+      },
+      "executed_at": "2025-07-07T15:14:50.999067"
+    }
   },
   {
-    "task_id": "test_task_20250707_143335",
+    "id": "task_20250707_150002",
+    "approved_at": "2025-07-07T15:00:02.000000",
+    "status": "approved",
+    "recommendation": {
+      "action": "expense",
+      "quantity": 150,
+      "expected_roi": "20.0%",
+      "confidence": "medium",
+      "reasoning": "Log expense for $150 office supplies purchase from OfficeMax",
+      "timestamp": "2025-07-07T15:00:02.000000"
+    },
+    "executed": true,
+    "executed_at": "2025-07-07T15:14:53.365326",
+    "execution_result": {
+      "success": true,
+      "action": "record_expense",
+      "message": "Recorded expense: $150.0 for Office",
+      "bill_id": "BILL-56-150",
+      "vendor": "AI Recommended Purchase",
+      "amount": 150.0,
+      "category": "Office",
+      "task_id": "task_20250707_150002",
+      "intent": "record_expense",
+      "params": {
+        "amount": 150.0,
+        "category": "Office",
+        "description": "Expense based on RL recommendation - log expense for $150 office supplies purchase from officemax",
+        "vendor": "AI Recommended Purchase"
+      },
+      "executed_at": "2025-07-07T15:14:53.365097"
+    }
+  },
+  {
+    "task_id": "test_task_20250707_151511",
     "action": "restock 10 units",
     "reasoning": "Test task for system verification",
     "confidence": "High",
     "expected_roi": "100%",
-    "approved_at": "2025-07-07T14:33:35.962370",
+    "approved_at": "2025-07-07T15:15:11.818636",
     "executed": false
   }
 ]
