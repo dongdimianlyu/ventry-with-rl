@@ -1,0 +1,34 @@
+{
+  "message_ts": "1751974977.008559",
+  "sent_at": "2025-07-08T19:42:57.137674",
+  "recommendation": {
+    "action": "restock",
+    "quantity": 50,
+    "expected_roi": "25.5%",
+    "confidence": "high",
+    "reasoning": "Based on demand analysis and inventory levels - sample data for testing",
+    "timestamp": "2025-07-06T21:51:23.881177",
+    "alternative_actions": [
+      {
+        "day": 5,
+        "action": "restock",
+        "quantity": 30,
+        "expected_roi": "22.0%",
+        "inventory_level": 20,
+        "daily_demand": 35
+      },
+      {
+        "day": 10,
+        "action": "restock",
+        "quantity": 40,
+        "expected_roi": "20.5%",
+        "inventory_level": 15,
+        "daily_demand": 40
+      }
+    ],
+    "generated_at": "2025-07-06T21:51:23.881185",
+    "model_type": "PPO",
+    "simulation_episodes": 3
+  },
+  "status": "approved"
+}

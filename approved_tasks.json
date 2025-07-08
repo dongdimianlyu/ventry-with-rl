@@ -382,5 +382,381 @@
       "model_type": "PPO",
       "simulation_episodes": 5
     }
+  },
+  {
+    "id": "debug-task-123",
+    "userId": "debug-user-456",
+    "approvedAt": "2025-07-08T11:06:50.736Z",
+    "status": "approved",
+    "source": "rl_agent_ui",
+    "action": "restock",
+    "details": {
+      "description": "RL Agent approved task for user debug-user-456",
+      "executionType": "quickbooks",
+      "priority": "high"
+    },
+    "recommendation": {
+      "action": "restock",
+      "quantity": 20,
+      "expected_roi": "370.0%",
+      "confidence": "high",
+      "reasoning": "Based on 5 simulation episodes with average profit of $6251.00",
+      "timestamp": "2025-07-06T20:24:43.804848",
+      "alternative_actions": [
+        {
+          "day": 7,
+          "action": "restock",
+          "quantity": 20,
+          "expected_roi": "350.0%",
+          "inventory_level": 15,
+          "daily_demand": 45
+        },
+        {
+          "day": 12,
+          "action": "restock",
+          "quantity": 20,
+          "expected_roi": "310.0%",
+          "inventory_level": 14,
+          "daily_demand": 41
+        }
+      ],
+      "generated_at": "2025-07-06T20:24:43.804902",
+      "model_type": "PPO",
+      "simulation_episodes": 5
+    }
+  },
+  {
+    "id": "debug-task-999",
+    "userId": "debug-user-999",
+    "approvedAt": "2025-07-08T11:08:27.020Z",
+    "status": "approved",
+    "source": "rl_agent_ui",
+    "action": "restock",
+    "details": {
+      "description": "RL Agent approved task for user debug-user-999",
+      "executionType": "quickbooks",
+      "priority": "high"
+    },
+    "recommendation": {
+      "action": "restock",
+      "quantity": 20,
+      "expected_roi": "370.0%",
+      "confidence": "high",
+      "reasoning": "Based on 5 simulation episodes with average profit of $6251.00",
+      "timestamp": "2025-07-06T20:24:43.804848",
+      "alternative_actions": [
+        {
+          "day": 7,
+          "action": "restock",
+          "quantity": 20,
+          "expected_roi": "350.0%",
+          "inventory_level": 15,
+          "daily_demand": 45
+        },
+        {
+          "day": 12,
+          "action": "restock",
+          "quantity": 20,
+          "expected_roi": "310.0%",
+          "inventory_level": 14,
+          "daily_demand": 41
+        }
+      ],
+      "generated_at": "2025-07-06T20:24:43.804902",
+      "model_type": "PPO",
+      "simulation_episodes": 5
+    }
+  },
+  {
+    "id": "debug-task-logs",
+    "userId": "debug-user-logs",
+    "approvedAt": "2025-07-08T11:08:48.472Z",
+    "status": "approved",
+    "source": "rl_agent_ui",
+    "action": "restock",
+    "details": {
+      "description": "RL Agent approved task for user debug-user-logs",
+      "executionType": "quickbooks",
+      "priority": "high"
+    },
+    "recommendation": {
+      "action": "restock",
+      "quantity": 20,
+      "expected_roi": "370.0%",
+      "confidence": "high",
+      "reasoning": "Based on 5 simulation episodes with average profit of $6251.00",
+      "timestamp": "2025-07-06T20:24:43.804848",
+      "alternative_actions": [
+        {
+          "day": 7,
+          "action": "restock",
+          "quantity": 20,
+          "expected_roi": "350.0%",
+          "inventory_level": 15,
+          "daily_demand": 45
+        },
+        {
+          "day": 12,
+          "action": "restock",
+          "quantity": 20,
+          "expected_roi": "310.0%",
+          "inventory_level": 14,
+          "daily_demand": 41
+        }
+      ],
+      "generated_at": "2025-07-06T20:24:43.804902",
+      "model_type": "PPO",
+      "simulation_episodes": 5
+    }
+  },
+  {
+    "id": "final-test-123",
+    "userId": "final-test-user",
+    "approvedAt": "2025-07-08T11:10:17.337Z",
+    "status": "approved",
+    "source": "rl_agent_ui",
+    "action": "restock",
+    "details": {
+      "description": "RL Agent approved task for user final-test-user",
+      "executionType": "quickbooks",
+      "priority": "high"
+    },
+    "recommendation": {
+      "action": "restock",
+      "quantity": 20,
+      "expected_roi": "370.0%",
+      "confidence": "high",
+      "reasoning": "Based on 5 simulation episodes with average profit of $6251.00",
+      "timestamp": "2025-07-06T20:24:43.804848",
+      "alternative_actions": [
+        {
+          "day": 7,
+          "action": "restock",
+          "quantity": 20,
+          "expected_roi": "350.0%",
+          "inventory_level": 15,
+          "daily_demand": 45
+        },
+        {
+          "day": 12,
+          "action": "restock",
+          "quantity": 20,
+          "expected_roi": "310.0%",
+          "inventory_level": 14,
+          "daily_demand": 41
+        }
+      ],
+      "generated_at": "2025-07-06T20:24:43.804902",
+      "model_type": "PPO",
+      "simulation_episodes": 5
+    }
+  },
+  {
+    "id": "rl-1751972689652-vsnt4t6wq",
+    "userId": "1",
+    "approvedAt": "2025-07-08T11:10:58.509Z",
+    "status": "approved",
+    "source": "rl_agent_ui",
+    "action": "restock",
+    "details": {
+      "description": "RL Agent approved task for user 1",
+      "executionType": "quickbooks",
+      "priority": "high"
+    },
+    "recommendation": {
+      "action": "restock",
+      "quantity": 20,
+      "expected_roi": "370.0%",
+      "confidence": "high",
+      "reasoning": "Based on 5 simulation episodes with average profit of $6251.00",
+      "timestamp": "2025-07-06T20:24:43.804848",
+      "alternative_actions": [
+        {
+          "day": 7,
+          "action": "restock",
+          "quantity": 20,
+          "expected_roi": "350.0%",
+          "inventory_level": 15,
+          "daily_demand": 45
+        },
+        {
+          "day": 12,
+          "action": "restock",
+          "quantity": 20,
+          "expected_roi": "310.0%",
+          "inventory_level": 14,
+          "daily_demand": 41
+        }
+      ],
+      "generated_at": "2025-07-06T20:24:43.804902",
+      "model_type": "PPO",
+      "simulation_episodes": 5
+    }
+  },
+  {
+    "id": "rl-1751973086393-o7b3zv4yn",
+    "userId": "1",
+    "approvedAt": "2025-07-08T11:12:47.619Z",
+    "status": "approved",
+    "source": "rl_agent_ui",
+    "action": "restock",
+    "details": {
+      "description": "RL Agent approved task for user 1",
+      "executionType": "quickbooks",
+      "priority": "high"
+    },
+    "recommendation": {
+      "action": "restock",
+      "quantity": 20,
+      "expected_roi": "370.0%",
+      "confidence": "high",
+      "reasoning": "Based on 5 simulation episodes with average profit of $6251.00",
+      "timestamp": "2025-07-06T20:24:43.804848",
+      "alternative_actions": [
+        {
+          "day": 7,
+          "action": "restock",
+          "quantity": 20,
+          "expected_roi": "350.0%",
+          "inventory_level": 15,
+          "daily_demand": 45
+        },
+        {
+          "day": 12,
+          "action": "restock",
+          "quantity": 20,
+          "expected_roi": "310.0%",
+          "inventory_level": 14,
+          "daily_demand": 41
+        }
+      ],
+      "generated_at": "2025-07-06T20:24:43.804902",
+      "model_type": "PPO",
+      "simulation_episodes": 5
+    }
+  },
+  {
+    "id": "rl-sim-1751974047664-fh4bf1xx0",
+    "status": "approved",
+    "approved_at": "2025-07-08T11:27:38.659Z",
+    "approved_by": "test-user",
+    "approved_via": "UI",
+    "recommendation": {
+      "action": "restock",
+      "quantity": 75,
+      "expected_roi": "320.0%",
+      "confidence": "high",
+      "reasoning": "Critical inventory shortage detected. AI analysis shows immediate restocking will prevent lost sales and maximize Q1 revenue.",
+      "item": "SKU-99999",
+      "category": "Best Sellers",
+      "timestamp": "2025-07-08T11:27:27.663Z",
+      "generated_at": "2025-07-08T11:27:27.663Z",
+      "user_id": "test-user",
+      "alternative_actions": [
+        {
+          "action": "restock",
+          "quantity": 37,
+          "expected_roi": "224%"
+        },
+        {
+          "action": "restock",
+          "quantity": 112,
+          "expected_roi": "384%"
+        }
+      ]
+    }
+  },
+  {
+    "id": "rl-sim-1751974240636-bhs43dkhe",
+    "status": "approved",
+    "approved_at": "2025-07-08T11:31:20.518Z",
+    "approved_by": "1",
+    "approved_via": "UI",
+    "recommendation": {
+      "action": "restock",
+      "quantity": 75,
+      "expected_roi": "320.0%",
+      "confidence": "high",
+      "reasoning": "Critical inventory shortage detected. AI analysis shows immediate restocking will prevent lost sales and maximize Q1 revenue.",
+      "item": "SKU-99999",
+      "category": "Best Sellers",
+      "timestamp": "2025-07-08T11:30:40.636Z",
+      "generated_at": "2025-07-08T11:30:40.636Z",
+      "user_id": "1",
+      "alternative_actions": [
+        {
+          "action": "restock",
+          "quantity": 37,
+          "expected_roi": "224%"
+        },
+        {
+          "action": "restock",
+          "quantity": 112,
+          "expected_roi": "384%"
+        }
+      ]
+    }
+  },
+  {
+    "id": "rl-sim-1751974240636-bhs43dkhe",
+    "status": "approved",
+    "approved_at": "2025-07-08T11:31:20.972Z",
+    "approved_by": "1",
+    "approved_via": "UI",
+    "recommendation": {
+      "action": "restock",
+      "quantity": 75,
+      "expected_roi": "320.0%",
+      "confidence": "high",
+      "reasoning": "Critical inventory shortage detected. AI analysis shows immediate restocking will prevent lost sales and maximize Q1 revenue.",
+      "item": "SKU-99999",
+      "category": "Best Sellers",
+      "timestamp": "2025-07-08T11:30:40.636Z",
+      "generated_at": "2025-07-08T11:30:40.636Z",
+      "user_id": "1",
+      "alternative_actions": [
+        {
+          "action": "restock",
+          "quantity": 37,
+          "expected_roi": "224%"
+        },
+        {
+          "action": "restock",
+          "quantity": 112,
+          "expected_roi": "384%"
+        }
+      ]
+    }
+  },
+  {
+    "id": "rl-sim-1751974379354-ff9whzngr",
+    "status": "approved",
+    "approved_at": "2025-07-08T11:48:22.738Z",
+    "approved_by": "1",
+    "approved_via": "UI",
+    "recommendation": {
+      "action": "restock",
+      "quantity": 75,
+      "expected_roi": "320.0%",
+      "confidence": "high",
+      "reasoning": "Critical inventory shortage detected. AI analysis shows immediate restocking will prevent lost sales and maximize Q1 revenue.",
+      "item": "SKU-99999",
+      "category": "Best Sellers",
+      "timestamp": "2025-07-08T11:42:56.452Z",
+      "generated_at": "2025-07-08T11:42:56.453Z",
+      "user_id": "1",
+      "alternative_actions": [
+        {
+          "action": "restock",
+          "quantity": 37,
+          "expected_roi": "224%"
+        },
+        {
+          "action": "restock",
+          "quantity": 112,
+          "expected_roi": "384%"
+        }
+      ]
+    }
   }
 ]

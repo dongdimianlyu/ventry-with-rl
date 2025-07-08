@@ -1,29 +1,24 @@
 {
   "action": "restock",
-  "quantity": 20,
-  "expected_roi": "370.0%",
+  "quantity": 75,
+  "expected_roi": "320.0%",
   "confidence": "high",
-  "reasoning": "Based on 5 simulation episodes with average profit of $6251.00",
-  "timestamp": "2025-07-06T20:24:43.804848",
+  "reasoning": "Critical inventory shortage detected. AI analysis shows immediate restocking will prevent lost sales and maximize Q1 revenue.",
+  "item": "SKU-99999",
+  "category": "Best Sellers",
+  "timestamp": "2025-07-08T11:42:56.452Z",
+  "generated_at": "2025-07-08T11:42:56.453Z",
+  "user_id": "1",
   "alternative_actions": [
     {
-      "day": 7,
       "action": "restock",
-      "quantity": 20,
-      "expected_roi": "350.0%",
-      "inventory_level": 15,
-      "daily_demand": 45
+      "quantity": 37,
+      "expected_roi": "224%"
     },
     {
-      "day": 12,
       "action": "restock",
-      "quantity": 20,
-      "expected_roi": "310.0%",
-      "inventory_level": 14,
-      "daily_demand": 41
+      "quantity": 112,
+      "expected_roi": "384%"
     }
-  ],
-  "generated_at": "2025-07-06T20:24:43.804902",
-  "model_type": "PPO",
-  "simulation_episodes": 5
+  ]
 }

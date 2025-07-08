@@ -7,11 +7,12 @@ import { useState } from 'react'
 
 interface RLTaskCardProps {
   task: RLTask
-  onApprove: (taskId: string) => void
-  onReject: (taskId: string) => void
+  onComplete?: (taskId: string) => void
+  onApprove?: (taskId: string) => void
+  onReject?: (taskId: string) => void
 }
 
-export function RLTaskCard({ task, onApprove, onReject }: RLTaskCardProps) {
+export function RLTaskCard({ task, onComplete, onApprove, onReject }: RLTaskCardProps) {
   const [showOverlay, setShowOverlay] = useState(false)
 
   const handleCardClick = () => {
@@ -100,7 +101,7 @@ export function RLTaskCard({ task, onApprove, onReject }: RLTaskCardProps) {
           </div>
 
           {/* Action Buttons */}
-          {task.approved === null && (
+          {task.approved === null && onApprove && onReject && (
             <div className="flex gap-2 mt-4">
               <Button
                 onClick={(e) => {
@@ -124,6 +125,21 @@ export function RLTaskCard({ task, onApprove, onReject }: RLTaskCardProps) {
               >
                 <XCircle className="h-4 w-4 mr-2" />
                 Reject
+              </Button>
+            </div>
+          )}
+          {task.approved === true && !task.completed && onComplete && (
+            <div className="flex gap-2 mt-4">
+              <Button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  onComplete(task.id)
+                }}
+                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
+                size="sm"
+              >
+                <CheckCircle className="h-4 w-4 mr-2" />
+                Mark Complete
               </Button>
             </div>
           )}
@@ -222,7 +238,7 @@ export function RLTaskCard({ task, onApprove, onReject }: RLTaskCardProps) {
                 </div>
 
                 {/* Action Buttons in Modal */}
-                {task.approved === null && (
+                {task.approved === null && onApprove && onReject && (
                   <div className="flex gap-3">
                     <Button
                       onClick={(e) => {
@@ -246,6 +262,21 @@ export function RLTaskCard({ task, onApprove, onReject }: RLTaskCardProps) {
                     >
                       <XCircle className="h-4 w-4 mr-2" />
                       Reject
+                    </Button>
+                  </div>
+                )}
+                {task.approved === true && !task.completed && onComplete && (
+                  <div className="flex gap-3">
+                    <Button
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        onComplete(task.id)
+                        handleOverlayClose()
+                      }}
+                      className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
+                    >
+                      <CheckCircle className="h-4 w-4 mr-2" />
+                      Mark Complete
                     </Button>
                   </div>
                 )}

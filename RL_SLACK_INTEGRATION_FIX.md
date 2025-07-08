@@ -178,10 +178,35 @@ If notifications still don't appear:
    ```
 6. **Check server logs**: Look at the terminal running `npm run dev` for Slack notification output
 
-## Recent Fix Applied
+## Recent Fixes Applied
 
+### Fix #1: Server-side Fetch Issue
 **Issue**: Server-side fetch to `/api/rl/slack-notify` was failing because API routes don't have full URL context.
 
-**Solution**: Replaced server-side fetch calls with direct Python subprocess execution in the API route handlers. This ensures Slack notifications are sent immediately when tasks are approved/rejected.
+**Solution**: Replaced server-side fetch calls with direct Python subprocess execution in the API route handlers.
+
+### Fix #2: Environment Variables Not Available to Subprocess (CRITICAL)
+**Issue**: The Python subprocess didn't have access to Slack environment variables (`SLACK_BOT_TOKEN`, `SLACK_CHANNEL_ID`), causing silent failures.
+
+**Root Cause**: Node.js subprocess doesn't inherit environment variables that are loaded from JSON config files.
+
+**Solution**: Modified the Python script in the API to load Slack configuration from `slack_config.json` and set environment variables before importing the Slack module.
+
+```python
+# Load Slack configuration from JSON file
+config = {}
+config_file = "slack_config.json"
+if os.path.exists(config_file):
+    with open(config_file, 'r') as f:
+        config = json.load(f)
+
+# Set environment variables from config
+if config.get("SLACK_BOT_TOKEN"):
+    os.environ["SLACK_BOT_TOKEN"] = config["SLACK_BOT_TOKEN"]
+if config.get("SLACK_CHANNEL_ID"):
+    os.environ["SLACK_CHANNEL_ID"] = config["SLACK_CHANNEL_ID"]
+```
+
+This ensures the subprocess has access to the required Slack credentials.
 
 The SSL certificate issue is a development environment problem and doesn't affect the functionality - the integration works properly with SSL bypass enabled for testing. 

@@ -94,6 +94,7 @@ export async function POST(request: NextRequest) {
 import sys
 import os
 import ssl
+import json
 sys.path.append('.')
 
 # Handle SSL issues in development
@@ -103,6 +104,19 @@ except:
     pass
 
 try:
+    # Load Slack configuration from JSON file
+    config = {}
+    config_file = "slack_config.json"
+    if os.path.exists(config_file):
+        with open(config_file, 'r') as f:
+            config = json.load(f)
+    
+    # Set environment variables from config
+    if config.get("SLACK_BOT_TOKEN"):
+        os.environ["SLACK_BOT_TOKEN"] = config["SLACK_BOT_TOKEN"]
+    if config.get("SLACK_CHANNEL_ID"):
+        os.environ["SLACK_CHANNEL_ID"] = config["SLACK_CHANNEL_ID"]
+    
     from simple_slack_approval import SimpleSlackApproval
     
     approval = SimpleSlackApproval()
@@ -129,11 +143,14 @@ The task has been approved and added to the execution queue."""
     
     if result["ok"]:
         print("✅ Slack notification sent successfully")
+        print(f"Message timestamp: {result['ts']}")
     else:
         print(f"❌ Failed to send Slack notification: {result}")
         
 except Exception as e:
     print(f"❌ Error sending Slack notification: {e}")
+    import traceback
+    traceback.print_exc()
 `
 
             const slackProcess = spawn('python3', ['-c', pythonScript], {
@@ -141,20 +158,35 @@ except Exception as e:
               stdio: 'pipe'
             })
 
+            let stdout = ''
+            let stderr = ''
+
             slackProcess.stdout.on('data', (data) => {
-              console.log(`Slack notification: ${data.toString()}`)
+              const output = data.toString()
+              stdout += output
+              console.log(`[SLACK STDOUT]: ${output}`)
             })
 
             slackProcess.stderr.on('data', (data) => {
-              console.error(`Slack error: ${data.toString()}`)
+              const output = data.toString()
+              stderr += output
+              console.error(`[SLACK STDERR]: ${output}`)
             })
 
             slackProcess.on('close', (code) => {
+              console.log(`[SLACK PROCESS] Closed with code: ${code}`)
+              console.log(`[SLACK STDOUT FULL]: ${stdout}`)
+              if (stderr) console.error(`[SLACK STDERR FULL]: ${stderr}`)
+              
               if (code === 0) {
                 console.log('✅ Slack notification sent successfully')
               } else {
                 console.error(`❌ Slack notification failed with code ${code}`)
               }
+            })
+
+            slackProcess.on('error', (error) => {
+              console.error(`[SLACK PROCESS ERROR]: ${error.message}`)
             })
 
             console.log('🔄 Slack notification process started...')
@@ -240,6 +272,7 @@ except Exception as e:
 import sys
 import os
 import ssl
+import json
 sys.path.append('.')
 
 # Handle SSL issues in development
@@ -249,6 +282,19 @@ except:
     pass
 
 try:
+    # Load Slack configuration from JSON file
+    config = {}
+    config_file = "slack_config.json"
+    if os.path.exists(config_file):
+        with open(config_file, 'r') as f:
+            config = json.load(f)
+    
+    # Set environment variables from config
+    if config.get("SLACK_BOT_TOKEN"):
+        os.environ["SLACK_BOT_TOKEN"] = config["SLACK_BOT_TOKEN"]
+    if config.get("SLACK_CHANNEL_ID"):
+        os.environ["SLACK_CHANNEL_ID"] = config["SLACK_CHANNEL_ID"]
+    
     from simple_slack_approval import SimpleSlackApproval
     
     approval = SimpleSlackApproval()
@@ -275,11 +321,14 @@ The recommendation has been logged as rejected."""
     
     if result["ok"]:
         print("✅ Slack rejection notification sent successfully")
+        print(f"Message timestamp: {result['ts']}")
     else:
         print(f"❌ Failed to send Slack rejection notification: {result}")
         
 except Exception as e:
     print(f"❌ Error sending Slack rejection notification: {e}")
+    import traceback
+    traceback.print_exc()
 `
 
             const slackProcess = spawn('python3', ['-c', pythonScript], {

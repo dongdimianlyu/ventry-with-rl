@@ -12,5 +12,33 @@
     "rejectedAt": "2025-07-08T11:03:12.845Z",
     "source": "rl_agent_ui",
     "reason": "User rejected via UI"
+  },
+  {
+    "id": "final-test-456",
+    "userId": "final-test-user",
+    "rejectedAt": "2025-07-08T11:10:25.107Z",
+    "source": "rl_agent_ui",
+    "reason": "User rejected via UI"
+  },
+  {
+    "id": "rl-sim-1751972691493-th37k0xt4",
+    "userId": "1",
+    "rejectedAt": "2025-07-08T11:11:00.464Z",
+    "source": "rl_agent_ui",
+    "reason": "User rejected via UI"
+  },
+  {
+    "id": "rl-sim-1751972745618-v05okyq75",
+    "userId": "1",
+    "rejectedAt": "2025-07-08T11:11:01.796Z",
+    "source": "rl_agent_ui",
+    "reason": "User rejected via UI"
+  },
+  {
+    "id": "rl-sim-1751973013936-w16lx92rv",
+    "userId": "1",
+    "rejectedAt": "2025-07-08T11:11:03.074Z",
+    "source": "rl_agent_ui",
+    "reason": "User rejected via UI"
   }
 ]

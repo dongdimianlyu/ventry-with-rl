@@ -10,7 +10,7 @@ import { RLTaskCard } from '@/components/dashboard/RLTaskCard'
 import AddGoalForm from '@/components/dashboard/AddGoalForm'
 import { TaskSuggestionModal } from '@/components/dashboard/TaskSuggestionModal'
 import { AutoModeToggle } from '@/components/ui/AutoModeToggle'
-import { Sparkles, LogOut, Calendar, Target, Brain, TrendingUp, Plus, AlertCircle, Zap } from 'lucide-react'
+import { Sparkles, LogOut, Calendar, Target, Brain, TrendingUp, Plus, AlertCircle, Zap, Clock, CheckCircle } from 'lucide-react'
 import { formatDate } from '@/lib/utils'
 import { knowledgeBase } from '@/data/knowledge-base'
 import { KnowledgeBase } from '@/types'
@@ -20,12 +20,15 @@ export default function DashboardPage() {
   const [goals, setGoals] = useState<Goal[]>([])
   const [tasks, setTasks] = useState<Task[]>([])
   const [rlTasks, setRlTasks] = useState<RLTask[]>([])
+  const [pendingRlTasks, setPendingRlTasks] = useState<RLTask[]>([])
   const [team, setTeam] = useState<TeamMember[]>([])
   const [, setTeamTasks] = useState<Record<string, TeamTask[]>>({})
   const [isGeneratingTasks, setIsGeneratingTasks] = useState(false)
   const [isSimulatingRL, setIsSimulatingRL] = useState(false)
   const [showAddGoal, setShowAddGoal] = useState(false)
   const [taskError, setTaskError] = useState<string | null>(null)
+  const [pendingSlackApproval, setPendingSlackApproval] = useState<any>(null)
+  const [slackStatus, setSlackStatus] = useState<string>('')
   
   // New states for task suggestion modal
   const [showTaskSuggestionModal, setShowTaskSuggestionModal] = useState(false)
@@ -75,7 +78,11 @@ export default function DashboardPage() {
         dueDate: new Date(task.dueDate),
         createdAt: new Date(task.createdAt)
       }))
-      setRlTasks(parsedRlTasks)
+      // Separate pending and approved tasks
+      const approved = parsedRlTasks.filter((task: RLTask) => task.approved === true)
+      const pending = parsedRlTasks.filter((task: RLTask) => task.approved === null)
+      setRlTasks(approved)
+      setPendingRlTasks(pending)
     }
     if (savedTeam) {
       setTeam(JSON.parse(savedTeam))
@@ -84,8 +91,9 @@ export default function DashboardPage() {
       setTeamTasks(JSON.parse(savedTeamTasks))
     }
 
-    // Load RL recommendations automatically
-    loadRLRecommendations(parsedUser.id)
+    // Load approved RL tasks and check for pending approvals
+    loadApprovedRLTasks(parsedUser.id)
+    checkPendingSlackApprovals()
   }, [router])
 
   const handleAddGoal = (goalData: Omit<Goal, 'id' | 'userId' | 'createdAt' | 'updatedAt'>) => {
@@ -226,18 +234,36 @@ export default function DashboardPage() {
     localStorage.setItem(`tasks_${user.id}`, JSON.stringify(updatedTasks))
   }
 
-  const loadRLRecommendations = async (userId: string) => {
+  const loadApprovedRLTasks = async (userId: string) => {
     try {
-      const response = await fetch(`/api/rl/recommendations?userId=${userId}`)
+      const response = await fetch(`/api/rl/approved-tasks?userId=${userId}`)
       if (response.ok) {
         const data = await response.json()
-        if (data.rlTasks && data.rlTasks.length > 0) {
-          setRlTasks(data.rlTasks)
-          localStorage.setItem(`rlTasks_${userId}`, JSON.stringify(data.rlTasks))
+        if (data.tasks && data.tasks.length > 0) {
+          setRlTasks(data.tasks)
+          localStorage.setItem(`rlTasks_${userId}`, JSON.stringify(data.tasks))
         }
       }
     } catch (error) {
-      console.error('Error loading RL recommendations:', error)
+      console.error('Error loading approved RL tasks:', error)
+    }
+  }
+
+  const checkPendingSlackApprovals = async () => {
+    try {
+      const response = await fetch('/api/rl/pending-approvals')
+      if (response.ok) {
+        const data = await response.json()
+        if (data.hasPendingApproval) {
+          setPendingSlackApproval(data.pendingApproval)
+          setSlackStatus('pending')
+        } else {
+          setPendingSlackApproval(null)
+          setSlackStatus('')
+        }
+      }
+    } catch (error) {
+      console.error('Error checking pending Slack approvals:', error)
     }
   }
 
@@ -245,18 +271,29 @@ export default function DashboardPage() {
     if (!user) return
 
     try {
-      const response = await fetch('/api/rl/recommendations', {
+      const response = await fetch('/api/rl/dual-approval', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'approve', taskId, userId: user.id })
+        body: JSON.stringify({ action: 'approve', taskId, userId: user.id, source: 'UI' })
       })
 
       if (response.ok) {
-        const updatedRlTasks = rlTasks.map(task =>
-          task.id === taskId ? { ...task, approved: true } : task
-        )
-        setRlTasks(updatedRlTasks)
-        localStorage.setItem(`rlTasks_${user.id}`, JSON.stringify(updatedRlTasks))
+        // Move task from pending to approved
+        const taskToApprove = pendingRlTasks.find(task => task.id === taskId)
+        if (taskToApprove) {
+          const approvedTask = { ...taskToApprove, approved: true }
+          const updatedPendingTasks = pendingRlTasks.filter(task => task.id !== taskId)
+          const updatedApprovedTasks = [...rlTasks, approvedTask]
+          
+          setPendingRlTasks(updatedPendingTasks)
+          setRlTasks(updatedApprovedTasks)
+          
+          // Update localStorage
+          const allTasks = [...updatedApprovedTasks, ...updatedPendingTasks]
+          localStorage.setItem(`rlTasks_${user.id}`, JSON.stringify(allTasks))
+          
+          setSlackStatus('Task approved via UI - notification sent to Slack')
+        }
       }
     } catch (error) {
       console.error('Error approving RL task:', error)
@@ -267,21 +304,50 @@ export default function DashboardPage() {
     if (!user) return
 
     try {
-      const response = await fetch('/api/rl/recommendations', {
+      const response = await fetch('/api/rl/dual-approval', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'reject', taskId, userId: user.id })
+        body: JSON.stringify({ action: 'reject', taskId, userId: user.id, source: 'UI' })
+      })
+
+      if (response.ok) {
+        // Remove task from pending
+        const updatedPendingTasks = pendingRlTasks.filter(task => task.id !== taskId)
+        setPendingRlTasks(updatedPendingTasks)
+        
+        // Update localStorage
+        const allTasks = [...rlTasks, ...updatedPendingTasks]
+        localStorage.setItem(`rlTasks_${user.id}`, JSON.stringify(allTasks))
+        
+        setSlackStatus('Task rejected via UI - notification sent to Slack')
+      }
+    } catch (error) {
+      console.error('Error rejecting RL task:', error)
+    }
+  }
+
+  const handleRLComplete = async (taskId: string) => {
+    if (!user) return
+
+    try {
+      const response = await fetch('/api/rl/approved-tasks', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'complete', taskId })
       })
 
       if (response.ok) {
         const updatedRlTasks = rlTasks.map(task =>
-          task.id === taskId ? { ...task, approved: false } : task
+          task.id === taskId ? { ...task, completed: true } : task
         )
         setRlTasks(updatedRlTasks)
-        localStorage.setItem(`rlTasks_${user.id}`, JSON.stringify(updatedRlTasks))
+        
+        // Update localStorage
+        const allTasks = [...updatedRlTasks, ...pendingRlTasks]
+        localStorage.setItem(`rlTasks_${user.id}`, JSON.stringify(allTasks))
       }
     } catch (error) {
-      console.error('Error rejecting RL task:', error)
+      console.error('Error completing RL task:', error)
     }
   }
 
@@ -289,6 +355,7 @@ export default function DashboardPage() {
     if (!user) return
 
     setIsSimulatingRL(true)
+    setSlackStatus('')
     try {
       const response = await fetch('/api/rl/simulate', {
         method: 'POST',
@@ -299,13 +366,26 @@ export default function DashboardPage() {
       if (response.ok) {
         const data = await response.json()
         if (data.rlTask) {
-          const newRlTasks = [...rlTasks, data.rlTask]
-          setRlTasks(newRlTasks)
-          localStorage.setItem(`rlTasks_${user.id}`, JSON.stringify(newRlTasks))
+          // Add the new pending task to the UI
+          const newPendingTasks = [...pendingRlTasks, data.rlTask]
+          setPendingRlTasks(newPendingTasks)
+          
+          // Update localStorage with all tasks
+          const allTasks = [...rlTasks, ...newPendingTasks]
+          localStorage.setItem(`rlTasks_${user.id}`, JSON.stringify(allTasks))
+        }
+        
+        if (data.slackStatus === 'sent') {
+          setSlackStatus('Recommendation sent to Slack for approval - you can also approve here in the UI')
+          // Check for pending approvals after sending
+          setTimeout(() => checkPendingSlackApprovals(), 1000)
+        } else if (data.slackStatus === 'failed') {
+          setSlackStatus(`Slack notification failed, but you can still approve in the UI: ${data.slackError}`)
         }
       }
     } catch (error) {
       console.error('Error simulating RL event:', error)
+      setSlackStatus('Error simulating RL event')
     } finally {
       setIsSimulatingRL(false)
     }
@@ -378,6 +458,19 @@ export default function DashboardPage() {
                 <Zap className="h-4 w-4 mr-2" />
                 {isSimulatingRL ? 'Simulating...' : 'Simulate AI Task'}
               </Button>
+              <Button
+                onClick={() => {
+                  if (user) {
+                    loadApprovedRLTasks(user.id)
+                    checkPendingSlackApprovals()
+                  }
+                }}
+                variant="outline"
+                className="border-gray-200 hover:bg-gray-50"
+              >
+                <TrendingUp className="h-4 w-4 mr-2" />
+                Refresh
+              </Button>
               <Button variant="outline" onClick={handleLogout} className="border-gray-200 hover:bg-gray-50">
                 <LogOut className="h-4 w-4" />
               </Button>
@@ -431,10 +524,61 @@ export default function DashboardPage() {
                 </div>
               </div>
 
-              {/* RL AI-Suggested Tasks */}
-              {rlTasks.length > 0 && (
+              {/* Slack Approval Status */}
+              {(pendingSlackApproval || slackStatus) && (
+                <div className="mb-8">
+                  <Card className="border-2 border-orange-200 bg-gradient-to-br from-orange-50 via-white to-yellow-50">
+                    <CardHeader>
+                      <CardTitle className="flex items-center text-lg">
+                        <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center mr-3">
+                          <Brain className="h-4 w-4 text-white" />
+                        </div>
+                        Slack Approval Status
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      {pendingSlackApproval && (
+                        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+                          <div className="flex items-start space-x-3">
+                            <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center mt-1">
+                              <Clock className="h-3 w-3 text-white" />
+                            </div>
+                            <div>
+                              <h4 className="font-semibold text-blue-900 mb-2">Pending Approval in Slack</h4>
+                              <p className="text-blue-800 mb-2">
+                                <strong>Action:</strong> {pendingSlackApproval.recommendation.action} {pendingSlackApproval.recommendation.quantity} units of {pendingSlackApproval.recommendation.item}
+                              </p>
+                              <p className="text-blue-800 mb-2">
+                                <strong>Expected ROI:</strong> {pendingSlackApproval.recommendation.expectedRoi} | 
+                                <strong> Confidence:</strong> {pendingSlackApproval.recommendation.confidence}
+                              </p>
+                              <p className="text-blue-700 text-sm">
+                                Reply with <strong>Y</strong> or <strong>N</strong> in Slack to approve or reject this recommendation.
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                      {slackStatus && (
+                        <div className="bg-green-50 border border-green-200 rounded-lg p-3">
+                          <p className="text-green-800 text-sm">{slackStatus}</p>
+                        </div>
+                      )}
+                    </CardContent>
+                  </Card>
+                </div>
+              )}
+
+              {/* Pending RL AI-Suggested Tasks (Need Approval) */}
+              {pendingRlTasks.length > 0 && (
                 <div className="space-y-6 mb-8">
-                  {rlTasks.map((rlTask) => (
+                  <h4 className="text-lg font-semibold text-gray-900 flex items-center mb-4">
+                    <div className="w-6 h-6 bg-orange-500 rounded-lg flex items-center justify-center mr-3">
+                      <Clock className="h-3 w-3 text-white" />
+                    </div>
+                    Pending Approval (Approve in Slack or UI)
+                  </h4>
+                  {pendingRlTasks.map((rlTask) => (
                     <RLTaskCard 
                       key={rlTask.id} 
                       task={rlTask} 
@@ -445,7 +589,26 @@ export default function DashboardPage() {
                 </div>
               )}
 
-              {(tasks.length === 0 && rlTasks.length === 0) ? (
+              {/* Approved RL AI-Suggested Tasks */}
+              {rlTasks.length > 0 && (
+                <div className="space-y-6 mb-8">
+                  <h4 className="text-lg font-semibold text-gray-900 flex items-center mb-4">
+                    <div className="w-6 h-6 bg-green-500 rounded-lg flex items-center justify-center mr-3">
+                      <CheckCircle className="h-3 w-3 text-white" />
+                    </div>
+                    Approved Tasks
+                  </h4>
+                  {rlTasks.map((rlTask) => (
+                    <RLTaskCard 
+                      key={rlTask.id} 
+                      task={rlTask} 
+                      onComplete={handleRLComplete}
+                    />
+                  ))}
+                </div>
+              )}
+
+              {(tasks.length === 0 && rlTasks.length === 0 && pendingRlTasks.length === 0) ? (
                 <Card className="refined-card text-center py-16 bg-gradient-to-br from-white to-gray-50">
                   <CardContent>
                     <div className="w-16 h-16 bg-brand-accent/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
