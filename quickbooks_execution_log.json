@@ -387,5 +387,1173 @@
       "failed": 0,
       "skipped": 0
     }
+  },
+  {
+    "session_id": "20250708_200154",
+    "executed_at": "2025-07-08T20:01:54.244528",
+    "results": [
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-1751970076769-65xgzdk3i",
+        "intent": "inventory_update",
+        "params": {
+          "action": "",
+          "quantity": 0,
+          "item_name": "Default Product",
+          "description": "Default action:  0 units"
+        },
+        "executed_at": "2025-07-08T20:01:02.154918"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-1751970113495-suq2mzs2q",
+        "intent": "inventory_update",
+        "params": {
+          "action": "",
+          "quantity": 0,
+          "item_name": "Default Product",
+          "description": "Default action:  0 units"
+        },
+        "executed_at": "2025-07-08T20:01:04.679912"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-sim-1751970127878-9at636xod",
+        "intent": "inventory_update",
+        "params": {
+          "action": "",
+          "quantity": 0,
+          "item_name": "Default Product",
+          "description": "Default action:  0 units"
+        },
+        "executed_at": "2025-07-08T20:01:07.263301"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-sim-1751970175696-5sqrehrhx",
+        "intent": "inventory_update",
+        "params": {
+          "action": "",
+          "quantity": 0,
+          "item_name": "Default Product",
+          "description": "Default action:  0 units"
+        },
+        "executed_at": "2025-07-08T20:01:09.925872"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-sim-1751970674847-pbwshruz7",
+        "intent": "inventory_update",
+        "params": {
+          "action": "",
+          "quantity": 0,
+          "item_name": "Default Product",
+          "description": "Default action:  0 units"
+        },
+        "executed_at": "2025-07-08T20:01:12.497630"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-sim-1751972264595-h7dpglkhv",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 20,
+          "item_name": "Default Product",
+          "description": "Restock 20 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:01:15.055081"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "test-task-123",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 20,
+          "item_name": "Default Product",
+          "description": "Restock 20 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:01:17.804418"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "debug-task-123",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 20,
+          "item_name": "Default Product",
+          "description": "Restock 20 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:01:20.564716"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "debug-task-999",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 20,
+          "item_name": "Default Product",
+          "description": "Restock 20 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:01:23.225671"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "debug-task-logs",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 20,
+          "item_name": "Default Product",
+          "description": "Restock 20 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:01:25.781052"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "final-test-123",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 20,
+          "item_name": "Default Product",
+          "description": "Restock 20 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:01:28.584677"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-1751972689652-vsnt4t6wq",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 20,
+          "item_name": "Default Product",
+          "description": "Restock 20 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:01:31.607051"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-1751973086393-o7b3zv4yn",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 20,
+          "item_name": "Default Product",
+          "description": "Restock 20 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:01:34.569777"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-sim-1751974047664-fh4bf1xx0",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 75,
+          "item_name": "Default Product",
+          "description": "Restock 75 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:01:37.252947"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-sim-1751974240636-bhs43dkhe",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 75,
+          "item_name": "Default Product",
+          "description": "Restock 75 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:01:39.947711"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-sim-1751974240636-bhs43dkhe",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 75,
+          "item_name": "Default Product",
+          "description": "Restock 75 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:01:42.495050"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-sim-1751974379354-ff9whzngr",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 75,
+          "item_name": "Default Product",
+          "description": "Restock 75 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:01:45.228465"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "slack-1751975705693-8834",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 50,
+          "item_name": "Default Product",
+          "description": "Restock 50 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:01:48.424190"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "slack-1751975941628-3826",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 50,
+          "item_name": "Default Product",
+          "description": "Restock 50 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:01:51.475035"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "test-slack-approval-1751975959",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 25,
+          "item_name": "Default Product",
+          "description": "Restock 25 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:01:54.242440"
+      }
+    ],
+    "statistics": {
+      "total_processed": 20,
+      "successful": 0,
+      "failed": 20,
+      "skipped": 0
+    }
+  },
+  {
+    "session_id": "20250708_200412",
+    "executed_at": "2025-07-08T20:04:12.348407",
+    "results": [
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-1751970076769-65xgzdk3i",
+        "intent": "inventory_update",
+        "params": {
+          "action": "",
+          "quantity": 0,
+          "item_name": "Default Product",
+          "description": "Default action:  0 units"
+        },
+        "executed_at": "2025-07-08T20:03:19.859581"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-1751970113495-suq2mzs2q",
+        "intent": "inventory_update",
+        "params": {
+          "action": "",
+          "quantity": 0,
+          "item_name": "Default Product",
+          "description": "Default action:  0 units"
+        },
+        "executed_at": "2025-07-08T20:03:22.710506"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-sim-1751970127878-9at636xod",
+        "intent": "inventory_update",
+        "params": {
+          "action": "",
+          "quantity": 0,
+          "item_name": "Default Product",
+          "description": "Default action:  0 units"
+        },
+        "executed_at": "2025-07-08T20:03:25.633928"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-sim-1751970175696-5sqrehrhx",
+        "intent": "inventory_update",
+        "params": {
+          "action": "",
+          "quantity": 0,
+          "item_name": "Default Product",
+          "description": "Default action:  0 units"
+        },
+        "executed_at": "2025-07-08T20:03:28.558540"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-sim-1751970674847-pbwshruz7",
+        "intent": "inventory_update",
+        "params": {
+          "action": "",
+          "quantity": 0,
+          "item_name": "Default Product",
+          "description": "Default action:  0 units"
+        },
+        "executed_at": "2025-07-08T20:03:31.312004"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-sim-1751972264595-h7dpglkhv",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 20,
+          "item_name": "Default Product",
+          "description": "Restock 20 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:03:34.200644"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "test-task-123",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 20,
+          "item_name": "Default Product",
+          "description": "Restock 20 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:03:37.256517"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "debug-task-123",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 20,
+          "item_name": "Default Product",
+          "description": "Restock 20 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:03:40.019272"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "debug-task-999",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 20,
+          "item_name": "Default Product",
+          "description": "Restock 20 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:03:42.655222"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "debug-task-logs",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 20,
+          "item_name": "Default Product",
+          "description": "Restock 20 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:03:45.253988"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "final-test-123",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 20,
+          "item_name": "Default Product",
+          "description": "Restock 20 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:03:48.110199"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-1751972689652-vsnt4t6wq",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 20,
+          "item_name": "Default Product",
+          "description": "Restock 20 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:03:50.797197"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-1751973086393-o7b3zv4yn",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 20,
+          "item_name": "Default Product",
+          "description": "Restock 20 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:03:53.439030"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-sim-1751974047664-fh4bf1xx0",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 75,
+          "item_name": "Default Product",
+          "description": "Restock 75 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:03:56.545363"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-sim-1751974240636-bhs43dkhe",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 75,
+          "item_name": "Default Product",
+          "description": "Restock 75 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:03:59.053282"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-sim-1751974240636-bhs43dkhe",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 75,
+          "item_name": "Default Product",
+          "description": "Restock 75 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:04:01.545249"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-sim-1751974379354-ff9whzngr",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 75,
+          "item_name": "Default Product",
+          "description": "Restock 75 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:04:04.468834"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "slack-1751975705693-8834",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 50,
+          "item_name": "Default Product",
+          "description": "Restock 50 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:04:07.166395"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "slack-1751975941628-3826",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 50,
+          "item_name": "Default Product",
+          "description": "Restock 50 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:04:09.745401"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "test-slack-approval-1751975959",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 25,
+          "item_name": "Default Product",
+          "description": "Restock 25 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:04:12.347702"
+      }
+    ],
+    "statistics": {
+      "total_processed": 20,
+      "successful": 0,
+      "failed": 20,
+      "skipped": 0
+    }
+  },
+  {
+    "session_id": "20250708_200656",
+    "executed_at": "2025-07-08T20:06:56.322314",
+    "results": [
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-1751970076769-65xgzdk3i",
+        "intent": "inventory_update",
+        "params": {
+          "action": "",
+          "quantity": 0,
+          "item_name": "Default Product",
+          "description": "Default action:  0 units"
+        },
+        "executed_at": "2025-07-08T20:06:04.231294"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-1751970113495-suq2mzs2q",
+        "intent": "inventory_update",
+        "params": {
+          "action": "",
+          "quantity": 0,
+          "item_name": "Default Product",
+          "description": "Default action:  0 units"
+        },
+        "executed_at": "2025-07-08T20:06:06.763935"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-sim-1751970127878-9at636xod",
+        "intent": "inventory_update",
+        "params": {
+          "action": "",
+          "quantity": 0,
+          "item_name": "Default Product",
+          "description": "Default action:  0 units"
+        },
+        "executed_at": "2025-07-08T20:06:09.335805"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-sim-1751970175696-5sqrehrhx",
+        "intent": "inventory_update",
+        "params": {
+          "action": "",
+          "quantity": 0,
+          "item_name": "Default Product",
+          "description": "Default action:  0 units"
+        },
+        "executed_at": "2025-07-08T20:06:11.826787"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-sim-1751970674847-pbwshruz7",
+        "intent": "inventory_update",
+        "params": {
+          "action": "",
+          "quantity": 0,
+          "item_name": "Default Product",
+          "description": "Default action:  0 units"
+        },
+        "executed_at": "2025-07-08T20:06:14.574164"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-sim-1751972264595-h7dpglkhv",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 20,
+          "item_name": "Default Product",
+          "description": "Restock 20 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:06:17.170029"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "test-task-123",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 20,
+          "item_name": "Default Product",
+          "description": "Restock 20 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:06:19.801308"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "debug-task-123",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 20,
+          "item_name": "Default Product",
+          "description": "Restock 20 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:06:22.429118"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "debug-task-999",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 20,
+          "item_name": "Default Product",
+          "description": "Restock 20 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:06:25.398930"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "debug-task-logs",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 20,
+          "item_name": "Default Product",
+          "description": "Restock 20 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:06:28.262245"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "final-test-123",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 20,
+          "item_name": "Default Product",
+          "description": "Restock 20 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:06:30.867090"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-1751972689652-vsnt4t6wq",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 20,
+          "item_name": "Default Product",
+          "description": "Restock 20 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:06:33.629561"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-1751973086393-o7b3zv4yn",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 20,
+          "item_name": "Default Product",
+          "description": "Restock 20 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:06:36.398618"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-sim-1751974047664-fh4bf1xx0",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 75,
+          "item_name": "Default Product",
+          "description": "Restock 75 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:06:39.353106"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-sim-1751974240636-bhs43dkhe",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 75,
+          "item_name": "Default Product",
+          "description": "Restock 75 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:06:41.869552"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-sim-1751974240636-bhs43dkhe",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 75,
+          "item_name": "Default Product",
+          "description": "Restock 75 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:06:44.726124"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-sim-1751974379354-ff9whzngr",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 75,
+          "item_name": "Default Product",
+          "description": "Restock 75 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:06:47.516907"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "slack-1751975705693-8834",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 50,
+          "item_name": "Default Product",
+          "description": "Restock 50 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:06:50.239436"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "slack-1751975941628-3826",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 50,
+          "item_name": "Default Product",
+          "description": "Restock 50 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:06:53.353065"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "test-slack-approval-1751975959",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 25,
+          "item_name": "Default Product",
+          "description": "Restock 25 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:06:56.320394"
+      }
+    ],
+    "statistics": {
+      "total_processed": 20,
+      "successful": 0,
+      "failed": 20,
+      "skipped": 0
+    }
+  },
+  {
+    "session_id": "20250708_200806",
+    "executed_at": "2025-07-08T20:08:06.126978",
+    "results": [
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-1751970076769-65xgzdk3i",
+        "intent": "inventory_update",
+        "params": {
+          "action": "",
+          "quantity": 0,
+          "item_name": "Default Product",
+          "description": "Default action:  0 units"
+        },
+        "executed_at": "2025-07-08T20:07:14.497160"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-1751970113495-suq2mzs2q",
+        "intent": "inventory_update",
+        "params": {
+          "action": "",
+          "quantity": 0,
+          "item_name": "Default Product",
+          "description": "Default action:  0 units"
+        },
+        "executed_at": "2025-07-08T20:07:17.320987"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-sim-1751970127878-9at636xod",
+        "intent": "inventory_update",
+        "params": {
+          "action": "",
+          "quantity": 0,
+          "item_name": "Default Product",
+          "description": "Default action:  0 units"
+        },
+        "executed_at": "2025-07-08T20:07:20.142201"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-sim-1751970175696-5sqrehrhx",
+        "intent": "inventory_update",
+        "params": {
+          "action": "",
+          "quantity": 0,
+          "item_name": "Default Product",
+          "description": "Default action:  0 units"
+        },
+        "executed_at": "2025-07-08T20:07:23.253666"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-sim-1751970674847-pbwshruz7",
+        "intent": "inventory_update",
+        "params": {
+          "action": "",
+          "quantity": 0,
+          "item_name": "Default Product",
+          "description": "Default action:  0 units"
+        },
+        "executed_at": "2025-07-08T20:07:26.225668"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-sim-1751972264595-h7dpglkhv",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 20,
+          "item_name": "Default Product",
+          "description": "Restock 20 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:07:29.209662"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "test-task-123",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 20,
+          "item_name": "Default Product",
+          "description": "Restock 20 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:07:32.059305"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "debug-task-123",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 20,
+          "item_name": "Default Product",
+          "description": "Restock 20 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:07:34.779813"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "debug-task-999",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 20,
+          "item_name": "Default Product",
+          "description": "Restock 20 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:07:37.398861"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "debug-task-logs",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 20,
+          "item_name": "Default Product",
+          "description": "Restock 20 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:07:40.000186"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "final-test-123",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 20,
+          "item_name": "Default Product",
+          "description": "Restock 20 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:07:42.525030"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-1751972689652-vsnt4t6wq",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 20,
+          "item_name": "Default Product",
+          "description": "Restock 20 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:07:45.266143"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-1751973086393-o7b3zv4yn",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 20,
+          "item_name": "Default Product",
+          "description": "Restock 20 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:07:47.870902"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-sim-1751974047664-fh4bf1xx0",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 75,
+          "item_name": "Default Product",
+          "description": "Restock 75 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:07:50.410985"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-sim-1751974240636-bhs43dkhe",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 75,
+          "item_name": "Default Product",
+          "description": "Restock 75 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:07:53.084219"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-sim-1751974240636-bhs43dkhe",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 75,
+          "item_name": "Default Product",
+          "description": "Restock 75 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:07:55.673840"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "rl-sim-1751974379354-ff9whzngr",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 75,
+          "item_name": "Default Product",
+          "description": "Restock 75 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:07:58.210658"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "slack-1751975705693-8834",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 50,
+          "item_name": "Default Product",
+          "description": "Restock 50 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:08:00.803734"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "slack-1751975941628-3826",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 50,
+          "item_name": "Default Product",
+          "description": "Restock 50 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:08:03.578315"
+      },
+      {
+        "success": false,
+        "action": "inventory_update",
+        "error": "Failed to update inventory for Default Product",
+        "task_id": "test-slack-approval-1751975959",
+        "intent": "inventory_update",
+        "params": {
+          "action": "restock",
+          "quantity": 25,
+          "item_name": "Default Product",
+          "description": "Restock 25 units based on RL recommendation"
+        },
+        "executed_at": "2025-07-08T20:08:06.125109"
+      }
+    ],
+    "statistics": {
+      "total_processed": 20,
+      "successful": 0,
+      "failed": 20,
+      "skipped": 0
+    }
   }
 ]

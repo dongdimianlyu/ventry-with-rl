@@ -1,24 +1,24 @@
 {
   "action": "restock",
-  "quantity": 75,
-  "expected_roi": "320.0%",
+  "quantity": 50,
+  "expected_roi": "280.0%",
   "confidence": "high",
-  "reasoning": "Critical inventory shortage detected. AI analysis shows immediate restocking will prevent lost sales and maximize Q1 revenue.",
-  "item": "SKU-99999",
-  "category": "Best Sellers",
-  "timestamp": "2025-07-08T11:42:56.452Z",
-  "generated_at": "2025-07-08T11:42:56.453Z",
+  "reasoning": "High-demand SKU showing consistent sales velocity with low inventory levels. Predictive model indicates 85% probability of stockout within 7 days.",
+  "item": "SKU-12345",
+  "category": "Electronics",
+  "timestamp": "2025-07-08T12:09:27.681Z",
+  "generated_at": "2025-07-08T12:09:27.682Z",
   "user_id": "1",
   "alternative_actions": [
     {
       "action": "restock",
-      "quantity": 37,
-      "expected_roi": "224%"
+      "quantity": 25,
+      "expected_roi": "196%"
     },
     {
       "action": "restock",
-      "quantity": 112,
-      "expected_roi": "384%"
+      "quantity": 75,
+      "expected_roi": "336%"
     }
   ]
 }
