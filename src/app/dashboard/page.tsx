@@ -2,14 +2,15 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Goal, Task, User, TeamMember, TeamTask, TaskSuggestion, TeamTaskSuggestion, AutoModeSettings } from '@/types'
+import { Goal, Task, User, TeamMember, TeamTask, TaskSuggestion, TeamTaskSuggestion, AutoModeSettings, RLTask } from '@/types'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { TaskCard } from '@/components/dashboard/TaskCard'
+import { RLTaskCard } from '@/components/dashboard/RLTaskCard'
 import AddGoalForm from '@/components/dashboard/AddGoalForm'
 import { TaskSuggestionModal } from '@/components/dashboard/TaskSuggestionModal'
 import { AutoModeToggle } from '@/components/ui/AutoModeToggle'
-import { Sparkles, LogOut, Calendar, Target, Brain, TrendingUp, Plus, AlertCircle } from 'lucide-react'
+import { Sparkles, LogOut, Calendar, Target, Brain, TrendingUp, Plus, AlertCircle, Zap } from 'lucide-react'
 import { formatDate } from '@/lib/utils'
 import { knowledgeBase } from '@/data/knowledge-base'
 import { KnowledgeBase } from '@/types'
@@ -18,9 +19,11 @@ export default function DashboardPage() {
   const [user, setUser] = useState<User | null>(null)
   const [goals, setGoals] = useState<Goal[]>([])
   const [tasks, setTasks] = useState<Task[]>([])
+  const [rlTasks, setRlTasks] = useState<RLTask[]>([])
   const [team, setTeam] = useState<TeamMember[]>([])
   const [, setTeamTasks] = useState<Record<string, TeamTask[]>>({})
   const [isGeneratingTasks, setIsGeneratingTasks] = useState(false)
+  const [isSimulatingRL, setIsSimulatingRL] = useState(false)
   const [showAddGoal, setShowAddGoal] = useState(false)
   const [taskError, setTaskError] = useState<string | null>(null)
   
@@ -51,6 +54,7 @@ export default function DashboardPage() {
     // Load goals, tasks, team, and team tasks from localStorage
     const savedGoals = localStorage.getItem(`goals_${parsedUser.id}`)
     const savedTasks = localStorage.getItem(`tasks_${parsedUser.id}`)
+    const savedRlTasks = localStorage.getItem(`rlTasks_${parsedUser.id}`)
     const savedTeam = localStorage.getItem(`team_${parsedUser.id}`)
     const savedTeamTasks = localStorage.getItem(`employeeTasks_${parsedUser.id}`)
 
@@ -65,12 +69,23 @@ export default function DashboardPage() {
       }))
       setTasks(parsedTasks)
     }
+    if (savedRlTasks) {
+      const parsedRlTasks = JSON.parse(savedRlTasks).map((task: RLTask & { dueDate: string; createdAt: string }) => ({
+        ...task,
+        dueDate: new Date(task.dueDate),
+        createdAt: new Date(task.createdAt)
+      }))
+      setRlTasks(parsedRlTasks)
+    }
     if (savedTeam) {
       setTeam(JSON.parse(savedTeam))
     }
     if (savedTeamTasks) {
       setTeamTasks(JSON.parse(savedTeamTasks))
     }
+
+    // Load RL recommendations automatically
+    loadRLRecommendations(parsedUser.id)
   }, [router])
 
   const handleAddGoal = (goalData: Omit<Goal, 'id' | 'userId' | 'createdAt' | 'updatedAt'>) => {
@@ -211,6 +226,91 @@ export default function DashboardPage() {
     localStorage.setItem(`tasks_${user.id}`, JSON.stringify(updatedTasks))
   }
 
+  const loadRLRecommendations = async (userId: string) => {
+    try {
+      const response = await fetch(`/api/rl/recommendations?userId=${userId}`)
+      if (response.ok) {
+        const data = await response.json()
+        if (data.rlTasks && data.rlTasks.length > 0) {
+          setRlTasks(data.rlTasks)
+          localStorage.setItem(`rlTasks_${userId}`, JSON.stringify(data.rlTasks))
+        }
+      }
+    } catch (error) {
+      console.error('Error loading RL recommendations:', error)
+    }
+  }
+
+  const handleRLApprove = async (taskId: string) => {
+    if (!user) return
+
+    try {
+      const response = await fetch('/api/rl/recommendations', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'approve', taskId, userId: user.id })
+      })
+
+      if (response.ok) {
+        const updatedRlTasks = rlTasks.map(task =>
+          task.id === taskId ? { ...task, approved: true } : task
+        )
+        setRlTasks(updatedRlTasks)
+        localStorage.setItem(`rlTasks_${user.id}`, JSON.stringify(updatedRlTasks))
+      }
+    } catch (error) {
+      console.error('Error approving RL task:', error)
+    }
+  }
+
+  const handleRLReject = async (taskId: string) => {
+    if (!user) return
+
+    try {
+      const response = await fetch('/api/rl/recommendations', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'reject', taskId, userId: user.id })
+      })
+
+      if (response.ok) {
+        const updatedRlTasks = rlTasks.map(task =>
+          task.id === taskId ? { ...task, approved: false } : task
+        )
+        setRlTasks(updatedRlTasks)
+        localStorage.setItem(`rlTasks_${user.id}`, JSON.stringify(updatedRlTasks))
+      }
+    } catch (error) {
+      console.error('Error rejecting RL task:', error)
+    }
+  }
+
+  const simulateRLEvent = async () => {
+    if (!user) return
+
+    setIsSimulatingRL(true)
+    try {
+      const response = await fetch('/api/rl/simulate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: user.id })
+      })
+
+      if (response.ok) {
+        const data = await response.json()
+        if (data.rlTask) {
+          const newRlTasks = [...rlTasks, data.rlTask]
+          setRlTasks(newRlTasks)
+          localStorage.setItem(`rlTasks_${user.id}`, JSON.stringify(newRlTasks))
+        }
+      }
+    } catch (error) {
+      console.error('Error simulating RL event:', error)
+    } finally {
+      setIsSimulatingRL(false)
+    }
+  }
+
   const handleLogout = () => {
     localStorage.removeItem('user')
     router.push('/')
@@ -270,6 +370,14 @@ export default function DashboardPage() {
                 <Brain className="h-4 w-4 mr-2" />
                 {isGeneratingTasks ? 'Generating...' : 'Generate Tasks'}
               </Button>
+              <Button
+                onClick={simulateRLEvent}
+                disabled={isSimulatingRL}
+                className="bg-purple-600 hover:bg-purple-700 text-white smooth-transition shadow-sm"
+              >
+                <Zap className="h-4 w-4 mr-2" />
+                {isSimulatingRL ? 'Simulating...' : 'Simulate AI Task'}
+              </Button>
               <Button variant="outline" onClick={handleLogout} className="border-gray-200 hover:bg-gray-50">
                 <LogOut className="h-4 w-4" />
               </Button>
@@ -323,7 +431,21 @@ export default function DashboardPage() {
                 </div>
               </div>
 
-              {tasks.length === 0 ? (
+              {/* RL AI-Suggested Tasks */}
+              {rlTasks.length > 0 && (
+                <div className="space-y-6 mb-8">
+                  {rlTasks.map((rlTask) => (
+                    <RLTaskCard 
+                      key={rlTask.id} 
+                      task={rlTask} 
+                      onApprove={handleRLApprove}
+                      onReject={handleRLReject}
+                    />
+                  ))}
+                </div>
+              )}
+
+              {(tasks.length === 0 && rlTasks.length === 0) ? (
                 <Card className="refined-card text-center py-16 bg-gradient-to-br from-white to-gray-50">
                   <CardContent>
                     <div className="w-16 h-16 bg-brand-accent/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
@@ -332,8 +454,8 @@ export default function DashboardPage() {
                     <h3 className="text-xl font-semibold text-gray-900 mb-3">No tasks generated yet</h3>
                     <p className="text-gray-600 mb-8 max-w-md mx-auto leading-relaxed">
                       {goals.length === 0 
-                        ? "Add some goals first, then generate your daily tasks"
-                        : "Click 'Generate Tasks' to get your AI-powered daily focus"
+                        ? "Add some goals first, then generate your daily tasks or simulate AI recommendations"
+                        : "Click 'Generate Tasks' to get your AI-powered daily focus or 'Simulate AI Task' for demo recommendations"
                       }
                     </p>
 

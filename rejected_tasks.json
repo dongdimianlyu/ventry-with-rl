@@ -1,0 +1,16 @@
+[
+  {
+    "id": "rl-1751970098451-gjbzn2lvr",
+    "userId": "1",
+    "rejectedAt": "2025-07-08T10:21:47.896Z",
+    "source": "rl_agent_ui",
+    "reason": "User rejected via UI"
+  },
+  {
+    "id": "test-task-456",
+    "userId": "test-user-789",
+    "rejectedAt": "2025-07-08T11:03:12.845Z",
+    "source": "rl_agent_ui",
+    "reason": "User rejected via UI"
+  }
+]

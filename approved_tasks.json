@@ -51,11 +51,11 @@
       "message": "Created invoice for Abc For Consulting Services: $500.0",
       "invoice_id": "INV-1-500",
       "customer": "Abc For Consulting Services",
-      "amount": 500.0,
+      "amount": 500,
       "task_id": "task_20250106_140001",
       "intent": "create_invoice",
       "params": {
-        "amount": 500.0,
+        "amount": 500,
         "customer": "Abc For Consulting Services",
         "description": "Invoice based on RL recommendation - send invoice for $500 to client abc for consulting services",
         "quantity": 1
@@ -83,12 +83,12 @@
       "message": "Recorded expense: $200.0 for Marketing",
       "bill_id": "BILL-56-200",
       "vendor": "AI Recommended Purchase",
-      "amount": 200.0,
+      "amount": 200,
       "category": "Marketing",
       "task_id": "task_20250106_140002",
       "intent": "record_expense",
       "params": {
-        "amount": 200.0,
+        "amount": 200,
         "category": "Marketing",
         "description": "Expense based on RL recommendation - log expense for $200 marketing spend on social media advertising",
         "vendor": "AI Recommended Purchase"
@@ -180,11 +180,11 @@
       "message": "Created invoice for Techcorp For Software Development Services: $750.0",
       "invoice_id": "INV-1-750",
       "customer": "Techcorp For Software Development Services",
-      "amount": 750.0,
+      "amount": 750,
       "task_id": "task_20250707_150001",
       "intent": "create_invoice",
       "params": {
-        "amount": 750.0,
+        "amount": 750,
         "customer": "Techcorp For Software Development Services",
         "description": "Invoice based on RL recommendation - send invoice for $750 to techcorp for software development services",
         "quantity": 1
@@ -212,12 +212,12 @@
       "message": "Recorded expense: $150.0 for Office",
       "bill_id": "BILL-56-150",
       "vendor": "AI Recommended Purchase",
-      "amount": 150.0,
+      "amount": 150,
       "category": "Office",
       "task_id": "task_20250707_150002",
       "intent": "record_expense",
       "params": {
-        "amount": 150.0,
+        "amount": 150,
         "category": "Office",
         "description": "Expense based on RL recommendation - log expense for $150 office supplies purchase from officemax",
         "vendor": "AI Recommended Purchase"
@@ -233,5 +233,154 @@
     "expected_roi": "100%",
     "approved_at": "2025-07-07T15:15:11.818636",
     "executed": false
+  },
+  {
+    "id": "rl-1751970076769-65xgzdk3i",
+    "userId": "1",
+    "approvedAt": "2025-07-08T10:21:27.557Z",
+    "status": "approved",
+    "source": "rl_agent_ui",
+    "action": "restock",
+    "details": {
+      "description": "RL Agent approved task for user 1",
+      "executionType": "quickbooks",
+      "priority": "high"
+    }
+  },
+  {
+    "id": "rl-1751970113495-suq2mzs2q",
+    "userId": "1",
+    "approvedAt": "2025-07-08T10:21:54.598Z",
+    "status": "approved",
+    "source": "rl_agent_ui",
+    "action": "restock",
+    "details": {
+      "description": "RL Agent approved task for user 1",
+      "executionType": "quickbooks",
+      "priority": "high"
+    }
+  },
+  {
+    "id": "rl-sim-1751970127878-9at636xod",
+    "userId": "1",
+    "approvedAt": "2025-07-08T10:22:46.617Z",
+    "status": "approved",
+    "source": "rl_agent_ui",
+    "action": "restock",
+    "details": {
+      "description": "RL Agent approved task for user 1",
+      "executionType": "quickbooks",
+      "priority": "high"
+    }
+  },
+  {
+    "id": "rl-sim-1751970175696-5sqrehrhx",
+    "userId": "1",
+    "approvedAt": "2025-07-08T10:31:31.684Z",
+    "status": "approved",
+    "source": "rl_agent_ui",
+    "action": "restock",
+    "details": {
+      "description": "RL Agent approved task for user 1",
+      "executionType": "quickbooks",
+      "priority": "high"
+    }
+  },
+  {
+    "id": "rl-sim-1751970674847-pbwshruz7",
+    "userId": "1",
+    "approvedAt": "2025-07-08T10:31:33.005Z",
+    "status": "approved",
+    "source": "rl_agent_ui",
+    "action": "restock",
+    "details": {
+      "description": "RL Agent approved task for user 1",
+      "executionType": "quickbooks",
+      "priority": "high"
+    }
+  },
+  {
+    "id": "rl-sim-1751972264595-h7dpglkhv",
+    "userId": "1",
+    "approvedAt": "2025-07-08T11:00:32.061Z",
+    "status": "approved",
+    "source": "rl_agent_ui",
+    "action": "restock",
+    "details": {
+      "description": "RL Agent approved task for user 1",
+      "executionType": "quickbooks",
+      "priority": "high"
+    },
+    "recommendation": {
+      "action": "restock",
+      "quantity": 20,
+      "expected_roi": "370.0%",
+      "confidence": "high",
+      "reasoning": "Based on 5 simulation episodes with average profit of $6251.00",
+      "timestamp": "2025-07-06T20:24:43.804848",
+      "alternative_actions": [
+        {
+          "day": 7,
+          "action": "restock",
+          "quantity": 20,
+          "expected_roi": "350.0%",
+          "inventory_level": 15,
+          "daily_demand": 45
+        },
+        {
+          "day": 12,
+          "action": "restock",
+          "quantity": 20,
+          "expected_roi": "310.0%",
+          "inventory_level": 14,
+          "daily_demand": 41
+        }
+      ],
+      "generated_at": "2025-07-06T20:24:43.804902",
+      "model_type": "PPO",
+      "simulation_episodes": 5
+    }
+  },
+  {
+    "id": "test-task-123",
+    "userId": "test-user-456",
+    "approvedAt": "2025-07-08T11:03:05.122Z",
+    "status": "approved",
+    "source": "rl_agent_ui",
+    "action": "restock",
+    "details": {
+      "description": "RL Agent approved task for user test-user-456",
+      "executionType": "quickbooks",
+      "priority": "high"
+    },
+    "recommendation": {
+      "action": "restock",
+      "quantity": 20,
+      "expected_roi": "370.0%",
+      "confidence": "high",
+      "reasoning": "Based on 5 simulation episodes with average profit of $6251.00",
+      "timestamp": "2025-07-06T20:24:43.804848",
+      "alternative_actions": [
+        {
+          "day": 7,
+          "action": "restock",
+          "quantity": 20,
+          "expected_roi": "350.0%",
+          "inventory_level": 15,
+          "daily_demand": 45
+        },
+        {
+          "day": 12,
+          "action": "restock",
+          "quantity": 20,
+          "expected_roi": "310.0%",
+          "inventory_level": 14,
+          "daily_demand": 41
+        }
+      ],
+      "generated_at": "2025-07-06T20:24:43.804902",
+      "model_type": "PPO",
+      "simulation_episodes": 5
+    }
   }
 ]

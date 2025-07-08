@@ -485,4 +485,42 @@ export interface ShopifyTaskContext {
   opportunities: string[]
   businessContext: string
   timeframe: string
+}
+
+// RL Agent Task Types
+export interface RLTask {
+  id: string
+  userId: string
+  title: string
+  description: string
+  action: string
+  quantity: number
+  predicted_roi: string
+  confidence_score: string
+  explanation: string
+  priority: 'low' | 'medium' | 'high'
+  completed: boolean
+  approved: boolean | null
+  dueDate: Date
+  createdAt: Date
+  rlData: {
+    expected_roi: string
+    confidence: string
+    reasoning: string
+    timestamp: string
+    alternative_actions?: any[]
+  }
+}
+
+export interface RLRecommendation {
+  action: string
+  quantity: number
+  expected_roi: string
+  confidence: string
+  reasoning: string
+  timestamp: string
+  alternative_actions?: any[]
+  generated_at: string
+  model_type: string
+  simulation_episodes: number
 } 
