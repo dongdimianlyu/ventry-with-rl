@@ -1,7 +1,7 @@
 'use client'
 
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Brain, Users, Target, TrendingUp, Zap, Clock, Shield, Sparkles, Menu, X, CheckCircle, BarChart3, MessageSquare, Calculator } from "lucide-react"
+import { ArrowRight, Brain, Users, Target, TrendingUp, Zap, Clock, Shield, Sparkles, Menu, X, CheckCircle, BarChart3, MessageSquare, Calculator, Play } from "lucide-react"
 import Link from "next/link"
 import { useState, useEffect } from "react"
 
@@ -18,279 +18,309 @@ export default function LandingPage() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Navigation */}
-      <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white/95 backdrop-blur-lg shadow-sm border-b border-gray-100' : 'bg-white'}`}>
-        <div className="max-w-6xl mx-auto px-6 lg:px-8">
-          <div className="flex items-center justify-between py-4">
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-[#00D632] rounded-lg flex items-center justify-center">
-                <Sparkles className="h-4 w-4 text-[#0A2A1A]" />
-              </div>
-              <span className="text-xl font-semibold text-[#0A2A1A] tracking-tight">
+    <div className="min-h-screen">
+      {/* Navigation - Matching Aviato exactly */}
+      <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white/95 backdrop-blur-lg shadow-sm' : 'bg-transparent'}`}>
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center">
+              <span className="text-2xl font-bold text-white">
                 Ventry
               </span>
             </div>
             
             {/* Desktop Nav */}
             <div className="hidden md:flex items-center space-x-8">
-              <a href="#features" className="text-gray-600 hover:text-[#0A2A1A] transition-colors font-medium">Features</a>
-              <a href="#how-it-works" className="text-gray-600 hover:text-[#0A2A1A] transition-colors font-medium">How it Works</a>
+              <a href="#features" className="text-white/80 hover:text-[#c9f222] transition-colors text-sm font-medium">Features</a>
+              <a href="#how-it-works" className="text-white/80 hover:text-[#c9f222] transition-colors text-sm font-medium">How it Works</a>
               <Link href="/auth/signin">
-                <Button variant="ghost" className="text-gray-600 hover:text-[#0A2A1A]">Sign In</Button>
+                <Button variant="ghost" className="text-white/80 hover:text-[#c9f222] text-sm">Login</Button>
               </Link>
-              <Button className="bg-[#00D632] hover:bg-[#00B82A] text-[#0A2A1A] px-6 py-2 font-medium rounded-lg transition-all duration-200">
-                Request a Demo
-                <ArrowRight className="ml-2 h-4 w-4" />
+              <Button className="bg-[#c9f222] hover:bg-[#b8e01f] text-[#023e34] px-6 py-2 text-sm font-semibold rounded-md">
+                Get a demo
               </Button>
             </div>
 
             {/* Mobile Menu Button */}
             <button 
-              className="md:hidden p-2 text-[#0A2A1A]"
+              className="md:hidden p-2 text-white"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
           </div>
-
-          {/* Mobile Menu */}
-          {isMenuOpen && (
-            <div className="md:hidden mt-4 pb-4 border-t border-gray-100">
-              <div className="flex flex-col space-y-4 pt-4">
-                <a href="#features" className="text-gray-600 hover:text-[#0A2A1A] transition-colors font-medium">Features</a>
-                <a href="#how-it-works" className="text-gray-600 hover:text-[#0A2A1A] transition-colors font-medium">How it Works</a>
-                <Link href="/auth/signin">
-                  <Button variant="ghost" className="w-full justify-start text-gray-600 hover:text-[#0A2A1A]">Sign In</Button>
-                </Link>
-                <Button className="bg-[#00D632] text-[#0A2A1A] w-full font-medium">Request a Demo</Button>
-              </div>
-            </div>
-          )}
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section className="pt-32 pb-20 px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center max-w-4xl mx-auto">
-            {/* Badge */}
-            <div className="mb-8">
-              <span className="inline-flex items-center px-4 py-2 bg-[#E8F5E8] rounded-full text-[#0A2A1A] text-sm font-medium">
-                <Zap className="w-4 h-4 mr-2" />
-                AI-Powered Operations Partner
-              </span>
+      {/* Hero Section - Dark green background like Aviato */}
+      <section className="min-h-screen bg-[#023e34] relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 pt-24 pb-16">
+          <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[80vh]">
+            <div className="space-y-8">
+              {/* Badge */}
+              <div className="inline-flex items-center px-3 py-1 bg-[#c9f222]/10 border border-[#c9f222]/20 rounded-full">
+                <span className="text-[#c9f222] text-sm font-medium">
+                  We just launched Ventry AI
+                </span>
+                <ArrowRight className="ml-2 h-3 w-3 text-[#c9f222]" />
+              </div>
+              
+              {/* Main Headline - Large and bold like Aviato */}
+              <h1 className="text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight tracking-tight">
+                AI Operations Partner for
+                <br />
+                <span className="text-[#c9f222]">SMEs</span>
+              </h1>
+              
+              {/* Subheadline */}
+              <p className="text-xl text-white/80 leading-relaxed max-w-xl">
+                You don't need an operating manager anymore. Ventry handles the gnarly, messy, behind-the-scenes operational work so you can just build something great.
+              </p>
+              
+              {/* CTA Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4">
+                <div className="flex items-center gap-4">
+                  <input 
+                    type="email" 
+                    placeholder="Email"
+                    className="px-4 py-3 bg-white/10 border border-white/20 rounded-md text-white placeholder-white/60 flex-1 min-w-[200px] backdrop-blur-sm"
+                  />
+                  <Button className="bg-[#c9f222] hover:bg-[#b8e01f] text-[#023e34] px-6 py-3 font-semibold rounded-md whitespace-nowrap">
+                    Request a demo
+                  </Button>
+                </div>
+              </div>
             </div>
             
-            {/* Main Headline */}
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-[#0A2A1A] mb-8 leading-tight tracking-tight">
-              You don't need an
-              <br />
-              <span className="text-gray-600">operating manager</span>
-              <br />
-              anymore.
-            </h1>
-            
-            {/* Subheadline */}
-            <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-4xl mx-auto leading-relaxed font-light">
-              Ventry is an AI-powered operations partner built for SMEs generating $100K–$200K in monthly revenue. By integrating with Shopify, Slack, and QuickBooks, Ventry surfaces urgent, high-impact operational decisions — such as when to restock a product, pause an underperforming ad, or adjust supplier terms.
-            </p>
-            
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
-              <Button size="lg" className="bg-[#00D632] hover:bg-[#00B82A] text-[#0A2A1A] px-8 py-4 text-lg font-medium rounded-lg transition-all duration-200">
-                Request a Demo
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-              <Link href="/auth/signin">
-                <Button variant="outline" size="lg" className="border-[#00D632] text-[#0A2A1A] hover:bg-[#E8F5E8] px-8 py-4 text-lg font-medium rounded-lg transition-all duration-200">
-                  Start Free Trial
-                </Button>
-              </Link>
+            {/* Hero Image/Stats Area */}
+            <div className="relative">
+              <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 space-y-6">
+                <div className="grid grid-cols-2 gap-6">
+                  <div className="bg-white/5 rounded-lg p-4">
+                    <div className="text-2xl font-bold text-[#c9f222]">$200K</div>
+                    <div className="text-sm text-white/60">Monthly Revenue</div>
+                    <div className="text-xs text-[#c9f222] mt-1">Target SME Range</div>
+                  </div>
+                  <div className="bg-white/5 rounded-lg p-4">
+                    <div className="text-2xl font-bold text-[#c9f222]">74K</div>
+                    <div className="text-sm text-white/60">Operations Automated</div>
+                    <div className="text-xs text-[#c9f222] mt-1">Recent automation spike</div>
+                  </div>
+                </div>
+                
+                <div className="text-center py-4">
+                  <div className="text-sm text-white/60 mb-2">Trusted by SME teams</div>
+                  <div className="flex justify-center space-x-6 text-white/40 text-xs font-semibold">
+                    <span>SHOPIFY</span>
+                    <span>SLACK</span>
+                    <span>QUICKBOOKS</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-             {/* Features Section */}
-       <section id="features" className="py-20 bg-[#F8FDF8]">
-         <div className="max-w-6xl mx-auto px-6 lg:px-8">
-           <div className="text-center mb-16">
-             <h2 className="text-4xl md:text-5xl font-bold text-[#0A2A1A] mb-6 tracking-tight">
-               Intelligent decisions,
-               <br />
-               <span className="text-gray-600">automatic execution</span>
-             </h2>
-             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-               Leveraging large language models and Retrieval-Augmented Generation (RAG), Ventry generates daily, context-specific task recommendations based on each store's unique sales, inventory, marketing, and financial data — not generic templates.
-             </p>
-           </div>
-           
-           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-             <div className="text-center">
-               <div className="w-12 h-12 bg-[#0A2A1A] rounded-lg flex items-center justify-center mx-auto mb-4">
-                 <Brain className="h-6 w-6 text-[#00D632]" />
-               </div>
-               <h3 className="text-lg font-semibold text-[#0A2A1A] mb-2">AI-Powered Insights</h3>
-               <p className="text-gray-600 text-sm">Context-specific recommendations using LLMs and RAG technology</p>
-             </div>
-             
-             <div className="text-center">
-               <div className="w-12 h-12 bg-[#0A2A1A] rounded-lg flex items-center justify-center mx-auto mb-4">
-                 <MessageSquare className="h-6 w-6 text-[#00D632]" />
-               </div>
-               <h3 className="text-lg font-semibold text-[#0A2A1A] mb-2">Slack Integration</h3>
-               <p className="text-gray-600 text-sm">One-click approvals and seamless team communication</p>
-             </div>
-             
-             <div className="text-center">
-               <div className="w-12 h-12 bg-[#0A2A1A] rounded-lg flex items-center justify-center mx-auto mb-4">
-                 <Calculator className="h-6 w-6 text-[#00D632]" />
-               </div>
-               <h3 className="text-lg font-semibold text-[#0A2A1A] mb-2">QuickBooks Execution</h3>
-               <p className="text-gray-600 text-sm">Direct execution in your accounting system with ROI tracking</p>
-             </div>
-             
-             <div className="text-center">
-               <div className="w-12 h-12 bg-[#0A2A1A] rounded-lg flex items-center justify-center mx-auto mb-4">
-                 <TrendingUp className="h-6 w-6 text-[#00D632]" />
-               </div>
-               <h3 className="text-lg font-semibold text-[#0A2A1A] mb-2">Reinforcement Learning</h3>
-               <p className="text-gray-600 text-sm">Continuously learns from feedback to predict profitable actions</p>
-             </div>
-           </div>
-         </div>
-       </section>
+      {/* What is Ventry Section - White background */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+              What is Ventry?
+            </h2>
+          </div>
+          
+          <div className="grid lg:grid-cols-2 gap-16 items-center mb-20">
+            <div>
+              <h3 className="text-3xl font-bold text-gray-900 mb-6">
+                The most intelligent operations partner built for SMEs generating $100K–$200K in monthly revenue.
+              </h3>
+              <div className="space-y-4 text-gray-600">
+                <p>Leveraging large language models and Retrieval-Augmented Generation (RAG)</p>
+                <p>Generates daily, context-specific task recommendations</p>
+                <p>Integrates with Shopify, Slack, and QuickBooks seamlessly</p>
+              </div>
+              <Button className="mt-6 bg-[#9b0e8d] hover:bg-[#8a0c7a] text-white px-6 py-3 rounded-md">
+                Try it
+              </Button>
+            </div>
+            <div className="bg-gray-50 rounded-xl p-8 text-center">
+              <div className="text-6xl mb-4">🤖</div>
+              <div className="text-sm text-gray-500">AI Operations Dashboard</div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-             {/* How It Works Section */}
-       <section id="how-it-works" className="py-20">
-         <div className="max-w-6xl mx-auto px-6 lg:px-8">
-           <div className="text-center mb-16">
-             <h2 className="text-4xl md:text-5xl font-bold text-[#0A2A1A] mb-6 tracking-tight">
-               From data to decisions
-               <br />
-               <span className="text-gray-600">in minutes</span>
-             </h2>
-           </div>
-           
-           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-             <div className="text-center lg:text-left">
-               <div className="w-16 h-16 bg-[#E8F5E8] rounded-lg flex items-center justify-center mx-auto lg:mx-0 mb-6">
-                 <span className="text-2xl font-bold text-[#0A2A1A]">1</span>
-               </div>
-               <h3 className="text-xl font-semibold text-[#0A2A1A] mb-4">Connect Your Systems</h3>
-               <p className="text-gray-600 leading-relaxed">
-                 Seamlessly integrate with Shopify, Slack, and QuickBooks to create a unified operational dashboard.
-               </p>
-             </div>
-             
-             <div className="text-center lg:text-left">
-               <div className="w-16 h-16 bg-[#E8F5E8] rounded-lg flex items-center justify-center mx-auto lg:mx-0 mb-6">
-                 <span className="text-2xl font-bold text-[#0A2A1A]">2</span>
-               </div>
-               <h3 className="text-xl font-semibold text-[#0A2A1A] mb-4">Receive Smart Recommendations</h3>
-               <p className="text-gray-600 leading-relaxed">
-                 Get daily, context-specific task recommendations with clear ROI estimates and confidence scores.
-               </p>
-             </div>
-             
-             <div className="text-center lg:text-left">
-               <div className="w-16 h-16 bg-[#E8F5E8] rounded-lg flex items-center justify-center mx-auto lg:mx-0 mb-6">
-                 <span className="text-2xl font-bold text-[#0A2A1A]">3</span>
-               </div>
-               <h3 className="text-xl font-semibold text-[#0A2A1A] mb-4">Execute with Confidence</h3>
-               <p className="text-gray-600 leading-relaxed">
-                 Approve actions via Slack and let Ventry execute directly in your systems while learning from results.
-               </p>
-             </div>
-           </div>
-         </div>
-       </section>
+      {/* Features Grid - White background with purple accents */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+              The most comprehensive operations view there is, made accessible to you
+            </h2>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="text-center group">
+              <div className="bg-gray-50 rounded-xl p-8 mb-4 group-hover:bg-[#9b0e8d]/5 transition-colors">
+                <Brain className="h-12 w-12 text-[#9b0e8d] mx-auto mb-4" />
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">AI-Powered Insights</h3>
+                <p className="text-gray-600 text-sm">Context-specific recommendations using LLMs and RAG technology</p>
+              </div>
+              <Button variant="outline" className="border-[#9b0e8d] text-[#9b0e8d] hover:bg-[#9b0e8d] hover:text-white">
+                Try it
+              </Button>
+            </div>
+            
+            <div className="text-center group">
+              <div className="bg-gray-50 rounded-xl p-8 mb-4 group-hover:bg-[#9b0e8d]/5 transition-colors">
+                <MessageSquare className="h-12 w-12 text-[#9b0e8d] mx-auto mb-4" />
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Slack Integration</h3>
+                <p className="text-gray-600 text-sm">One-click approvals and seamless team communication</p>
+              </div>
+              <Button variant="outline" className="border-[#9b0e8d] text-[#9b0e8d] hover:bg-[#9b0e8d] hover:text-white">
+                Try it
+              </Button>
+            </div>
+            
+            <div className="text-center group">
+              <div className="bg-gray-50 rounded-xl p-8 mb-4 group-hover:bg-[#9b0e8d]/5 transition-colors">
+                <Calculator className="h-12 w-12 text-[#9b0e8d] mx-auto mb-4" />
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">QuickBooks Execution</h3>
+                <p className="text-gray-600 text-sm">Direct execution in your accounting system with ROI tracking</p>
+              </div>
+              <Button variant="outline" className="border-[#9b0e8d] text-[#9b0e8d] hover:bg-[#9b0e8d] hover:text-white">
+                Try it
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
 
-             {/* Integration Showcase */}
-       <section className="py-20 bg-[#F8FDF8]">
-         <div className="max-w-6xl mx-auto px-6 lg:px-8">
-           <div className="text-center mb-16">
-             <h2 className="text-4xl md:text-5xl font-bold text-[#0A2A1A] mb-6 tracking-tight">
-               Works with your
-               <br />
-               <span className="text-gray-600">existing tools</span>
-             </h2>
-           </div>
-           
-           <div className="flex justify-center items-center space-x-12 opacity-60">
-             <div className="text-2xl font-bold text-gray-400">SHOPIFY</div>
-             <div className="text-2xl font-bold text-gray-400">SLACK</div>
-             <div className="text-2xl font-bold text-gray-400">QUICKBOOKS</div>
-           </div>
-         </div>
-       </section>
+      {/* Integration Section - White with team photos layout */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <h3 className="text-3xl font-bold text-gray-900 mb-6">
+                Work wherever you work with our API
+              </h3>
+              <p className="text-gray-600 mb-6">
+                Ventry connects seamlessly with Shopify, Slack, and QuickBooks. Powerful API enables an easy transition to data-driven operational decisions, no process disruption.
+              </p>
+              <Button className="bg-[#9b0e8d] hover:bg-[#8a0c7a] text-white px-6 py-3 rounded-md">
+                Check it out
+              </Button>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-4">
+                <div className="bg-gray-100 rounded-lg h-32 flex items-center justify-center">
+                  <span className="text-gray-400 text-sm">Operations Dashboard</span>
+                </div>
+                <div className="bg-gray-100 rounded-lg h-32 flex items-center justify-center">
+                  <span className="text-gray-400 text-sm">Slack Integration</span>
+                </div>
+              </div>
+              <div className="space-y-4 mt-8">
+                <div className="bg-gray-100 rounded-lg h-32 flex items-center justify-center">
+                  <span className="text-gray-400 text-sm">QuickBooks Sync</span>
+                </div>
+                <div className="bg-gray-100 rounded-lg h-32 flex items-center justify-center">
+                  <span className="text-gray-400 text-sm">Shopify Analytics</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-             {/* CTA Section */}
-       <section className="py-20">
-         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-           <h2 className="text-4xl md:text-5xl font-bold text-[#0A2A1A] mb-8 tracking-tight">
-             Ready to transform
-             <br />
-             <span className="text-gray-600">your operations?</span>
-           </h2>
-           <p className="text-xl text-gray-600 mb-12 leading-relaxed">
-             A reinforcement learning agent continuously learns from feedback and predicts the most profitable actions, providing clear ROI estimates and confidence scores.
-           </p>
-           
-           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-             <Button size="lg" className="bg-[#00D632] hover:bg-[#00B82A] text-[#0A2A1A] px-8 py-4 text-lg font-medium rounded-lg transition-all duration-200">
-               Request a Demo
-               <ArrowRight className="ml-2 h-5 w-5" />
-             </Button>
-             <Link href="/auth/signin">
-               <Button variant="outline" size="lg" className="border-[#00D632] text-[#0A2A1A] hover:bg-[#E8F5E8] px-8 py-4 text-lg font-medium rounded-lg transition-all duration-200">
-                 Start Free Trial
-               </Button>
-             </Link>
-           </div>
-         </div>
-       </section>
+      {/* Features List Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold text-gray-900 mb-6">What we do</h2>
+            <h3 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+              Powerful features and intelligence for your operations
+            </h3>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              'AI-powered task generation',
+              'Reinforcement learning optimization',
+              'Seamless integrations',
+              'ROI tracking and predictions',
+              'One-click Slack approvals',
+              'Real-time data processing'
+            ].map((feature, index) => (
+              <div key={index} className="text-center">
+                <h4 className="text-xl font-semibold text-gray-900">{feature}</h4>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-             {/* Large VENTRY Section */}
-       <section className="py-32 bg-[#0A2A1A]">
-         <div className="max-w-6xl mx-auto px-6 lg:px-8 text-center">
-           <h1 className="text-8xl md:text-9xl lg:text-[12rem] font-bold text-[#00D632] tracking-tighter leading-none">
-             VENTRY
-           </h1>
-           <p className="text-xl text-gray-300 mt-8 max-w-2xl mx-auto">
-             The AI-powered operations partner that eliminates the need for an operating manager.
-           </p>
-         </div>
-       </section>
+      {/* CTA Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
+          <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-8">
+            We handle the hard operational work<br />
+            so you can focus on your business.
+          </h2>
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+            <input 
+              type="email" 
+              placeholder="Email"
+              className="px-4 py-3 border border-gray-300 rounded-md flex-1 max-w-xs"
+            />
+            <Button className="bg-[#9b0e8d] hover:bg-[#8a0c7a] text-white px-6 py-3 rounded-md">
+              Request a demo
+            </Button>
+          </div>
+          
+          <p className="text-sm text-gray-600">Get the latest Ventry company updates</p>
+        </div>
+      </section>
 
-             {/* Footer */}
-       <footer className="bg-white border-t border-gray-100 py-12">
-         <div className="max-w-6xl mx-auto px-6 lg:px-8">
-           <div className="flex flex-col md:flex-row justify-between items-center">
-             <div className="flex items-center space-x-3 mb-4 md:mb-0">
-               <div className="w-8 h-8 bg-[#00D632] rounded-lg flex items-center justify-center">
-                 <Sparkles className="h-4 w-4 text-[#0A2A1A]" />
-               </div>
-               <span className="text-xl font-semibold text-[#0A2A1A] tracking-tight">
-                 Ventry
-               </span>
-             </div>
-             
-             <div className="flex items-center space-x-8">
-               <a href="#" className="text-gray-600 hover:text-[#0A2A1A] transition-colors">Privacy</a>
-               <a href="#" className="text-gray-600 hover:text-[#0A2A1A] transition-colors">Terms</a>
-               <a href="#" className="text-gray-600 hover:text-[#0A2A1A] transition-colors">Contact</a>
-             </div>
-           </div>
-           
-           <div className="mt-8 pt-8 border-t border-gray-100 text-center">
-             <p className="text-gray-500 text-sm">
-               © 2024 Ventry. All rights reserved.
-             </p>
-           </div>
-         </div>
-       </footer>
+      {/* Large VENTRY Section */}
+      <section className="py-32 bg-[#023e34]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
+          <h1 className="text-8xl md:text-9xl lg:text-[12rem] font-bold text-[#c9f222] tracking-tighter leading-none">
+            VENTRY
+          </h1>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-white py-12">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="grid md:grid-cols-4 gap-8 mb-8">
+            <div>
+              <h3 className="font-semibold text-gray-900 mb-4">Company</h3>
+              <ul className="space-y-2 text-sm text-gray-600">
+                <li><a href="#" className="hover:text-[#9b0e8d]">Careers</a></li>
+                <li><a href="#" className="hover:text-[#9b0e8d]">Contact</a></li>
+                <li><a href="#" className="hover:text-[#9b0e8d]">X/Twitter</a></li>
+                <li><a href="#" className="hover:text-[#9b0e8d]">LinkedIn</a></li>
+              </ul>
+            </div>
+          </div>
+          
+          <div className="border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center">
+            <p className="text-sm text-gray-600">
+              © Ventry 2024. All Rights Reserved.
+            </p>
+            <div className="flex space-x-6 text-sm text-gray-600 mt-4 md:mt-0">
+              <a href="#" className="hover:text-[#9b0e8d]">Terms & Conditions</a>
+              <a href="#" className="hover:text-[#9b0e8d]">Privacy Policy</a>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }
