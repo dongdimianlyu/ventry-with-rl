@@ -39,8 +39,8 @@ export async function GET(request: NextRequest) {
             expectedRoi: recommendation.expected_roi || '0%',
             confidence: recommendation.confidence || 'unknown',
             reasoning: recommendation.reasoning || 'No reasoning provided',
-            item: recommendation.item || 'Unknown Item',
-            category: recommendation.category || 'Unknown Category',
+            item: recommendation.item || recommendation.product || 'Business Inventory',
+            category: recommendation.category || 'General Products',
             timestamp: recommendation.timestamp || recommendation.generated_at
           }
         }

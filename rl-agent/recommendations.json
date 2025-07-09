@@ -1,24 +1,24 @@
 {
   "action": "restock",
-  "quantity": 50,
-  "expected_roi": "280.0%",
+  "quantity": 30,
+  "expected_roi": "250.0%",
   "confidence": "high",
-  "reasoning": "High-demand SKU showing consistent sales velocity with low inventory levels. Predictive model indicates 85% probability of stockout within 7 days.",
-  "item": "SKU-12345",
-  "category": "Electronics",
-  "timestamp": "2025-07-09T13:21:40.850Z",
-  "generated_at": "2025-07-09T13:21:40.850Z",
+  "reasoning": "Fitness equipment demand surge detected. Market analysis indicates 40% increase in sales velocity for yoga mats approaching Q1 fitness season.",
+  "item": "Professional Yoga Mat",
+  "category": "Fitness Equipment",
+  "timestamp": "2025-07-09T14:11:43.396Z",
+  "generated_at": "2025-07-09T14:11:43.396Z",
   "user_id": "1",
   "alternative_actions": [
     {
       "action": "restock",
-      "quantity": 25,
-      "expected_roi": "196%"
+      "quantity": 15,
+      "expected_roi": "175%"
     },
     {
       "action": "restock",
-      "quantity": 75,
-      "expected_roi": "336%"
+      "quantity": 45,
+      "expected_roi": "300%"
     }
   ]
 }

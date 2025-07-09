@@ -29,6 +29,7 @@ export default function DashboardPage() {
   const [taskError, setTaskError] = useState<string | null>(null)
   const [pendingSlackApproval, setPendingSlackApproval] = useState<any>(null)
   const [slackStatus, setSlackStatus] = useState<string>('')
+  const [lastSyncCheck, setLastSyncCheck] = useState<string>(new Date().toISOString())
   
   // New states for task suggestion modal
   const [showTaskSuggestionModal, setShowTaskSuggestionModal] = useState(false)
@@ -72,18 +73,9 @@ export default function DashboardPage() {
       }))
       setTasks(parsedTasks)
     }
-    if (savedRlTasks) {
-      const parsedRlTasks = JSON.parse(savedRlTasks).map((task: RLTask & { dueDate: string; createdAt: string }) => ({
-        ...task,
-        dueDate: new Date(task.dueDate),
-        createdAt: new Date(task.createdAt)
-      }))
-      // Separate pending and approved tasks
-      const approved = parsedRlTasks.filter((task: RLTask) => task.approved === true)
-      const pending = parsedRlTasks.filter((task: RLTask) => task.approved === null)
-      setRlTasks(approved)
-      setPendingRlTasks(pending)
-    }
+    // Don't load RL tasks from localStorage - they should only appear when freshly generated/approved
+    // Clean up any existing RL tasks from localStorage
+    localStorage.removeItem(`rlTasks_${parsedUser.id}`)
     if (savedTeam) {
       setTeam(JSON.parse(savedTeam))
     }
@@ -94,7 +86,14 @@ export default function DashboardPage() {
     // Load approved RL tasks and check for pending approvals
     loadApprovedRLTasks(parsedUser.id)
     checkPendingSlackApprovals()
-  }, [router])
+    
+    // Set up periodic sync for Slack status updates
+    const syncInterval = setInterval(() => {
+      syncSlackStatus()
+    }, 10000) // Check every 10 seconds
+    
+    return () => clearInterval(syncInterval)
+  }, [router, lastSyncCheck])
 
   const handleAddGoal = (goalData: Omit<Goal, 'id' | 'userId' | 'createdAt' | 'updatedAt'>) => {
     if (!user) return
@@ -241,7 +240,7 @@ export default function DashboardPage() {
         const data = await response.json()
         if (data.tasks && data.tasks.length > 0) {
           setRlTasks(data.tasks)
-          localStorage.setItem(`rlTasks_${userId}`, JSON.stringify(data.tasks))
+          // Don't save to localStorage - these should only show when freshly approved
         }
       }
     } catch (error) {
@@ -267,6 +266,46 @@ export default function DashboardPage() {
     }
   }
 
+  const syncSlackStatus = async () => {
+    if (!user) return
+    
+    try {
+      const response = await fetch(`/api/rl/sync-status?userId=${user.id}&lastCheck=${lastSyncCheck}`)
+      if (response.ok) {
+        const data = await response.json()
+        
+        if (data.hasUpdates) {
+          // Add new approved tasks from Slack
+          if (data.newApprovals.length > 0) {
+            setRlTasks(prev => [...prev, ...data.newApprovals])
+            setSlackStatus(`✅ ${data.newApprovals.length} task(s) approved via Slack`)
+          }
+          
+          // Remove pending tasks if they were rejected via Slack
+          if (data.newRejections.length > 0) {
+            setPendingRlTasks(prev => prev.filter(task => 
+              !data.newRejections.some((rejection: any) => 
+                task.action === rejection.recommendation?.action && 
+                task.quantity === rejection.recommendation?.quantity
+              )
+            ))
+            setSlackStatus(`❌ ${data.newRejections.length} task(s) rejected via Slack`)
+          }
+          
+          // Clear pending approvals if they're resolved
+          if (data.pendingCleared) {
+            setPendingSlackApproval(null)
+          }
+          
+          // Update last sync time
+          setLastSyncCheck(data.timestamp)
+        }
+      }
+    } catch (error) {
+      console.error('Error syncing Slack status:', error)
+    }
+  }
+
   const handleRLApprove = async (taskId: string) => {
     if (!user) return
 
@@ -288,9 +327,7 @@ export default function DashboardPage() {
           setPendingRlTasks(updatedPendingTasks)
           setRlTasks(updatedApprovedTasks)
           
-          // Update localStorage
-          const allTasks = [...updatedApprovedTasks, ...updatedPendingTasks]
-          localStorage.setItem(`rlTasks_${user.id}`, JSON.stringify(allTasks))
+          // Don't save RL tasks to localStorage
           
           setSlackStatus('Task approved via UI - notification sent to Slack')
         }
@@ -315,9 +352,7 @@ export default function DashboardPage() {
         const updatedPendingTasks = pendingRlTasks.filter(task => task.id !== taskId)
         setPendingRlTasks(updatedPendingTasks)
         
-        // Update localStorage
-        const allTasks = [...rlTasks, ...updatedPendingTasks]
-        localStorage.setItem(`rlTasks_${user.id}`, JSON.stringify(allTasks))
+        // Don't save RL tasks to localStorage
         
         setSlackStatus('Task rejected via UI - notification sent to Slack')
       }
@@ -342,9 +377,7 @@ export default function DashboardPage() {
         )
         setRlTasks(updatedRlTasks)
         
-        // Update localStorage
-        const allTasks = [...updatedRlTasks, ...pendingRlTasks]
-        localStorage.setItem(`rlTasks_${user.id}`, JSON.stringify(allTasks))
+        // Don't save RL tasks to localStorage
       }
     } catch (error) {
       console.error('Error completing RL task:', error)
@@ -370,9 +403,7 @@ export default function DashboardPage() {
           const newPendingTasks = [...pendingRlTasks, data.rlTask]
           setPendingRlTasks(newPendingTasks)
           
-          // Update localStorage with all tasks
-          const allTasks = [...rlTasks, ...newPendingTasks]
-          localStorage.setItem(`rlTasks_${user.id}`, JSON.stringify(allTasks))
+          // Don't save RL tasks to localStorage
         }
         
         if (data.slackStatus === 'sent') {
@@ -463,6 +494,7 @@ export default function DashboardPage() {
                   if (user) {
                     loadApprovedRLTasks(user.id)
                     checkPendingSlackApprovals()
+                    syncSlackStatus()
                   }
                 }}
                 variant="outline"

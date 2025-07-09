@@ -1,6 +1,6 @@
 {
-  "message_ts": "1752067301.248259",
-  "sent_at": "2025-07-09T21:21:41.398002",
+  "message_ts": "1752070303.924959",
+  "sent_at": "2025-07-09T22:11:44.036111",
   "recommendation": {
     "action": "restock",
     "quantity": 50,
@@ -30,5 +30,5 @@
     "model_type": "PPO",
     "simulation_episodes": 3
   },
-  "status": "rejected"
+  "status": "pending"
 }

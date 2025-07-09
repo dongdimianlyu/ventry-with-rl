@@ -19,8 +19,9 @@ export async function POST(request: NextRequest) {
         quantity: 50,
         expected_roi: '280.0%',
         confidence: 'high',
-        reasoning: 'High-demand SKU showing consistent sales velocity with low inventory levels. Predictive model indicates 85% probability of stockout within 7 days.',
-        item: 'SKU-12345',
+        reasoning: 'High-demand wireless headphones showing consistent sales velocity with low inventory levels. Predictive model indicates 85% probability of stockout within 7 days.',
+        item: 'Wireless Bluetooth Headphones',
+        product: 'Wireless Bluetooth Headphones',
         category: 'Electronics'
       },
       {
@@ -28,18 +29,40 @@ export async function POST(request: NextRequest) {
         quantity: 25,
         expected_roi: '195.0%',
         confidence: 'medium',
-        reasoning: 'Seasonal uptick detected for home goods category. Machine learning model predicts 3x sales increase over next 14 days based on historical patterns.',
-        item: 'SKU-67890',
-        category: 'Home Goods'
+        reasoning: 'Seasonal uptick detected for smart home devices category. Machine learning model predicts 3x sales increase over next 14 days based on historical patterns.',
+        item: 'Smart Light Bulbs',
+        product: 'Smart Light Bulbs',
+        category: 'Home Automation'
       },
       {
         action: 'restock',
         quantity: 75,
         expected_roi: '320.0%',
         confidence: 'high',
-        reasoning: 'Critical inventory shortage detected. AI analysis shows immediate restocking will prevent lost sales and maximize Q1 revenue.',
-        item: 'SKU-99999',
-        category: 'Best Sellers'
+        reasoning: 'Critical inventory shortage detected for premium coffee makers. AI analysis shows immediate restocking will prevent lost sales and maximize Q1 revenue.',
+        item: 'Premium Coffee Maker',
+        product: 'Premium Coffee Maker',
+        category: 'Kitchen Appliances'
+      },
+      {
+        action: 'restock',
+        quantity: 30,
+        expected_roi: '250.0%',
+        confidence: 'high',
+        reasoning: 'Fitness equipment demand surge detected. Market analysis indicates 40% increase in sales velocity for yoga mats approaching Q1 fitness season.',
+        item: 'Professional Yoga Mat',
+        product: 'Professional Yoga Mat',
+        category: 'Fitness Equipment'
+      },
+      {
+        action: 'restock',
+        quantity: 60,
+        expected_roi: '210.0%',
+        confidence: 'medium',
+        reasoning: 'Gaming peripherals showing strong demand correlation with upcoming game releases. Predictive model suggests optimal restocking window.',
+        item: 'Gaming Mechanical Keyboard',
+        product: 'Gaming Mechanical Keyboard',
+        category: 'Gaming Accessories'
       }
     ]
 

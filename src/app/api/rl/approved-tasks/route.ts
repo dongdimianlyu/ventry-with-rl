@@ -18,8 +18,8 @@ export async function GET(request: NextRequest) {
         return {
           id: `rl-approved-${task.approved_at || Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
           userId: recommendation.user_id || 'unknown',
-          title: `${recommendation.action || 'Restock'} ${recommendation.quantity || 0} units of ${recommendation.item || 'Unknown Item'}`,
-          description: `AI-approved ${recommendation.action || 'restock'} of ${recommendation.quantity || 0} units for ${recommendation.category || 'Unknown Category'} (${recommendation.item || 'Unknown Item'}) to optimize inventory levels and maximize revenue.`,
+          title: `${recommendation.action || 'Restock'} ${recommendation.quantity || 0} units of ${recommendation.item || recommendation.product || 'Business Inventory'}`,
+          description: `AI-approved ${recommendation.action || 'restock'} of ${recommendation.quantity || 0} units for ${recommendation.category || 'General Products'} (${recommendation.item || recommendation.product || 'Business Inventory'}) to optimize inventory levels and maximize revenue.`,
           action: recommendation.action || 'restock',
           quantity: recommendation.quantity || 0,
           predicted_roi: recommendation.expected_roi || '0%',
