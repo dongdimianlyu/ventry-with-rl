@@ -234,11 +234,14 @@ class SlackListenerService:
                 message_ts = message.get("ts", "")
                 
                 # Check for approval/rejection responses
-                if text in ["y", "yes", "approve", "approved"]:
-                    self.logger.info(f"✅ APPROVED by user {user}")
+                approval_words = ["y", "yes", "yeah", "yep", "approve", "approved", "ok", "okay", "accept", "accepted"]
+                rejection_words = ["n", "no", "nope", "reject", "rejected", "deny", "denied", "cancel", "cancelled"]
+                
+                if text in approval_words:
+                    self.logger.info(f"✅ APPROVED by user {user} with response: '{text}'")
                     self.handle_response(True, user, message_ts)
-                elif text in ["n", "no", "reject", "rejected", "deny"]:
-                    self.logger.info(f"❌ REJECTED by user {user}")
+                elif text in rejection_words:
+                    self.logger.info(f"❌ REJECTED by user {user} with response: '{text}'")
                     self.handle_response(False, user, message_ts)
             
             # Update last checked time

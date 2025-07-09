@@ -40,5 +40,211 @@
     "rejectedAt": "2025-07-08T11:11:03.074Z",
     "source": "rl_agent_ui",
     "reason": "User rejected via UI"
+  },
+  {
+    "id": "test-rejection-1751977056",
+    "rejected_at": "2025-07-08T20:17:36.392565",
+    "status": "rejected",
+    "source": "slack_test",
+    "recommendation": {
+      "action": "restock",
+      "quantity": 50,
+      "expected_roi": "25.5%",
+      "confidence": "high",
+      "reasoning": "Based on demand analysis and inventory levels - sample data for testing",
+      "timestamp": "2025-07-06T21:51:23.881177",
+      "alternative_actions": [
+        {
+          "day": 5,
+          "action": "restock",
+          "quantity": 30,
+          "expected_roi": "22.0%",
+          "inventory_level": 20,
+          "daily_demand": 35
+        },
+        {
+          "day": 10,
+          "action": "restock",
+          "quantity": 40,
+          "expected_roi": "20.5%",
+          "inventory_level": 15,
+          "daily_demand": 40
+        }
+      ],
+      "generated_at": "2025-07-06T21:51:23.881185",
+      "model_type": "PPO",
+      "simulation_episodes": 3
+    },
+    "test_response": "n"
+  },
+  {
+    "id": "test-rejection-1751977056",
+    "rejected_at": "2025-07-08T20:17:36.392859",
+    "status": "rejected",
+    "source": "slack_test",
+    "recommendation": {
+      "action": "restock",
+      "quantity": 50,
+      "expected_roi": "25.5%",
+      "confidence": "high",
+      "reasoning": "Based on demand analysis and inventory levels - sample data for testing",
+      "timestamp": "2025-07-06T21:51:23.881177",
+      "alternative_actions": [
+        {
+          "day": 5,
+          "action": "restock",
+          "quantity": 30,
+          "expected_roi": "22.0%",
+          "inventory_level": 20,
+          "daily_demand": 35
+        },
+        {
+          "day": 10,
+          "action": "restock",
+          "quantity": 40,
+          "expected_roi": "20.5%",
+          "inventory_level": 15,
+          "daily_demand": 40
+        }
+      ],
+      "generated_at": "2025-07-06T21:51:23.881185",
+      "model_type": "PPO",
+      "simulation_episodes": 3
+    },
+    "test_response": "NO"
+  },
+  {
+    "id": "test-rejection-1751977056",
+    "rejected_at": "2025-07-08T20:17:36.393047",
+    "status": "rejected",
+    "source": "slack_test",
+    "recommendation": {
+      "action": "restock",
+      "quantity": 50,
+      "expected_roi": "25.5%",
+      "confidence": "high",
+      "reasoning": "Based on demand analysis and inventory levels - sample data for testing",
+      "timestamp": "2025-07-06T21:51:23.881177",
+      "alternative_actions": [
+        {
+          "day": 5,
+          "action": "restock",
+          "quantity": 30,
+          "expected_roi": "22.0%",
+          "inventory_level": 20,
+          "daily_demand": 35
+        },
+        {
+          "day": 10,
+          "action": "restock",
+          "quantity": 40,
+          "expected_roi": "20.5%",
+          "inventory_level": 15,
+          "daily_demand": 40
+        }
+      ],
+      "generated_at": "2025-07-06T21:51:23.881185",
+      "model_type": "PPO",
+      "simulation_episodes": 3
+    },
+    "test_response": "nope"
+  },
+  {
+    "id": "test-rejection-1751977056",
+    "rejected_at": "2025-07-08T20:17:36.393252",
+    "status": "rejected",
+    "source": "slack_test",
+    "recommendation": {
+      "action": "restock",
+      "quantity": 50,
+      "expected_roi": "25.5%",
+      "confidence": "high",
+      "reasoning": "Based on demand analysis and inventory levels - sample data for testing",
+      "timestamp": "2025-07-06T21:51:23.881177",
+      "alternative_actions": [
+        {
+          "day": 5,
+          "action": "restock",
+          "quantity": 30,
+          "expected_roi": "22.0%",
+          "inventory_level": 20,
+          "daily_demand": 35
+        },
+        {
+          "day": 10,
+          "action": "restock",
+          "quantity": 40,
+          "expected_roi": "20.5%",
+          "inventory_level": 15,
+          "daily_demand": 40
+        }
+      ],
+      "generated_at": "2025-07-06T21:51:23.881185",
+      "model_type": "PPO",
+      "simulation_episodes": 3
+    },
+    "test_response": "reject"
+  },
+  {
+    "id": "rl-sim-1751977424466-cbws8ijki",
+    "status": "rejected",
+    "rejected_at": "2025-07-09T13:22:53.546Z",
+    "rejected_by": "1",
+    "rejected_via": "UI",
+    "recommendation": {
+      "action": "restock",
+      "quantity": 50,
+      "expected_roi": "280.0%",
+      "confidence": "high",
+      "reasoning": "High-demand SKU showing consistent sales velocity with low inventory levels. Predictive model indicates 85% probability of stockout within 7 days.",
+      "item": "SKU-12345",
+      "category": "Electronics",
+      "timestamp": "2025-07-09T13:21:40.850Z",
+      "generated_at": "2025-07-09T13:21:40.850Z",
+      "user_id": "1",
+      "alternative_actions": [
+        {
+          "action": "restock",
+          "quantity": 25,
+          "expected_roi": "196%"
+        },
+        {
+          "action": "restock",
+          "quantity": 75,
+          "expected_roi": "336%"
+        }
+      ]
+    }
+  },
+  {
+    "id": "rl-sim-1751978560169-tq81s1llx",
+    "status": "rejected",
+    "rejected_at": "2025-07-09T13:22:59.928Z",
+    "rejected_by": "1",
+    "rejected_via": "UI",
+    "recommendation": {
+      "action": "restock",
+      "quantity": 50,
+      "expected_roi": "280.0%",
+      "confidence": "high",
+      "reasoning": "High-demand SKU showing consistent sales velocity with low inventory levels. Predictive model indicates 85% probability of stockout within 7 days.",
+      "item": "SKU-12345",
+      "category": "Electronics",
+      "timestamp": "2025-07-09T13:21:40.850Z",
+      "generated_at": "2025-07-09T13:21:40.850Z",
+      "user_id": "1",
+      "alternative_actions": [
+        {
+          "action": "restock",
+          "quantity": 25,
+          "expected_roi": "196%"
+        },
+        {
+          "action": "restock",
+          "quantity": 75,
+          "expected_roi": "336%"
+        }
+      ]
+    }
   }
 ]

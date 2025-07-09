@@ -842,7 +842,7 @@
       "quantity": 25,
       "expected_roi": "250.0%",
       "confidence": "high",
-      "reasoning": "Test approval for Slack \u2192 QuickBooks workflow verification",
+      "reasoning": "Test approval for Slack → QuickBooks workflow verification",
       "timestamp": "2025-07-08T19:59:19.713257"
     }
   },
@@ -880,6 +880,382 @@
       "generated_at": "2025-07-06T21:51:23.881185",
       "model_type": "PPO",
       "simulation_episodes": 3
+    }
+  },
+  {
+    "id": "test-approval-1751977056",
+    "approved_at": "2025-07-08T20:17:36.384161",
+    "status": "approved",
+    "source": "slack_test",
+    "executed": false,
+    "recommendation": {
+      "action": "restock",
+      "quantity": 50,
+      "expected_roi": "25.5%",
+      "confidence": "high",
+      "reasoning": "Based on demand analysis and inventory levels - sample data for testing",
+      "timestamp": "2025-07-06T21:51:23.881177",
+      "alternative_actions": [
+        {
+          "day": 5,
+          "action": "restock",
+          "quantity": 30,
+          "expected_roi": "22.0%",
+          "inventory_level": 20,
+          "daily_demand": 35
+        },
+        {
+          "day": 10,
+          "action": "restock",
+          "quantity": 40,
+          "expected_roi": "20.5%",
+          "inventory_level": 15,
+          "daily_demand": 40
+        }
+      ],
+      "generated_at": "2025-07-06T21:51:23.881185",
+      "model_type": "PPO",
+      "simulation_episodes": 3
+    },
+    "test_response": "Y"
+  },
+  {
+    "id": "test-approval-1751977056",
+    "approved_at": "2025-07-08T20:17:36.387849",
+    "status": "approved",
+    "source": "slack_test",
+    "executed": false,
+    "recommendation": {
+      "action": "restock",
+      "quantity": 50,
+      "expected_roi": "25.5%",
+      "confidence": "high",
+      "reasoning": "Based on demand analysis and inventory levels - sample data for testing",
+      "timestamp": "2025-07-06T21:51:23.881177",
+      "alternative_actions": [
+        {
+          "day": 5,
+          "action": "restock",
+          "quantity": 30,
+          "expected_roi": "22.0%",
+          "inventory_level": 20,
+          "daily_demand": 35
+        },
+        {
+          "day": 10,
+          "action": "restock",
+          "quantity": 40,
+          "expected_roi": "20.5%",
+          "inventory_level": 15,
+          "daily_demand": 40
+        }
+      ],
+      "generated_at": "2025-07-06T21:51:23.881185",
+      "model_type": "PPO",
+      "simulation_episodes": 3
+    },
+    "test_response": "yes"
+  },
+  {
+    "id": "test-approval-1751977056",
+    "approved_at": "2025-07-08T20:17:36.388836",
+    "status": "approved",
+    "source": "slack_test",
+    "executed": false,
+    "recommendation": {
+      "action": "restock",
+      "quantity": 50,
+      "expected_roi": "25.5%",
+      "confidence": "high",
+      "reasoning": "Based on demand analysis and inventory levels - sample data for testing",
+      "timestamp": "2025-07-06T21:51:23.881177",
+      "alternative_actions": [
+        {
+          "day": 5,
+          "action": "restock",
+          "quantity": 30,
+          "expected_roi": "22.0%",
+          "inventory_level": 20,
+          "daily_demand": 35
+        },
+        {
+          "day": 10,
+          "action": "restock",
+          "quantity": 40,
+          "expected_roi": "20.5%",
+          "inventory_level": 15,
+          "daily_demand": 40
+        }
+      ],
+      "generated_at": "2025-07-06T21:51:23.881185",
+      "model_type": "PPO",
+      "simulation_episodes": 3
+    },
+    "test_response": "Yeah"
+  },
+  {
+    "id": "test-approval-1751977056",
+    "approved_at": "2025-07-08T20:17:36.390042",
+    "status": "approved",
+    "source": "slack_test",
+    "executed": false,
+    "recommendation": {
+      "action": "restock",
+      "quantity": 50,
+      "expected_roi": "25.5%",
+      "confidence": "high",
+      "reasoning": "Based on demand analysis and inventory levels - sample data for testing",
+      "timestamp": "2025-07-06T21:51:23.881177",
+      "alternative_actions": [
+        {
+          "day": 5,
+          "action": "restock",
+          "quantity": 30,
+          "expected_roi": "22.0%",
+          "inventory_level": 20,
+          "daily_demand": 35
+        },
+        {
+          "day": 10,
+          "action": "restock",
+          "quantity": 40,
+          "expected_roi": "20.5%",
+          "inventory_level": 15,
+          "daily_demand": 40
+        }
+      ],
+      "generated_at": "2025-07-06T21:51:23.881185",
+      "model_type": "PPO",
+      "simulation_episodes": 3
+    },
+    "test_response": "ok"
+  },
+  {
+    "id": "test-approval-1751977056",
+    "approved_at": "2025-07-08T20:17:36.391338",
+    "status": "approved",
+    "source": "slack_test",
+    "executed": false,
+    "recommendation": {
+      "action": "restock",
+      "quantity": 50,
+      "expected_roi": "25.5%",
+      "confidence": "high",
+      "reasoning": "Based on demand analysis and inventory levels - sample data for testing",
+      "timestamp": "2025-07-06T21:51:23.881177",
+      "alternative_actions": [
+        {
+          "day": 5,
+          "action": "restock",
+          "quantity": 30,
+          "expected_roi": "22.0%",
+          "inventory_level": 20,
+          "daily_demand": 35
+        },
+        {
+          "day": 10,
+          "action": "restock",
+          "quantity": 40,
+          "expected_roi": "20.5%",
+          "inventory_level": 15,
+          "daily_demand": 40
+        }
+      ],
+      "generated_at": "2025-07-06T21:51:23.881185",
+      "model_type": "PPO",
+      "simulation_episodes": 3
+    },
+    "test_response": "approve"
+  },
+  {
+    "id": "rl-sim-1751974976454-lakrfxyhz",
+    "status": "approved",
+    "approved_at": "2025-07-08T12:24:26.501Z",
+    "approved_by": "1",
+    "approved_via": "UI",
+    "recommendation": {
+      "action": "restock",
+      "quantity": 50,
+      "expected_roi": "280.0%",
+      "confidence": "high",
+      "reasoning": "High-demand SKU showing consistent sales velocity with low inventory levels. Predictive model indicates 85% probability of stockout within 7 days.",
+      "item": "SKU-12345",
+      "category": "Electronics",
+      "timestamp": "2025-07-08T12:23:44.464Z",
+      "generated_at": "2025-07-08T12:23:44.465Z",
+      "user_id": "1",
+      "alternative_actions": [
+        {
+          "action": "restock",
+          "quantity": 25,
+          "expected_roi": "196%"
+        },
+        {
+          "action": "restock",
+          "quantity": 75,
+          "expected_roi": "336%"
+        }
+      ]
+    }
+  },
+  {
+    "id": "slack-1751977501572-3015",
+    "approved_at": "2025-07-08T20:25:01.572542",
+    "status": "approved",
+    "source": "slack",
+    "executed": false,
+    "recommendation": {
+      "action": "restock",
+      "quantity": 50,
+      "expected_roi": "25.5%",
+      "confidence": "high",
+      "reasoning": "Based on demand analysis and inventory levels - sample data for testing",
+      "timestamp": "2025-07-06T21:51:23.881177",
+      "alternative_actions": [
+        {
+          "day": 5,
+          "action": "restock",
+          "quantity": 30,
+          "expected_roi": "22.0%",
+          "inventory_level": 20,
+          "daily_demand": 35
+        },
+        {
+          "day": 10,
+          "action": "restock",
+          "quantity": 40,
+          "expected_roi": "20.5%",
+          "inventory_level": 15,
+          "daily_demand": 40
+        }
+      ],
+      "generated_at": "2025-07-06T21:51:23.881185",
+      "model_type": "PPO",
+      "simulation_episodes": 3
+    }
+  },
+  {
+    "id": "rl-sim-1751975925514-u1zbiylb2",
+    "status": "approved",
+    "approved_at": "2025-07-08T12:43:52.348Z",
+    "approved_by": "1",
+    "approved_via": "UI",
+    "recommendation": {
+      "action": "restock",
+      "quantity": 25,
+      "expected_roi": "195.0%",
+      "confidence": "medium",
+      "reasoning": "Seasonal uptick detected for home goods category. Machine learning model predicts 3x sales increase over next 14 days based on historical patterns.",
+      "item": "SKU-67890",
+      "category": "Home Goods",
+      "timestamp": "2025-07-08T12:42:40.168Z",
+      "generated_at": "2025-07-08T12:42:40.169Z",
+      "user_id": "1",
+      "alternative_actions": [
+        {
+          "action": "restock",
+          "quantity": 12,
+          "expected_roi": "136%"
+        },
+        {
+          "action": "restock",
+          "quantity": 37,
+          "expected_roi": "234%"
+        }
+      ]
+    }
+  },
+  {
+    "id": "rl-sim-1751976477388-dsuz5r3m1",
+    "status": "approved",
+    "approved_at": "2025-07-09T13:21:34.630Z",
+    "approved_by": "1",
+    "approved_via": "UI",
+    "recommendation": {
+      "action": "restock",
+      "quantity": 25,
+      "expected_roi": "195.0%",
+      "confidence": "medium",
+      "reasoning": "Seasonal uptick detected for home goods category. Machine learning model predicts 3x sales increase over next 14 days based on historical patterns.",
+      "item": "SKU-67890",
+      "category": "Home Goods",
+      "timestamp": "2025-07-08T12:42:40.168Z",
+      "generated_at": "2025-07-08T12:42:40.169Z",
+      "user_id": "1",
+      "alternative_actions": [
+        {
+          "action": "restock",
+          "quantity": 12,
+          "expected_roi": "136%"
+        },
+        {
+          "action": "restock",
+          "quantity": 37,
+          "expected_roi": "234%"
+        }
+      ]
+    }
+  },
+  {
+    "id": "rl-sim-1751977784285-21o6zx4wz",
+    "status": "approved",
+    "approved_at": "2025-07-09T13:22:50.434Z",
+    "approved_by": "1",
+    "approved_via": "UI",
+    "recommendation": {
+      "action": "restock",
+      "quantity": 50,
+      "expected_roi": "280.0%",
+      "confidence": "high",
+      "reasoning": "High-demand SKU showing consistent sales velocity with low inventory levels. Predictive model indicates 85% probability of stockout within 7 days.",
+      "item": "SKU-12345",
+      "category": "Electronics",
+      "timestamp": "2025-07-09T13:21:40.850Z",
+      "generated_at": "2025-07-09T13:21:40.850Z",
+      "user_id": "1",
+      "alternative_actions": [
+        {
+          "action": "restock",
+          "quantity": 25,
+          "expected_roi": "196%"
+        },
+        {
+          "action": "restock",
+          "quantity": 75,
+          "expected_roi": "336%"
+        }
+      ]
+    }
+  },
+  {
+    "id": "rl-sim-1752067300851-9qfzibsz3",
+    "status": "approved",
+    "approved_at": "2025-07-09T13:22:57.230Z",
+    "approved_by": "1",
+    "approved_via": "UI",
+    "recommendation": {
+      "action": "restock",
+      "quantity": 50,
+      "expected_roi": "280.0%",
+      "confidence": "high",
+      "reasoning": "High-demand SKU showing consistent sales velocity with low inventory levels. Predictive model indicates 85% probability of stockout within 7 days.",
+      "item": "SKU-12345",
+      "category": "Electronics",
+      "timestamp": "2025-07-09T13:21:40.850Z",
+      "generated_at": "2025-07-09T13:21:40.850Z",
+      "user_id": "1",
+      "alternative_actions": [
+        {
+          "action": "restock",
+          "quantity": 25,
+          "expected_roi": "196%"
+        },
+        {
+          "action": "restock",
+          "quantity": 75,
+          "expected_roi": "336%"
+        }
+      ]
     }
   }
 ]
