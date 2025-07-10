@@ -1,0 +1,66 @@
+{
+  "name": "Market Volatility Challenge",
+  "description": "Navigate through market uncertainty and competitive pressures",
+  "scenario_type": "market_volatility",
+  "duration_days": 90,
+  "events": [
+    {
+      "day": 5,
+      "event_type": "market_uncertainty",
+      "description": "Industry reports suggest potential market instability",
+      "impact_factors": {
+        "demand_volatility": 1.2,
+        "customer_confidence": 0.9
+      },
+      "duration": 10,
+      "severity": 1
+    },
+    {
+      "day": 15,
+      "event_type": "market_crash",
+      "description": "Major market correction affects consumer spending",
+      "impact_factors": {
+        "demand_multiplier": 0.6,
+        "customer_confidence": 0.7,
+        "payment_delays": 1.4
+      },
+      "duration": 20,
+      "severity": 2
+    },
+    {
+      "day": 40,
+      "event_type": "market_recovery",
+      "description": "Market shows signs of recovery",
+      "impact_factors": {
+        "demand_multiplier": 1.1,
+        "customer_confidence": 0.95
+      },
+      "duration": 15,
+      "severity": 1
+    },
+    {
+      "day": 25,
+      "event_type": "competitor_price_war",
+      "description": "Competitors reduce prices to maintain market share",
+      "impact_factors": {
+        "competitive_pressure": 1.3,
+        "price_sensitivity": 1.2
+      },
+      "duration": 30,
+      "severity": 2
+    }
+  ],
+  "target_metrics": {
+    "total_revenue": 450000,
+    "gross_margin": 0.35,
+    "inventory_turnover": 3.5,
+    "cash_flow": 50000
+  },
+  "difficulty_level": 0.5,
+  "learning_objectives": [
+    "Manage inventory during market uncertainty",
+    "Adapt pricing strategies to competitive pressure",
+    "Maintain cash flow during revenue fluctuations",
+    "Balance risk vs. opportunity in volatile conditions"
+  ]
+}

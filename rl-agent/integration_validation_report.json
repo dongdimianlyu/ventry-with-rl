@@ -1,0 +1,63 @@
+{
+  "validation_timestamp": "2025-07-10T22:09:22.694899",
+  "test_results": {
+    "environment": {
+      "status": "PASSED",
+      "performance": 28198.518239636418,
+      "observation_shape": [
+        25
+      ],
+      "action_space_size": [
+        4,
+        4,
+        4,
+        4,
+        4,
+        3,
+        3,
+        3
+      ],
+      "episode_length": 90
+    },
+    "scenarios": {
+      "status": "PASSED",
+      "scenario_types_tested": 6,
+      "scenarios_generated": 6,
+      "average_events_per_scenario": 4.0
+    },
+    "agent": {
+      "status": "FAILED",
+      "error": "Enhanced agent not available"
+    },
+    "training": {
+      "status": "FAILED",
+      "error": "Enhanced training not available"
+    },
+    "mock_data": {
+      "status": "FAILED",
+      "error": ""
+    },
+    "compatibility": {
+      "status": "PASSED",
+      "original_agent": true,
+      "slack_integration": false,
+      "quickbooks_integration": false,
+      "task_cards": false,
+      "compatibility_score": 0.25
+    }
+  },
+  "summary": {
+    "tests_passed": 3,
+    "total_tests": 6,
+    "success_rate": 0.5,
+    "overall_status": "NEEDS_ATTENTION"
+  },
+  "recommendations": [
+    "Resolve enhanced RL agent functionality issues",
+    "Address enhanced training system issues",
+    "Ensure enhanced QuickBooks data is available",
+    "Ensure enhanced Shopify data is available",
+    "Verify integration with existing Ventry components"
+  ],
+  "system_readiness": "NEEDS_DEVELOPMENT"
+}

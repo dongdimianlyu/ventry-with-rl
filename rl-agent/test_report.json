@@ -1,0 +1,23 @@
+{
+  "test_timestamp": "2025-07-10T22:05:17.095752",
+  "system_status": {
+    "enhanced_training_available": false,
+    "enhanced_environment_available": true,
+    "python_version": "3.13.3 (v3.13.3:6280bb54784, Apr  8 2025, 10:47:54) [Clang 15.0.0 (clang-1500.3.9.4)]"
+  },
+  "test_results": {
+    "Configuration": "FAILED: name 'TrainingConfig' is not defined",
+    "Curriculum Stages": "PASSED",
+    "Environment Creation": "PASSED",
+    "Training Metrics": "FAILED: name 'TrainingMetrics' is not defined",
+    "Configuration Validation": "FAILED: name 'TrainingConfig' is not defined",
+    "Curriculum Logic": "PASSED"
+  },
+  "performance_benchmark": {
+    "operations_per_second": 24100.209152129446
+  },
+  "recommendations": [
+    "Install enhanced training dependencies",
+    "Fix failing tests (3/6 passed)"
+  ]
+}
