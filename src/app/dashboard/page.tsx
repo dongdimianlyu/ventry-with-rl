@@ -496,7 +496,7 @@ export default function DashboardPage() {
               <Button
                 onClick={simulateRLEvent}
                 disabled={isSimulatingRL}
-                className="bg-purple-600 hover:bg-purple-700 text-white smooth-transition shadow-sm"
+                className="bg-[#9B0E8D] hover:bg-[#9B0E8D]/90 text-white smooth-transition shadow-sm"
               >
                 <BarChart3 className="h-4 w-4 mr-2" />
                 {isSimulatingRL ? 'analysing...' : 'Run Agent Suggestion'}
@@ -571,45 +571,89 @@ export default function DashboardPage() {
               {/* Slack Approval Status */}
               {(pendingSlackApproval || slackStatus) && (
                 <div className="mb-8">
-                  <Card className="border-2 border-[#1A4231] bg-[#1A4231]">
-                    <CardHeader>
-                      <CardTitle className="flex items-center text-lg text-white">
-                        <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center mr-3">
-                          <Clock className="h-4 w-4 text-white" />
+                  <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#1A4231] via-[#1A4231] to-[#2D5A44] border-2 border-[#C9F223]/20 shadow-2xl">
+                    {/* Decorative elements */}
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-[#C9F223]/10 rounded-full blur-3xl"></div>
+                    <div className="absolute bottom-0 left-0 w-24 h-24 bg-[#C9F223]/5 rounded-full blur-2xl"></div>
+                    
+                    <CardHeader className="relative z-10 pb-4">
+                      <CardTitle className="flex items-center text-xl text-white font-bold">
+                        <div className="w-12 h-12 bg-gradient-to-br from-[#C9F223] to-[#C9F223]/80 rounded-xl flex items-center justify-center mr-4 shadow-lg">
+                          <Clock className="h-6 w-6 text-[#1A4231]" />
                         </div>
-                        Slack Approval Status
+                        <div>
+                          <div className="text-xl font-bold">Slack Integration</div>
+                          <div className="text-[#C9F223] text-sm font-medium mt-1">Real-time Approval System</div>
+                        </div>
                       </CardTitle>
                     </CardHeader>
-                    <CardContent>
+                    
+                    <CardContent className="relative z-10 space-y-4">
                       {pendingSlackApproval && (
-                        <div className="bg-white/10 border border-white/20 rounded-lg p-4 mb-4">
-                          <div className="flex items-start space-x-3">
-                            <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center mt-1">
-                              <Clock className="h-3 w-3 text-white" />
+                        <div className="bg-gradient-to-r from-white/15 to-white/10 backdrop-blur-sm border border-[#C9F223]/30 rounded-xl p-6 shadow-inner">
+                          <div className="flex items-start space-x-4">
+                            <div className="w-10 h-10 bg-gradient-to-br from-[#C9F223] to-[#C9F223]/80 rounded-xl flex items-center justify-center shadow-lg flex-shrink-0">
+                              <Clock className="h-5 w-5 text-[#1A4231]" />
                             </div>
-                            <div>
-                              <h4 className="font-semibold text-white mb-2">Pending Approval in Slack</h4>
-                              <p className="text-white/90 mb-2">
-                                <strong>Action:</strong> {pendingSlackApproval.recommendation.action} {pendingSlackApproval.recommendation.quantity} units of {pendingSlackApproval.recommendation.item}
-                              </p>
-                              <p className="text-white/90 mb-2">
-                                <strong>Expected ROI:</strong> {pendingSlackApproval.recommendation.expectedRoi} | 
-                                <strong> Confidence:</strong> {pendingSlackApproval.recommendation.confidence}
-                              </p>
-                              <p className="text-white/80 text-sm">
-                                Reply with <strong>Y</strong> or <strong>N</strong> in Slack to approve or reject this recommendation.
-                              </p>
+                            <div className="flex-1">
+                              <div className="flex items-center gap-2 mb-3">
+                                <h4 className="font-bold text-white text-lg">Pending Approval</h4>
+                                <div className="px-3 py-1 bg-[#C9F223] text-[#1A4231] rounded-full text-xs font-bold animate-pulse">
+                                  LIVE
+                                </div>
+                              </div>
+                              
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                <div className="bg-[#1A4231]/40 rounded-lg p-3 border border-[#C9F223]/20">
+                                  <p className="text-[#C9F223] text-xs font-semibold uppercase tracking-wider mb-1">Action Required</p>
+                                  <p className="text-white font-medium">
+                                    {pendingSlackApproval.recommendation.action} {pendingSlackApproval.recommendation.quantity} units of {pendingSlackApproval.recommendation.item}
+                                  </p>
+                                </div>
+                                
+                                <div className="bg-[#1A4231]/40 rounded-lg p-3 border border-[#C9F223]/20">
+                                  <p className="text-[#C9F223] text-xs font-semibold uppercase tracking-wider mb-1">Expected Impact</p>
+                                  <p className="text-white font-medium">
+                                    {pendingSlackApproval.recommendation.expectedRoi} ROI • {pendingSlackApproval.recommendation.confidence} confidence
+                                  </p>
+                                </div>
+                              </div>
+                              
+                              <div className="bg-gradient-to-r from-[#C9F223]/20 to-transparent border-l-4 border-[#C9F223] pl-4 py-2">
+                                <p className="text-white/90 text-sm leading-relaxed">
+                                  💬 <strong>Reply in Slack:</strong> Type <code className="bg-[#C9F223] text-[#1A4231] px-2 py-1 rounded font-bold">Y</code> to approve or <code className="bg-red-500 text-white px-2 py-1 rounded font-bold">N</code> to reject
+                                </p>
+                              </div>
                             </div>
                           </div>
                         </div>
                       )}
+                      
                       {slackStatus && (
-                        <div className="bg-white/10 border border-white/20 rounded-lg p-3">
-                          <p className="text-white text-sm font-medium">{slackStatus}</p>
+                        <div className="bg-gradient-to-r from-[#C9F223]/20 to-[#C9F223]/10 border border-[#C9F223]/40 rounded-xl p-4 backdrop-blur-sm">
+                          <div className="flex items-center space-x-3">
+                            <div className="w-8 h-8 bg-[#C9F223] rounded-full flex items-center justify-center">
+                              <CheckCircle className="h-4 w-4 text-[#1A4231]" />
+                            </div>
+                            <p className="text-white font-medium flex-1">{slackStatus}</p>
+                          </div>
                         </div>
                       )}
+                      
+                      {/* Integration Status Footer */}
+                      <div className="pt-4 border-t border-white/10">
+                        <div className="flex items-center justify-between text-sm">
+                          <div className="flex items-center space-x-2 text-[#C9F223]/80">
+                            <div className="w-2 h-2 bg-[#C9F223] rounded-full animate-pulse"></div>
+                            <span>Connected to Slack</span>
+                          </div>
+                          <div className="text-white/60">
+                            Real-time sync enabled
+                          </div>
+                        </div>
+                      </div>
                     </CardContent>
-                  </Card>
+                  </div>
                 </div>
               )}
 
@@ -622,14 +666,17 @@ export default function DashboardPage() {
                     </div>
                     Pending Approval (Approve in Slack or UI)
                   </h4>
-                  {pendingRlTasks.map((rlTask) => (
-                    <RLTaskCard 
-                      key={rlTask.id} 
-                      task={rlTask} 
-                      onApprove={handleRLApprove}
-                      onReject={handleRLReject}
-                    />
-                  ))}
+                  <div className="space-y-6 transition-all duration-500">
+                    {pendingRlTasks.map((rlTask) => (
+                      <div key={rlTask.id} className="transition-all duration-500">
+                        <RLTaskCard 
+                          task={rlTask} 
+                          onApprove={handleRLApprove}
+                          onReject={handleRLReject}
+                        />
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
 
@@ -642,13 +689,16 @@ export default function DashboardPage() {
                     </div>
                     Approved Tasks
                   </h4>
-                  {rlTasks.map((rlTask) => (
-                    <RLTaskCard 
-                      key={rlTask.id} 
-                      task={rlTask} 
-                      onComplete={handleRLComplete}
-                    />
-                  ))}
+                  <div className="space-y-6 transition-all duration-500">
+                    {rlTasks.map((rlTask) => (
+                      <div key={rlTask.id} className="transition-all duration-500">
+                        <RLTaskCard 
+                          task={rlTask} 
+                          onComplete={handleRLComplete}
+                        />
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
 
@@ -669,18 +719,19 @@ export default function DashboardPage() {
                   </CardContent>
                 </Card>
               ) : (
-                <div className="space-y-6">
+                <div className="space-y-6 transition-all duration-500">
                   {tasks
                     .sort((a, b) => {
                       const priorityOrder = { high: 0, medium: 1, low: 2 }
                       return priorityOrder[a.priority] - priorityOrder[b.priority]
                     })
                     .map((task) => (
-                      <TaskCard 
-                        key={task.id} 
-                        task={task} 
-                        onToggleComplete={() => handleToggleTaskComplete(task.id)}
-                      />
+                      <div key={task.id} className="transition-all duration-500">
+                        <TaskCard 
+                          task={task} 
+                          onToggleComplete={() => handleToggleTaskComplete(task.id)}
+                        />
+                      </div>
                     ))}
                 </div>
               )}
@@ -749,10 +800,10 @@ export default function DashboardPage() {
             />
 
             {/* Progress Overview */}
-            <Card className="refined-card bg-gradient-to-br from-white to-purple-50 border-purple-100">
+            <Card className="refined-card bg-gradient-to-br from-white to-[#9B0E8D]/5 border-[#9B0E8D]/20">
               <CardHeader>
                 <CardTitle className="flex items-center text-lg">
-                  <div className="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center mr-3">
+                  <div className="w-8 h-8 bg-[#9B0E8D] rounded-lg flex items-center justify-center mr-3">
                     <TrendingUp className="h-4 w-4 text-white" />
                   </div>
                   Progress Overview

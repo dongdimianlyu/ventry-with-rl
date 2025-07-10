@@ -372,7 +372,7 @@ export default function TeamPage() {
           <CardContent className="p-6">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <TrendingUp className="h-8 w-8 text-purple-600" />
+                <TrendingUp className="h-8 w-8 text-[#9B0E8D]" />
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-500">Completion Rate</p>
@@ -410,7 +410,7 @@ export default function TeamPage() {
                 <CardHeader className="border-b border-gray-100">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-4">
-                      <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
+                      <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-[#9B0E8D] rounded-xl flex items-center justify-center">
                         <span className="text-white text-lg font-bold">
                           {member.name.charAt(0).toUpperCase()}
                         </span>

@@ -389,7 +389,7 @@ export default function SettingsPage() {
                 <div className="space-y-3 mb-6">
                   <div className="flex items-center justify-between text-sm">
                     <div className="flex items-center space-x-2">
-                      <MessageSquare className="h-4 w-4 text-purple-600" />
+                      <MessageSquare className="h-4 w-4 text-[#9B0E8D]" />
                       <span>Slack</span>
                     </div>
                     <span className="text-gray-500">Not connected</span>

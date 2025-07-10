@@ -86,7 +86,7 @@ export function ShopifyConnectionModal({
       why: 'To track product performance and inventory management'
     },
     {
-      icon: <Users className="h-5 w-5 text-purple-600" />,
+              icon: <Users className="h-5 w-5 text-[#9B0E8D]" />,
       title: 'Read Customers',
       description: 'View customer profiles, purchase history, and engagement metrics',
       why: 'To understand customer behavior and improve retention'

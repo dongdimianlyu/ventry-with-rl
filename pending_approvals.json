@@ -30,5 +30,5 @@
     "model_type": "PPO",
     "simulation_episodes": 3
   },
-  "status": "pending"
+  "status": "approved"
 }

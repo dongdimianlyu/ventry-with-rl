@@ -56,8 +56,8 @@ export function AutoModeToggle({ onSettingsChange, className = '' }: AutoModeTog
         size="sm"
         className={`relative transition-all duration-200 ${
           settings.enabled 
-            ? 'bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white shadow-lg' 
-            : 'border-gray-300 hover:border-purple-400 hover:bg-purple-50'
+                    ? 'bg-gradient-to-r from-[#9B0E8D] to-blue-600 hover:from-[#9B0E8D]/90 hover:to-blue-700 text-white shadow-lg'
+        : 'border-gray-300 hover:border-[#9B0E8D]/40 hover:bg-[#9B0E8D]/5'
         }`}
       >
         {settings.enabled ? (
@@ -96,7 +96,7 @@ export function AutoModeToggle({ onSettingsChange, className = '' }: AutoModeTog
               <select
                 value={settings.maxTasksPerPerson}
                 onChange={(e) => updateSetting('maxTasksPerPerson', parseInt(e.target.value))}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#9B0E8D] text-sm"
               >
                 <option value={1}>1 task</option>
                 <option value={2}>2 tasks</option>
@@ -112,7 +112,7 @@ export function AutoModeToggle({ onSettingsChange, className = '' }: AutoModeTog
                   type="checkbox"
                   checked={settings.prioritizeHighImpact}
                   onChange={(e) => updateSetting('prioritizeHighImpact', e.target.checked)}
-                  className="rounded border-gray-300 text-purple-600 focus:ring-purple-500"
+                  className="rounded border-gray-300 text-[#9B0E8D] focus:ring-[#9B0E8D]"
                 />
                 <span className="ml-2 text-sm text-gray-700">Prioritize high-impact tasks</span>
               </label>
@@ -122,7 +122,7 @@ export function AutoModeToggle({ onSettingsChange, className = '' }: AutoModeTog
                   type="checkbox"
                   checked={settings.ensureDiversity}
                   onChange={(e) => updateSetting('ensureDiversity', e.target.checked)}
-                  className="rounded border-gray-300 text-purple-600 focus:ring-purple-500"
+                  className="rounded border-gray-300 text-[#9B0E8D] focus:ring-[#9B0E8D]"
                 />
                 <span className="ml-2 text-sm text-gray-700">Ensure task diversity</span>
               </label>

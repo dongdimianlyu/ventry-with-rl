@@ -223,7 +223,7 @@ export function TaskSuggestionModal({
                   size="sm"
                   className={`transition-all duration-200 ${
                     currentView === option.key 
-                      ? 'bg-purple-600 text-white' 
+                                              ? 'bg-[#9B0E8D] text-white' 
                       : 'text-gray-600 hover:text-gray-900'
                   }`}
                 >
@@ -253,7 +253,7 @@ export function TaskSuggestionModal({
           {isLoading ? (
             <div className="flex items-center justify-center py-16">
               <div className="text-center">
-                <BarChart3 className="h-12 w-12 text-purple-600 animate-pulse mx-auto mb-4" />
+                <BarChart3 className="h-12 w-12 text-[#9B0E8D] animate-pulse mx-auto mb-4" />
                 <p className="text-gray-600">Analyzing data for recommendations...</p>
               </div>
             </div>

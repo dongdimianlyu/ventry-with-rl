@@ -15,6 +15,7 @@ interface RLTaskCardProps {
 export function RLTaskCard({ task, onComplete, onApprove, onReject }: RLTaskCardProps) {
   const [showOverlay, setShowOverlay] = useState(false)
   const [isCompleting, setIsCompleting] = useState(false)
+  const [shouldHide, setShouldHide] = useState(false)
 
   const handleCardClick = () => {
     setShowOverlay(true)
@@ -27,6 +28,7 @@ export function RLTaskCard({ task, onComplete, onApprove, onReject }: RLTaskCard
   const handleComplete = (taskId: string) => {
     setIsCompleting(true)
     setTimeout(() => {
+      setShouldHide(true)
       if (onComplete) {
         onComplete(taskId)
       }
@@ -48,20 +50,26 @@ export function RLTaskCard({ task, onComplete, onApprove, onReject }: RLTaskCard
 
   const approvalStatus = getApprovalStatus()
 
+  // Don't render if the card should be hidden
+  if (shouldHide) {
+    return null
+  }
+
   return (
     <>
       {/* Main Card - Compact View */}
-      <Card 
+      <div 
         className={`relative cursor-pointer transition-all duration-500 hover:shadow-lg hover:-translate-y-1 ${
           task.completed || isCompleting ? 'opacity-0 transform scale-95 pointer-events-none' : ''
-        } border-2 border-purple-200 bg-gradient-to-br from-purple-50 via-white to-indigo-50 rounded-xl flex flex-col w-full min-h-[280px]`}
+        } border-2 border-[#9B0E8D]/20 bg-gradient-to-br from-[#9B0E8D]/5 via-white to-[#9B0E8D]/10 rounded-xl flex flex-col w-full min-h-[280px] overflow-hidden`}
         onClick={handleCardClick}
       >
+        <Card className="h-full border-none bg-transparent shadow-none">
         <CardHeader className="pb-4">
           <div className="flex items-start justify-between">
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-3">
-                <div className="flex items-center gap-2 px-3 py-1 bg-purple-600 text-white rounded-full text-xs font-semibold">
+                <div className="flex items-center gap-2 px-3 py-1 bg-[#9B0E8D] text-white rounded-full text-xs font-semibold">
                   <Settings className="h-3 w-3" />
                   Smart Suggestion
                 </div>
@@ -159,7 +167,8 @@ export function RLTaskCard({ task, onComplete, onApprove, onReject }: RLTaskCard
           {/* Add padding to bottom to make room for buttons */}
           <div className="pb-12"></div>
         </CardContent>
-      </Card>
+        </Card>
+      </div>
 
       {/* Expandable Overlay */}
       {showOverlay && (
@@ -172,12 +181,12 @@ export function RLTaskCard({ task, onComplete, onApprove, onReject }: RLTaskCard
           
           {/* Modal Content */}
           <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-            <Card className="shadow-2xl border-2 border-purple-200 bg-gradient-to-br from-purple-50 via-white to-indigo-50">
+            <Card className="shadow-2xl border-2 border-[#9B0E8D]/20 bg-gradient-to-br from-[#9B0E8D]/5 via-white to-[#9B0E8D]/10">
               <CardHeader className="pb-4 border-b border-gray-100">
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-3">
-                      <div className="flex items-center gap-2 px-3 py-1 bg-purple-600 text-white rounded-full text-xs font-semibold">
+                      <div className="flex items-center gap-2 px-3 py-1 bg-[#9B0E8D] text-white rounded-full text-xs font-semibold">
                         <Settings className="h-3 w-3" />
                         Smart Suggestion
                       </div>
@@ -218,14 +227,14 @@ export function RLTaskCard({ task, onComplete, onApprove, onReject }: RLTaskCard
                 <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
                 
                 {/* AI Analysis Section */}
-                <div className="bg-gradient-to-r from-purple-50 to-indigo-50 border border-purple-100 rounded-xl p-6">
+                <div className="bg-gradient-to-r from-[#9B0E8D]/5 to-[#9B0E8D]/10 border border-[#9B0E8D]/20 rounded-xl p-6">
                   <div className="flex items-start space-x-4">
-                    <div className="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center shrink-0">
+                    <div className="w-10 h-10 bg-[#9B0E8D] rounded-lg flex items-center justify-center shrink-0">
                       <Sparkles className="h-5 w-5 text-white" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-purple-900 mb-3">AI Analysis</h3>
-                      <p className="text-base text-purple-800 leading-relaxed mb-4">{task.explanation}</p>
+                      <h3 className="text-lg font-semibold text-[#9B0E8D] mb-3">AI Analysis</h3>
+                      <p className="text-base text-[#9B0E8D]/80 leading-relaxed mb-4">{task.explanation}</p>
                       
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="bg-green-100 border border-green-200 rounded-lg p-4">

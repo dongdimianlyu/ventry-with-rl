@@ -170,5 +170,67 @@
         }
       ]
     }
+  },
+  {
+    "id": "rl-sim-1752138727134-gvp7zfdgq",
+    "status": "approved",
+    "approved_at": "2025-07-10T09:16:16.055Z",
+    "approved_by": "1",
+    "approved_via": "UI",
+    "recommendation": {
+      "action": "restock",
+      "quantity": 25,
+      "expected_roi": "195.0%",
+      "confidence": "medium",
+      "reasoning": "Seasonal uptick detected for smart home devices category. Machine learning model predicts 3x sales increase over next 14 days based on historical patterns.",
+      "item": "Smart Light Bulbs",
+      "category": "Home Automation",
+      "timestamp": "2025-07-10T09:12:07.133Z",
+      "generated_at": "2025-07-10T09:12:07.133Z",
+      "user_id": "1",
+      "alternative_actions": [
+        {
+          "action": "restock",
+          "quantity": 12,
+          "expected_roi": "136%"
+        },
+        {
+          "action": "restock",
+          "quantity": 37,
+          "expected_roi": "234%"
+        }
+      ]
+    }
+  },
+  {
+    "id": "rl-sim-1752138727134-gvp7zfdgq",
+    "status": "approved",
+    "approved_at": "2025-07-10T09:16:17.019Z",
+    "approved_by": "1",
+    "approved_via": "UI",
+    "recommendation": {
+      "action": "restock",
+      "quantity": 25,
+      "expected_roi": "195.0%",
+      "confidence": "medium",
+      "reasoning": "Seasonal uptick detected for smart home devices category. Machine learning model predicts 3x sales increase over next 14 days based on historical patterns.",
+      "item": "Smart Light Bulbs",
+      "category": "Home Automation",
+      "timestamp": "2025-07-10T09:12:07.133Z",
+      "generated_at": "2025-07-10T09:12:07.133Z",
+      "user_id": "1",
+      "alternative_actions": [
+        {
+          "action": "restock",
+          "quantity": 12,
+          "expected_roi": "136%"
+        },
+        {
+          "action": "restock",
+          "quantity": 37,
+          "expected_roi": "234%"
+        }
+      ]
+    }
   }
 ]
