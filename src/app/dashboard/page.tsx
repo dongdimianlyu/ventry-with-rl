@@ -10,7 +10,7 @@ import { RLTaskCard } from '@/components/dashboard/RLTaskCard'
 import AddGoalForm from '@/components/dashboard/AddGoalForm'
 import { TaskSuggestionModal } from '@/components/dashboard/TaskSuggestionModal'
 import { AutoModeToggle } from '@/components/ui/AutoModeToggle'
-import { Sparkles, LogOut, Calendar, Target, TrendingUp, Plus, AlertCircle, Clock, CheckCircle, BarChart3, Building2, ClipboardList } from 'lucide-react'
+import { Sparkles, LogOut, Calendar, Target, TrendingUp, Plus, AlertCircle, Clock, CheckCircle, BarChart3, Building2, ClipboardList, Trash2 } from 'lucide-react'
 import { formatDate } from '@/lib/utils'
 import { knowledgeBase } from '@/data/knowledge-base'
 import { KnowledgeBase } from '@/types'
@@ -113,6 +113,16 @@ export default function DashboardPage() {
     setGoals(updatedGoals)
     localStorage.setItem(`goals_${user.id}`, JSON.stringify(updatedGoals))
     setShowAddGoal(false)
+  }
+
+  const handleDeleteGoal = (goalId: string) => {
+    if (!user) return
+
+    if (window.confirm('Are you sure you want to delete this goal? This action cannot be undone.')) {
+      const updatedGoals = goals.filter(goal => goal.id !== goalId)
+      setGoals(updatedGoals)
+      localStorage.setItem(`goals_${user.id}`, JSON.stringify(updatedGoals))
+    }
   }
 
   const generateTaskSuggestions = async () => {
@@ -375,12 +385,11 @@ export default function DashboardPage() {
       })
 
       if (response.ok) {
-        const updatedRlTasks = rlTasks.map(task =>
-          task.id === taskId ? { ...task, completed: true } : task
-        )
+        // Remove the completed task from the list entirely
+        const updatedRlTasks = rlTasks.filter(task => task.id !== taskId)
         setRlTasks(updatedRlTasks)
         
-        // Don't save RL tasks to localStorage
+        // Don't save RL tasks to sessionStorage
       }
     } catch (error) {
       console.error('Error completing RL task:', error)
@@ -562,7 +571,7 @@ export default function DashboardPage() {
               {/* Slack Approval Status */}
               {(pendingSlackApproval || slackStatus) && (
                 <div className="mb-8">
-                  <Card className="border-2 border-brand-primary bg-brand-primary">
+                  <Card className="border-2 border-[#1A4231] bg-[#1A4231]">
                     <CardHeader>
                       <CardTitle className="flex items-center text-lg text-white">
                         <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center mr-3">
@@ -686,7 +695,7 @@ export default function DashboardPage() {
               <CardHeader>
                 <CardTitle className="flex items-center text-lg">
                   <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center mr-3">
-                    <Target className="h-4 w-4 text-white" />
+                    <CheckCircle className="h-4 w-4 text-white" />
                   </div>
                   Your Goals
                 </CardTitle>
@@ -702,8 +711,18 @@ export default function DashboardPage() {
                     </div>
                   ) : (
                     goals.map((goal) => (
-                      <div key={goal.id} className="border border-blue-100 rounded-xl p-4 bg-white/60 backdrop-blur-sm">
-                        <h4 className="font-semibold text-gray-900 mb-2">{goal.title}</h4>
+                      <div key={goal.id} className="border border-blue-100 rounded-xl p-4 bg-white/60 backdrop-blur-sm relative group">
+                        <div className="flex justify-between items-start mb-2">
+                          <h4 className="font-semibold text-gray-900 flex-1 pr-2">{goal.title}</h4>
+                          <Button
+                            onClick={() => handleDeleteGoal(goal.id)}
+                            variant="ghost"
+                            size="sm"
+                            className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 h-8 w-8 p-0 hover:bg-red-50 hover:text-red-600"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
                         <p className="text-sm text-gray-600 mb-3 leading-relaxed">{goal.description}</p>
                         <div className="flex items-center gap-2 flex-wrap">
                           <span className="text-xs bg-blue-100 text-blue-700 px-3 py-1 rounded-full border border-blue-200 font-medium">

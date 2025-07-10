@@ -14,6 +14,7 @@ interface RLTaskCardProps {
 
 export function RLTaskCard({ task, onComplete, onApprove, onReject }: RLTaskCardProps) {
   const [showOverlay, setShowOverlay] = useState(false)
+  const [isCompleting, setIsCompleting] = useState(false)
 
   const handleCardClick = () => {
     setShowOverlay(true)
@@ -21,6 +22,15 @@ export function RLTaskCard({ task, onComplete, onApprove, onReject }: RLTaskCard
 
   const handleOverlayClose = () => {
     setShowOverlay(false)
+  }
+
+  const handleComplete = (taskId: string) => {
+    setIsCompleting(true)
+    setTimeout(() => {
+      if (onComplete) {
+        onComplete(taskId)
+      }
+    }, 500) // 500ms delay for fade animation
   }
 
   const getConfidenceColor = (confidence: string) => {
@@ -42,7 +52,9 @@ export function RLTaskCard({ task, onComplete, onApprove, onReject }: RLTaskCard
     <>
       {/* Main Card - Compact View */}
       <Card 
-        className={`relative cursor-pointer transition-all duration-200 hover:shadow-lg hover:-translate-y-1 ${task.completed ? 'opacity-60' : ''} border-2 border-purple-200 bg-gradient-to-br from-purple-50 via-white to-indigo-50 rounded-xl flex flex-col w-full min-h-[280px]`}
+        className={`relative cursor-pointer transition-all duration-500 hover:shadow-lg hover:-translate-y-1 ${
+          task.completed || isCompleting ? 'opacity-0 transform scale-95 pointer-events-none' : ''
+        } border-2 border-purple-200 bg-gradient-to-br from-purple-50 via-white to-indigo-50 rounded-xl flex flex-col w-full min-h-[280px]`}
         onClick={handleCardClick}
       >
         <CardHeader className="pb-4">
@@ -133,7 +145,7 @@ export function RLTaskCard({ task, onComplete, onApprove, onReject }: RLTaskCard
               <Button
                 onClick={(e) => {
                   e.stopPropagation()
-                  onComplete(task.id)
+                  handleComplete(task.id)
                 }}
                 className="bg-blue-600 hover:bg-blue-700 text-white"
                 size="sm"
@@ -273,7 +285,7 @@ export function RLTaskCard({ task, onComplete, onApprove, onReject }: RLTaskCard
                     <Button
                       onClick={(e) => {
                         e.stopPropagation()
-                        onComplete(task.id)
+                        handleComplete(task.id)
                         handleOverlayClose()
                       }}
                       className="bg-blue-600 hover:bg-blue-700 text-white"
