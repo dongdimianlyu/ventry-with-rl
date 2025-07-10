@@ -524,3 +524,112 @@ export interface RLRecommendation {
   model_type: string
   simulation_episodes: number
 } 
+
+// Slack Integration Types
+export interface SlackConnection {
+  id: string
+  userId: string
+  teamId: string
+  teamName: string
+  accessToken: string
+  botUserId: string
+  scope: string[]
+  connectedAt: Date
+  lastSyncAt: Date
+  isActive: boolean
+  appId: string
+  channelId?: string
+  userId_slack?: string
+}
+
+export interface SlackOAuthState {
+  userId: string
+  returnUrl: string
+  nonce: string
+  createdAt: Date
+}
+
+export interface SlackConfig {
+  clientId: string
+  clientSecret: string
+  scopes: string[]
+  redirectUri: string
+  signingSecret: string
+}
+
+export interface SlackIntegrationStatus {
+  isConnected: boolean
+  connectionHealth: 'healthy' | 'warning' | 'error'
+  lastSuccessfulSync: Date
+  lastError?: {
+    message: string
+    code: string
+    occurredAt: Date
+  }
+  messagesDelivered: number
+  approvalsReceived: number
+  botActive: boolean
+}
+
+// QuickBooks Integration Types
+export interface QuickBooksConnection {
+  id: string
+  userId: string
+  companyId: string
+  companyName: string
+  accessToken: string
+  refreshToken: string
+  scope: string[]
+  connectedAt: Date
+  lastSyncAt: Date
+  isActive: boolean
+  tokenExpiresAt: Date
+  sandbox: boolean
+  country: string
+  baseUrl: string
+}
+
+export interface QuickBooksOAuthState {
+  userId: string
+  returnUrl: string
+  nonce: string
+  createdAt: Date
+}
+
+export interface QuickBooksConfig {
+  clientId: string
+  clientSecret: string
+  scopes: string[]
+  redirectUri: string
+  sandbox: boolean
+  discoveryDocument: string
+}
+
+export interface QuickBooksIntegrationStatus {
+  isConnected: boolean
+  connectionHealth: 'healthy' | 'warning' | 'error'
+  lastSuccessfulSync: Date
+  lastError?: {
+    message: string
+    code: string
+    occurredAt: Date
+  }
+  apiCallsUsed: number
+  apiCallsLimit: number
+  tokenExpiresAt: Date
+  companyName: string
+  sandboxMode: boolean
+}
+
+// Generic Integration Types
+export interface IntegrationConnection {
+  slack?: SlackConnection
+  quickbooks?: QuickBooksConnection
+  shopify?: ShopifyConnection
+}
+
+export interface IntegrationStatuses {
+  slack?: SlackIntegrationStatus
+  quickbooks?: QuickBooksIntegrationStatus
+  shopify?: ShopifyIntegrationStatus
+} 

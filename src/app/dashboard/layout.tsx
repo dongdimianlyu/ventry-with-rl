@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Sidebar } from '@/components/dashboard/Sidebar'
 import OnboardingFlow from '@/components/onboarding/OnboardingFlow'
+import IntegrationsOnboardingFlow from '@/components/onboarding/IntegrationsOnboardingFlow'
 import { User, CompanyProfile } from '@/types'
 import { Building2 } from 'lucide-react'
 
@@ -15,6 +16,7 @@ export default function DashboardLayout({
   const router = useRouter()
   const [user, setUser] = useState<User | null>(null)
   const [showOnboarding, setShowOnboarding] = useState(false)
+  const [showIntegrationsOnboarding, setShowIntegrationsOnboarding] = useState(false)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -29,6 +31,8 @@ export default function DashboardLayout({
 
     // Check if onboarding is complete
     const onboardingData = localStorage.getItem(`onboarding_${parsedUser.id}`)
+    const integrationsData = localStorage.getItem(`integrations_onboarding_${parsedUser.id}`)
+    
     if (!onboardingData) {
       setShowOnboarding(true)
     } else {
@@ -36,6 +40,9 @@ export default function DashboardLayout({
         const profile = JSON.parse(onboardingData) as CompanyProfile
         if (!profile.isOnboardingComplete) {
           setShowOnboarding(true)
+        } else if (!integrationsData) {
+          // Main onboarding complete, but integrations onboarding not shown yet
+          setShowIntegrationsOnboarding(true)
         }
       } catch (error) {
         console.error('Error parsing onboarding data:', error)
@@ -57,6 +64,33 @@ export default function DashboardLayout({
     localStorage.setItem('user', JSON.stringify(updatedUser))
     
     setShowOnboarding(false)
+    
+    // Show integrations onboarding next
+    setShowIntegrationsOnboarding(true)
+  }
+
+  const handleIntegrationsOnboardingComplete = () => {
+    if (!user) return
+    
+    // Mark integrations onboarding as complete
+    localStorage.setItem(`integrations_onboarding_${user.id}`, JSON.stringify({ 
+      completed: true, 
+      completedAt: new Date().toISOString() 
+    }))
+    
+    setShowIntegrationsOnboarding(false)
+  }
+
+  const handleIntegrationsOnboardingSkip = () => {
+    if (!user) return
+    
+    // Mark integrations onboarding as skipped
+    localStorage.setItem(`integrations_onboarding_${user.id}`, JSON.stringify({ 
+      skipped: true, 
+      skippedAt: new Date().toISOString() 
+    }))
+    
+    setShowIntegrationsOnboarding(false)
   }
 
   if (loading) {
@@ -77,6 +111,16 @@ export default function DashboardLayout({
       <OnboardingFlow
         user={user}
         onComplete={handleOnboardingComplete}
+      />
+    )
+  }
+
+  if (showIntegrationsOnboarding && user) {
+    return (
+      <IntegrationsOnboardingFlow
+        user={user}
+        onComplete={handleIntegrationsOnboardingComplete}
+        onSkip={handleIntegrationsOnboardingSkip}
       />
     )
   }

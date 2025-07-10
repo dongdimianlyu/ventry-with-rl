@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Settings, RefreshCw, User, CheckCircle, AlertCircle, ShoppingBag, Plus } from 'lucide-react'
+import { Settings, RefreshCw, User, CheckCircle, AlertCircle, ShoppingBag, Plus, MessageSquare, Calculator, Shield } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { getOnboardingProfile, resetOnboarding, formatDate } from '@/lib/utils'
@@ -182,6 +182,16 @@ export default function SettingsPage() {
     }
   }
 
+  const handleManageIntegrations = () => {
+    if (!user) return
+    
+    // Remove the integrations onboarding flag to trigger it again
+    localStorage.removeItem(`integrations_onboarding_${user.id}`)
+    
+    // Reload the page to trigger integrations onboarding flow
+    window.location.reload()
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white shadow-sm border-b">
@@ -194,7 +204,7 @@ export default function SettingsPage() {
       </header>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
           {/* Onboarding Profile Card */}
           <Card className="shadow-sm">
             <CardHeader>
@@ -356,6 +366,59 @@ export default function SettingsPage() {
                   </Button>
                 </div>
               )}
+            </CardContent>
+          </Card>
+
+          {/* Integrations Management Card */}
+          <Card className="shadow-sm">
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2">
+                <Shield className="h-5 w-5 text-[#1A4231]" />
+                <span>Integration Setup</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-center py-8">
+                <Shield className="h-12 w-12 text-[#1A4231] mx-auto mb-4" />
+                <h3 className="text-lg font-medium text-gray-900 mb-2">Manage Integrations</h3>
+                <p className="text-gray-500 mb-6">
+                  Connect Slack, QuickBooks, and Shopify to unlock powerful automation and AI-driven insights.
+                </p>
+                
+                {/* Integration Status Summary */}
+                <div className="space-y-3 mb-6">
+                  <div className="flex items-center justify-between text-sm">
+                    <div className="flex items-center space-x-2">
+                      <MessageSquare className="h-4 w-4 text-purple-600" />
+                      <span>Slack</span>
+                    </div>
+                    <span className="text-gray-500">Not connected</span>
+                  </div>
+                  <div className="flex items-center justify-between text-sm">
+                    <div className="flex items-center space-x-2">
+                      <Calculator className="h-4 w-4 text-blue-600" />
+                      <span>QuickBooks</span>
+                    </div>
+                    <span className="text-gray-500">Not connected</span>
+                  </div>
+                  <div className="flex items-center justify-between text-sm">
+                    <div className="flex items-center space-x-2">
+                      <ShoppingBag className="h-4 w-4 text-green-600" />
+                      <span>Shopify</span>
+                    </div>
+                    <span className={shopifyConnection ? "text-green-600" : "text-gray-500"}>
+                      {shopifyConnection ? "Connected" : "Not connected"}
+                    </span>
+                  </div>
+                </div>
+
+                <Button
+                  onClick={handleManageIntegrations}
+                  className="bg-[#c9f222] hover:bg-[#c9f222]/90 text-[#1A4231] font-semibold"
+                >
+                  Manage Integrations
+                </Button>
+              </div>
             </CardContent>
           </Card>
         </div>
