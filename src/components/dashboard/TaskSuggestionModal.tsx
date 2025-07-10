@@ -115,6 +115,30 @@ export function TaskSuggestionModal({
   }
 
   const handleConfirm = () => {
+    // Validation: Check if at least one CEO task is selected
+    if (selectedCeoTasks.length === 0) {
+      alert('Please select at least one task for yourself before confirming.')
+      return
+    }
+
+    // Validation: Check if at least one task is selected for each team member
+    const teamMemberKeys = Object.keys(teamSuggestions)
+    const missingSelections: string[] = []
+    
+    teamMemberKeys.forEach(memberKey => {
+      const memberTasks = selectedTeamTasks[memberKey] || []
+      if (memberTasks.length === 0) {
+        const memberName = memberKey.split(' - ')[0]
+        missingSelections.push(memberName)
+      }
+    })
+
+    if (missingSelections.length > 0) {
+      const memberList = missingSelections.join(', ')
+      alert(`Please select at least one task for: ${memberList}`)
+      return
+    }
+
     onConfirm(selectedCeoTasks, selectedTeamTasks)
     onClose()
   }
@@ -155,7 +179,7 @@ export function TaskSuggestionModal({
       {/* Modal */}
       <div className="relative w-full max-w-6xl max-h-[90vh] bg-white rounded-2xl shadow-2xl overflow-hidden">
         {/* Header */}
-        <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-6">
+        <div className="bg-brand-primary text-white p-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
@@ -163,7 +187,7 @@ export function TaskSuggestionModal({
               </div>
               <div>
                 <h2 className="text-2xl font-bold">Smart Suggestions</h2>
-                <p className="text-purple-100">
+                <p className="text-white/80">
                   {autoModeSettings.enabled ? 'Auto-selected based on your preferences' : 'Choose up to 3 tasks per person'}
                 </p>
               </div>
@@ -237,20 +261,20 @@ export function TaskSuggestionModal({
             <div className={`transition-opacity duration-150 ${isAnimating ? 'opacity-0' : 'opacity-100'}`}>
               {currentView === 'ceo' ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {ceoSuggestions.map((task) => {
-                    const isSelected = selectedCeoTasks.some(t => t.id === task.id)
-                    const canSelect = selectedCeoTasks.length < autoModeSettings.maxTasksPerPerson
-                    
-                    return (
-                      <Card
-                        key={task.id}
-                        className={`cursor-pointer transition-all duration-200 hover:shadow-lg ${
-                          isSelected 
-                            ? 'ring-2 ring-purple-500 bg-purple-50' 
-                            : 'hover:ring-1 hover:ring-purple-200'
-                        } ${!canSelect && !isSelected ? 'opacity-50' : ''}`}
-                        onClick={() => !autoModeSettings.enabled && toggleCeoTask(task)}
-                      >
+                                {ceoSuggestions.map((task) => {
+                const isSelected = selectedCeoTasks.some(t => t.id === task.id)
+                const canSelect = selectedCeoTasks.length < autoModeSettings.maxTasksPerPerson
+
+                return (
+                  <Card
+                    key={task.id}
+                    className={`cursor-pointer transition-all duration-200 hover:shadow-lg ${
+                      isSelected 
+                        ? 'ring-2 ring-brand-primary bg-brand-accent-soft' 
+                        : 'hover:ring-1 hover:ring-brand-primary/30'
+                    } ${!canSelect && !isSelected ? 'opacity-50' : ''}`}
+                    onClick={() => !autoModeSettings.enabled && toggleCeoTask(task)}
+                  >
                         <CardHeader className="pb-3">
                           <div className="flex items-start justify-between">
                             <div className="flex-1">
@@ -274,7 +298,7 @@ export function TaskSuggestionModal({
                               </CardTitle>
                             </div>
                             {isSelected && (
-                              <div className="w-6 h-6 bg-purple-600 rounded-full flex items-center justify-center ml-2">
+                              <div className="w-6 h-6 bg-brand-primary rounded-full flex items-center justify-center ml-2">
                                 <Check className="h-4 w-4 text-white" />
                               </div>
                             )}
@@ -338,8 +362,8 @@ export function TaskSuggestionModal({
                         key={task.id}
                         className={`cursor-pointer transition-all duration-200 hover:shadow-lg ${
                           isSelected 
-                            ? 'ring-2 ring-purple-500 bg-purple-50' 
-                            : 'hover:ring-1 hover:ring-purple-200'
+                            ? 'ring-2 ring-brand-primary bg-brand-accent-soft' 
+                            : 'hover:ring-1 hover:ring-brand-primary/30'
                         } ${!canSelect && !isSelected ? 'opacity-50' : ''}`}
                         onClick={() => !autoModeSettings.enabled && toggleTeamTask(currentView, task)}
                       >
@@ -366,7 +390,7 @@ export function TaskSuggestionModal({
                               </CardTitle>
                             </div>
                             {isSelected && (
-                              <div className="w-6 h-6 bg-purple-600 rounded-full flex items-center justify-center ml-2">
+                              <div className="w-6 h-6 bg-brand-primary rounded-full flex items-center justify-center ml-2">
                                 <Check className="h-4 w-4 text-white" />
                               </div>
                             )}
@@ -430,7 +454,7 @@ export function TaskSuggestionModal({
             <div className="text-sm text-gray-600">
               {autoModeSettings.enabled ? (
                 <span className="flex items-center gap-2">
-                  <BarChart3 className="h-4 w-4 text-purple-600" />
+                  <BarChart3 className="h-4 w-4 text-brand-primary" />
                   Tasks auto-selected based on priority and diversity
                 </span>
               ) : (
@@ -449,7 +473,7 @@ export function TaskSuggestionModal({
               <Button
                 onClick={handleConfirm}
                 disabled={getTotalSelected() === 0}
-                className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
+                className="bg-brand-primary hover:bg-brand-primary-light text-white"
               >
                 Confirm Selection
               </Button>

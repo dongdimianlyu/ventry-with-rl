@@ -562,10 +562,10 @@ export default function DashboardPage() {
               {/* Slack Approval Status */}
               {(pendingSlackApproval || slackStatus) && (
                 <div className="mb-8">
-                  <Card className="border-2 border-orange-200 bg-gradient-to-br from-orange-50 via-white to-yellow-50">
+                  <Card className="border-2 border-brand-primary bg-brand-primary">
                     <CardHeader>
-                      <CardTitle className="flex items-center text-lg">
-                        <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center mr-3">
+                      <CardTitle className="flex items-center text-lg text-white">
+                        <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center mr-3">
                           <Clock className="h-4 w-4 text-white" />
                         </div>
                         Slack Approval Status
@@ -573,21 +573,21 @@ export default function DashboardPage() {
                     </CardHeader>
                     <CardContent>
                       {pendingSlackApproval && (
-                        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+                        <div className="bg-white/10 border border-white/20 rounded-lg p-4 mb-4">
                           <div className="flex items-start space-x-3">
-                            <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center mt-1">
+                            <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center mt-1">
                               <Clock className="h-3 w-3 text-white" />
                             </div>
                             <div>
-                              <h4 className="font-semibold text-blue-900 mb-2">Pending Approval in Slack</h4>
-                              <p className="text-blue-800 mb-2">
+                              <h4 className="font-semibold text-white mb-2">Pending Approval in Slack</h4>
+                              <p className="text-white/90 mb-2">
                                 <strong>Action:</strong> {pendingSlackApproval.recommendation.action} {pendingSlackApproval.recommendation.quantity} units of {pendingSlackApproval.recommendation.item}
                               </p>
-                              <p className="text-blue-800 mb-2">
+                              <p className="text-white/90 mb-2">
                                 <strong>Expected ROI:</strong> {pendingSlackApproval.recommendation.expectedRoi} | 
                                 <strong> Confidence:</strong> {pendingSlackApproval.recommendation.confidence}
                               </p>
-                              <p className="text-blue-700 text-sm">
+                              <p className="text-white/80 text-sm">
                                 Reply with <strong>Y</strong> or <strong>N</strong> in Slack to approve or reject this recommendation.
                               </p>
                             </div>
@@ -595,7 +595,7 @@ export default function DashboardPage() {
                         </div>
                       )}
                       {slackStatus && (
-                        <div className="bg-brand-primary border border-brand-primary-light rounded-lg p-3">
+                        <div className="bg-white/10 border border-white/20 rounded-lg p-3">
                           <p className="text-white text-sm font-medium">{slackStatus}</p>
                         </div>
                       )}

@@ -1,24 +1,24 @@
 {
   "action": "restock",
-  "quantity": 30,
-  "expected_roi": "250.0%",
+  "quantity": 75,
+  "expected_roi": "320.0%",
   "confidence": "high",
-  "reasoning": "Fitness equipment demand surge detected. Market analysis indicates 40% increase in sales velocity for yoga mats approaching Q1 fitness season.",
-  "item": "Professional Yoga Mat",
-  "category": "Fitness Equipment",
-  "timestamp": "2025-07-10T08:45:26.118Z",
-  "generated_at": "2025-07-10T08:45:26.119Z",
+  "reasoning": "Critical inventory shortage detected for premium coffee makers. AI analysis shows immediate restocking will prevent lost sales and maximize Q1 revenue.",
+  "item": "Premium Coffee Maker",
+  "category": "Kitchen Appliances",
+  "timestamp": "2025-07-10T08:53:38.357Z",
+  "generated_at": "2025-07-10T08:53:38.357Z",
   "user_id": "1",
   "alternative_actions": [
     {
       "action": "restock",
-      "quantity": 15,
-      "expected_roi": "175%"
+      "quantity": 37,
+      "expected_roi": "224%"
     },
     {
       "action": "restock",
-      "quantity": 45,
-      "expected_roi": "300%"
+      "quantity": 112,
+      "expected_roi": "384%"
     }
   ]
 }
