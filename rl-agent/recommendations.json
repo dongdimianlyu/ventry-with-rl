@@ -1,24 +1,24 @@
 {
   "action": "restock",
-  "quantity": 60,
-  "expected_roi": "210.0%",
-  "confidence": "medium",
-  "reasoning": "Gaming peripherals showing strong demand correlation with upcoming game releases. Predictive model suggests optimal restocking window.",
-  "item": "Gaming Mechanical Keyboard",
-  "category": "Gaming Accessories",
-  "timestamp": "2025-07-10T06:58:33.987Z",
-  "generated_at": "2025-07-10T06:58:33.988Z",
+  "quantity": 30,
+  "expected_roi": "250.0%",
+  "confidence": "high",
+  "reasoning": "Fitness equipment demand surge detected. Market analysis indicates 40% increase in sales velocity for yoga mats approaching Q1 fitness season.",
+  "item": "Professional Yoga Mat",
+  "category": "Fitness Equipment",
+  "timestamp": "2025-07-10T08:45:26.118Z",
+  "generated_at": "2025-07-10T08:45:26.119Z",
   "user_id": "1",
   "alternative_actions": [
     {
       "action": "restock",
-      "quantity": 30,
-      "expected_roi": "147%"
+      "quantity": 15,
+      "expected_roi": "175%"
     },
     {
       "action": "restock",
-      "quantity": 90,
-      "expected_roi": "252%"
+      "quantity": 45,
+      "expected_roi": "300%"
     }
   ]
 }

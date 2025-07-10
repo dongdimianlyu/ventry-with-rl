@@ -139,5 +139,36 @@
       "model_type": "PPO",
       "simulation_episodes": 3
     }
+  },
+  {
+    "id": "rl-sim-1752136807838-xr1winb7e",
+    "status": "approved",
+    "approved_at": "2025-07-10T08:40:12.830Z",
+    "approved_by": "1",
+    "approved_via": "UI",
+    "recommendation": {
+      "action": "restock",
+      "quantity": 25,
+      "expected_roi": "195.0%",
+      "confidence": "medium",
+      "reasoning": "Seasonal uptick detected for smart home devices category. Machine learning model predicts 3x sales increase over next 14 days based on historical patterns.",
+      "item": "Smart Light Bulbs",
+      "category": "Home Automation",
+      "timestamp": "2025-07-10T08:40:07.838Z",
+      "generated_at": "2025-07-10T08:40:07.838Z",
+      "user_id": "1",
+      "alternative_actions": [
+        {
+          "action": "restock",
+          "quantity": 12,
+          "expected_roi": "136%"
+        },
+        {
+          "action": "restock",
+          "quantity": 37,
+          "expected_roi": "234%"
+        }
+      ]
+    }
   }
 ]

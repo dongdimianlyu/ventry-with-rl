@@ -55,12 +55,18 @@ export default function DashboardPage() {
     const parsedUser = JSON.parse(userData)
     setUser(parsedUser)
 
-    // Load goals, tasks, team, and team tasks from localStorage
+    // Clean up existing stored tasks from localStorage (move to session-based storage)
+    localStorage.removeItem(`tasks_${parsedUser.id}`)
+    localStorage.removeItem(`rlTasks_${parsedUser.id}`)
+    localStorage.removeItem(`employeeTasks_${parsedUser.id}`)
+
+    // Load goals and team from localStorage (persistent across sessions)
     const savedGoals = localStorage.getItem(`goals_${parsedUser.id}`)
-    const savedTasks = localStorage.getItem(`tasks_${parsedUser.id}`)
-    const savedRlTasks = localStorage.getItem(`rlTasks_${parsedUser.id}`)
     const savedTeam = localStorage.getItem(`team_${parsedUser.id}`)
-    const savedTeamTasks = localStorage.getItem(`employeeTasks_${parsedUser.id}`)
+
+    // Load tasks and team tasks from sessionStorage (only persist during session)
+    const savedTasks = sessionStorage.getItem(`tasks_${parsedUser.id}`)
+    const savedTeamTasks = sessionStorage.getItem(`employeeTasks_${parsedUser.id}`)
 
     if (savedGoals) {
       setGoals(JSON.parse(savedGoals))
@@ -73,9 +79,6 @@ export default function DashboardPage() {
       }))
       setTasks(parsedTasks)
     }
-    // Don't load RL tasks from localStorage - they should only appear when freshly generated/approved
-    // Clean up any existing RL tasks from localStorage
-    localStorage.removeItem(`rlTasks_${parsedUser.id}`)
     if (savedTeam) {
       setTeam(JSON.parse(savedTeam))
     }
@@ -136,7 +139,7 @@ export default function DashboardPage() {
           teamMembers: team,
           generateForTeam: team.length > 0,
           suggestionMode: true,
-          previousTeamTasks: localStorage.getItem(`employeeTasks_${user.id}`) ? JSON.parse(localStorage.getItem(`employeeTasks_${user.id}`) || '{}') : {},
+          previousTeamTasks: sessionStorage.getItem(`employeeTasks_${user.id}`) ? JSON.parse(sessionStorage.getItem(`employeeTasks_${user.id}`) || '{}') : {},
           userId: user.id
         })
       })
@@ -194,7 +197,7 @@ export default function DashboardPage() {
     // Add new CEO tasks to existing tasks
     const updatedTasks = [...tasks, ...newCeoTasks]
     setTasks(updatedTasks)
-    localStorage.setItem(`tasks_${user.id}`, JSON.stringify(updatedTasks))
+    sessionStorage.setItem(`tasks_${user.id}`, JSON.stringify(updatedTasks))
 
     // Convert selected team tasks to actual team tasks
     const newTeamTasks: Record<string, TeamTask[]> = {}
@@ -214,7 +217,7 @@ export default function DashboardPage() {
     // Save new team tasks
     if (Object.keys(newTeamTasks).length > 0) {
       setTeamTasks(newTeamTasks)
-      localStorage.setItem(`employeeTasks_${user.id}`, JSON.stringify(newTeamTasks))
+      sessionStorage.setItem(`employeeTasks_${user.id}`, JSON.stringify(newTeamTasks))
     }
 
     // Reset modal state
@@ -230,7 +233,7 @@ export default function DashboardPage() {
       task.id === taskId ? { ...task, completed: !task.completed } : task
     )
     setTasks(updatedTasks)
-    localStorage.setItem(`tasks_${user.id}`, JSON.stringify(updatedTasks))
+    sessionStorage.setItem(`tasks_${user.id}`, JSON.stringify(updatedTasks))
   }
 
   const loadApprovedRLTasks = async (userId: string) => {
@@ -592,8 +595,8 @@ export default function DashboardPage() {
                         </div>
                       )}
                       {slackStatus && (
-                        <div className="bg-green-50 border border-green-200 rounded-lg p-3">
-                          <p className="text-green-800 text-sm">{slackStatus}</p>
+                        <div className="bg-brand-primary border border-brand-primary-light rounded-lg p-3">
+                          <p className="text-white text-sm font-medium">{slackStatus}</p>
                         </div>
                       )}
                     </CardContent>

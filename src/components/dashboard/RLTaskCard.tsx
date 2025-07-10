@@ -1,7 +1,7 @@
 import { RLTask } from '@/types'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { CheckCircle, XCircle, Brain, TrendingUp, Target, Sparkles, BarChart3 } from 'lucide-react'
+import { CheckCircle, XCircle, TrendingUp, Target, Sparkles, BarChart3, Settings } from 'lucide-react'
 import { formatCompactDateTime } from '@/lib/utils'
 import { useState } from 'react'
 
@@ -50,8 +50,8 @@ export function RLTaskCard({ task, onComplete, onApprove, onReject }: RLTaskCard
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-3">
                 <div className="flex items-center gap-2 px-3 py-1 bg-purple-600 text-white rounded-full text-xs font-semibold">
-                  <Brain className="h-3 w-3" />
-                  AI-Suggested
+                  <Settings className="h-3 w-3" />
+                  Smart Suggestion
                 </div>
                 <span className="text-sm text-gray-600">
                   {formatCompactDateTime(task.dueDate)}
@@ -72,13 +72,13 @@ export function RLTaskCard({ task, onComplete, onApprove, onReject }: RLTaskCard
           </div>
         </CardHeader>
         
-        <CardContent className="pt-0 space-y-4 flex-1 flex flex-col">
+        <CardContent className="pt-0 space-y-4 flex-1 flex flex-col relative">
           <p className="text-sm text-gray-600 leading-relaxed line-clamp-3">
             {task.description}
           </p>
           
           {/* RL Metrics */}
-          <div className="grid grid-cols-2 gap-3 mt-auto">
+          <div className="grid grid-cols-2 gap-3">
             <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg p-3">
               <div className="flex items-center space-x-2">
                 <TrendingUp className="h-4 w-4 text-green-600" />
@@ -100,49 +100,52 @@ export function RLTaskCard({ task, onComplete, onApprove, onReject }: RLTaskCard
             </div>
           </div>
 
-          {/* Action Buttons */}
+          {/* Action Buttons - Positioned at bottom-right */}
           {task.approved === null && onApprove && onReject && (
-            <div className="flex gap-2 mt-4">
-              <Button
-                onClick={(e) => {
-                  e.stopPropagation()
-                  onApprove(task.id)
-                }}
-                className="flex-1 bg-green-600 hover:bg-green-700 text-white"
-                size="sm"
-              >
-                <CheckCircle className="h-4 w-4 mr-2" />
-                Approve
-              </Button>
+            <div className="absolute bottom-4 right-4 flex gap-2">
               <Button
                 onClick={(e) => {
                   e.stopPropagation()
                   onReject(task.id)
                 }}
                 variant="outline"
-                className="flex-1 border-red-200 text-red-600 hover:bg-red-50"
+                className="border-red-200 text-red-600 hover:bg-red-50"
                 size="sm"
               >
-                <XCircle className="h-4 w-4 mr-2" />
+                <XCircle className="h-4 w-4 mr-1" />
                 Reject
+              </Button>
+              <Button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  onApprove(task.id)
+                }}
+                className="bg-green-600 hover:bg-green-700 text-white"
+                size="sm"
+              >
+                <CheckCircle className="h-4 w-4 mr-1" />
+                Approve
               </Button>
             </div>
           )}
           {task.approved === true && !task.completed && onComplete && (
-            <div className="flex gap-2 mt-4">
+            <div className="absolute bottom-4 right-4">
               <Button
                 onClick={(e) => {
                   e.stopPropagation()
                   onComplete(task.id)
                 }}
-                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
+                className="bg-blue-600 hover:bg-blue-700 text-white"
                 size="sm"
               >
-                <CheckCircle className="h-4 w-4 mr-2" />
-                Mark Complete
+                <CheckCircle className="h-4 w-4 mr-1" />
+                Complete
               </Button>
             </div>
           )}
+          
+          {/* Add padding to bottom to make room for buttons */}
+          <div className="pb-12"></div>
         </CardContent>
       </Card>
 
@@ -163,8 +166,8 @@ export function RLTaskCard({ task, onComplete, onApprove, onReject }: RLTaskCard
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-3">
                       <div className="flex items-center gap-2 px-3 py-1 bg-purple-600 text-white rounded-full text-xs font-semibold">
-                        <Brain className="h-3 w-3" />
-                        AI-Suggested
+                        <Settings className="h-3 w-3" />
+                        Smart Suggestion
                       </div>
                       <span className="text-sm text-gray-600">
                         {formatCompactDateTime(task.dueDate)}
@@ -237,49 +240,49 @@ export function RLTaskCard({ task, onComplete, onApprove, onReject }: RLTaskCard
                   </div>
                 </div>
 
-                {/* Action Buttons in Modal */}
-                {task.approved === null && onApprove && onReject && (
-                  <div className="flex gap-3">
-                    <Button
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        onApprove(task.id)
-                        handleOverlayClose()
-                      }}
-                      className="flex-1 bg-green-600 hover:bg-green-700 text-white"
-                    >
-                      <CheckCircle className="h-4 w-4 mr-2" />
-                      Approve & Execute
-                    </Button>
-                    <Button
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        onReject(task.id)
-                        handleOverlayClose()
-                      }}
-                      variant="outline"
-                      className="flex-1 border-red-200 text-red-600 hover:bg-red-50"
-                    >
-                      <XCircle className="h-4 w-4 mr-2" />
-                      Reject
-                    </Button>
-                  </div>
-                )}
-                {task.approved === true && !task.completed && onComplete && (
-                  <div className="flex gap-3">
+                {/* Action Buttons in Modal - Bottom-right positioning */}
+                <div className="flex justify-end">
+                  {task.approved === null && onApprove && onReject && (
+                    <div className="flex gap-3">
+                      <Button
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          onReject(task.id)
+                          handleOverlayClose()
+                        }}
+                        variant="outline"
+                        className="border-red-200 text-red-600 hover:bg-red-50"
+                      >
+                        <XCircle className="h-4 w-4 mr-2" />
+                        Reject
+                      </Button>
+                      <Button
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          onApprove(task.id)
+                          handleOverlayClose()
+                        }}
+                        className="bg-green-600 hover:bg-green-700 text-white"
+                      >
+                        <CheckCircle className="h-4 w-4 mr-2" />
+                        Approve & Execute
+                      </Button>
+                    </div>
+                  )}
+                  {task.approved === true && !task.completed && onComplete && (
                     <Button
                       onClick={(e) => {
                         e.stopPropagation()
                         onComplete(task.id)
                         handleOverlayClose()
                       }}
-                      className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
+                      className="bg-blue-600 hover:bg-blue-700 text-white"
                     >
                       <CheckCircle className="h-4 w-4 mr-2" />
                       Mark Complete
                     </Button>
-                  </div>
-                )}
+                  )}
+                </div>
               </CardContent>
             </Card>
           </div>

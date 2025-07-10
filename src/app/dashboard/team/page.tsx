@@ -63,8 +63,8 @@ export default function TeamPage() {
       setGoals(JSON.parse(savedGoals))
     }
 
-    // Load team tasks
-    const savedTeamTasks = localStorage.getItem(`employeeTasks_${user.id}`)
+    // Load team tasks from sessionStorage (only persist during session)
+    const savedTeamTasks = sessionStorage.getItem(`employeeTasks_${user.id}`)
     if (savedTeamTasks) {
       setTeamTasks(JSON.parse(savedTeamTasks))
     }
@@ -160,10 +160,10 @@ export default function TeamPage() {
       }))
 
       // Add CEO tasks to existing tasks
-      const existingTasks = localStorage.getItem(`tasks_${user.id}`)
+      const existingTasks = sessionStorage.getItem(`tasks_${user.id}`)
       const currentTasks = existingTasks ? JSON.parse(existingTasks) : []
       const updatedTasks = [...currentTasks, ...newCeoTasks]
-      localStorage.setItem(`tasks_${user.id}`, JSON.stringify(updatedTasks))
+      sessionStorage.setItem(`tasks_${user.id}`, JSON.stringify(updatedTasks))
     }
 
     // Convert selected team tasks to actual team tasks
@@ -182,12 +182,12 @@ export default function TeamPage() {
     })
 
     // Merge with existing team tasks
-    const existingTeamTasks = localStorage.getItem(`employeeTasks_${user.id}`)
+    const existingTeamTasks = sessionStorage.getItem(`employeeTasks_${user.id}`)
     const currentTeamTasks = existingTeamTasks ? JSON.parse(existingTeamTasks) : {}
     const updatedTeamTasks = { ...currentTeamTasks, ...newTeamTasks }
     
     setTeamTasks(updatedTeamTasks)
-    localStorage.setItem(`employeeTasks_${user.id}`, JSON.stringify(updatedTeamTasks))
+    sessionStorage.setItem(`employeeTasks_${user.id}`, JSON.stringify(updatedTeamTasks))
 
     // Reset modal state
     setShowTaskSuggestionModal(false)
@@ -252,7 +252,7 @@ export default function TeamPage() {
     
     if (userData) {
       const user = JSON.parse(userData)
-      localStorage.setItem(`employeeTasks_${user.id}`, JSON.stringify(updatedTasks))
+      sessionStorage.setItem(`employeeTasks_${user.id}`, JSON.stringify(updatedTasks))
     }
   }
 
@@ -268,7 +268,7 @@ export default function TeamPage() {
     const userData = localStorage.getItem('user')
     if (userData) {
       const user = JSON.parse(userData)
-      localStorage.setItem(`employeeTasks_${user.id}`, JSON.stringify(updatedTasks))
+      sessionStorage.setItem(`employeeTasks_${user.id}`, JSON.stringify(updatedTasks))
     }
   }
 
