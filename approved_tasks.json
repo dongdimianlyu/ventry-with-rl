@@ -67,5 +67,77 @@
       "model_type": "PPO",
       "simulation_episodes": 3
     }
+  },
+  {
+    "id": "slack-1752116850667-1070",
+    "approved_at": "2025-07-10T11:07:30.667171",
+    "status": "approved",
+    "source": "slack",
+    "executed": false,
+    "recommendation": {
+      "action": "restock",
+      "quantity": 50,
+      "expected_roi": "25.5%",
+      "confidence": "high",
+      "reasoning": "Based on demand analysis and inventory levels - sample data for testing",
+      "timestamp": "2025-07-06T21:51:23.881177",
+      "alternative_actions": [
+        {
+          "day": 5,
+          "action": "restock",
+          "quantity": 30,
+          "expected_roi": "22.0%",
+          "inventory_level": 20,
+          "daily_demand": 35
+        },
+        {
+          "day": 10,
+          "action": "restock",
+          "quantity": 40,
+          "expected_roi": "20.5%",
+          "inventory_level": 15,
+          "daily_demand": 40
+        }
+      ],
+      "generated_at": "2025-07-06T21:51:23.881185",
+      "model_type": "PPO",
+      "simulation_episodes": 3
+    }
+  },
+  {
+    "id": "slack-1752120267141-1070",
+    "approved_at": "2025-07-10T12:04:27.142106",
+    "status": "approved",
+    "source": "slack",
+    "executed": false,
+    "recommendation": {
+      "action": "restock",
+      "quantity": 50,
+      "expected_roi": "25.5%",
+      "confidence": "high",
+      "reasoning": "Based on demand analysis and inventory levels - sample data for testing",
+      "timestamp": "2025-07-06T21:51:23.881177",
+      "alternative_actions": [
+        {
+          "day": 5,
+          "action": "restock",
+          "quantity": 30,
+          "expected_roi": "22.0%",
+          "inventory_level": 20,
+          "daily_demand": 35
+        },
+        {
+          "day": 10,
+          "action": "restock",
+          "quantity": 40,
+          "expected_roi": "20.5%",
+          "inventory_level": 15,
+          "daily_demand": 40
+        }
+      ],
+      "generated_at": "2025-07-06T21:51:23.881185",
+      "model_type": "PPO",
+      "simulation_episodes": 3
+    }
   }
 ]
