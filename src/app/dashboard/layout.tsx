@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { Sidebar } from '@/components/dashboard/Sidebar'
 import OnboardingFlow from '@/components/onboarding/OnboardingFlow'
 import { User, CompanyProfile } from '@/types'
+import { Building2 } from 'lucide-react'
 
 export default function DashboardLayout({
   children,
@@ -63,7 +64,7 @@ export default function DashboardLayout({
       <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-center">
           <div className="w-12 h-12 bg-[#1A4231] rounded-xl flex items-center justify-center mx-auto mb-4">
-            <div className="w-6 h-6 border-2 border-[#c9f223] border-t-transparent rounded-full animate-spin" />
+            <Building2 className="w-6 h-6 text-[#c9f223] animate-pulse" />
           </div>
           <p className="text-gray-600">Loading your workspace...</p>
         </div>

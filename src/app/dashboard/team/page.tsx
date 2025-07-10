@@ -10,8 +10,8 @@ import {
   Clock, 
   Target,
   AlertCircle,
-  Brain,
-  TrendingUp
+  TrendingUp,
+  ClipboardList
 } from 'lucide-react'
 import { TeamMember, Goal, TeamTask, TaskSuggestion, TeamTaskSuggestion, AutoModeSettings } from '@/types'
 import { TeamTaskCard } from '@/components/dashboard/TeamTaskCard'
@@ -344,7 +344,7 @@ export default function TeamPage() {
           <CardContent className="p-6">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <Target className="h-8 w-8 text-green-600" />
+                <ClipboardList className="h-8 w-8 text-green-600" />
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-500">Total Tasks</p>

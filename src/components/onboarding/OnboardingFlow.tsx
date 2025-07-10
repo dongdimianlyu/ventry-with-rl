@@ -528,8 +528,22 @@ export default function OnboardingFlow({ user, onComplete }: OnboardingFlowProps
       <header className="bg-white border-b border-gray-100 px-6 py-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-[#1A4231] rounded-xl flex items-center justify-center">
-              <Sparkles className="h-5 w-5 text-[#c9f223]" />
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center">
+              <img 
+                src="/ventry-logo.png" 
+                alt="Ventry Logo" 
+                className="w-10 h-10 object-contain"
+                onError={(e) => {
+                  // Fallback to icon if image doesn't exist
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                  const fallback = target.nextElementSibling as HTMLElement;
+                  if (fallback) fallback.style.display = 'flex';
+                }}
+              />
+              <div className="w-10 h-10 bg-[#1A4231] rounded-xl items-center justify-center hidden">
+                <Sparkles className="h-5 w-5 text-[#c9f223]" />
+              </div>
             </div>
             <span className="text-2xl font-bold text-[#1A4231]">Ventry</span>
           </div>

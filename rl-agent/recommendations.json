@@ -1,24 +1,24 @@
 {
   "action": "restock",
-  "quantity": 50,
-  "expected_roi": "280.0%",
-  "confidence": "high",
-  "reasoning": "High-demand wireless headphones showing consistent sales velocity with low inventory levels. Predictive model indicates 85% probability of stockout within 7 days.",
-  "item": "Wireless Bluetooth Headphones",
-  "category": "Electronics",
-  "timestamp": "2025-07-10T06:29:39.457Z",
-  "generated_at": "2025-07-10T06:29:39.458Z",
+  "quantity": 60,
+  "expected_roi": "210.0%",
+  "confidence": "medium",
+  "reasoning": "Gaming peripherals showing strong demand correlation with upcoming game releases. Predictive model suggests optimal restocking window.",
+  "item": "Gaming Mechanical Keyboard",
+  "category": "Gaming Accessories",
+  "timestamp": "2025-07-10T06:58:33.987Z",
+  "generated_at": "2025-07-10T06:58:33.988Z",
   "user_id": "1",
   "alternative_actions": [
     {
       "action": "restock",
-      "quantity": 25,
-      "expected_roi": "196%"
+      "quantity": 30,
+      "expected_roi": "147%"
     },
     {
       "action": "restock",
-      "quantity": 75,
-      "expected_roi": "336%"
+      "quantity": 90,
+      "expected_roi": "252%"
     }
   ]
 }

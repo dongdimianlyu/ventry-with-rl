@@ -33,8 +33,18 @@ export default function SignInPage() {
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
-          <Link href="/" className="text-3xl font-bold text-slate-900">
-            Ventry
+          <Link href="/" className="flex items-center justify-center space-x-2 mb-2">
+            <img 
+              src="/ventry-logo.png" 
+              alt="Ventry Logo" 
+              className="w-8 h-8 object-contain"
+              onError={(e) => {
+                // Fallback to text if image doesn't exist
+                const target = e.target as HTMLImageElement;
+                target.style.display = 'none';
+              }}
+            />
+            <span className="text-3xl font-bold text-slate-900">Ventry</span>
           </Link>
           <p className="text-slate-600 mt-2">Sign in to your account</p>
         </div>

@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { Goal } from '@/types'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Target, Sparkles } from 'lucide-react'
+import { Target, Building2 } from 'lucide-react'
 
 interface AddGoalFormProps {
   onSubmit: (goalData: Omit<Goal, 'id' | 'userId' | 'createdAt' | 'updatedAt'>) => void
@@ -145,8 +145,8 @@ export default function AddGoalForm({ onSubmit, onCancel }: AddGoalFormProps) {
               type="submit" 
               className="brand-gradient text-white hover:opacity-90 smooth-transition shadow-sm accent-glow"
             >
-              <Sparkles className="h-4 w-4 mr-2" />
-              Add Goal
+                          <Building2 className="h-4 w-4 mr-2" />
+            Add Goal
             </Button>
             <Button 
               type="button" 

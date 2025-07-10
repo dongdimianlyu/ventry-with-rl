@@ -32,8 +32,22 @@ export function Sidebar() {
       {/* Header */}
       <div className="flex h-16 shrink-0 items-center px-6 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white">
         <div className="flex items-center space-x-2">
-          <div className="w-8 h-8 brand-gradient rounded-lg flex items-center justify-center">
-            <Sparkles className="h-4 w-4 text-white" />
+          <div className="w-8 h-8 rounded-lg flex items-center justify-center">
+            <img 
+              src="/ventry-logo.png" 
+              alt="Ventry Logo" 
+              className="w-8 h-8 object-contain"
+              onError={(e) => {
+                // Fallback to icon if image doesn't exist
+                const target = e.target as HTMLImageElement;
+                target.style.display = 'none';
+                const fallback = target.nextElementSibling as HTMLElement;
+                if (fallback) fallback.style.display = 'flex';
+              }}
+            />
+            <div className="w-8 h-8 brand-gradient rounded-lg items-center justify-center hidden">
+              <Sparkles className="h-4 w-4 text-white" />
+            </div>
           </div>
           <h1 className="text-xl font-bold text-brand-primary tracking-tight">Ventry</h1>
         </div>

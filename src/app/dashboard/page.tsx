@@ -10,7 +10,7 @@ import { RLTaskCard } from '@/components/dashboard/RLTaskCard'
 import AddGoalForm from '@/components/dashboard/AddGoalForm'
 import { TaskSuggestionModal } from '@/components/dashboard/TaskSuggestionModal'
 import { AutoModeToggle } from '@/components/ui/AutoModeToggle'
-import { Sparkles, LogOut, Calendar, Target, TrendingUp, Plus, AlertCircle, Clock, CheckCircle, BarChart3 } from 'lucide-react'
+import { Sparkles, LogOut, Calendar, Target, TrendingUp, Plus, AlertCircle, Clock, CheckCircle, BarChart3, Building2, ClipboardList } from 'lucide-react'
 import { formatDate } from '@/lib/utils'
 import { knowledgeBase } from '@/data/knowledge-base'
 import { KnowledgeBase } from '@/types'
@@ -432,7 +432,7 @@ export default function DashboardPage() {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <div className="w-12 h-12 brand-gradient rounded-xl flex items-center justify-center mx-auto mb-4">
-            <Sparkles className="h-6 w-6 text-white animate-pulse" />
+            <Building2 className="h-6 w-6 text-white animate-pulse" />
           </div>
           <p className="text-gray-600">Loading your workspace...</p>
         </div>
@@ -470,7 +470,7 @@ export default function DashboardPage() {
                 onClick={() => setShowAddGoal(true)}
                 className="brand-gradient text-white hover:opacity-90 smooth-transition shadow-sm accent-glow"
               >
-                <Plus className="h-4 w-4 mr-2" />
+                <Building2 className="h-4 w-4 mr-2" />
                 Add Goal
               </Button>
               <Button
@@ -487,7 +487,7 @@ export default function DashboardPage() {
                 className="bg-purple-600 hover:bg-purple-700 text-white smooth-transition shadow-sm"
               >
                 <BarChart3 className="h-4 w-4 mr-2" />
-                {isSimulatingRL ? 'Simulating...' : 'Run Agent Suggestion'}
+                {isSimulatingRL ? 'analysing...' : 'Run Agent Suggestion'}
               </Button>
               <Button
                 onClick={() => {
