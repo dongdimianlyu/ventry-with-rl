@@ -5,6 +5,9 @@ import { generateShopifyTaskContext, isShopifyDataFresh } from '@/lib/shopify-ta
 
 export async function POST(request: NextRequest) {
   try {
+    // Log that the API is being called
+    console.log('📝 Task generation API called')
+    
     const { goals, previousTasks, knowledgeBase, timeframe, teamMembers, generateForTeam = true, suggestionMode = false, previousTeamTasks, userId } = await request.json()
 
     // Basic validation

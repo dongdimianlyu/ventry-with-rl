@@ -7,6 +7,11 @@ const openai = process.env.OPENAI_API_KEY ? new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 }) : null
 
+// Add helpful logging
+if (typeof window === 'undefined' && !process.env.OPENAI_API_KEY) {
+  console.warn('⚠️ OPENAI_API_KEY not found. Using fallback task suggestions.')
+}
+
 export async function generateDailyTasks(context: TaskGenerationContext): Promise<Omit<Task, 'id' | 'userId' | 'createdAt'>[]> {
   const { goals, previousTasks, knowledgeBase, shopifyContext } = context
 

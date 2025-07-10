@@ -152,16 +152,20 @@ export default function DashboardPage() {
           previousTeamTasks: sessionStorage.getItem(`employeeTasks_${user.id}`) ? JSON.parse(sessionStorage.getItem(`employeeTasks_${user.id}`) || '{}') : {},
           userId: user.id
         })
+      }).catch((networkError) => {
+        console.error('Network error during fetch:', networkError)
+        throw new Error('Network connection failed. Please check your internet connection and try again.')
       })
 
       if (!response.ok) {
         const errorText = await response.text();
+        console.error('API Response Error:', response.status, errorText)
         try {
           const errorData = JSON.parse(errorText);
-          throw new Error(errorData.details || errorData.error || 'Failed to generate task suggestions');
-        } catch {
-          console.error("Non-JSON error response:", errorText);
-          throw new Error('Received an invalid response from the server. Check the server logs for more details.');
+          throw new Error(errorData.details || errorData.error || `HTTP ${response.status}: Failed to generate task suggestions`);
+        } catch (parseError) {
+          console.error("Failed to parse error response:", parseError);
+          throw new Error(`HTTP ${response.status}: Server error occurred. Please try again later.`);
         }
       }
 
@@ -571,89 +575,51 @@ export default function DashboardPage() {
               {/* Slack Approval Status */}
               {(pendingSlackApproval || slackStatus) && (
                 <div className="mb-8">
-                  <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#1A4231] via-[#1A4231] to-[#2D5A44] border-2 border-[#C9F223]/20 shadow-2xl">
-                    {/* Decorative elements */}
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-[#C9F223]/10 rounded-full blur-3xl"></div>
-                    <div className="absolute bottom-0 left-0 w-24 h-24 bg-[#C9F223]/5 rounded-full blur-2xl"></div>
-                    
-                    <CardHeader className="relative z-10 pb-4">
-                      <CardTitle className="flex items-center text-xl text-white font-bold">
-                        <div className="w-12 h-12 bg-gradient-to-br from-[#C9F223] to-[#C9F223]/80 rounded-xl flex items-center justify-center mr-4 shadow-lg">
-                          <Clock className="h-6 w-6 text-[#1A4231]" />
+                  <Card className="bg-[#1A4231] border border-[#C9F223]/30">
+                    <CardHeader className="pb-4">
+                      <CardTitle className="flex items-center text-white">
+                        <div className="w-8 h-8 bg-[#C9F223] rounded-lg flex items-center justify-center mr-3">
+                          <Clock className="h-4 w-4 text-[#1A4231]" />
                         </div>
-                        <div>
-                          <div className="text-xl font-bold">Slack Integration</div>
-                          <div className="text-[#C9F223] text-sm font-medium mt-1">Real-time Approval System</div>
-                        </div>
+                        Slack Approval Status
                       </CardTitle>
                     </CardHeader>
-                    
-                    <CardContent className="relative z-10 space-y-4">
+                    <CardContent className="space-y-4">
                       {pendingSlackApproval && (
-                        <div className="bg-gradient-to-r from-white/15 to-white/10 backdrop-blur-sm border border-[#C9F223]/30 rounded-xl p-6 shadow-inner">
-                          <div className="flex items-start space-x-4">
-                            <div className="w-10 h-10 bg-gradient-to-br from-[#C9F223] to-[#C9F223]/80 rounded-xl flex items-center justify-center shadow-lg flex-shrink-0">
-                              <Clock className="h-5 w-5 text-[#1A4231]" />
+                        <div className="bg-white/10 border border-[#C9F223]/30 rounded-lg p-4">
+                          <div className="flex items-start space-x-3">
+                            <div className="w-6 h-6 bg-[#C9F223] rounded-full flex items-center justify-center mt-1">
+                              <Clock className="h-3 w-3 text-[#1A4231]" />
                             </div>
                             <div className="flex-1">
-                              <div className="flex items-center gap-2 mb-3">
-                                <h4 className="font-bold text-white text-lg">Pending Approval</h4>
-                                <div className="px-3 py-1 bg-[#C9F223] text-[#1A4231] rounded-full text-xs font-bold animate-pulse">
-                                  LIVE
-                                </div>
-                              </div>
-                              
-                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                                <div className="bg-[#1A4231]/40 rounded-lg p-3 border border-[#C9F223]/20">
-                                  <p className="text-[#C9F223] text-xs font-semibold uppercase tracking-wider mb-1">Action Required</p>
-                                  <p className="text-white font-medium">
-                                    {pendingSlackApproval.recommendation.action} {pendingSlackApproval.recommendation.quantity} units of {pendingSlackApproval.recommendation.item}
-                                  </p>
-                                </div>
-                                
-                                <div className="bg-[#1A4231]/40 rounded-lg p-3 border border-[#C9F223]/20">
-                                  <p className="text-[#C9F223] text-xs font-semibold uppercase tracking-wider mb-1">Expected Impact</p>
-                                  <p className="text-white font-medium">
-                                    {pendingSlackApproval.recommendation.expectedRoi} ROI • {pendingSlackApproval.recommendation.confidence} confidence
-                                  </p>
-                                </div>
-                              </div>
-                              
-                              <div className="bg-gradient-to-r from-[#C9F223]/20 to-transparent border-l-4 border-[#C9F223] pl-4 py-2">
-                                <p className="text-white/90 text-sm leading-relaxed">
-                                  💬 <strong>Reply in Slack:</strong> Type <code className="bg-[#C9F223] text-[#1A4231] px-2 py-1 rounded font-bold">Y</code> to approve or <code className="bg-red-500 text-white px-2 py-1 rounded font-bold">N</code> to reject
-                                </p>
+                              <h4 className="font-semibold text-white mb-2">Pending Approval</h4>
+                              <p className="text-white/90 mb-2">
+                                <strong>Action:</strong> {pendingSlackApproval.recommendation.action} {pendingSlackApproval.recommendation.quantity} units of {pendingSlackApproval.recommendation.item}
+                              </p>
+                              <p className="text-white/90 mb-3">
+                                <strong>Expected ROI:</strong> {pendingSlackApproval.recommendation.expectedRoi} | 
+                                <strong> Confidence:</strong> {pendingSlackApproval.recommendation.confidence}
+                              </p>
+                              <div className="flex items-center gap-2">
+                                <span className="text-white/80 text-sm">Reply in Slack:</span>
+                                <code className="bg-[#C9F223] text-[#1A4231] px-2 py-1 rounded text-xs font-bold">Y</code>
+                                <span className="text-white/60 text-sm">or</span>
+                                <code className="bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">N</code>
                               </div>
                             </div>
                           </div>
                         </div>
                       )}
-                      
                       {slackStatus && (
-                        <div className="bg-gradient-to-r from-[#C9F223]/20 to-[#C9F223]/10 border border-[#C9F223]/40 rounded-xl p-4 backdrop-blur-sm">
-                          <div className="flex items-center space-x-3">
-                            <div className="w-8 h-8 bg-[#C9F223] rounded-full flex items-center justify-center">
-                              <CheckCircle className="h-4 w-4 text-[#1A4231]" />
-                            </div>
-                            <p className="text-white font-medium flex-1">{slackStatus}</p>
+                        <div className="bg-[#C9F223]/20 border border-[#C9F223]/40 rounded-lg p-3">
+                          <div className="flex items-center space-x-2">
+                            <div className="w-2 h-2 bg-[#C9F223] rounded-full"></div>
+                            <p className="text-white text-sm font-medium">{slackStatus}</p>
                           </div>
                         </div>
                       )}
-                      
-                      {/* Integration Status Footer */}
-                      <div className="pt-4 border-t border-white/10">
-                        <div className="flex items-center justify-between text-sm">
-                          <div className="flex items-center space-x-2 text-[#C9F223]/80">
-                            <div className="w-2 h-2 bg-[#C9F223] rounded-full animate-pulse"></div>
-                            <span>Connected to Slack</span>
-                          </div>
-                          <div className="text-white/60">
-                            Real-time sync enabled
-                          </div>
-                        </div>
-                      </div>
                     </CardContent>
-                  </div>
+                  </Card>
                 </div>
               )}
 

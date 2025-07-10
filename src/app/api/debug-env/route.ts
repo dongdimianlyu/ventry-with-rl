@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(request: NextRequest) {
   const envVars = {
+    // OpenAI variables
+    OPENAI_API_KEY: process.env.OPENAI_API_KEY ? 'SET' : 'NOT SET',
+    
     // Slack variables
     SLACK_CLIENT_ID: process.env.SLACK_CLIENT_ID ? 'SET' : 'NOT SET',
     SLACK_CLIENT_SECRET: process.env.SLACK_CLIENT_SECRET ? 'SET' : 'NOT SET',
