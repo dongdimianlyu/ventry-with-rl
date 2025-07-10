@@ -305,8 +305,8 @@ export default function TeamPage() {
             disabled={generatingTasks || teamMembers.length === 0 || goals.length === 0}
             className="brand-gradient text-white hover:opacity-90 flex items-center gap-2"
           >
-            <Brain className="h-4 w-4" />
-            {generatingTasks ? 'Generating...' : 'Generate Tasks'}
+            <TrendingUp className="h-4 w-4" />
+            {generatingTasks ? 'Generating...' : 'Get Recommendations'}
           </Button>
         </div>
       </div>

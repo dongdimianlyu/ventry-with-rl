@@ -60,14 +60,14 @@ export default function LandingPage() {
               {/* Badge */}
               <div className="inline-flex items-center px-3 py-1 bg-[#c9f222]/10 border border-[#c9f222]/20 rounded-full">
                 <span className="text-[#c9f222] text-sm font-medium">
-                  We just launched Ventry AI
+                  We just launched Ventry
                 </span>
                 <ArrowRight className="ml-2 h-3 w-3 text-[#c9f222]" />
               </div>
               
               {/* Main Headline - Large and bold like Aviato */}
               <h1 className="text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight tracking-tight">
-                AI Operations Partner for
+  Data Operations Partner for
                 <br />
                 <span className="text-[#c9f222]">SMEs</span>
               </h1>
@@ -147,7 +147,7 @@ export default function LandingPage() {
             </div>
             <div className="bg-gray-50 rounded-xl p-8 text-center">
               <div className="text-6xl mb-4">🤖</div>
-              <div className="text-sm text-gray-500">AI Operations Dashboard</div>
+                              <div className="text-sm text-gray-500">Operations Dashboard</div>
             </div>
           </div>
         </div>
@@ -165,9 +165,9 @@ export default function LandingPage() {
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center group">
               <div className="bg-gray-50 rounded-xl p-8 mb-4 group-hover:bg-[#9b0e8d]/5 transition-colors">
-                <Brain className="h-12 w-12 text-[#9b0e8d] mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">AI-Powered Insights</h3>
-                <p className="text-gray-600 text-sm">Context-specific recommendations using LLMs and RAG technology</p>
+                <BarChart3 className="h-12 w-12 text-[#9b0e8d] mx-auto mb-4" />
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Data-Driven Insights</h3>
+                <p className="text-gray-600 text-sm">Context-specific recommendations using advanced analytics and business intelligence</p>
               </div>
               <Button variant="outline" className="border-[#9b0e8d] text-[#9b0e8d] hover:bg-[#9b0e8d] hover:text-white">
                 Try it
@@ -248,7 +248,7 @@ export default function LandingPage() {
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
-              'AI-powered task generation',
+              'Data-driven task generation',
               'Reinforcement learning optimization',
               'Seamless integrations',
               'ROI tracking and predictions',

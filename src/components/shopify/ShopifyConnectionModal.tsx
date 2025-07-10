@@ -103,7 +103,7 @@ export function ShopifyConnectionModal({
     {
       icon: <TrendingUp className="h-6 w-6 text-green-500" />,
       title: 'Smart Task Generation',
-      description: 'Get AI-powered tasks based on your actual business performance and trends'
+      description: 'Get data-driven tasks based on your actual business performance and trends'
     },
     {
       icon: <Eye className="h-6 w-6 text-blue-500" />,

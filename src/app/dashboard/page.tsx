@@ -10,7 +10,7 @@ import { RLTaskCard } from '@/components/dashboard/RLTaskCard'
 import AddGoalForm from '@/components/dashboard/AddGoalForm'
 import { TaskSuggestionModal } from '@/components/dashboard/TaskSuggestionModal'
 import { AutoModeToggle } from '@/components/ui/AutoModeToggle'
-import { Sparkles, LogOut, Calendar, Target, Brain, TrendingUp, Plus, AlertCircle, Zap, Clock, CheckCircle } from 'lucide-react'
+import { Sparkles, LogOut, Calendar, Target, TrendingUp, Plus, AlertCircle, Clock, CheckCircle, BarChart3 } from 'lucide-react'
 import { formatDate } from '@/lib/utils'
 import { knowledgeBase } from '@/data/knowledge-base'
 import { KnowledgeBase } from '@/types'
@@ -478,16 +478,16 @@ export default function DashboardPage() {
                 disabled={isGeneratingTasks || goals.length === 0}
                 className="brand-gradient text-white hover:opacity-90 smooth-transition shadow-sm accent-glow"
               >
-                <Brain className="h-4 w-4 mr-2" />
-                {isGeneratingTasks ? 'Generating...' : 'Generate Tasks'}
+                <TrendingUp className="h-4 w-4 mr-2" />
+                {isGeneratingTasks ? 'Generating...' : 'Get Recommendations'}
               </Button>
               <Button
                 onClick={simulateRLEvent}
                 disabled={isSimulatingRL}
                 className="bg-purple-600 hover:bg-purple-700 text-white smooth-transition shadow-sm"
               >
-                <Zap className="h-4 w-4 mr-2" />
-                {isSimulatingRL ? 'Simulating...' : 'Simulate AI Task'}
+                <BarChart3 className="h-4 w-4 mr-2" />
+                {isSimulatingRL ? 'Simulating...' : 'Run Agent Suggestion'}
               </Button>
               <Button
                 onClick={() => {
@@ -520,7 +520,7 @@ export default function DashboardPage() {
             </div>
             <div>
               <h2 className="text-3xl font-bold text-brand-primary">{formatDate(new Date())}</h2>
-              <p className="text-gray-600 mt-1 accent-dot">Your AI-generated daily focus</p>
+              <p className="text-gray-600 mt-1 accent-dot">Your daily focus backed by data</p>
             </div>
           </div>
           <div className="subtle-divider mt-4" />
@@ -546,9 +546,9 @@ export default function DashboardPage() {
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-2xl font-bold text-gray-900 flex items-center">
                   <div className="w-8 h-8 bg-brand-primary rounded-lg flex items-center justify-center mr-3">
-                    <Brain className="h-4 w-4 text-white" />
+                    <CheckCircle className="h-4 w-4 text-white" />
                   </div>
-                  CEO Tasks
+                  Your tasks
                 </h3>
                 <div className="flex items-center space-x-2 text-sm text-gray-500 bg-white rounded-full px-4 py-2 shadow-sm border border-gray-100">
                   <TrendingUp className="h-4 w-4" />
@@ -563,7 +563,7 @@ export default function DashboardPage() {
                     <CardHeader>
                       <CardTitle className="flex items-center text-lg">
                         <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center mr-3">
-                          <Brain className="h-4 w-4 text-white" />
+                          <Clock className="h-4 w-4 text-white" />
                         </div>
                         Slack Approval Status
                       </CardTitle>
@@ -601,7 +601,7 @@ export default function DashboardPage() {
                 </div>
               )}
 
-              {/* Pending RL AI-Suggested Tasks (Need Approval) */}
+              {/* Pending Agent Suggestions (Need Approval) */}
               {pendingRlTasks.length > 0 && (
                 <div className="space-y-6 mb-8">
                   <h4 className="text-lg font-semibold text-gray-900 flex items-center mb-4">
@@ -621,7 +621,7 @@ export default function DashboardPage() {
                 </div>
               )}
 
-              {/* Approved RL AI-Suggested Tasks */}
+              {/* Approved Agent Suggestions */}
               {rlTasks.length > 0 && (
                 <div className="space-y-6 mb-8">
                   <h4 className="text-lg font-semibold text-gray-900 flex items-center mb-4">
@@ -643,14 +643,14 @@ export default function DashboardPage() {
               {(tasks.length === 0 && rlTasks.length === 0 && pendingRlTasks.length === 0) ? (
                 <Card className="refined-card text-center py-16 bg-gradient-to-br from-white to-gray-50">
                   <CardContent>
-                    <div className="w-16 h-16 bg-brand-accent/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                      <Brain className="h-8 w-8 text-brand-primary" />
-                    </div>
+                                      <div className="w-16 h-16 bg-brand-accent/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                    <Target className="h-8 w-8 text-brand-primary" />
+                  </div>
                     <h3 className="text-xl font-semibold text-gray-900 mb-3">No tasks generated yet</h3>
                     <p className="text-gray-600 mb-8 max-w-md mx-auto leading-relaxed">
                       {goals.length === 0 
-                        ? "Add some goals first, then generate your daily tasks or simulate AI recommendations"
-                        : "Click 'Generate Tasks' to get your AI-powered daily focus or 'Simulate AI Task' for demo recommendations"
+                        ? "Add some goals first, then get your daily recommendations or run agent suggestions"
+                        : "Click 'Get Recommendations' to get your data-driven daily focus or 'Run Agent Suggestion' for demo recommendations"
                       }
                     </p>
 

@@ -75,13 +75,6 @@ export function Sidebar() {
         {/* Bottom decorative element */}
         <div className="mt-auto pt-4">
           <div className="subtle-divider mb-4" />
-          <div className="text-xs text-gray-400 text-center">
-            <div className="inline-flex items-center space-x-1">
-              <div className="w-1 h-1 bg-brand-accent rounded-full opacity-60" />
-              <span>Powered by AI</span>
-              <div className="w-1 h-1 bg-brand-accent rounded-full opacity-60" />
-            </div>
-          </div>
         </div>
       </nav>
     </div>

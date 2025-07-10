@@ -9,9 +9,8 @@ import {
   Clock, 
   Target, 
   Users, 
-  Sparkles,
-  Brain,
-  Zap,
+  Settings,
+  BarChart3,
   User,
   TrendingUp,
   DollarSign
@@ -160,10 +159,10 @@ export function TaskSuggestionModal({
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
-                <Sparkles className="h-5 w-5" />
+                <Settings className="h-5 w-5" />
               </div>
               <div>
-                <h2 className="text-2xl font-bold">Task Suggestions</h2>
+                <h2 className="text-2xl font-bold">Smart Suggestions</h2>
                 <p className="text-purple-100">
                   {autoModeSettings.enabled ? 'Auto-selected based on your preferences' : 'Choose up to 3 tasks per person'}
                 </p>
@@ -172,7 +171,7 @@ export function TaskSuggestionModal({
             <div className="flex items-center gap-3">
               {autoModeSettings.enabled && (
                 <div className="flex items-center gap-2 bg-white/20 rounded-full px-3 py-1">
-                  <Zap className="h-4 w-4" />
+                  <BarChart3 className="h-4 w-4" />
                   <span className="text-sm font-medium">Auto Mode</span>
                 </div>
               )}
@@ -230,8 +229,8 @@ export function TaskSuggestionModal({
           {isLoading ? (
             <div className="flex items-center justify-center py-16">
               <div className="text-center">
-                <Brain className="h-12 w-12 text-purple-600 animate-pulse mx-auto mb-4" />
-                <p className="text-gray-600">Generating intelligent task suggestions...</p>
+                <BarChart3 className="h-12 w-12 text-purple-600 animate-pulse mx-auto mb-4" />
+                <p className="text-gray-600">Analyzing data for recommendations...</p>
               </div>
             </div>
           ) : (
@@ -431,7 +430,7 @@ export function TaskSuggestionModal({
             <div className="text-sm text-gray-600">
               {autoModeSettings.enabled ? (
                 <span className="flex items-center gap-2">
-                  <Zap className="h-4 w-4 text-purple-600" />
+                  <BarChart3 className="h-4 w-4 text-purple-600" />
                   Tasks auto-selected based on priority and diversity
                 </span>
               ) : (
