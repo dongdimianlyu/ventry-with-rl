@@ -41,10 +41,9 @@ yarn-error.log*
 next-env.d.ts
 .env
 
-# Secret configuration files
-slack_config.json
-quickbooks_config.json
-*_config.json
+# Secret configuration files (allow template files with ${ENV_VAR} placeholders)
+# slack_config.json - now contains only ${ENV_VAR} placeholders
+# quickbooks_config.json - now contains only ${ENV_VAR} placeholders
 *.log
 *.pid
 

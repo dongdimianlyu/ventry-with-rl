@@ -1,0 +1,10 @@
+{
+  "SLACK_BOT_TOKEN": "${SLACK_BOT_TOKEN}",
+  "SLACK_APP_TOKEN": "${SLACK_APP_TOKEN}",
+  "SLACK_SIGNING_SECRET": "${SLACK_SIGNING_SECRET}",
+  "SLACK_CHANNEL_ID": "${SLACK_CHANNEL_ID}",
+  "SLACK_USER_ID": "${SLACK_USER_ID}",
+  "RECOMMENDATIONS_FILE": "recommendations.json",
+  "APPROVED_TASKS_FILE": "approved_tasks.json",
+  "RL_AGENT_PATH": "rl-agent"
+}
