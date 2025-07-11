@@ -36,6 +36,9 @@ export async function POST(request: NextRequest) {
       let slackMessage = ''
       
       if (action === 'approve') {
+        // Check if QuickBooks is disabled for beta testing
+        const quickbooksDisabled = process.env.QUICKBOOKS_DISABLED === 'true'
+        
         slackMessage = `✅ **Task Approved via UI**
 
 **Action:** ${recommendation.action || 'restock'} ${recommendation.quantity || 0} units
@@ -44,11 +47,11 @@ export async function POST(request: NextRequest) {
 **Approved by:** User ${userId}
 **Task ID:** ${taskId}
 
-**Status:** Approved via frontend UI and queued for QuickBooks execution
+**Status:** Approved via frontend UI ${quickbooksDisabled ? '(QuickBooks execution disabled for beta testing)' : 'and queued for QuickBooks execution'}
 
 **AI Reasoning:** ${recommendation.reasoning || 'No reasoning provided'}
 
-The task has been approved and added to the execution queue.`
+${quickbooksDisabled ? 'The task has been approved but QuickBooks execution is disabled for beta testing.' : 'The task has been approved and added to the execution queue.'}`
       } else if (action === 'reject') {
         slackMessage = `❌ **Task Rejected via UI**
 

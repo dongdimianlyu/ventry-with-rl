@@ -131,7 +131,13 @@ try:
     
     approval = SimpleSlackApproval()
     
-    message = """✅ **Task Approved via UI**
+    # Check if QuickBooks is disabled
+    quickbooks_disabled = os.getenv('QUICKBOOKS_DISABLED', '').lower() == 'true'
+    
+    status_message = 'Approved via frontend UI (QuickBooks execution disabled for beta testing)' if quickbooks_disabled else 'Approved via frontend UI and queued for QuickBooks execution'
+    conclusion_message = 'The task has been approved but QuickBooks execution is disabled for beta testing.' if quickbooks_disabled else 'The task has been approved and added to the execution queue.'
+    
+    message = f"""✅ **Task Approved via UI**
 
 **Action:** ${recommendation.action || 'restock'} ${recommendation.quantity || 0} units
 **Expected ROI:** ${recommendation.expected_roi || 'N/A'}
@@ -139,11 +145,11 @@ try:
 **Approved by:** User ${userId}
 **Task ID:** ${taskId}
 
-**Status:** Approved via frontend UI and queued for QuickBooks execution
+**Status:** {status_message}
 
 **AI Reasoning:** ${recommendation.reasoning || 'No reasoning provided'}
 
-The task has been approved and added to the execution queue."""
+{conclusion_message}"""
     
     result = approval.client.chat_postMessage(
         channel=approval.channel_id,
@@ -207,47 +213,55 @@ except Exception as e:
         }
 
         // Create approved task entry for QuickBooks executor
-        const { writeFile } = await import('fs/promises')
+        // 🔧 QUICKBOOKS_DISABLED: Set to 'true' to disable QuickBooks execution for beta testing
+        const quickbooksDisabled = process.env.QUICKBOOKS_DISABLED === 'true'
         
-        const approvedTasksPath = join(process.cwd(), 'approved_tasks.json')
-        const approvedTask = {
-          id: taskId,
-          userId: userId,
-          approvedAt: new Date().toISOString(),
-          status: 'approved',
-          source: 'rl_agent_ui',
-          action: 'restock',
-          details: {
-            description: `RL Agent approved task for user ${userId}`,
-            executionType: 'quickbooks',
-            priority: 'high'
-          },
-          recommendation: recommendation || null
+        if (!quickbooksDisabled) {
+          const { writeFile } = await import('fs/promises')
+          
+          const approvedTasksPath = join(process.cwd(), 'approved_tasks.json')
+          const approvedTask = {
+            id: taskId,
+            userId: userId,
+            approvedAt: new Date().toISOString(),
+            status: 'approved',
+            source: 'rl_agent_ui',
+            action: 'restock',
+            details: {
+              description: `RL Agent approved task for user ${userId}`,
+              executionType: 'quickbooks',
+              priority: 'high'
+            },
+            recommendation: recommendation || null
+          }
+          
+          // Read existing approved tasks
+          let existingTasks = []
+          try {
+            const { readFile } = await import('fs/promises')
+            const existingContent = await readFile(approvedTasksPath, 'utf-8')
+            existingTasks = JSON.parse(existingContent)
+          } catch (error) {
+            // File doesn't exist or is empty, start with empty array
+            existingTasks = []
+          }
+          
+          // Add new task
+          existingTasks.push(approvedTask)
+          
+          // Write back to file
+          await writeFile(approvedTasksPath, JSON.stringify(existingTasks, null, 2))
         }
-        
-        // Read existing approved tasks
-        let existingTasks = []
-        try {
-          const { readFile } = await import('fs/promises')
-          const existingContent = await readFile(approvedTasksPath, 'utf-8')
-          existingTasks = JSON.parse(existingContent)
-        } catch (error) {
-          // File doesn't exist or is empty, start with empty array
-          existingTasks = []
-        }
-        
-        // Add new task
-        existingTasks.push(approvedTask)
-        
-        // Write back to file
-        await writeFile(approvedTasksPath, JSON.stringify(existingTasks, null, 2))
         
         return NextResponse.json({ 
           success: true, 
-          message: 'Task approved, queued for QuickBooks execution, and Slack notification sent',
+          message: quickbooksDisabled 
+            ? 'Task approved and Slack notification sent (QuickBooks execution disabled for beta testing)'
+            : 'Task approved, queued for QuickBooks execution, and Slack notification sent',
           slackIntegration: 'Notification sent to Slack channel',
-          quickbooksQueued: true,
-          approvedTasksFile: 'approved_tasks.json updated'
+          quickbooksQueued: !quickbooksDisabled,
+          quickbooksDisabled: quickbooksDisabled,
+          approvedTasksFile: quickbooksDisabled ? 'QuickBooks execution disabled' : 'approved_tasks.json updated'
         })
       } catch (error) {
         console.error('Error creating approved task:', error)

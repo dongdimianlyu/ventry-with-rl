@@ -572,56 +572,7 @@ export default function DashboardPage() {
                 </div>
               </div>
 
-              {/* Slack Approval Status */}
-              {(pendingSlackApproval || slackStatus) && (
-                <div className="mb-8">
-                  <Card className="bg-[#1A4231] border border-[#C9F223]/30">
-                    <CardHeader className="pb-4">
-                      <CardTitle className="flex items-center text-white">
-                        <div className="w-8 h-8 bg-[#C9F223] rounded-lg flex items-center justify-center mr-3">
-                          <Clock className="h-4 w-4 text-[#1A4231]" />
-                        </div>
-                        Slack Approval Status
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      {pendingSlackApproval && (
-                        <div className="bg-white/10 border border-[#C9F223]/30 rounded-lg p-4">
-                          <div className="flex items-start space-x-3">
-                            <div className="w-6 h-6 bg-[#C9F223] rounded-full flex items-center justify-center mt-1">
-                              <Clock className="h-3 w-3 text-[#1A4231]" />
-                            </div>
-                            <div className="flex-1">
-                              <h4 className="font-semibold text-white mb-2">Pending Approval</h4>
-                              <p className="text-white/90 mb-2">
-                                <strong>Action:</strong> {pendingSlackApproval.recommendation.action} {pendingSlackApproval.recommendation.quantity} units of {pendingSlackApproval.recommendation.item}
-                              </p>
-                              <p className="text-white/90 mb-3">
-                                <strong>Expected ROI:</strong> {pendingSlackApproval.recommendation.expectedRoi} | 
-                                <strong> Confidence:</strong> {pendingSlackApproval.recommendation.confidence}
-                              </p>
-                              <div className="flex items-center gap-2">
-                                <span className="text-white/80 text-sm">Reply in Slack:</span>
-                                <code className="bg-[#C9F223] text-[#1A4231] px-2 py-1 rounded text-xs font-bold">Y</code>
-                                <span className="text-white/60 text-sm">or</span>
-                                <code className="bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">N</code>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      )}
-                      {slackStatus && (
-                        <div className="bg-[#C9F223]/20 border border-[#C9F223]/40 rounded-lg p-3">
-                          <div className="flex items-center space-x-2">
-                            <div className="w-2 h-2 bg-[#C9F223] rounded-full"></div>
-                            <p className="text-white text-sm font-medium">{slackStatus}</p>
-                          </div>
-                        </div>
-                      )}
-                    </CardContent>
-                  </Card>
-                </div>
-              )}
+
 
               {/* Pending Agent Suggestions (Need Approval) */}
               {pendingRlTasks.length > 0 && (

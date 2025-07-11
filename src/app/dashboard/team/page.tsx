@@ -410,7 +410,7 @@ export default function TeamPage() {
                 <CardHeader className="border-b border-gray-100">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-4">
-                      <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-[#9B0E8D] rounded-xl flex items-center justify-center">
+                      <div className="w-12 h-12 bg-[#9B0E8D] rounded-xl flex items-center justify-center">
                         <span className="text-white text-lg font-bold">
                           {member.name.charAt(0).toUpperCase()}
                         </span>
