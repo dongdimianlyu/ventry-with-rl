@@ -350,10 +350,16 @@ def test_simple_client():
     # Load config
     config = {}
     
-    # Load from file
-    if os.path.exists('quickbooks_config.json'):
-        with open('quickbooks_config.json', 'r') as f:
-            config = json.load(f)
+    # Load from file with environment variable substitution
+    try:
+        from env_loader import load_env_file, load_config_with_env
+        load_env_file(".env")
+        config = load_config_with_env("quickbooks_config.json")
+    except ImportError:
+        # Fallback to direct file loading
+        if os.path.exists('quickbooks_config.json'):
+            with open('quickbooks_config.json', 'r') as f:
+                config = json.load(f)
     
     # Override with environment variables
     env_vars = ['QB_CLIENT_ID', 'QB_CLIENT_SECRET', 'QB_ACCESS_TOKEN', 'QB_COMPANY_ID', 'QB_SANDBOX']

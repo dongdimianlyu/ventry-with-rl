@@ -34,14 +34,20 @@ try:
 except:
     pass
 
-# Load Slack configuration
-config = {}
-config_file = "slack_config.json"
-if os.path.exists(config_file):
-    with open(config_file, 'r') as f:
-        config = json.load(f)
+# Load environment variables from .env file
+try:
+    from env_loader import load_env_file, load_config_with_env
+    load_env_file(".env")
+    config = load_config_with_env("slack_config.json")
+except ImportError:
+    # Fallback to direct file loading if env_loader not available
+    config = {}
+    config_file = "slack_config.json"
+    if os.path.exists(config_file):
+        with open(config_file, 'r') as f:
+            config = json.load(f)
 
-# Set environment variables from config
+# Set environment variables from config for compatibility
 if config.get("SLACK_BOT_TOKEN"):
     os.environ["SLACK_BOT_TOKEN"] = config["SLACK_BOT_TOKEN"]
 if config.get("SLACK_CHANNEL_ID"):
