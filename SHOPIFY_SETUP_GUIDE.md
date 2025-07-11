@@ -18,7 +18,7 @@ NEXTAUTH_URL=http://localhost:3000
 # Shopify Integration Configuration
 SHOPIFY_CLIENT_ID=your_shopify_app_client_id
 SHOPIFY_CLIENT_SECRET=your_shopify_app_client_secret
-SHOPIFY_REDIRECT_URI=http://localhost:3000/api/shopify/callback
+SHOPIFY_REDIRECT_URI=fhttp://localhost:3000/api/shopify/callback
 SHOPIFY_WEBHOOK_SECRET=your_shopify_webhook_secret
 ```
 

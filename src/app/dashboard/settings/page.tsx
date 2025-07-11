@@ -328,6 +328,57 @@ export default function SettingsPage() {
             </CardContent>
           </Card>
 
+          {/* Display Preferences Card */}
+          <Card className="shadow-sm">
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2">
+                <Settings className="h-5 w-5 text-[#1A4231]" />
+                <span>Display Preferences</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-6">
+                <div>
+                  <label className="text-sm font-medium text-gray-900 mb-3 block">Task Card Display</label>
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1">
+                        <p className="text-sm font-medium text-gray-700">Show ROI Percentage</p>
+                        <p className="text-xs text-gray-500">Display percentage values alongside profit amounts in AI task cards</p>
+                      </div>
+                      <label className="relative inline-flex items-center cursor-pointer">
+                        <input
+                          type="checkbox"
+                          className="sr-only peer"
+                          defaultChecked={true}
+                          onChange={(e) => {
+                            localStorage.setItem('show_roi_percentage', e.target.checked.toString())
+                            // Trigger a custom event to notify components
+                            window.dispatchEvent(new CustomEvent('displayPreferencesChanged'))
+                          }}
+                        />
+                        <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-[#1A4231]/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#1A4231]"></div>
+                      </label>
+                    </div>
+                    <div className="bg-blue-50 border border-blue-100 rounded-lg p-3">
+                      <p className="text-xs text-blue-700">
+                        <strong>Example:</strong> When enabled: "ROI: +280% (≈$2,500)"<br/>
+                        When disabled: "Expected Profit: ≈$2,500"
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="h-px bg-gray-200"></div>
+                
+                <div className="text-center py-4">
+                  <Settings className="h-8 w-8 text-gray-400 mx-auto mb-2" />
+                  <p className="text-sm text-gray-500">More display options coming soon</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
           {/* Shopify Integration Card */}
           <Card className="shadow-sm">
             <CardHeader>

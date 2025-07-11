@@ -496,6 +496,7 @@ export interface RLTask {
   action: string
   quantity: number
   predicted_roi: string
+  predicted_profit_usd: number
   confidence_score: string
   explanation: string
   priority: 'low' | 'medium' | 'high'
@@ -505,6 +506,7 @@ export interface RLTask {
   createdAt: Date
   rlData: {
     expected_roi: string
+    predicted_profit_usd: number
     confidence: string
     reasoning: string
     timestamp: string
@@ -516,6 +518,7 @@ export interface RLRecommendation {
   action: string
   quantity: number
   expected_roi: string
+  predicted_profit_usd: number
   confidence: string
   reasoning: string
   timestamp: string

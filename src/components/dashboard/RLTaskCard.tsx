@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { CheckCircle, XCircle, TrendingUp, Target, Sparkles, BarChart3, Settings } from 'lucide-react'
 import { formatCompactDateTime } from '@/lib/utils'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 interface RLTaskCardProps {
   task: RLTask
@@ -16,6 +16,22 @@ export function RLTaskCard({ task, onComplete, onApprove, onReject }: RLTaskCard
   const [showOverlay, setShowOverlay] = useState(false)
   const [isCompleting, setIsCompleting] = useState(false)
   const [shouldHide, setShouldHide] = useState(false)
+  const [showPercentage, setShowPercentage] = useState(true)
+
+  useEffect(() => {
+    // Load initial setting
+    const showPct = localStorage.getItem('show_roi_percentage')
+    setShowPercentage(showPct === null || showPct === 'true')
+
+    // Listen for changes
+    const handlePreferencesChange = () => {
+      const showPct = localStorage.getItem('show_roi_percentage')
+      setShowPercentage(showPct === null || showPct === 'true')
+    }
+
+    window.addEventListener('displayPreferencesChanged', handlePreferencesChange)
+    return () => window.removeEventListener('displayPreferencesChanged', handlePreferencesChange)
+  }, [])
 
   const handleCardClick = () => {
     setShowOverlay(true)
@@ -46,6 +62,15 @@ export function RLTaskCard({ task, onComplete, onApprove, onReject }: RLTaskCard
     if (task.approved === true) return { icon: CheckCircle, color: 'text-green-600', bg: 'bg-green-50', border: 'border-green-200', text: 'Approved' }
     if (task.approved === false) return { icon: XCircle, color: 'text-red-600', bg: 'bg-red-50', border: 'border-red-200', text: 'Rejected' }
     return null
+  }
+
+  const formatROIDisplay = () => {
+    const profit = `≈$${task.predicted_profit_usd?.toLocaleString() || '0'}`
+    if (showPercentage) {
+      return `${task.predicted_roi} (${profit})`
+    } else {
+      return profit
+    }
   }
 
   const approvalStatus = getApprovalStatus()
@@ -104,7 +129,9 @@ export function RLTaskCard({ task, onComplete, onApprove, onReject }: RLTaskCard
                 <TrendingUp className="h-4 w-4 text-green-600" />
                 <div>
                   <p className="text-xs text-green-700 font-medium">Predicted ROI</p>
-                  <p className="text-sm font-bold text-green-800">{task.predicted_roi}</p>
+                  <p className="text-sm font-bold text-green-800">
+                    {formatROIDisplay()}
+                  </p>
                 </div>
               </div>
             </div>
@@ -242,7 +269,9 @@ export function RLTaskCard({ task, onComplete, onApprove, onReject }: RLTaskCard
                             <TrendingUp className="h-5 w-5 text-green-600" />
                             <div>
                               <p className="text-sm font-medium text-green-900">Predicted ROI</p>
-                              <p className="text-lg font-bold text-green-800">{task.predicted_roi}</p>
+                              <p className="text-lg font-bold text-green-800">
+                                {formatROIDisplay()}
+                              </p>
                             </div>
                           </div>
                         </div>

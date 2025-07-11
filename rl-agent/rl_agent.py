@@ -143,11 +143,18 @@ class RestockingAgent:
                 episode_profit += info.get("daily_profit", 0)
                 
                 if info.get("restock_quantity", 0) > 0:
+                    # Calculate ROI and profit USD
+                    restock_cost = info['restock_quantity'] * 10  # Cost per unit
+                    revenue = info['units_sold'] * 20  # Selling price per unit
+                    profit_usd = revenue - restock_cost
+                    roi_percent = (profit_usd / max(restock_cost, 1)) * 100
+                    
                     episode_actions.append({
                         "day": step + 1,
                         "action": "restock",
                         "quantity": info["restock_quantity"],
-                        "expected_roi": f"{((info['units_sold'] * 20 - info['restock_quantity'] * 10) / max(info['restock_quantity'] * 10, 1)) * 100:.1f}%",
+                        "expected_roi": f"{roi_percent:.1f}%",
+                        "predicted_profit_usd": profit_usd,
                         "inventory_level": info["current_inventory"],
                         "daily_demand": info["daily_demand"]
                     })
@@ -169,6 +176,7 @@ class RestockingAgent:
                 "action": best_action["action"],
                 "quantity": best_action["quantity"],
                 "expected_roi": best_action["expected_roi"],
+                "predicted_profit_usd": best_action.get("predicted_profit_usd", 0),
                 "confidence": "high" if len(best_actions) >= 3 else "medium",
                 "reasoning": f"Based on {n_episodes} simulation episodes with average profit of ${avg_profit:.2f}",
                 "timestamp": datetime.now().isoformat(),
@@ -179,6 +187,7 @@ class RestockingAgent:
                 "action": "monitor",
                 "quantity": 0,
                 "expected_roi": "0%",
+                "predicted_profit_usd": 0,
                 "confidence": "low",
                 "reasoning": "No profitable restocking opportunities identified",
                 "timestamp": datetime.now().isoformat(),

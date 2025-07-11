@@ -498,9 +498,13 @@ class EnhancedBusinessEnv(gym.Env):
                 action_types = ["none", "restock_small", "restock_medium", "restock_large"]
                 quantities = [0, 50, 100, 200]
                 
-                expected_revenue = daily_results['daily_revenue']
-                expected_roi = ((expected_revenue - quantities[action] * product.cost_price) / 
-                               max(quantities[action] * product.cost_price, 1)) * 100
+                # Calculate more accurate profit projections
+                restock_cost = quantities[action] * product.cost_price
+                # Estimate sales based on current demand and inventory levels
+                estimated_units_sold = min(quantities[action], product.base_demand * 7)  # Weekly demand estimate
+                estimated_revenue = estimated_units_sold * product.selling_price
+                predicted_profit_usd = estimated_revenue - restock_cost
+                expected_roi = (predicted_profit_usd / max(restock_cost, 1)) * 100
                 
                 self.episode_actions.append({
                     "day": self.max_days - self.days_remaining + 1,
@@ -508,6 +512,7 @@ class EnhancedBusinessEnv(gym.Env):
                     "product": product.name,
                     "quantity": quantities[action],
                     "expected_roi": f"{expected_roi:.1f}%",
+                    "predicted_profit_usd": predicted_profit_usd,
                     "inventory_level": self.business_state['inventory_levels'][i],
                     "customer_satisfaction": self.business_state['customer_satisfaction'],
                     "cash_flow": self.business_state['cash_flow']

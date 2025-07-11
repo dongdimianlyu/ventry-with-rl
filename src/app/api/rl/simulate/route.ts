@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'User ID is required' }, { status: 400 })
     }
 
-    // Simulate RL agent analysis with synthetic business data
+    // Simulate RL agent analysis with synthetic business data including realistic cost calculations
     const simulatedRecommendations = [
       {
         action: 'restock',
@@ -22,7 +22,9 @@ export async function POST(request: NextRequest) {
         reasoning: 'High-demand wireless headphones showing consistent sales velocity with low inventory levels. Predictive model indicates 85% probability of stockout within 7 days.',
         item: 'Wireless Bluetooth Headphones',
         product: 'Wireless Bluetooth Headphones',
-        category: 'Electronics'
+        category: 'Electronics',
+        cost_per_unit: 45,
+        selling_price: 125
       },
       {
         action: 'restock',
@@ -32,7 +34,9 @@ export async function POST(request: NextRequest) {
         reasoning: 'Seasonal uptick detected for smart home devices category. Machine learning model predicts 3x sales increase over next 14 days based on historical patterns.',
         item: 'Smart Light Bulbs',
         product: 'Smart Light Bulbs',
-        category: 'Home Automation'
+        category: 'Home Automation',
+        cost_per_unit: 12,
+        selling_price: 35
       },
       {
         action: 'restock',
@@ -42,7 +46,9 @@ export async function POST(request: NextRequest) {
         reasoning: 'Critical inventory shortage detected for premium coffee makers. AI analysis shows immediate restocking will prevent lost sales and maximize Q1 revenue.',
         item: 'Premium Coffee Maker',
         product: 'Premium Coffee Maker',
-        category: 'Kitchen Appliances'
+        category: 'Kitchen Appliances',
+        cost_per_unit: 80,
+        selling_price: 255
       },
       {
         action: 'restock',
@@ -52,7 +58,9 @@ export async function POST(request: NextRequest) {
         reasoning: 'Fitness equipment demand surge detected. Market analysis indicates 40% increase in sales velocity for yoga mats approaching Q1 fitness season.',
         item: 'Professional Yoga Mat',
         product: 'Professional Yoga Mat',
-        category: 'Fitness Equipment'
+        category: 'Fitness Equipment',
+        cost_per_unit: 18,
+        selling_price: 65
       },
       {
         action: 'restock',
@@ -62,7 +70,9 @@ export async function POST(request: NextRequest) {
         reasoning: 'Gaming peripherals showing strong demand correlation with upcoming game releases. Predictive model suggests optimal restocking window.',
         item: 'Gaming Mechanical Keyboard',
         product: 'Gaming Mechanical Keyboard',
-        category: 'Gaming Accessories'
+        category: 'Gaming Accessories',
+        cost_per_unit: 35,
+        selling_price: 95
       }
     ]
 
@@ -70,11 +80,21 @@ export async function POST(request: NextRequest) {
     const actionableRecs = simulatedRecommendations.filter(rec => rec.action !== 'monitor')
     const selectedRec = actionableRecs[Math.floor(Math.random() * actionableRecs.length)]
     
+    // Calculate accurate profit projections
+    const restock_cost = selectedRec.quantity * selectedRec.cost_per_unit
+    const estimated_units_sold = Math.floor(selectedRec.quantity * 0.85) // 85% sell-through rate
+    const estimated_revenue = estimated_units_sold * selectedRec.selling_price
+    const predicted_profit_usd = estimated_revenue - restock_cost
+    
+    // Recalculate ROI based on actual profit
+    const actual_roi = (predicted_profit_usd / restock_cost) * 100
+    
     // Create recommendation in RL agent format
     const recommendation = {
       action: selectedRec.action,
       quantity: selectedRec.quantity,
-      expected_roi: selectedRec.expected_roi,
+      expected_roi: `${actual_roi.toFixed(1)}%`,
+      predicted_profit_usd: predicted_profit_usd,
       confidence: selectedRec.confidence,
       reasoning: selectedRec.reasoning,
       item: selectedRec.item,
@@ -86,12 +106,14 @@ export async function POST(request: NextRequest) {
         {
           action: 'restock',
           quantity: Math.floor(selectedRec.quantity * 0.5),
-          expected_roi: `${Math.floor(parseFloat(selectedRec.expected_roi) * 0.7)}%`
+          expected_roi: `${Math.floor(actual_roi * 0.7)}%`,
+          predicted_profit_usd: Math.floor(predicted_profit_usd * 0.5)
         },
         {
           action: 'restock', 
           quantity: Math.floor(selectedRec.quantity * 1.5),
-          expected_roi: `${Math.floor(parseFloat(selectedRec.expected_roi) * 1.2)}%`
+          expected_roi: `${Math.floor(actual_roi * 1.2)}%`,
+          predicted_profit_usd: Math.floor(predicted_profit_usd * 1.5)
         }
       ]
     }
@@ -109,6 +131,7 @@ export async function POST(request: NextRequest) {
       action: recommendation.action,
       quantity: recommendation.quantity,
       predicted_roi: recommendation.expected_roi,
+      predicted_profit_usd: recommendation.predicted_profit_usd,
       confidence_score: recommendation.confidence,
       explanation: recommendation.reasoning,
       priority: recommendation.confidence === 'high' ? 'high' : recommendation.confidence === 'medium' ? 'medium' : 'low',
@@ -118,6 +141,7 @@ export async function POST(request: NextRequest) {
       createdAt: new Date(),
       rlData: {
         expected_roi: recommendation.expected_roi,
+        predicted_profit_usd: recommendation.predicted_profit_usd,
         confidence: recommendation.confidence,
         reasoning: recommendation.reasoning,
         timestamp: recommendation.timestamp,

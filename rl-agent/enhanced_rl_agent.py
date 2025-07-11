@@ -398,11 +398,18 @@ class EnhancedRestockingAgent:
             episode_metrics, best_recommendations, float(avg_satisfaction), float(avg_revenue)
         )
         
+        # Calculate predicted profit USD for the primary recommendation
+        predicted_profit_usd = 0
+        if best_recommendations:
+            primary_rec = best_recommendations[0]
+            predicted_profit_usd = primary_rec.get("predicted_profit_usd", 0)
+
         return {
             "action": action,
             "product": product,
             "quantity": quantity,
             "expected_roi": expected_roi,
+            "predicted_profit_usd": predicted_profit_usd,
             "confidence": confidence,
             "reasoning": reasoning,
             "timestamp": datetime.now().isoformat(),
@@ -419,7 +426,8 @@ class EnhancedRestockingAgent:
                     "action": rec.get("action", "unknown"),
                     "product": rec.get("product", "unknown"),
                     "quantity": rec.get("quantity", 0),
-                    "expected_roi": rec.get("expected_roi", "0%")
+                    "expected_roi": rec.get("expected_roi", "0%"),
+                    "predicted_profit_usd": rec.get("predicted_profit_usd", 0)
                 }
                 for rec in best_recommendations[1:4]
             ]

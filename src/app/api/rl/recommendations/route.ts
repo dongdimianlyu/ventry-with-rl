@@ -33,6 +33,7 @@ export async function GET(request: NextRequest) {
       action: recommendation.action,
       quantity: recommendation.quantity,
       predicted_roi: recommendation.expected_roi,
+      predicted_profit_usd: recommendation.predicted_profit_usd || 0,
       confidence_score: recommendation.confidence,
       explanation: recommendation.reasoning,
       priority: recommendation.confidence === 'high' ? 'high' : recommendation.confidence === 'medium' ? 'medium' : 'low',
@@ -42,6 +43,7 @@ export async function GET(request: NextRequest) {
       createdAt: new Date(),
       rlData: {
         expected_roi: recommendation.expected_roi,
+        predicted_profit_usd: recommendation.predicted_profit_usd || 0,
         confidence: recommendation.confidence,
         reasoning: recommendation.reasoning,
         timestamp: recommendation.timestamp,

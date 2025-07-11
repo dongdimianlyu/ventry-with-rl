@@ -23,6 +23,7 @@ export async function GET(request: NextRequest) {
           action: recommendation.action || 'restock',
           quantity: recommendation.quantity || 0,
           predicted_roi: recommendation.expected_roi || '0%',
+          predicted_profit_usd: recommendation.predicted_profit_usd || 0,
           confidence_score: recommendation.confidence || 'unknown',
           explanation: recommendation.reasoning || 'No reasoning provided',
           priority: recommendation.confidence === 'high' ? 'high' : recommendation.confidence === 'medium' ? 'medium' : 'low',
@@ -32,6 +33,7 @@ export async function GET(request: NextRequest) {
           createdAt: new Date(task.approved_at || Date.now()),
           rlData: {
             expected_roi: recommendation.expected_roi || '0%',
+            predicted_profit_usd: recommendation.predicted_profit_usd || 0,
             confidence: recommendation.confidence || 'unknown',
             reasoning: recommendation.reasoning || 'No reasoning provided',
             timestamp: recommendation.timestamp || new Date().toISOString(),
