@@ -22,6 +22,13 @@ import logging
 from datetime import datetime
 from typing import Dict, Any, Optional
 import argparse
+import ssl
+
+# Fix SSL certificate issues in development (MUST be before Slack SDK import)
+try:
+    ssl._create_default_https_context = ssl._create_unverified_context
+except:
+    pass
 
 # Try to load .env file support
 try:

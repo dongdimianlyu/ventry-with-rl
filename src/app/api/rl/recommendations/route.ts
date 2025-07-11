@@ -99,21 +99,29 @@ import ssl
 import json
 sys.path.append('.')
 
-# Handle SSL issues in development
+# Handle SSL issues in development (MUST be before Slack SDK import)
 try:
     ssl._create_default_https_context = ssl._create_unverified_context
 except:
     pass
 
+# Load environment variables from .env files
 try:
-    # Load Slack configuration from JSON file
+    from dotenv import load_dotenv
+    load_dotenv('.env')
+    load_dotenv('.env.local')
+except ImportError:
+    pass
+
+try:
+    # Load Slack configuration from JSON file (fallback)
     config = {}
     config_file = "slack_config.json"
     if os.path.exists(config_file):
         with open(config_file, 'r') as f:
             config = json.load(f)
     
-    # Set environment variables from config
+    # Set environment variables from config (fallback)
     if config.get("SLACK_BOT_TOKEN"):
         os.environ["SLACK_BOT_TOKEN"] = config["SLACK_BOT_TOKEN"]
     if config.get("SLACK_CHANNEL_ID"):
@@ -277,21 +285,29 @@ import ssl
 import json
 sys.path.append('.')
 
-# Handle SSL issues in development
+# Handle SSL issues in development (MUST be before Slack SDK import)
 try:
     ssl._create_default_https_context = ssl._create_unverified_context
 except:
     pass
 
+# Load environment variables from .env files
 try:
-    # Load Slack configuration from JSON file
+    from dotenv import load_dotenv
+    load_dotenv('.env')
+    load_dotenv('.env.local')
+except ImportError:
+    pass
+
+try:
+    # Load Slack configuration from JSON file (fallback)
     config = {}
     config_file = "slack_config.json"
     if os.path.exists(config_file):
         with open(config_file, 'r') as f:
             config = json.load(f)
     
-    # Set environment variables from config
+    # Set environment variables from config (fallback)
     if config.get("SLACK_BOT_TOKEN"):
         os.environ["SLACK_BOT_TOKEN"] = config["SLACK_BOT_TOKEN"]
     if config.get("SLACK_CHANNEL_ID"):

@@ -74,10 +74,18 @@ import os
 import ssl
 sys.path.append('.')
 
-# Handle SSL issues in development
+# Handle SSL issues in development (MUST be before Slack SDK import)
 try:
     ssl._create_default_https_context = ssl._create_unverified_context
 except:
+    pass
+
+# Load environment variables from .env files
+try:
+    from dotenv import load_dotenv
+    load_dotenv('.env')
+    load_dotenv('.env.local')
+except ImportError:
     pass
 
 try:
