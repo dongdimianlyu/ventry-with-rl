@@ -130,7 +130,7 @@ const LiveDemoCard = ({
     <h4 className="font-semibold text-gray-900 mb-2">{title}</h4>
     <p className="text-gray-600 text-sm mb-4">[AI Analysis Details]</p>
          <div className="flex items-center justify-between">
-       <span className="text-[#9b0e8d] text-sm font-semibold">ROI: +{Math.floor(Math.random() * 200 + 100)}%</span>
+       <span className="text-[#9b0e8d] text-sm font-semibold">ROI: +{Math.floor(Math.random() * 80 + 15)}%</span>
        <ChevronRight className="h-4 w-4 text-gray-400" />
      </div>
   </motion.div>
@@ -470,26 +470,79 @@ export default function LandingPage() {
           </motion.div>
           
           <div className="grid lg:grid-cols-2 gap-8 mb-12">
-            <div className="space-y-6">
-              <LiveDemoCard 
-                title="Restock Smart Light Bulbs" 
-                type="Inventory Task" 
-                status="approved" 
-                delay={0.2}
-              />
-              <LiveDemoCard 
-                title="Optimize Email Campaign ROI" 
-                type="Marketing Task" 
-                status="pending" 
-                delay={0.4}
-              />
-              <LiveDemoCard 
-                title="Review Q3 Cash Flow" 
-                type="Finance Task" 
-                status="analyzing" 
-                delay={0.6}
-              />
-            </div>
+                         <div className="space-y-6">
+               <motion.div
+                 initial={{ opacity: 0, y: 30, rotateX: 10 }}
+                 whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+                 transition={{ delay: 0.2, duration: 0.6, ease: "easeOut" }}
+                 whileHover={{ y: -5, scale: 1.02 }}
+                 className="bg-white rounded-xl shadow-lg border border-gray-100 p-6"
+               >
+                 <div className="flex items-center justify-between mb-4">
+                   <div className="flex items-center space-x-3">
+                     <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                     <span className="text-gray-600 text-sm font-medium">Inventory Task</span>
+                   </div>
+                   <span className="text-xs px-2 py-1 rounded-full font-medium bg-green-100 text-green-700">
+                     APPROVED
+                   </span>
+                 </div>
+                 <h4 className="font-semibold text-gray-900 mb-2">Restock Smart Light Bulbs</h4>
+                 <p className="text-gray-600 text-sm mb-4">[AI Analysis Details]</p>
+                 <div className="flex items-center justify-between">
+                   <span className="text-[#9b0e8d] text-sm font-semibold">ROI: +67%</span>
+                   <ChevronRight className="h-4 w-4 text-gray-400" />
+                 </div>
+               </motion.div>
+               
+               <motion.div
+                 initial={{ opacity: 0, y: 30, rotateX: 10 }}
+                 whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+                 transition={{ delay: 0.4, duration: 0.6, ease: "easeOut" }}
+                 whileHover={{ y: -5, scale: 1.02 }}
+                 className="bg-white rounded-xl shadow-lg border border-gray-100 p-6"
+               >
+                 <div className="flex items-center justify-between mb-4">
+                   <div className="flex items-center space-x-3">
+                     <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                     <span className="text-gray-600 text-sm font-medium">Marketing Task</span>
+                   </div>
+                   <span className="text-xs px-2 py-1 rounded-full font-medium bg-yellow-100 text-yellow-700">
+                     PENDING
+                   </span>
+                 </div>
+                 <h4 className="font-semibold text-gray-900 mb-2">Optimize Email Campaign ROI</h4>
+                 <p className="text-gray-600 text-sm mb-4">[AI Analysis Details]</p>
+                 <div className="flex items-center justify-between">
+                   <span className="text-[#9b0e8d] text-sm font-semibold">ROI: +127%</span>
+                   <ChevronRight className="h-4 w-4 text-gray-400" />
+                 </div>
+               </motion.div>
+               
+               <motion.div
+                 initial={{ opacity: 0, y: 30, rotateX: 10 }}
+                 whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+                 transition={{ delay: 0.6, duration: 0.6, ease: "easeOut" }}
+                 whileHover={{ y: -5, scale: 1.02 }}
+                 className="bg-white rounded-xl shadow-lg border border-gray-100 p-6"
+               >
+                 <div className="flex items-center justify-between mb-4">
+                   <div className="flex items-center space-x-3">
+                     <div className="w-3 h-3 rounded-full bg-blue-500"></div>
+                     <span className="text-gray-600 text-sm font-medium">Finance Task</span>
+                   </div>
+                   <span className="text-xs px-2 py-1 rounded-full font-medium bg-blue-100 text-blue-700">
+                     ANALYZING
+                   </span>
+                 </div>
+                 <h4 className="font-semibold text-gray-900 mb-2">Review Q3 Cash Flow</h4>
+                 <p className="text-gray-600 text-sm mb-4">[AI Analysis Details]</p>
+                 <div className="flex items-center justify-between">
+                   <span className="text-[#9b0e8d] text-sm font-semibold">ROI: +43%</span>
+                   <ChevronRight className="h-4 w-4 text-gray-400" />
+                 </div>
+               </motion.div>
+             </div>
             
             <div className="space-y-6">
               <motion.div
@@ -644,111 +697,105 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Final CTA Section */}
-      <section className="py-20 bg-[#1A4231] relative overflow-hidden">
-        <GeometricDecorations />
-        
-        <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center relative">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <h2 className="text-4xl lg:text-5xl font-bold text-white mb-8">
-              [Final CTA Headline]
-            </h2>
-            <p className="text-xl text-white/80 mb-12 max-w-2xl mx-auto">
-              [Final value proposition and call to action]
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button className="bg-[#C9F223] hover:bg-[#b8e01f] text-[#1A4231] px-8 py-4 text-lg font-semibold rounded-lg">
-                  Start Free Trial
-                </Button>
-              </motion.div>
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button variant="outline" className="border-white/20 text-white hover:bg-white/10 px-8 py-4 text-lg font-semibold rounded-lg">
-                  Schedule Demo
-                </Button>
-              </motion.div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      
 
              {/* Large VENTRY Section - Aviato Style */}
-       <section className="py-16 bg-[#1A4231] relative overflow-hidden">
-         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-           <div className="grid lg:grid-cols-2 gap-12 items-start">
-             {/* Left side - Logo and CTA */}
-             <div className="space-y-8">
-               <div className="flex items-center space-x-4">
+       <section className="bg-[#1A4231]">
+         {/* Content Section */}
+         <div className="py-16">
+           <div className="max-w-7xl mx-auto px-6 lg:px-8">
+             <div className="grid lg:grid-cols-2 gap-12 items-start">
+               {/* Left side - Logo and CTA */}
+               <div className="space-y-8">
+                 <div className="flex items-center space-x-4">
+                   <img 
+                     src="/ventry-logo.png" 
+                     alt="Ventry Logo" 
+                     className="w-12 h-12 object-contain opacity-100"
+                     onError={(e) => {
+                       const target = e.target as HTMLImageElement;
+                       target.style.display = 'none';
+                     }}
+                   />
+                   <span className="text-2xl font-bold text-white/60">Ventry</span>
+                 </div>
+                 
+                 <div className="space-y-4">
+                   <p className="text-white/80 text-lg">Get the latest Ventry company updates</p>
+                   
+                   <div className="flex flex-col sm:flex-row gap-4 max-w-md">
+                     <input 
+                       type="email" 
+                       placeholder="What's your work email?"
+                       className="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-[#C9F223]/50"
+                     />
+                     <Button className="bg-[#C9F223] hover:bg-[#b8e01f] text-[#1A4231] px-6 py-3 font-semibold rounded-lg whitespace-nowrap">
+                       Book a demo
+                     </Button>
+                   </div>
+                 </div>
+               </div>
+               
+               {/* Right side - Company links */}
+               <div className="flex justify-end">
+                 <div className="space-y-4">
+                   <h3 className="text-white font-semibold text-lg">Company</h3>
+                   <ul className="space-y-3 text-white/70">
+                     <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
+                     <li><a href="#" className="hover:text-white transition-colors">Contact</a></li>
+                     <li><a href="#" className="hover:text-white transition-colors">X/Twitter</a></li>
+                     <li><a href="#" className="hover:text-white transition-colors">LinkedIn</a></li>
+                   </ul>
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div>
+         
+         {/* Large VENTRY Section at Bottom */}
+         <div className="py-16 relative overflow-hidden">
+           <div className="max-w-7xl mx-auto px-6 lg:px-8">
+             <div className="flex items-center justify-center relative">
+               {/* Large Logo positioned to the left of VENTRY - with proper spacing */}
+               <div className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-8 md:-translate-x-16 lg:-translate-x-24 xl:-translate-x-32">
                  <img 
                    src="/ventry-logo.png" 
                    alt="Ventry Logo" 
-                   className="w-12 h-12 object-contain opacity-60"
+                   className="w-24 h-24 md:w-32 md:h-32 lg:w-48 lg:h-48 xl:w-64 xl:h-64 object-contain opacity-100"
                    onError={(e) => {
                      const target = e.target as HTMLImageElement;
                      target.style.display = 'none';
                    }}
                  />
-                 <span className="text-2xl font-bold text-white/60">ventry.</span>
                </div>
                
-               <div className="space-y-4">
-                 <p className="text-white/80 text-lg">Get the latest Ventry company updates</p>
-                 
-                 <div className="flex flex-col sm:flex-row gap-4 max-w-md">
-                   <input 
-                     type="email" 
-                     placeholder="What's your work email?"
-                     className="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-[#C9F223]/50"
-                   />
-                   <Button className="bg-[#C9F223] hover:bg-[#b8e01f] text-[#1A4231] px-6 py-3 font-semibold rounded-lg whitespace-nowrap">
-                     Book a demo
-                   </Button>
-                 </div>
-               </div>
+               {/* Large VENTRY text */}
+               <div className="translate-x-24 text-[8rem] md:text-[12rem] lg:text-[16rem] xl:text-[20rem] font-bold text-white/10 tracking-tighter leading-none select-none">
+  VENTRY
+</div>
+
+
              </div>
-             
-             {/* Right side - Company links */}
-             <div className="flex justify-end">
-               <div className="space-y-4">
-                 <h3 className="text-white font-semibold text-lg">Company</h3>
-                 <ul className="space-y-3 text-white/70">
-                   <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
-                   <li><a href="#" className="hover:text-white transition-colors">Contact</a></li>
-                   <li><a href="#" className="hover:text-white transition-colors">X/Twitter</a></li>
-                   <li><a href="#" className="hover:text-white transition-colors">LinkedIn</a></li>
-                 </ul>
-               </div>
-             </div>
-           </div>
-         </div>
-         
-         {/* Large VENTRY text overlay */}
-         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-           <div className="text-[12rem] md:text-[16rem] lg:text-[20rem] xl:text-[24rem] font-bold text-white/5 tracking-tighter leading-none select-none">
-             VENTRY
            </div>
          </div>
          
          {/* Bottom links */}
-         <div className="max-w-7xl mx-auto px-6 lg:px-8 mt-12 pt-8 border-t border-white/10">
-           <div className="flex flex-col md:flex-row justify-between items-center">
-             <div className="flex space-x-6 text-sm text-white/60">
-               <a href="#" className="hover:text-white transition-colors">Terms & Conditions</a>
-               <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+         <div className="pb-8">
+           <div className="max-w-7xl mx-auto px-6 lg:px-8">
+             <div className="pt-8 border-t border-white/10">
+               <div className="flex flex-col md:flex-row justify-between items-center">
+                 <div className="flex space-x-6 text-sm text-white/60">
+                   <a href="#" className="hover:text-white transition-colors">Terms & Conditions</a>
+                   <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+                 </div>
+                 <p className="text-sm text-white/60 mt-4 md:mt-0">
+                   © Ventry 2024. All Rights Reserved.
+                 </p>
+               </div>
              </div>
-             <p className="text-sm text-white/60 mt-4 md:mt-0">
-               © Ventry 2024. All Rights Reserved.
-             </p>
            </div>
          </div>
        </section>
-
-       
     </div>
   )
 }
