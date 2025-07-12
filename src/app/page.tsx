@@ -53,7 +53,7 @@ const FloatingTaskCard = ({ delay = 0, className = "" }: { delay?: number; class
       [Task Description]
     </p>
     <div className="flex items-center justify-between">
-      <span className="text-[#C9F223] text-xs font-medium">ROI: +145%</span>
+      <span className="text-[#C9F223] text-xs font-medium">ROI: +30%</span>
       <div className="flex space-x-2">
         <button className="bg-[#C9F223] text-[#1A4231] px-3 py-1 rounded text-xs font-medium">
           Approve
@@ -129,10 +129,10 @@ const LiveDemoCard = ({
     </div>
     <h4 className="font-semibold text-gray-900 mb-2">{title}</h4>
     <p className="text-gray-600 text-sm mb-4">[AI Analysis Details]</p>
-    <div className="flex items-center justify-between">
-      <span className="text-[#C9F223] text-sm font-semibold">ROI: +{Math.floor(Math.random() * 200 + 100)}%</span>
-      <ChevronRight className="h-4 w-4 text-gray-400" />
-    </div>
+         <div className="flex items-center justify-between">
+       <span className="text-[#9b0e8d] text-sm font-semibold">ROI: +{Math.floor(Math.random() * 200 + 100)}%</span>
+       <ChevronRight className="h-4 w-4 text-gray-400" />
+     </div>
   </motion.div>
 )
 
@@ -273,9 +273,9 @@ export default function LandingPage() {
                 transition={{ delay: 0.2, duration: 0.6 }}
                 className="inline-flex items-center px-4 py-2 bg-[#C9F223]/10 border border-[#C9F223]/20 rounded-full"
               >
-                <Sparkles className="h-4 w-4 text-[#C9F223] mr-2" />
+                <Database className="h-4 w-4 text-[#C9F223] mr-2" />
                 <span className="text-[#C9F223] text-sm font-medium">
-                  Your AI COO is here
+                Your AI Operations Partner
                 </span>
                 <ArrowRight className="ml-2 h-3 w-3 text-[#C9F223]" />
               </motion.div>
@@ -289,9 +289,9 @@ export default function LandingPage() {
               >
                 Your AI
                 <br />
-                <span className="text-[#C9F223]">Chief Operating</span>
+                <span className="text-[#C9F223]">Operations</span>
                 <br />
-                Officer
+                <span className="text-[#C9F223]">Partner</span>
               </motion.h1>
               
               {/* Subheadline */}
@@ -346,7 +346,7 @@ export default function LandingPage() {
                 className="mt-8 grid grid-cols-2 gap-4"
               >
                 <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4">
-                  <div className="text-2xl font-bold text-[#C9F223]">145%</div>
+                  <div className="text-2xl font-bold text-[#C9F223]">75%</div>
                   <div className="text-sm text-white/60">Avg ROI Increase</div>
                 </div>
                 <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4">
@@ -386,9 +386,9 @@ export default function LandingPage() {
               transition={{ delay: 0.2, duration: 0.6 }}
               className="text-center group"
             >
-              <div className="bg-[#C9F223]/10 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6 group-hover:bg-[#C9F223]/20 transition-colors">
-                <Database className="h-10 w-10 text-[#1A4231]" />
-              </div>
+                             <div className="bg-[#9b0e8d]/10 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6 group-hover:bg-[#9b0e8d]/20 transition-colors">
+                 <Database className="h-10 w-10 text-[#9b0e8d]" />
+               </div>
               <h3 className="text-2xl font-bold text-gray-900 mb-4">1. Analyze Ops Data</h3>
               <p className="text-gray-600 mb-6">
                 [Description of how AI analyzes business context from Shopify, QuickBooks, and other sources]
@@ -410,9 +410,9 @@ export default function LandingPage() {
               transition={{ delay: 0.4, duration: 0.6 }}
               className="text-center group"
             >
-              <div className="bg-[#C9F223]/10 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6 group-hover:bg-[#C9F223]/20 transition-colors">
-                <Brain className="h-10 w-10 text-[#1A4231]" />
-              </div>
+                             <div className="bg-[#C9F223]/10 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6 group-hover:bg-[#C9F223]/20 transition-colors">
+                 <Brain className="h-10 w-10 text-[#C9F223]" />
+               </div>
               <h3 className="text-2xl font-bold text-gray-900 mb-4">2. Generate Strategic Tasks</h3>
               <p className="text-gray-600 mb-6">
                 [Description of how RL algorithms create profit-maximizing tasks with ROI predictions]
@@ -433,9 +433,9 @@ export default function LandingPage() {
               transition={{ delay: 0.6, duration: 0.6 }}
               className="text-center group"
             >
-              <div className="bg-[#C9F223]/10 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6 group-hover:bg-[#C9F223]/20 transition-colors">
-                <Workflow className="h-10 w-10 text-[#1A4231]" />
-              </div>
+                             <div className="bg-[#9b0e8d]/10 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6 group-hover:bg-[#9b0e8d]/20 transition-colors">
+                 <Workflow className="h-10 w-10 text-[#9b0e8d]" />
+               </div>
               <h3 className="text-2xl font-bold text-gray-900 mb-4">3. Execute via Integrations</h3>
               <p className="text-gray-600 mb-6">
                 [Description of how tasks are executed through Slack approvals and QuickBooks actions]
@@ -498,20 +498,20 @@ export default function LandingPage() {
                 transition={{ delay: 0.8, duration: 0.6 }}
                 className="bg-white rounded-xl shadow-lg border border-gray-100 p-6"
               >
-                <div className="flex items-center space-x-3 mb-4">
-                  <MessageSquare className="h-6 w-6 text-[#C9F223]" />
-                  <h3 className="font-semibold text-gray-900">Slack Integration</h3>
-                </div>
-                <div className="bg-gray-50 rounded-lg p-4 mb-4">
-                  <div className="text-sm text-gray-600 mb-2">
-                    <strong>VentryBot:</strong> New task recommendation:
-                  </div>
-                  <div className="text-sm text-gray-800 mb-2">
-                    "Restock 25 units of Smart Light Bulbs"
-                  </div>
-                  <div className="text-sm text-[#C9F223] font-semibold mb-2">
-                    Predicted ROI: +145% (~$435)
-                  </div>
+                                 <div className="flex items-center space-x-3 mb-4">
+                   <MessageSquare className="h-6 w-6 text-[#9b0e8d]" />
+                   <h3 className="font-semibold text-gray-900">Slack Integration</h3>
+                 </div>
+                                 <div className="bg-gray-50 rounded-lg p-4 mb-4">
+                   <div className="text-sm text-gray-600 mb-2">
+                     <strong>RL agent:</strong> New task recommendation:
+                   </div>
+                   <div className="text-sm text-gray-800 mb-2">
+                     "Restock 25 units of Smart Light Bulbs"
+                   </div>
+                   <div className="text-sm text-[#9b0e8d] font-semibold mb-2">
+                     Predicted ROI: +35% (~$435)
+                   </div>
                   <div className="flex space-x-2">
                     <button className="bg-green-500 text-white px-3 py-1 rounded text-xs">
                       ✓ Approve
@@ -529,10 +529,10 @@ export default function LandingPage() {
                 transition={{ delay: 1.0, duration: 0.6 }}
                 className="bg-white rounded-xl shadow-lg border border-gray-100 p-6"
               >
-                <div className="flex items-center space-x-3 mb-4">
-                  <Calculator className="h-6 w-6 text-[#C9F223]" />
-                  <h3 className="font-semibold text-gray-900">QuickBooks Execution</h3>
-                </div>
+                                 <div className="flex items-center space-x-3 mb-4">
+                   <Calculator className="h-6 w-6 text-[#9b0e8d]" />
+                   <h3 className="font-semibold text-gray-900">QuickBooks Execution</h3>
+                 </div>
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-gray-600">Purchase Order Created</span>
@@ -596,9 +596,9 @@ export default function LandingPage() {
                 whileHover={{ y: -5 }}
                 className="text-center group"
               >
-                <div className="bg-[#C9F223]/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6 group-hover:bg-[#C9F223]/20 transition-colors">
-                  <div className="text-[#1A4231]">{feature.icon}</div>
-                </div>
+                                 <div className="bg-[#9b0e8d]/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6 group-hover:bg-[#9b0e8d]/20 transition-colors">
+                   <div className="text-[#9b0e8d]">{feature.icon}</div>
+                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">{feature.title}</h3>
                 <p className="text-gray-600">{feature.description}</p>
               </motion.div>
@@ -677,63 +677,78 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-[#1A4231] border-t border-white/10 py-12">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-8 mb-8">
-            <div>
-              <div className="flex items-center space-x-2 mb-4">
-                <img 
-                  src="/ventry-logo.png" 
-                  alt="Ventry Logo" 
-                  className="w-6 h-6 object-contain"
-                />
-                <span className="text-xl font-bold text-white">Ventry</span>
-              </div>
-              <p className="text-white/60 text-sm">
-                Your AI Chief Operating Officer
-              </p>
-            </div>
-            
-            <div>
-              <h3 className="font-semibold text-white mb-4">Product</h3>
-              <ul className="space-y-2 text-sm text-white/60">
-                <li><a href="#" className="hover:text-[#C9F223]">Features</a></li>
-                <li><a href="#" className="hover:text-[#C9F223]">Pricing</a></li>
-                <li><a href="#" className="hover:text-[#C9F223]">Integrations</a></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h3 className="font-semibold text-white mb-4">Company</h3>
-              <ul className="space-y-2 text-sm text-white/60">
-                <li><a href="#" className="hover:text-[#C9F223]">About</a></li>
-                <li><a href="#" className="hover:text-[#C9F223]">Careers</a></li>
-                <li><a href="#" className="hover:text-[#C9F223]">Contact</a></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h3 className="font-semibold text-white mb-4">Resources</h3>
-              <ul className="space-y-2 text-sm text-white/60">
-                <li><a href="#" className="hover:text-[#C9F223]">Documentation</a></li>
-                <li><a href="#" className="hover:text-[#C9F223]">Blog</a></li>
-                <li><a href="#" className="hover:text-[#C9F223]">Support</a></li>
-              </ul>
-            </div>
-          </div>
-          
-          <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center">
-            <p className="text-sm text-white/60">
-              © 2024 Ventry. All rights reserved.
-            </p>
-            <div className="flex space-x-6 text-sm text-white/60 mt-4 md:mt-0">
-              <a href="#" className="hover:text-[#C9F223]">Privacy Policy</a>
-              <a href="#" className="hover:text-[#C9F223]">Terms of Service</a>
-            </div>
-          </div>
-        </div>
-      </footer>
+             {/* Large VENTRY Section - Aviato Style */}
+       <section className="py-16 bg-[#1A4231] relative overflow-hidden">
+         <div className="max-w-7xl mx-auto px-6 lg:px-8">
+           <div className="grid lg:grid-cols-2 gap-12 items-start">
+             {/* Left side - Logo and CTA */}
+             <div className="space-y-8">
+               <div className="flex items-center space-x-4">
+                 <img 
+                   src="/ventry-logo.png" 
+                   alt="Ventry Logo" 
+                   className="w-12 h-12 object-contain opacity-60"
+                   onError={(e) => {
+                     const target = e.target as HTMLImageElement;
+                     target.style.display = 'none';
+                   }}
+                 />
+                 <span className="text-2xl font-bold text-white/60">ventry.</span>
+               </div>
+               
+               <div className="space-y-4">
+                 <p className="text-white/80 text-lg">Get the latest Ventry company updates</p>
+                 
+                 <div className="flex flex-col sm:flex-row gap-4 max-w-md">
+                   <input 
+                     type="email" 
+                     placeholder="What's your work email?"
+                     className="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-[#C9F223]/50"
+                   />
+                   <Button className="bg-[#C9F223] hover:bg-[#b8e01f] text-[#1A4231] px-6 py-3 font-semibold rounded-lg whitespace-nowrap">
+                     Book a demo
+                   </Button>
+                 </div>
+               </div>
+             </div>
+             
+             {/* Right side - Company links */}
+             <div className="flex justify-end">
+               <div className="space-y-4">
+                 <h3 className="text-white font-semibold text-lg">Company</h3>
+                 <ul className="space-y-3 text-white/70">
+                   <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
+                   <li><a href="#" className="hover:text-white transition-colors">Contact</a></li>
+                   <li><a href="#" className="hover:text-white transition-colors">X/Twitter</a></li>
+                   <li><a href="#" className="hover:text-white transition-colors">LinkedIn</a></li>
+                 </ul>
+               </div>
+             </div>
+           </div>
+         </div>
+         
+         {/* Large VENTRY text overlay */}
+         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+           <div className="text-[12rem] md:text-[16rem] lg:text-[20rem] xl:text-[24rem] font-bold text-white/5 tracking-tighter leading-none select-none">
+             VENTRY
+           </div>
+         </div>
+         
+         {/* Bottom links */}
+         <div className="max-w-7xl mx-auto px-6 lg:px-8 mt-12 pt-8 border-t border-white/10">
+           <div className="flex flex-col md:flex-row justify-between items-center">
+             <div className="flex space-x-6 text-sm text-white/60">
+               <a href="#" className="hover:text-white transition-colors">Terms & Conditions</a>
+               <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+             </div>
+             <p className="text-sm text-white/60 mt-4 md:mt-0">
+               © Ventry 2024. All Rights Reserved.
+             </p>
+           </div>
+         </div>
+       </section>
+
+       
     </div>
   )
 }
