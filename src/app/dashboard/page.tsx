@@ -406,10 +406,14 @@ export default function DashboardPage() {
     setIsSimulatingRL(true)
     setSlackStatus('')
     try {
-      const response = await fetch('/api/rl/simulate', {
+      // Use the enhanced RL system instead of basic simulation
+      const response = await fetch('/api/rl/enhanced-simulate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId: user.id })
+        body: JSON.stringify({ 
+          userId: user.id,
+          useEnhancedModel: true 
+        })
       })
 
       if (response.ok) {
@@ -423,16 +427,42 @@ export default function DashboardPage() {
         }
         
         if (data.slackStatus === 'sent') {
-          setSlackStatus('Recommendation sent to Slack for approval - you can also approve here in the UI')
+          setSlackStatus('Enhanced AI recommendation sent to Slack for approval - you can also approve here in the UI')
           // Check for pending approvals after sending
           setTimeout(() => checkPendingSlackApprovals(), 1000)
         } else if (data.slackStatus === 'failed') {
           setSlackStatus(`Slack notification failed, but you can still approve in the UI: ${data.slackError}`)
         }
+        
+        // Show enhanced features status
+        if (data.features) {
+          console.log('Enhanced RL features:', data.features)
+        }
       }
     } catch (error) {
-      console.error('Error simulating RL event:', error)
-      setSlackStatus('Error simulating RL event')
+      console.error('Error with enhanced RL system:', error)
+      setSlackStatus('Error with enhanced RL system - falling back to basic simulation')
+      
+      // Fallback to basic simulation
+      try {
+        const fallbackResponse = await fetch('/api/rl/simulate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ userId: user.id })
+        })
+        
+        if (fallbackResponse.ok) {
+          const fallbackData = await fallbackResponse.json()
+          if (fallbackData.rlTask) {
+            const newPendingTasks = [...pendingRlTasks, fallbackData.rlTask]
+            setPendingRlTasks(newPendingTasks)
+          }
+          setSlackStatus('Using basic RL simulation (enhanced system unavailable)')
+        }
+      } catch (fallbackError) {
+        console.error('Fallback simulation also failed:', fallbackError)
+        setSlackStatus('Error with RL system')
+      }
     } finally {
       setIsSimulatingRL(false)
     }
@@ -503,7 +533,7 @@ export default function DashboardPage() {
                 className="bg-[#9B0E8D] hover:bg-[#9B0E8D]/90 text-white smooth-transition shadow-sm"
               >
                 <BarChart3 className="h-4 w-4 mr-2" />
-                {isSimulatingRL ? 'analysing...' : 'Run Agent Suggestion'}
+                {isSimulatingRL ? 'analysing...' : 'Enhanced AI Suggestion'}
               </Button>
               <Button
                 onClick={() => {

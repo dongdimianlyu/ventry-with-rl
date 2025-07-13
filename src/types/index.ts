@@ -511,6 +511,9 @@ export interface RLTask {
     reasoning: string
     timestamp: string
     alternative_actions?: any[]
+    enhanced_model?: boolean
+    outcome_tracking?: boolean
+    user_feedback?: boolean
   }
 }
 

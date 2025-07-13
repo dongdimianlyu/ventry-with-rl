@@ -1,0 +1,42 @@
+[
+  {
+    "id": "task_20250713_174202",
+    "approved_at": "2025-07-13T17:42:02.006720",
+    "status": "approved",
+    "executed": false,
+    "recommendation": {
+      "error": "No trained model available",
+      "system_info": {
+        "model_type": "enhanced",
+        "outcomes_tracked": 0,
+        "feedback_collected": 0,
+        "system_health": "error",
+        "last_retraining": null
+      },
+      "user_id": "demo-user",
+      "generated_for": "ventry_application"
+    },
+    "user_id": "demo-user",
+    "approved_via": "enhanced_rl_demo"
+  },
+  {
+    "id": "task_20250713_174223",
+    "approved_at": "2025-07-13T17:42:23.473202",
+    "status": "approved",
+    "executed": false,
+    "recommendation": {
+      "error": "No trained model available",
+      "system_info": {
+        "model_type": "enhanced",
+        "outcomes_tracked": 0,
+        "feedback_collected": 0,
+        "system_health": "healthy",
+        "last_retraining": null
+      },
+      "user_id": "demo-user",
+      "generated_for": "ventry_application"
+    },
+    "user_id": "demo-user",
+    "approved_via": "enhanced_rl_demo"
+  }
+]

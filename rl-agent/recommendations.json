@@ -1,27 +1,27 @@
 {
   "action": "restock",
-  "quantity": 25,
-  "expected_roi": "145.0%",
-  "predicted_profit_usd": 435,
-  "confidence": "medium",
-  "reasoning": "Seasonal uptick detected for smart home devices category. Machine learning model predicts 3x sales increase over next 14 days based on historical patterns.",
-  "item": "Smart Light Bulbs",
-  "category": "Home Automation",
-  "timestamp": "2025-07-13T09:25:54.439Z",
-  "generated_at": "2025-07-13T09:25:54.439Z",
+  "quantity": 75,
+  "expected_roi": "85.0%",
+  "predicted_profit_usd": 8280,
+  "confidence": "high",
+  "reasoning": "Critical inventory shortage detected for premium coffee makers. AI analysis shows immediate restocking will prevent lost sales and maximize Q1 revenue.",
+  "item": "Premium Coffee Maker",
+  "category": "Kitchen Appliances",
+  "timestamp": "2025-07-13T12:12:43.992Z",
+  "generated_at": "2025-07-13T12:12:43.992Z",
   "user_id": "1",
   "alternative_actions": [
     {
       "action": "restock",
-      "quantity": 12,
-      "expected_roi": "101%",
-      "predicted_profit_usd": 217
+      "quantity": 37,
+      "expected_roi": "59%",
+      "predicted_profit_usd": 4140
     },
     {
       "action": "restock",
-      "quantity": 37,
-      "expected_roi": "174%",
-      "predicted_profit_usd": 652
+      "quantity": 112,
+      "expected_roi": "102%",
+      "predicted_profit_usd": 12420
     }
   ]
 }

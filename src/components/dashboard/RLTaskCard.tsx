@@ -96,7 +96,7 @@ export function RLTaskCard({ task, onComplete, onApprove, onReject }: RLTaskCard
               <div className="flex items-center gap-2 mb-3">
                 <div className="flex items-center gap-2 px-3 py-1 bg-[#9B0E8D] text-white rounded-full text-xs font-semibold">
                   <Settings className="h-3 w-3" />
-                  Smart Suggestion
+                  {task.rlData?.enhanced_model ? 'Enhanced AI' : 'Smart Suggestion'}
                 </div>
                 <span className="text-sm text-gray-600">
                   {formatCompactDateTime(task.dueDate)}

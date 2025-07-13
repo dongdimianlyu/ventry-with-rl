@@ -1,0 +1,17 @@
+{
+  "total_requests": 0,
+  "completed_requests": 0,
+  "response_rate": 0,
+  "helpful_rate": 0,
+  "average_rating": 0,
+  "recent_responses": 0,
+  "recent_helpful_rate": 0,
+  "feedback_trends": {},
+  "user_engagement": {
+    "total_users": 0,
+    "average_engagement_rate": 0,
+    "highly_engaged_users": 0,
+    "low_engagement_users": 0
+  },
+  "generated_at": "2025-07-13T17:42:23.473988"
+}
