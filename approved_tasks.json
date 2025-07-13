@@ -432,5 +432,209 @@
         }
       ]
     }
+  },
+  {
+    "id": "ai-coo-1752412019461-ihmxge7s0",
+    "status": "approved",
+    "approved_at": "2025-07-13T13:07:11.486Z",
+    "approved_by": "1",
+    "approved_via": "UI",
+    "recommendation": {
+      "action": "restock",
+      "quantity": 60,
+      "expected_roi": "58.0%",
+      "predicted_profit_usd": 2270,
+      "confidence": "medium",
+      "reasoning": "Gaming peripherals showing strong demand correlation with upcoming game releases. Predictive model suggests optimal restocking window.",
+      "item": "Gaming Mechanical Keyboard",
+      "category": "Gaming Accessories",
+      "timestamp": "2025-07-13T12:49:46.134Z",
+      "generated_at": "2025-07-13T12:49:46.134Z",
+      "user_id": "1",
+      "alternative_actions": [
+        {
+          "action": "restock",
+          "quantity": 30,
+          "expected_roi": "40%",
+          "predicted_profit_usd": 1135
+        },
+        {
+          "action": "restock",
+          "quantity": 90,
+          "expected_roi": "69%",
+          "predicted_profit_usd": 3405
+        }
+      ]
+    }
+  },
+  {
+    "id": "ai-coo-1752412019461-ihmxge7s0",
+    "status": "approved",
+    "approved_at": "2025-07-13T13:08:43.538Z",
+    "approved_by": "1",
+    "approved_via": "UI",
+    "recommendation": {
+      "action": "restock",
+      "quantity": 60,
+      "expected_roi": "58.0%",
+      "predicted_profit_usd": 2270,
+      "confidence": "medium",
+      "reasoning": "Gaming peripherals showing strong demand correlation with upcoming game releases. Predictive model suggests optimal restocking window.",
+      "item": "Gaming Mechanical Keyboard",
+      "category": "Gaming Accessories",
+      "timestamp": "2025-07-13T12:49:46.134Z",
+      "generated_at": "2025-07-13T12:49:46.134Z",
+      "user_id": "1",
+      "alternative_actions": [
+        {
+          "action": "restock",
+          "quantity": 30,
+          "expected_roi": "40%",
+          "predicted_profit_usd": 1135
+        },
+        {
+          "action": "restock",
+          "quantity": 90,
+          "expected_roi": "69%",
+          "predicted_profit_usd": 3405
+        }
+      ]
+    }
+  },
+  {
+    "id": "ai-coo-1752412142035-y1cj3d104",
+    "status": "approved",
+    "approved_at": "2025-07-13T13:12:04.591Z",
+    "approved_by": "1",
+    "approved_via": "UI",
+    "recommendation": {
+      "action": "restock",
+      "quantity": 60,
+      "expected_roi": "58.0%",
+      "predicted_profit_usd": 2270,
+      "confidence": "medium",
+      "reasoning": "Gaming peripherals showing strong demand correlation with upcoming game releases. Predictive model suggests optimal restocking window.",
+      "item": "Gaming Mechanical Keyboard",
+      "category": "Gaming Accessories",
+      "timestamp": "2025-07-13T12:49:46.134Z",
+      "generated_at": "2025-07-13T12:49:46.134Z",
+      "user_id": "1",
+      "alternative_actions": [
+        {
+          "action": "restock",
+          "quantity": 30,
+          "expected_roi": "40%",
+          "predicted_profit_usd": 1135
+        },
+        {
+          "action": "restock",
+          "quantity": 90,
+          "expected_roi": "69%",
+          "predicted_profit_usd": 3405
+        }
+      ]
+    }
+  },
+  {
+    "id": "ai-coo-1752412147042-4a7cia3e7",
+    "status": "approved",
+    "approved_at": "2025-07-13T13:12:06.358Z",
+    "approved_by": "1",
+    "approved_via": "UI",
+    "recommendation": {
+      "action": "restock",
+      "quantity": 60,
+      "expected_roi": "58.0%",
+      "predicted_profit_usd": 2270,
+      "confidence": "medium",
+      "reasoning": "Gaming peripherals showing strong demand correlation with upcoming game releases. Predictive model suggests optimal restocking window.",
+      "item": "Gaming Mechanical Keyboard",
+      "category": "Gaming Accessories",
+      "timestamp": "2025-07-13T12:49:46.134Z",
+      "generated_at": "2025-07-13T12:49:46.134Z",
+      "user_id": "1",
+      "alternative_actions": [
+        {
+          "action": "restock",
+          "quantity": 30,
+          "expected_roi": "40%",
+          "predicted_profit_usd": 1135
+        },
+        {
+          "action": "restock",
+          "quantity": 90,
+          "expected_roi": "69%",
+          "predicted_profit_usd": 3405
+        }
+      ]
+    }
+  },
+  {
+    "id": "ai-coo-1752412147042-4a7cia3e7",
+    "status": "approved",
+    "approved_at": "2025-07-13T13:12:07.226Z",
+    "approved_by": "1",
+    "approved_via": "UI",
+    "recommendation": {
+      "action": "restock",
+      "quantity": 60,
+      "expected_roi": "58.0%",
+      "predicted_profit_usd": 2270,
+      "confidence": "medium",
+      "reasoning": "Gaming peripherals showing strong demand correlation with upcoming game releases. Predictive model suggests optimal restocking window.",
+      "item": "Gaming Mechanical Keyboard",
+      "category": "Gaming Accessories",
+      "timestamp": "2025-07-13T12:49:46.134Z",
+      "generated_at": "2025-07-13T12:49:46.134Z",
+      "user_id": "1",
+      "alternative_actions": [
+        {
+          "action": "restock",
+          "quantity": 30,
+          "expected_roi": "40%",
+          "predicted_profit_usd": 1135
+        },
+        {
+          "action": "restock",
+          "quantity": 90,
+          "expected_roi": "69%",
+          "predicted_profit_usd": 3405
+        }
+      ]
+    }
+  },
+  {
+    "id": "ai-coo-1752412159404-8k5l27d48",
+    "status": "approved",
+    "approved_at": "2025-07-13T13:12:10.609Z",
+    "approved_by": "1",
+    "approved_via": "UI",
+    "recommendation": {
+      "action": "restock",
+      "quantity": 60,
+      "expected_roi": "58.0%",
+      "predicted_profit_usd": 2270,
+      "confidence": "medium",
+      "reasoning": "Gaming peripherals showing strong demand correlation with upcoming game releases. Predictive model suggests optimal restocking window.",
+      "item": "Gaming Mechanical Keyboard",
+      "category": "Gaming Accessories",
+      "timestamp": "2025-07-13T12:49:46.134Z",
+      "generated_at": "2025-07-13T12:49:46.134Z",
+      "user_id": "1",
+      "alternative_actions": [
+        {
+          "action": "restock",
+          "quantity": 30,
+          "expected_roi": "40%",
+          "predicted_profit_usd": 1135
+        },
+        {
+          "action": "restock",
+          "quantity": 90,
+          "expected_roi": "69%",
+          "predicted_profit_usd": 3405
+        }
+      ]
+    }
   }
 ]

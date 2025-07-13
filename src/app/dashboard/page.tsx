@@ -10,7 +10,7 @@ import { RLTaskCard } from '@/components/dashboard/RLTaskCard'
 import AddGoalForm from '@/components/dashboard/AddGoalForm'
 import { TaskSuggestionModal } from '@/components/dashboard/TaskSuggestionModal'
 import { AutoModeToggle } from '@/components/ui/AutoModeToggle'
-import { Sparkles, LogOut, Calendar, Target, TrendingUp, Plus, AlertCircle, Clock, CheckCircle, BarChart3, Building2, ClipboardList, Trash2 } from 'lucide-react'
+import { Sparkles, LogOut, Calendar, Target, TrendingUp, Plus, AlertCircle, Clock, CheckCircle, BarChart3, Building2, ClipboardList, Trash2, Settings } from 'lucide-react'
 import { formatDate } from '@/lib/utils'
 import { knowledgeBase } from '@/data/knowledge-base'
 import { KnowledgeBase } from '@/types'
@@ -97,6 +97,11 @@ export default function DashboardPage() {
     
     return () => clearInterval(syncInterval)
   }, [router, lastSyncCheck])
+
+  // Debug pending tasks
+  useEffect(() => {
+    console.log('Pending RL Tasks state updated:', pendingRlTasks)
+  }, [pendingRlTasks])
 
   const handleAddGoal = (goalData: Omit<Goal, 'id' | 'userId' | 'createdAt' | 'updatedAt'>) => {
     if (!user) return
@@ -406,49 +411,59 @@ export default function DashboardPage() {
     setIsSimulatingRL(true)
     setSlackStatus('')
     try {
-      // Use the enhanced RL system instead of basic simulation
-      const response = await fetch('/api/rl/enhanced-simulate', {
+      // Use the AI COO system for comprehensive business operations
+      const response = await fetch('/api/rl/ai-coo-simulate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
           userId: user.id,
-          useEnhancedModel: true 
+          useAICOO: true 
         })
       })
 
       if (response.ok) {
         const data = await response.json()
-        if (data.rlTask) {
+        console.log('AI COO API Response:', data)
+        
+        if (data.task) {
+          console.log('Adding task to pending tasks:', data.task)
           // Add the new pending task to the UI
-          const newPendingTasks = [...pendingRlTasks, data.rlTask]
+          const newPendingTasks = [...pendingRlTasks, data.task]
           setPendingRlTasks(newPendingTasks)
+          console.log('Updated pending tasks:', newPendingTasks)
           
           // Don't save RL tasks to localStorage
         }
         
-        if (data.slackStatus === 'sent') {
-          setSlackStatus('Enhanced AI recommendation sent to Slack for approval - you can also approve here in the UI')
+        if (data.success) {
+          setSlackStatus('AI COO recommendation generated and sent for approval - you can also approve here in the UI')
           // Check for pending approvals after sending
           setTimeout(() => checkPendingSlackApprovals(), 1000)
-        } else if (data.slackStatus === 'failed') {
-          setSlackStatus(`Slack notification failed, but you can still approve in the UI: ${data.slackError}`)
+        } else {
+          console.error('AI COO API failed:', data.error)
+          setSlackStatus(`AI COO failed: ${data.error || 'Unknown error'}`)
         }
         
-        // Show enhanced features status
-        if (data.features) {
-          console.log('Enhanced RL features:', data.features)
+        // Show AI COO features status
+        if (data.ai_coo_features) {
+          console.log('AI COO features:', data.ai_coo_features)
         }
+      } else {
+        console.error('AI COO API response not ok:', response.status, response.statusText)
+        const errorData = await response.json().catch(() => ({}))
+        console.error('Error data:', errorData)
+        setSlackStatus(`AI COO API error: ${response.status} ${response.statusText}`)
       }
     } catch (error) {
-      console.error('Error with enhanced RL system:', error)
-      setSlackStatus('Error with enhanced RL system - falling back to basic simulation')
+      console.error('Error with AI COO system:', error)
+      setSlackStatus('Error with AI COO system - falling back to enhanced simulation')
       
-      // Fallback to basic simulation
+      // Fallback to enhanced simulation
       try {
-        const fallbackResponse = await fetch('/api/rl/simulate', {
+        const fallbackResponse = await fetch('/api/rl/enhanced-simulate', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ userId: user.id })
+          body: JSON.stringify({ userId: user.id, useEnhancedModel: true })
         })
         
         if (fallbackResponse.ok) {
@@ -457,7 +472,7 @@ export default function DashboardPage() {
             const newPendingTasks = [...pendingRlTasks, fallbackData.rlTask]
             setPendingRlTasks(newPendingTasks)
           }
-          setSlackStatus('Using basic RL simulation (enhanced system unavailable)')
+          setSlackStatus('Using enhanced RL simulation (AI COO system unavailable)')
         }
       } catch (fallbackError) {
         console.error('Fallback simulation also failed:', fallbackError)
@@ -467,6 +482,8 @@ export default function DashboardPage() {
       setIsSimulatingRL(false)
     }
   }
+
+
 
   const handleLogout = () => {
     localStorage.removeItem('user')

@@ -494,6 +494,7 @@ export interface RLTask {
   title: string
   description: string
   action: string
+  category?: string
   quantity: number
   predicted_roi: string
   predicted_profit_usd: number
@@ -510,10 +511,25 @@ export interface RLTask {
     confidence: string
     reasoning: string
     timestamp: string
+    category?: string
     alternative_actions?: any[]
     enhanced_model?: boolean
+    ai_coo_model?: boolean
     outcome_tracking?: boolean
     user_feedback?: boolean
+    comprehensive_analysis?: boolean
+    business_analysis?: {
+      average_profit: string
+      recommendation_diversity: string
+      total_recommendations: number
+      categories_covered: string[]
+    }
+    recommendations_by_category?: Record<string, any[]>
+    comprehensive_plan?: {
+      immediate_actions: any[]
+      short_term_initiatives: any[]
+      strategic_priorities: any[]
+    }
   }
 }
 

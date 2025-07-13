@@ -1,7 +1,7 @@
 import { RLTask } from '@/types'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { CheckCircle, XCircle, TrendingUp, Target, Sparkles, BarChart3, Settings } from 'lucide-react'
+import { CheckCircle, XCircle, TrendingUp, Target, Sparkles, BarChart3, Settings, ShoppingCart, Megaphone, DollarSign, Tag, Cog } from 'lucide-react'
 import { formatCompactDateTime } from '@/lib/utils'
 import { useState, useEffect } from 'react'
 
@@ -64,6 +64,28 @@ export function RLTaskCard({ task, onComplete, onApprove, onReject }: RLTaskCard
     return null
   }
 
+  const getCategoryIcon = (category: string) => {
+    switch (category?.toLowerCase()) {
+      case 'inventory': return <ShoppingCart className="h-4 w-4" />
+      case 'marketing': return <Megaphone className="h-4 w-4" />
+      case 'financial': return <DollarSign className="h-4 w-4" />
+      case 'pricing': return <Tag className="h-4 w-4" />
+      case 'operational': return <Cog className="h-4 w-4" />
+      default: return <BarChart3 className="h-4 w-4" />
+    }
+  }
+
+  const getCategoryColor = (category: string) => {
+    switch (category?.toLowerCase()) {
+      case 'inventory': return 'bg-blue-100 text-blue-800'
+      case 'marketing': return 'bg-purple-100 text-purple-800'
+      case 'financial': return 'bg-green-100 text-green-800'
+      case 'pricing': return 'bg-orange-100 text-orange-800'
+      case 'operational': return 'bg-gray-100 text-gray-800'
+      default: return 'bg-indigo-100 text-indigo-800'
+    }
+  }
+
   const formatROIDisplay = () => {
     const profit = `≈$${task.predicted_profit_usd?.toLocaleString() || '0'}`
     if (showPercentage) {
@@ -96,8 +118,14 @@ export function RLTaskCard({ task, onComplete, onApprove, onReject }: RLTaskCard
               <div className="flex items-center gap-2 mb-3">
                 <div className="flex items-center gap-2 px-3 py-1 bg-[#9B0E8D] text-white rounded-full text-xs font-semibold">
                   <Settings className="h-3 w-3" />
-                  {task.rlData?.enhanced_model ? 'Enhanced AI' : 'Smart Suggestion'}
+                  Smart Suggestion
                 </div>
+                {task.category && (
+                  <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${getCategoryColor(task.category)}`}>
+                    {getCategoryIcon(task.category)}
+                    <span className="capitalize">{task.category}</span>
+                  </div>
+                )}
                 <span className="text-sm text-gray-600">
                   {formatCompactDateTime(task.dueDate)}
                 </span>

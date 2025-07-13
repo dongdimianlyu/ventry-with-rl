@@ -249,8 +249,8 @@ class EnhancedROICalculator:
         cost_range = cost_ranges.get(category, (10, 100))
         cost_per_unit = np.random.uniform(*cost_range)
         
-        # Realistic markup (1.5x to 3x cost)
-        markup_factor = np.random.uniform(1.5, 3.0)
+        # More realistic markup (1.2x to 1.8x cost) to achieve 10-30% ROI range
+        markup_factor = float(np.random.uniform(1.2, 1.8))
         selling_price = cost_per_unit * markup_factor
         
         # Sales velocity based on category
@@ -286,7 +286,7 @@ class EnhancedROICalculator:
             current_inventory=np.random.randint(10, 200),
             reorder_point=int(avg_daily_sales * 7),  # 7 days of sales
             lead_time_days=np.random.randint(3, 14),
-            historical_sell_through_rate=np.random.uniform(0.75, 0.95),
+            historical_sell_through_rate=float(np.random.uniform(0.45, 0.75)),
             stockout_probability=np.random.uniform(0.05, 0.25),
             demand_volatility=np.random.uniform(0.1, 0.3),
             last_updated=datetime.now()

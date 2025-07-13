@@ -28,6 +28,7 @@ try:
     from enhanced_rl_training import EnhancedRLTrainingSystem
     from user_feedback_system import UserFeedbackSystem
     from enhanced_roi_calculator import EnhancedROICalculator
+    from ai_coo_agent import AICOOAgent
     from rl_agent import RestockingAgent  # Original agent for compatibility
 except ImportError as e:
     print(f"Warning: Enhanced RL components not available: {e}")
@@ -83,6 +84,9 @@ class EnhancedRLIntegrationManager:
             slack_integration=True
         )
         self.roi_calculator = EnhancedROICalculator(mock_mode=mock_mode)
+        
+        # AI COO agent for comprehensive business operations
+        self.ai_coo_agent = AICOOAgent(mock_mode=mock_mode)
         
         # Original agent for compatibility
         self.original_agent = RestockingAgent()
@@ -250,7 +254,8 @@ class EnhancedRLIntegrationManager:
     def generate_recommendations(self, 
                                use_enhanced_model: bool = True,
                                n_episodes: int = 5,
-                               user_id: Optional[str] = None) -> Dict[str, Any]:
+                               user_id: Optional[str] = None,
+                               use_ai_coo: bool = False) -> Dict[str, Any]:
         """
         Generate recommendations using the enhanced system
         
@@ -258,12 +263,16 @@ class EnhancedRLIntegrationManager:
             use_enhanced_model: Whether to use enhanced model or original
             n_episodes: Number of simulation episodes
             user_id: User ID for personalized recommendations
+            use_ai_coo: Whether to use AI COO for comprehensive business operations
             
         Returns:
             Dict: Recommendations with enhanced features
         """
         try:
-            if use_enhanced_model:
+            if use_ai_coo:
+                # Use AI COO for comprehensive business operations
+                return self._generate_ai_coo_recommendations(n_episodes, user_id)
+            elif use_enhanced_model:
                 # Use enhanced model with real outcomes
                 recommendations = self.training_system.generate_enhanced_recommendations(n_episodes)
                 
@@ -403,6 +412,38 @@ class EnhancedRLIntegrationManager:
             logger.error(f"Error enhancing recommendation ROI: {e}")
             # Return original recommendation if enhancement fails
             return recommendation
+    
+    def _generate_ai_coo_recommendations(self, n_episodes: int, user_id: Optional[str] = None) -> Dict[str, Any]:
+        """Generate comprehensive AI COO recommendations"""
+        try:
+            # Load AI COO model if not already loaded
+            if not self.ai_coo_agent.load_model():
+                logger.info("AI COO model not found, training new model...")
+                self.ai_coo_agent.train(total_timesteps=10000)
+            
+            # Generate comprehensive recommendations
+            recommendations = self.ai_coo_agent.generate_coo_recommendations(n_episodes)
+            
+            # Add user context
+            if user_id:
+                recommendations['user_id'] = user_id
+            
+            # Add enhanced features
+            recommendations['enhanced_features'] = {
+                'outcome_tracking': True,
+                'user_feedback': True,
+                'roi_calculation': 'enhanced',
+                'model_type': 'ai_coo',
+                'comprehensive_analysis': True
+            }
+            
+            logger.info(f"Generated AI COO recommendation: {recommendations.get('action', 'unknown')}")
+            return recommendations
+            
+        except Exception as e:
+            logger.error(f"Error generating AI COO recommendations: {e}")
+            # Fallback to enhanced model
+            return self.training_system.generate_enhanced_recommendations(n_episodes)
     
     def process_approved_task(self, approved_task: Dict[str, Any]) -> bool:
         """

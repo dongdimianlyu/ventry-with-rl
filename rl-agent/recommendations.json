@@ -1,27 +1,27 @@
 {
   "action": "restock",
-  "quantity": 75,
-  "expected_roi": "85.0%",
-  "predicted_profit_usd": 8280,
-  "confidence": "high",
-  "reasoning": "Critical inventory shortage detected for premium coffee makers. AI analysis shows immediate restocking will prevent lost sales and maximize Q1 revenue.",
-  "item": "Premium Coffee Maker",
-  "category": "Kitchen Appliances",
-  "timestamp": "2025-07-13T12:12:43.992Z",
-  "generated_at": "2025-07-13T12:12:43.992Z",
+  "quantity": 60,
+  "expected_roi": "58.0%",
+  "predicted_profit_usd": 2270,
+  "confidence": "medium",
+  "reasoning": "Gaming peripherals showing strong demand correlation with upcoming game releases. Predictive model suggests optimal restocking window.",
+  "item": "Gaming Mechanical Keyboard",
+  "category": "Gaming Accessories",
+  "timestamp": "2025-07-13T12:49:46.134Z",
+  "generated_at": "2025-07-13T12:49:46.134Z",
   "user_id": "1",
   "alternative_actions": [
     {
       "action": "restock",
-      "quantity": 37,
-      "expected_roi": "59%",
-      "predicted_profit_usd": 4140
+      "quantity": 30,
+      "expected_roi": "40%",
+      "predicted_profit_usd": 1135
     },
     {
       "action": "restock",
-      "quantity": 112,
-      "expected_roi": "102%",
-      "predicted_profit_usd": 12420
+      "quantity": 90,
+      "expected_roi": "69%",
+      "predicted_profit_usd": 3405
     }
   ]
 }

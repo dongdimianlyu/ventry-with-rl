@@ -795,22 +795,13 @@ export default function LandingPage() {
              {/* Large VENTRY Section - Aviato Style */}
        <section className="bg-[#1A4231]">
          {/* Content Section */}
-         <div className="py-16">
+         <div className="py-12">
            <div className="max-w-7xl mx-auto px-6 lg:px-8">
              <div className="grid lg:grid-cols-2 gap-12 items-start">
                {/* Left side - Logo and CTA */}
                <div className="space-y-8">
-                 <div className="flex items-center space-x-4">
-                   <img 
-                     src="/ventry-logo.png" 
-                     alt="Ventry Logo" 
-                     className="w-12 h-12 object-contain opacity-100"
-                     onError={(e) => {
-                       const target = e.target as HTMLImageElement;
-                       target.style.display = 'none';
-                     }}
-                   />
-                   <span className="text-2xl font-bold text-white/60">Ventry</span>
+                 <div className="flex items-center justify-center lg:justify-start">
+                   <span className="text-4xl font-bold text-white">VENTRY</span>
                  </div>
                  
                  <div className="space-y-4">
@@ -846,36 +837,21 @@ export default function LandingPage() {
          </div>
          
          {/* Large VENTRY Section at Bottom */}
-         <div className="py-16 relative overflow-hidden">
+         <div className="py-4 relative overflow-hidden">
            <div className="max-w-7xl mx-auto px-6 lg:px-8">
-             <div className="flex items-center justify-center relative">
-               {/* Large Logo positioned to the left of VENTRY - with proper spacing */}
-               <div className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-8 md:-translate-x-16 lg:-translate-x-24 xl:-translate-x-32">
-                 <img 
-                   src="/ventry-logo.png" 
-                   alt="Ventry Logo" 
-                   className="w-24 h-24 md:w-32 md:h-32 lg:w-48 lg:h-48 xl:w-64 xl:h-64 object-contain opacity-100"
-                   onError={(e) => {
-                     const target = e.target as HTMLImageElement;
-                     target.style.display = 'none';
-                   }}
-                 />
+             <div className="flex items-center justify-center">
+               {/* Large VENTRY text - centered */}
+               <div className="text-[6rem] md:text-[8rem] lg:text-[10rem] xl:text-[12rem] font-bold text-white/10 tracking-tighter leading-none select-none">
+                 VENTRY
                </div>
-               
-               {/* Large VENTRY text */}
-               <div className="translate-x-24 text-[8rem] md:text-[12rem] lg:text-[16rem] xl:text-[20rem] font-bold text-white/10 tracking-tighter leading-none select-none">
-  VENTRY
-</div>
-
-
              </div>
            </div>
          </div>
          
          {/* Bottom links */}
-         <div className="pb-8">
+         <div className="pb-6">
            <div className="max-w-7xl mx-auto px-6 lg:px-8">
-             <div className="pt-8 border-t border-white/10">
+             <div className="pt-6 border-t border-white/10">
                <div className="flex flex-col md:flex-row justify-between items-center">
                  <div className="flex space-x-6 text-sm text-white/60">
                    <a href="#" className="hover:text-white transition-colors">Terms & Conditions</a>
