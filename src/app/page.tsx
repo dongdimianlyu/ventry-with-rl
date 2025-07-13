@@ -301,7 +301,8 @@ export default function LandingPage() {
                 transition={{ delay: 0.6, duration: 0.6 }}
                 className="text-xl text-white/80 leading-relaxed max-w-xl"
               >
-                [Subheadline about AI-powered operations management for SMEs. Analyze business context, generate strategic tasks, execute via Slack + QuickBooks with human approval.]
+                [AI-powered operations clarity for growing teams."
+                  Understands your business, Cuts through the noise. Reveals where to focus. Aligns your company around for maximized profit]
               </motion.p>
               
               {/* CTA Buttons */}
@@ -330,31 +331,66 @@ export default function LandingPage() {
               </motion.div>
             </div>
             
-            {/* Floating Task Cards */}
-            <div className="relative">
-              <div className="space-y-4">
-                <FloatingTaskCard delay={1.0} className="ml-8" />
-                <FloatingTaskCard delay={1.2} className="mr-8" />
-                <FloatingTaskCard delay={1.4} className="ml-4" />
-              </div>
-              
-              {/* Stats Cards */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 1.6, duration: 0.6 }}
-                className="mt-8 grid grid-cols-2 gap-4"
-              >
-                <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4">
-                  <div className="text-2xl font-bold text-[#C9F223]">75%</div>
-                  <div className="text-sm text-white/60">Avg ROI Increase</div>
-                </div>
-                <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4">
-                  <div className="text-2xl font-bold text-[#C9F223]">87%</div>
-                  <div className="text-sm text-white/60">Task Accuracy</div>
-                </div>
-              </motion.div>
-            </div>
+                         {/* Single AI Task Card */}
+             <div className="relative">
+               <motion.div
+                 initial={{ opacity: 0, y: 20, scale: 0.9 }}
+                 animate={{ opacity: 1, y: 0, scale: 1 }}
+                 transition={{ delay: 1.0, duration: 0.6, ease: "easeOut" }}
+                 className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-6"
+               >
+                 <div className="flex items-center justify-between mb-4">
+                   <div className="flex items-center space-x-2">
+                     <div className="w-2 h-2 bg-[#C9F223] rounded-full"></div>
+                     <span className="text-white/80 text-sm font-medium">AI Suggestion</span>
+                   </div>
+                   <span className="text-[#C9F223] text-xs font-semibold">HIGH ROI</span>
+                 </div>
+                 
+                 <h4 className="text-white font-semibold text-lg mb-3">
+                   Restock 25 units of Smart Light Bulbs
+                 </h4>
+                 
+                 <p className="text-white/70 text-sm mb-4 leading-relaxed">
+                   AI recommends immediate restock of 25 units for Home Automation category (Smart Light Bulbs) to optimize inventory levels and maximize revenue.
+                 </p>
+                 
+                 <div className="bg-white/5 rounded-lg p-3 mb-4">
+                   <p className="text-white/60 text-xs leading-relaxed">
+                     <span className="text-[#C9F223] font-medium">Reasoning:</span> Seasonal uptick detected for smart home devices category. Machine learning model predicts ~3x sales increase over next 14 days based on historical patterns.
+                   </p>
+                 </div>
+                 
+                 <div className="flex items-center justify-between">
+                   <span className="text-[#C9F223] text-sm font-medium">ROI: +30%</span>
+                   <div className="flex space-x-2">
+                     <button className="bg-[#C9F223] text-[#1A4231] px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#b8e01f] transition-colors">
+                       Approve
+                     </button>
+                     <button className="bg-white/10 text-white/80 px-4 py-2 rounded-lg text-sm font-medium hover:bg-white/20 transition-colors">
+                       Reject
+                     </button>
+                   </div>
+                 </div>
+               </motion.div>
+               
+               {/* Stats Cards */}
+               <motion.div
+                 initial={{ opacity: 0, scale: 0.9 }}
+                 animate={{ opacity: 1, scale: 1 }}
+                 transition={{ delay: 1.4, duration: 0.6 }}
+                 className="mt-8 grid grid-cols-2 gap-4"
+               >
+                 <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4">
+                   <div className="text-2xl font-bold text-[#C9F223]">75%</div>
+                   <div className="text-sm text-white/60">Avg ROI Increase</div>
+                 </div>
+                 <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4">
+                   <div className="text-2xl font-bold text-[#C9F223]">87%</div>
+                   <div className="text-sm text-white/60">Task Accuracy</div>
+                 </div>
+               </motion.div>
+             </div>
           </div>
         </motion.div>
       </section>
@@ -488,7 +524,7 @@ export default function LandingPage() {
                    </span>
                  </div>
                  <h4 className="font-semibold text-gray-900 mb-2">Restock Smart Light Bulbs</h4>
-                 <p className="text-gray-600 text-sm mb-4">[AI Analysis Details]</p>
+                 <p className="text-gray-600 text-sm mb-4">Current inventory at 12 units. Demand forecasting shows 85% probability of stockout within 5 days. Optimal reorder point triggered.</p>
                  <div className="flex items-center justify-between">
                    <span className="text-[#9b0e8d] text-sm font-semibold">ROI: +67%</span>
                    <ChevronRight className="h-4 w-4 text-gray-400" />
@@ -512,7 +548,7 @@ export default function LandingPage() {
                    </span>
                  </div>
                  <h4 className="font-semibold text-gray-900 mb-2">Optimize Email Campaign ROI</h4>
-                 <p className="text-gray-600 text-sm mb-4">[AI Analysis Details]</p>
+                 <p className="text-gray-600 text-sm mb-4">A/B testing reveals personalized subject lines increase open rates by 34%. Segmentation analysis identifies high-value customer clusters for targeted campaigns.</p>
                  <div className="flex items-center justify-between">
                    <span className="text-[#9b0e8d] text-sm font-semibold">ROI: +127%</span>
                    <ChevronRight className="h-4 w-4 text-gray-400" />
@@ -536,7 +572,7 @@ export default function LandingPage() {
                    </span>
                  </div>
                  <h4 className="font-semibold text-gray-900 mb-2">Review Q3 Cash Flow</h4>
-                 <p className="text-gray-600 text-sm mb-4">[AI Analysis Details]</p>
+                 <p className="text-gray-600 text-sm mb-4">Cash flow analysis detects recurring payment delays from 3 key clients. Predictive model suggests adjusting payment terms to improve liquidity by 23%.</p>
                  <div className="flex items-center justify-between">
                    <span className="text-[#9b0e8d] text-sm font-semibold">ROI: +43%</span>
                    <ChevronRight className="h-4 w-4 text-gray-400" />
@@ -616,10 +652,10 @@ export default function LandingPage() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-              [Feature Section Title]
+              Powerful Features for Your Business
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              [Feature section description]
+              Advanced AI capabilities designed to optimize your operations and maximize ROI
             </p>
           </motion.div>
           
@@ -627,18 +663,18 @@ export default function LandingPage() {
             {[
               {
                 icon: <BarChart3 className="h-8 w-8" />,
-                title: "[Feature 1 Title]",
-                description: "[Feature 1 Description]"
+                title: "Smart Decisions",
+                description: "Reinforcement learning agent predicts what decision generates most ROI based on your data"
               },
               {
                 icon: <Zap className="h-8 w-8" />,
-                title: "[Feature 2 Title]",
-                description: "[Feature 2 Description]"
+                title: "AI Tasks",
+                description: "Based on your integrations, daily actionable tasks for you and your team members that drive profit"
               },
               {
                 icon: <Shield className="h-8 w-8" />,
-                title: "[Feature 3 Title]",
-                description: "[Feature 3 Description]"
+                title: "Shopify, Slack, QuickBooks",
+                description: "Robust integrations with your existing tools (completely optional - you choose what to connect)"
               }
             ].map((feature, index) => (
               <motion.div
@@ -660,44 +696,101 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Trusted By Section */}
-      <section className="py-20 bg-gray-50">
+      {/* User Control Section */}
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">
-              Trusted by SME Teams
-            </h2>
-          </motion.div>
-          
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 1 }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center"
-          >
-            {['[Company 1]', '[Company 2]', '[Company 3]', '[Company 4]'].map((company, index) => (
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
               <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ delay: index * 0.1, duration: 0.5 }}
-                className="text-center"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
               >
-                <div className="bg-white rounded-lg p-6 shadow-sm">
-                  <div className="text-gray-400 font-semibold">{company}</div>
+                <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+                  You're Always in Control
+                </h2>
+                <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+                  Worried about AI taking over? Don't be. Ventry is designed to empower, not replace you.
+                </p>
+                
+                <div className="space-y-6">
+                  <div className="flex items-start space-x-4">
+                    <div className="bg-[#C9F223]/20 rounded-full p-2 mt-1">
+                      <CheckCircle className="h-5 w-5 text-[#1A4231]" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900 mb-2">Choose Your Tasks</h3>
+                      <p className="text-gray-600">You decide which AI suggestions to approve or reject. Every recommendation requires your explicit approval.</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start space-x-4">
+                    <div className="bg-[#C9F223]/20 rounded-full p-2 mt-1">
+                      <CheckCircle className="h-5 w-5 text-[#1A4231]" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900 mb-2">Manual or Automatic</h3>
+                      <p className="text-gray-600">Auto-execution only activates when you choose to connect QuickBooks. You can always run tasks manually.</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start space-x-4">
+                    <div className="bg-[#C9F223]/20 rounded-full p-2 mt-1">
+                      <CheckCircle className="h-5 w-5 text-[#1A4231]" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900 mb-2">Full Transparency</h3>
+                      <p className="text-gray-600">See exactly why each task is recommended with detailed AI reasoning and ROI predictions.</p>
+                    </div>
+                  </div>
                 </div>
               </motion.div>
-            ))}
-          </motion.div>
+            </div>
+            
+            <div className="relative">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.2, duration: 0.8 }}
+                className="bg-gray-50 rounded-2xl p-8"
+              >
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between p-4 bg-white rounded-lg shadow-sm">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                      <span className="text-sm font-medium text-gray-700">AI Suggestion</span>
+                    </div>
+                    <span className="text-xs px-2 py-1 bg-yellow-100 text-yellow-700 rounded-full font-medium">
+                      PENDING YOUR APPROVAL
+                    </span>
+                  </div>
+                  
+                  <div className="p-4 bg-white rounded-lg shadow-sm">
+                    <h4 className="font-semibold text-gray-900 mb-2">Update Product Pricing</h4>
+                    <p className="text-gray-600 text-sm mb-3">
+                      Market analysis suggests 8% price increase for premium products
+                    </p>
+                    <div className="flex space-x-2">
+                      <button className="flex-1 bg-[#C9F223] text-[#1A4231] py-2 px-4 rounded-lg text-sm font-medium">
+                        ✓ You Approve
+                      </button>
+                      <button className="flex-1 bg-gray-100 text-gray-700 py-2 px-4 rounded-lg text-sm font-medium">
+                        ✗ You Reject
+                      </button>
+                    </div>
+                  </div>
+                  
+                  <div className="text-center py-4">
+                    <p className="text-sm text-gray-500">
+                      <span className="font-medium">Your choice:</span> Connect QuickBooks for auto-execution or keep it manual
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </div>
         </div>
       </section>
-
-      
 
              {/* Large VENTRY Section - Aviato Style */}
        <section className="bg-[#1A4231]">
