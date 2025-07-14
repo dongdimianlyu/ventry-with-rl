@@ -1,7 +1,7 @@
 import { RLTask } from '@/types'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { CheckCircle, XCircle, TrendingUp, Target, Sparkles, BarChart3, Settings, ShoppingCart, Megaphone, DollarSign, Tag, Cog } from 'lucide-react'
+import { CheckCircle, XCircle, TrendingUp, Target, Sparkles, BarChart3, Brain, ShoppingCart, Megaphone, DollarSign, Tag, Cog } from 'lucide-react'
 import { formatCompactDateTime } from '@/lib/utils'
 import { useState, useEffect } from 'react'
 
@@ -117,7 +117,7 @@ export function RLTaskCard({ task, onComplete, onApprove, onReject }: RLTaskCard
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-3">
                 <div className="flex items-center gap-2 px-3 py-1 bg-[#9B0E8D] text-white rounded-full text-xs font-semibold">
-                  <Settings className="h-3 w-3" />
+                  <Brain className="h-3 w-3" />
                   Smart Suggestion
                 </div>
                 {task.category && (
@@ -242,7 +242,7 @@ export function RLTaskCard({ task, onComplete, onApprove, onReject }: RLTaskCard
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-3">
                       <div className="flex items-center gap-2 px-3 py-1 bg-[#9B0E8D] text-white rounded-full text-xs font-semibold">
-                        <Settings className="h-3 w-3" />
+                        <Brain className="h-3 w-3" />
                         Smart Suggestion
                       </div>
                       <span className="text-sm text-gray-600">

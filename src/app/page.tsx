@@ -30,6 +30,7 @@ import {
   Activity
 } from "lucide-react"
 import Link from "next/link"
+import EmailModal from "@/components/ui/EmailModal"
 
 // Floating Task Card Component
 const FloatingTaskCard = ({ delay = 0, className = "" }: { delay?: number; className?: string }) => (
@@ -139,6 +140,17 @@ const LiveDemoCard = ({
 export default function LandingPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const [modalState, setModalState] = useState<{
+    isOpen: boolean
+    type: 'get_demo' | 'book_demo' | 'subscription'
+    title: string
+    description: string
+  }>({
+    isOpen: false,
+    type: 'get_demo',
+    title: '',
+    description: ''
+  })
   const { scrollYProgress } = useScroll()
   const heroY = useTransform(scrollYProgress, [0, 1], [0, -50])
   const heroOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0])
@@ -150,6 +162,28 @@ export default function LandingPage() {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  const openGetDemoModal = () => {
+    setModalState({
+      isOpen: true,
+      type: 'get_demo',
+      title: 'Get a Demo',
+      description: 'Enter your email to schedule a personalized demo of Ventry\'s AI operations platform.'
+    })
+  }
+
+  const openBookDemoModal = () => {
+    setModalState({
+      isOpen: true,
+      type: 'book_demo',
+      title: 'Book a Demo',
+      description: 'Get the latest Ventry company updates and schedule a demo with our team.'
+    })
+  }
+
+  const closeModal = () => {
+    setModalState(prev => ({ ...prev, isOpen: false }))
+  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -209,7 +243,10 @@ export default function LandingPage() {
                 </Button>
               </Link>
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button className="bg-[#C9F223] hover:bg-[#b8e01f] text-[#1A4231] px-6 py-2 text-sm font-semibold rounded-md">
+                <Button 
+                  onClick={openGetDemoModal}
+                  className="bg-[#C9F223] hover:bg-[#b8e01f] text-[#1A4231] px-6 py-2 text-sm font-semibold rounded-md"
+                >
                   Get Demo
                 </Button>
               </motion.div>
@@ -247,7 +284,10 @@ export default function LandingPage() {
                 <Link href="/auth/signin" className="block text-gray-600 hover:text-[#1A4231] text-sm font-medium">
                   Login
                 </Link>
-                <Button className="w-full bg-[#C9F223] hover:bg-[#b8e01f] text-[#1A4231] text-sm font-semibold">
+                <Button 
+                  onClick={openGetDemoModal}
+                  className="w-full bg-[#C9F223] hover:bg-[#b8e01f] text-[#1A4231] text-sm font-semibold"
+                >
                   Get Demo
                 </Button>
               </div>
@@ -315,6 +355,7 @@ export default function LandingPage() {
                 <motion.div 
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
+                  onClick={openGetDemoModal}
                   className="bg-[#C9F223] hover:bg-[#b8e01f] text-[#1A4231] px-8 py-4 font-semibold rounded-lg cursor-pointer inline-flex items-center justify-center"
                 >
                   <Play className="h-5 w-5 mr-2" />
@@ -813,7 +854,10 @@ export default function LandingPage() {
                        placeholder="What's your work email?"
                        className="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-[#C9F223]/50"
                      />
-                     <Button className="bg-[#C9F223] hover:bg-[#b8e01f] text-[#1A4231] px-6 py-3 font-semibold rounded-lg whitespace-nowrap">
+                     <Button 
+                       onClick={openBookDemoModal}
+                       className="bg-[#C9F223] hover:bg-[#b8e01f] text-[#1A4231] px-6 py-3 font-semibold rounded-lg whitespace-nowrap"
+                     >
                        Book a demo
                      </Button>
                    </div>
@@ -865,6 +909,15 @@ export default function LandingPage() {
            </div>
          </div>
        </section>
+
+       {/* Email Modal */}
+       <EmailModal
+         isOpen={modalState.isOpen}
+         onClose={closeModal}
+         type={modalState.type}
+         title={modalState.title}
+         description={modalState.description}
+       />
     </div>
   )
 }

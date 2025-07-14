@@ -181,7 +181,7 @@ function formatAICOOTitle(recommendation: AICOORecommendation): string {
 }
 
 function formatAICOODescription(recommendation: AICOORecommendation): string {
-  const baseDescription = `AI COO recommends ${recommendation.description} with ${recommendation.expected_roi} expected ROI.`
+  const baseDescription = `Agent Recommends ${recommendation.description} with ${recommendation.expected_roi} expected ROI.`
   
   if (recommendation.business_analysis) {
     const analysis = recommendation.business_analysis
@@ -210,10 +210,20 @@ async function savePendingApproval(task: any): Promise<void> {
   try {
     const pendingApprovalsPath = join(process.cwd(), 'pending_approvals.json')
     
-    let pendingApprovals = []
+    let pendingApprovals: any[] = []
     try {
       const existingData = await readFile(pendingApprovalsPath, 'utf-8')
-      pendingApprovals = JSON.parse(existingData)
+      const parsed = JSON.parse(existingData)
+      
+      // Handle both array and object formats
+      if (Array.isArray(parsed)) {
+        pendingApprovals = parsed
+      } else if (typeof parsed === 'object' && parsed !== null) {
+        // Convert object to array if it's in object format
+        pendingApprovals = Object.values(parsed)
+      } else {
+        pendingApprovals = []
+      }
     } catch (error) {
       // File doesn't exist or is empty, start with empty array
       pendingApprovals = []
