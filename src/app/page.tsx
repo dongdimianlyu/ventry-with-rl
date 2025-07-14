@@ -144,6 +144,7 @@ export default function LandingPage() {
   const [footerEmail, setFooterEmail] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'success' | 'error' | null>(null)
+  const [submitErrorMessage, setSubmitErrorMessage] = useState('')
   const [modalState, setModalState] = useState<{
     isOpen: boolean
     type: 'get_demo' | 'book_demo' | 'subscription'
@@ -189,12 +190,17 @@ export default function LandingPage() {
     const email = footerEmail.trim();
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       setSubmitStatus('error');
-      setTimeout(() => setSubmitStatus(null), 3000);
+      setSubmitErrorMessage('Please enter a valid email address.');
+      setTimeout(() => {
+        setSubmitStatus(null);
+        setSubmitErrorMessage('');
+      }, 3000);
       return;
     }
 
     setIsSubmitting(true);
     setSubmitStatus(null);
+    setSubmitErrorMessage('');
     try {
       const response = await fetch('/api/demo-request', {
         method: 'POST',
@@ -206,13 +212,24 @@ export default function LandingPage() {
         setSubmitStatus('success');
         setFooterEmail('');
       } else {
+        // Try to get error message from response
+        try {
+          const errorData = await response.json();
+          setSubmitErrorMessage(errorData.error || 'Failed to submit demo request. Please try again later.');
+        } catch {
+          setSubmitErrorMessage('Failed to submit demo request. Please try again later.');
+        }
         setSubmitStatus('error');
       }
     } catch (error) {
       setSubmitStatus('error');
+      setSubmitErrorMessage('Network error occurred. Please check your connection and try again.');
     } finally {
       setIsSubmitting(false);
-      setTimeout(() => setSubmitStatus(null), 5000);
+      setTimeout(() => {
+        setSubmitStatus(null);
+        setSubmitErrorMessage('');
+      }, 5000);
     }
   };
 
@@ -902,7 +919,7 @@ export default function LandingPage() {
                       <p className="text-sm text-green-400">Thank you! Your demo request has been submitted.</p>
                     )}
                     {submitStatus === 'error' && (
-                      <p className="text-sm text-red-400">Please enter a valid email address.</p>
+                      <p className="text-sm text-red-400">{submitErrorMessage || 'Please enter a valid email address.'}</p>
                     )}
                  </div>
                </div>
