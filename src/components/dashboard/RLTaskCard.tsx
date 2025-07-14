@@ -1,7 +1,7 @@
 import { RLTask } from '@/types'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { CheckCircle, XCircle, TrendingUp, Target, Sparkles, BarChart3, Brain, ShoppingCart, Megaphone, DollarSign, Tag, Cog } from 'lucide-react'
+import { CheckCircle, XCircle, TrendingUp, Target, Sparkles, BarChart3, Brain, ShoppingCart, Megaphone, DollarSign, Tag, Cog, Boxes } from 'lucide-react'
 import { formatCompactDateTime } from '@/lib/utils'
 import { useState, useEffect } from 'react'
 
@@ -117,7 +117,7 @@ export function RLTaskCard({ task, onComplete, onApprove, onReject }: RLTaskCard
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-3">
                 <div className="flex items-center gap-2 px-3 py-1 bg-[#9B0E8D] text-white rounded-full text-xs font-semibold">
-                  <Brain className="h-3 w-3" />
+                  <Boxes className="h-3 w-3" />
                   Smart Suggestion
                 </div>
                 {task.category && (
@@ -242,7 +242,7 @@ export function RLTaskCard({ task, onComplete, onApprove, onReject }: RLTaskCard
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-3">
                       <div className="flex items-center gap-2 px-3 py-1 bg-[#9B0E8D] text-white rounded-full text-xs font-semibold">
-                        <Brain className="h-3 w-3" />
+                        <Boxes className="h-3 w-3" />
                         Smart Suggestion
                       </div>
                       <span className="text-sm text-gray-600">
@@ -285,7 +285,7 @@ export function RLTaskCard({ task, onComplete, onApprove, onReject }: RLTaskCard
                 <div className="bg-gradient-to-r from-[#9B0E8D]/5 to-[#9B0E8D]/10 border border-[#9B0E8D]/20 rounded-xl p-6">
                   <div className="flex items-start space-x-4">
                     <div className="w-10 h-10 bg-[#9B0E8D] rounded-lg flex items-center justify-center shrink-0">
-                      <Sparkles className="h-5 w-5 text-white" />
+                      <Boxes className="h-5 w-5 text-white" />
                     </div>
                     <div className="flex-1">
                       <h3 className="text-lg font-semibold text-[#9B0E8D] mb-3">AI Analysis</h3>

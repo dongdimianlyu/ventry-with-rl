@@ -26,6 +26,7 @@ import {
   Star,
   ChevronRight,
   Globe,
+  CalendarDays,
   Layers,
   Activity
 } from "lucide-react"
@@ -54,7 +55,7 @@ const FloatingTaskCard = ({ delay = 0, className = "" }: { delay?: number; class
       [Task Description]
     </p>
     <div className="flex items-center justify-between">
-      <span className="text-[#C9F223] text-xs font-medium">ROI: +30%</span>
+      <span className="text-[#C9F223] text-xs font-medium">ROI: +27%</span>
       <div className="flex space-x-2">
         <button className="bg-[#C9F223] text-[#1A4231] px-3 py-1 rounded text-xs font-medium">
           Approve
@@ -341,8 +342,7 @@ export default function LandingPage() {
                 transition={{ delay: 0.6, duration: 0.6 }}
                 className="text-xl text-white/80 leading-relaxed max-w-xl"
               >
-                [AI-powered operations clarity for growing teams."
-                  Understands your business, Cuts through the noise. Reveals where to focus. Aligns your company around for maximized profit]
+                Understands your business data, cuts through the noise, reveals where to focus, and highlights the priorities and decisions that drive profit.
               </motion.p>
               
               {/* CTA Buttons */}
@@ -358,15 +358,15 @@ export default function LandingPage() {
                   onClick={openGetDemoModal}
                   className="bg-[#C9F223] hover:bg-[#b8e01f] text-[#1A4231] px-8 py-4 font-semibold rounded-lg cursor-pointer inline-flex items-center justify-center"
                 >
-                  <Play className="h-5 w-5 mr-2" />
-                  Watch Demo
+                  <CalendarDays className="h-5 w-5 mr-2" />
+                  Book a Demo
                 </motion.div>
                 <motion.div 
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   className="bg-white/10 backdrop-blur-sm border border-white/20 text-white px-8 py-4 font-semibold rounded-lg cursor-pointer inline-flex items-center justify-center"
                 >
-                  Start Free Trial
+                  Join Beta
                   <ArrowRight className="h-5 w-5 ml-2" />
                 </motion.div>
               </motion.div>
@@ -403,7 +403,7 @@ export default function LandingPage() {
                  </div>
                  
                  <div className="flex items-center justify-between">
-                   <span className="text-[#C9F223] text-sm font-medium">ROI: +30%</span>
+                   <span className="text-[#C9F223] text-sm font-medium">ROI: +27%</span>
                    <div className="flex space-x-2">
                      <button className="bg-[#C9F223] text-[#1A4231] px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#b8e01f] transition-colors">
                        Approve
@@ -423,7 +423,7 @@ export default function LandingPage() {
                  className="mt-8 grid grid-cols-2 gap-4"
                >
                  <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4">
-                   <div className="text-2xl font-bold text-[#C9F223]">75%</div>
+                   <div className="text-2xl font-bold text-[#C9F223]">24%</div>
                    <div className="text-sm text-white/60">Avg ROI Increase</div>
                  </div>
                  <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4">
@@ -450,9 +450,7 @@ export default function LandingPage() {
             <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
               How It Works
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              [Explanation of the 3-step process: Analyze ops data, Generate strategic tasks, Execute via integrations]
-            </p>
+          
           </motion.div>
           
           <div className="grid lg:grid-cols-3 gap-8">
@@ -468,7 +466,7 @@ export default function LandingPage() {
                </div>
               <h3 className="text-2xl font-bold text-gray-900 mb-4">1. Analyze Ops Data</h3>
               <p className="text-gray-600 mb-6">
-                [Description of how AI analyzes business context from Shopify, QuickBooks, and other sources]
+                Analyzes your sales, inventory, and customer trends from Shopify and QuickBooks to surface the most impactful business decisions.
               </p>
               <div className="bg-gray-50 rounded-xl p-6 group-hover:bg-gray-100 transition-colors">
                 <div className="text-sm text-gray-500 mb-2">Live Data Sources</div>
@@ -487,12 +485,12 @@ export default function LandingPage() {
               transition={{ delay: 0.4, duration: 0.6 }}
               className="text-center group"
             >
-                             <div className="bg-[#C9F223]/10 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6 group-hover:bg-[#C9F223]/20 transition-colors">
-                 <Brain className="h-10 w-10 text-[#C9F223]" />
+                             <div className="bg-[#C9F223]/90 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6 group-hover:bg-[#C9F223]/90 transition-colors">
+                             <TrendingUp className="h-10 w-10 text-[#A7C700] drop-shadow-md" />
                </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">2. Generate Strategic Tasks</h3>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">2. Creates Strategic Tasks</h3>
               <p className="text-gray-600 mb-6">
-                [Description of how RL algorithms create profit-maximizing tasks with ROI predictions]
+              RL engine simulates operational decisions and generates actions with predicted ROI—prioritizing the ones most likely to drive growth and efficiency.
               </p>
               <div className="bg-gray-50 rounded-xl p-6 group-hover:bg-gray-100 transition-colors">
                 <div className="text-sm text-gray-500 mb-2">AI Capabilities</div>
@@ -515,7 +513,7 @@ export default function LandingPage() {
                </div>
               <h3 className="text-2xl font-bold text-gray-900 mb-4">3. Execute via Integrations</h3>
               <p className="text-gray-600 mb-6">
-                [Description of how tasks are executed through Slack approvals and QuickBooks actions]
+              Tasks are sent through Slack for your approval before anything happens—you're always in control, and auto-execution can be turned off anytime. Approved actions are then carried out via QuickBooks, seamlessly.
               </p>
               <div className="bg-gray-50 rounded-xl p-6 group-hover:bg-gray-100 transition-colors">
                 <div className="text-sm text-gray-500 mb-2">Execution Channels</div>
@@ -567,7 +565,7 @@ export default function LandingPage() {
                  <h4 className="font-semibold text-gray-900 mb-2">Restock Smart Light Bulbs</h4>
                  <p className="text-gray-600 text-sm mb-4">Current inventory at 12 units. Demand forecasting shows 85% probability of stockout within 5 days. Optimal reorder point triggered.</p>
                  <div className="flex items-center justify-between">
-                   <span className="text-[#9b0e8d] text-sm font-semibold">ROI: +67%</span>
+                   <span className="text-[#9b0e8d] text-sm font-semibold">ROI: +32%</span>
                    <ChevronRight className="h-4 w-4 text-gray-400" />
                  </div>
                </motion.div>
@@ -591,7 +589,7 @@ export default function LandingPage() {
                  <h4 className="font-semibold text-gray-900 mb-2">Optimize Email Campaign ROI</h4>
                  <p className="text-gray-600 text-sm mb-4">A/B testing reveals personalized subject lines increase open rates by 34%. Segmentation analysis identifies high-value customer clusters for targeted campaigns.</p>
                  <div className="flex items-center justify-between">
-                   <span className="text-[#9b0e8d] text-sm font-semibold">ROI: +127%</span>
+                   <span className="text-[#9b0e8d] text-sm font-semibold">ROI: +27%</span>
                    <ChevronRight className="h-4 w-4 text-gray-400" />
                  </div>
                </motion.div>
@@ -615,7 +613,7 @@ export default function LandingPage() {
                  <h4 className="font-semibold text-gray-900 mb-2">Review Q3 Cash Flow</h4>
                  <p className="text-gray-600 text-sm mb-4">Cash flow analysis detects recurring payment delays from 3 key clients. Predictive model suggests adjusting payment terms to improve liquidity by 23%.</p>
                  <div className="flex items-center justify-between">
-                   <span className="text-[#9b0e8d] text-sm font-semibold">ROI: +43%</span>
+                   <span className="text-[#9b0e8d] text-sm font-semibold">ROI: +23%</span>
                    <ChevronRight className="h-4 w-4 text-gray-400" />
                  </div>
                </motion.div>
@@ -708,8 +706,8 @@ export default function LandingPage() {
                 description: "Reinforcement learning agent predicts what decision generates most ROI based on your data"
               },
               {
-                icon: <Zap className="h-8 w-8" />,
-                title: "AI Tasks",
+                icon: <TrendingUp className="h-8 w-8" />,
+                title: "Strategic Tasks",
                 description: "Based on your integrations, daily actionable tasks for you and your team members that drive profit"
               },
               {

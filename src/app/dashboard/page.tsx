@@ -472,7 +472,7 @@ export default function DashboardPage() {
             const newPendingTasks = [...pendingRlTasks, fallbackData.rlTask]
             setPendingRlTasks(newPendingTasks)
           }
-          setSlackStatus('Using enhanced RL simulation (AI COO system unavailable)')
+          setSlackStatus('Using enhanced RL simulation')
         }
       } catch (fallbackError) {
         console.error('Fallback simulation also failed:', fallbackError)
@@ -550,7 +550,7 @@ export default function DashboardPage() {
                 className="bg-[#9B0E8D] hover:bg-[#9B0E8D]/90 text-white smooth-transition shadow-sm"
               >
                 <BarChart3 className="h-4 w-4 mr-2" />
-                {isSimulatingRL ? 'analysing...' : 'Enhanced AI Suggestion'}
+                {isSimulatingRL ? 'analysing...' : 'Run Agent Suggestion'}
               </Button>
               <Button
                 onClick={() => {
