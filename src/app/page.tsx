@@ -141,6 +141,9 @@ const LiveDemoCard = ({
 export default function LandingPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const [footerEmail, setFooterEmail] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<'success' | 'error' | null>(null)
   const [modalState, setModalState] = useState<{
     isOpen: boolean
     type: 'get_demo' | 'book_demo' | 'subscription'
@@ -181,6 +184,36 @@ export default function LandingPage() {
       description: 'Get the latest Ventry company updates and schedule a demo with our team.'
     })
   }
+
+  const handleFooterDemoSubmit = async () => {
+    if (!footerEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(footerEmail)) {
+      setSubmitStatus('error');
+      setTimeout(() => setSubmitStatus(null), 3000);
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+    try {
+      const response = await fetch('/api/demo-request', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: footerEmail, type: 'book_demo' })
+      });
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        setFooterEmail('');
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch (error) {
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+      setTimeout(() => setSubmitStatus(null), 5000);
+    }
+  };
 
   const closeModal = () => {
     setModalState(prev => ({ ...prev, isOpen: false }))
@@ -361,14 +394,16 @@ export default function LandingPage() {
                   <CalendarDays className="h-5 w-5 mr-2" />
                   Book a Demo
                 </motion.div>
-                <motion.div 
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="bg-white/10 backdrop-blur-sm border border-white/20 text-white px-8 py-4 font-semibold rounded-lg cursor-pointer inline-flex items-center justify-center"
-                >
-                  Join Beta
-                  <ArrowRight className="h-5 w-5 ml-2" />
-                </motion.div>
+                <Link href="/auth/signin">
+                  <motion.div 
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="bg-white/10 backdrop-blur-sm border border-white/20 text-white px-8 py-4 font-semibold rounded-lg cursor-pointer inline-flex items-center justify-center"
+                  >
+                    Join Beta
+                    <ArrowRight className="h-5 w-5 ml-2" />
+                  </motion.div>
+                </Link>
               </motion.div>
             </div>
             
@@ -846,19 +881,28 @@ export default function LandingPage() {
                  <div className="space-y-4">
                    <p className="text-white/80 text-lg">Get the latest Ventry company updates</p>
                    
-                   <div className="flex flex-col sm:flex-row gap-4 max-w-md">
+                   <div className="flex flex-col sm:flex-row gap-4 max-w-md items-center">
                      <input 
                        type="email" 
                        placeholder="What's your work email?"
-                       className="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-[#C9F223]/50"
+                       value={footerEmail}
+                       onChange={(e) => setFooterEmail(e.target.value)}
+                       className="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-[#C9F223]/50 w-full sm:w-auto"
                      />
                      <Button 
-                       onClick={openBookDemoModal}
-                       className="bg-[#C9F223] hover:bg-[#b8e01f] text-[#1A4231] px-6 py-3 font-semibold rounded-lg whitespace-nowrap"
+                       onClick={handleFooterDemoSubmit}
+                       disabled={isSubmitting}
+                       className="bg-[#C9F223] hover:bg-[#b8e01f] text-[#1A4231] px-6 py-3 font-semibold rounded-lg whitespace-nowrap w-full sm:w-auto"
                      >
-                       Book a demo
+                       {isSubmitting ? 'Submitting...' : 'Book a demo'}
                      </Button>
                    </div>
+                   {submitStatus === 'success' && (
+                      <p className="text-sm text-green-400">Thank you! Your demo request has been submitted.</p>
+                    )}
+                    {submitStatus === 'error' && (
+                      <p className="text-sm text-red-400">Please enter a valid email address.</p>
+                    )}
                  </div>
                </div>
                

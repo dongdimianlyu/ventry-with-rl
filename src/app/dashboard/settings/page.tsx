@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button'
 import { getOnboardingProfile, resetOnboarding, formatDate } from '@/lib/utils'
 import { CompanyProfile, ShopifyConnection, ShopifyIntegrationStatus } from '@/types'
 import { ShopifyConnectionModal, ShopifyConnectionStatus } from '@/components/shopify/ShopifyConnectionModal'
-import { getShopifyConnection } from '@/lib/shopify'
 
 export default function SettingsPage() {
   const [onboardingProfile, setOnboardingProfile] = useState<CompanyProfile | null>(null)
@@ -84,29 +83,29 @@ export default function SettingsPage() {
   // Shopify connection management functions
   const loadShopifyConnection = async (userId: string) => {
     try {
-      const connection = await getShopifyConnection(userId)
-      setShopifyConnection(connection)
-      
-      if (connection) {
-        // Load connection status
-        const response = await fetch(`/api/shopify/sync?userId=${userId}`)
-        const data = await response.json()
-        
-        if (data.connected) {
-          setShopifyStatus({
-            isConnected: true,
-            connectionHealth: data.status.isHealthy ? 'healthy' : 'warning',
-            lastSuccessfulSync: new Date(data.status.lastSyncAt),
-            apiCallsUsed: 0, // Would need to track this
-            apiCallsLimit: 1000, // Shopify default
-            webhooksActive: 0, // Would need to track this
-            webhooksTotal: 0,
-            dataFreshness: data.status.dataAge < 6 * 60 * 60 * 1000 ? 'fresh' : 'stale'
-          })
-        }
+      const response = await fetch(`/api/shopify/sync?userId=${userId}`)
+      const data = await response.json()
+
+      if (data.connected) {
+        setShopifyConnection(data.connection)
+        setShopifyStatus({
+          isConnected: true,
+          connectionHealth: data.status.isHealthy ? 'healthy' : 'warning',
+          lastSuccessfulSync: new Date(data.status.lastSyncAt),
+          apiCallsUsed: 0, // Would need to track this
+          apiCallsLimit: 1000, // Shopify default
+          webhooksActive: 0, // Would need to track this
+          webhooksTotal: 0,
+          dataFreshness: data.status.dataAge < 6 * 60 * 60 * 1000 ? 'fresh' : 'stale'
+        })
+      } else {
+        setShopifyConnection(null)
+        setShopifyStatus(null)
       }
     } catch (error) {
       console.error('Error loading Shopify connection:', error)
+      setShopifyConnection(null)
+      setShopifyStatus(null)
     }
   }
 
