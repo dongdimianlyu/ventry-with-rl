@@ -84,7 +84,7 @@ export default function SettingsPage() {
   // Shopify connection management functions
   const loadShopifyConnection = async (userId: string) => {
     try {
-      const connection = getShopifyConnection(userId)
+      const connection = await getShopifyConnection(userId)
       setShopifyConnection(connection)
       
       if (connection) {

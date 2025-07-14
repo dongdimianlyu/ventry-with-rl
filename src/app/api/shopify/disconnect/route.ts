@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Get existing connection
-    const connection = getShopifyConnection(userId)
+    const connection = await getShopifyConnection(userId)
     if (!connection) {
       return NextResponse.json(
         { error: 'No connection found' },
@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Remove connection from storage
-    removeShopifyConnection(userId)
+    await removeShopifyConnection(userId)
 
     return NextResponse.json({
       success: true,

@@ -94,7 +94,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Save connection
-    saveShopifyConnection(connection)
+    await saveShopifyConnection(connection)
 
     // Set up webhooks (optional - could be done in background)
     try {
@@ -151,6 +151,6 @@ async function setupWebhooks(apiClient: ShopifyApiClient, connection: ShopifyCon
   // Update connection with webhook IDs
   if (webhookIds.length > 0) {
     connection.webhookIds = webhookIds
-    saveShopifyConnection(connection)
+    await saveShopifyConnection(connection)
   }
 } 

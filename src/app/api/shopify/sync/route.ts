@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Get Shopify connection
-    const connection = getShopifyConnection(userId)
+    const connection = await getShopifyConnection(userId)
     if (!connection) {
       return NextResponse.json(
         { error: 'No Shopify connection found' },
@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
     // Update connection last sync time
     connection.lastSyncAt = new Date()
     const { saveShopifyConnection } = await import('@/lib/shopify')
-    saveShopifyConnection(connection)
+    await saveShopifyConnection(connection)
 
     return NextResponse.json({
       success: true,
@@ -81,7 +81,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Get connection status
-    const connection = getShopifyConnection(userId)
+    const connection = await getShopifyConnection(userId)
     if (!connection) {
       return NextResponse.json({
         connected: false,

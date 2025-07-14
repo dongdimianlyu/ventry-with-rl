@@ -14,6 +14,8 @@ import { Sparkles, LogOut, Calendar, Target, TrendingUp, Plus, AlertCircle, Cloc
 import { formatDate } from '@/lib/utils'
 import { knowledgeBase } from '@/data/knowledge-base'
 import { KnowledgeBase } from '@/types'
+import Link from 'next/link'
+
 
 export default function DashboardPage() {
   const [user, setUser] = useState<User | null>(null)
@@ -41,6 +43,7 @@ export default function DashboardPage() {
     prioritizeHighImpact: true,
     ensureDiversity: true
   })
+  const [isShopifyConnected, setIsShopifyConnected] = useState(true) // Assume connected initially
   
   const router = useRouter()
 
@@ -54,6 +57,21 @@ export default function DashboardPage() {
 
     const parsedUser = JSON.parse(userData)
     setUser(parsedUser)
+
+    // Check Shopify Connection Status
+    const checkShopifyStatus = async (userId: string) => {
+      try {
+        const response = await fetch(`/api/shopify/sync?userId=${userId}`)
+        const data = await response.json()
+        setIsShopifyConnected(data.connected)
+      } catch (error) {
+        console.error('Error checking Shopify connection status:', error)
+        setIsShopifyConnected(false)
+      }
+    }
+
+    checkShopifyStatus(parsedUser.id)
+
 
     // Clean up existing stored tasks from localStorage (move to session-based storage)
     localStorage.removeItem(`tasks_${parsedUser.id}`)
@@ -588,6 +606,25 @@ export default function DashboardPage() {
           </div>
           <div className="subtle-divider mt-4" />
         </div>
+
+        {/* Shopify Connection Warning */}
+        {!isShopifyConnected && (
+          <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-8 rounded-md shadow-sm">
+            <div className="flex">
+              <div className="flex-shrink-0">
+                <AlertCircle className="h-5 w-5 text-yellow-400" />
+              </div>
+              <div className="ml-3">
+                <p className="text-sm text-yellow-700">
+                  Shopify is not connected. The AI Agent's task generation will not function until you connect your store.
+                  <Link href="/dashboard/settings" className="font-semibold underline text-yellow-800 hover:text-yellow-900 ml-2">
+                    Connect Now
+                  </Link>
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Error Alert */}
         {taskError && (

@@ -1,4 +1,6 @@
 import { ShopifyConfig, ShopifyConnection, ShopifyOAuthState, ShopifyRateLimitStatus } from '@/types'
+import { promises as fs } from 'fs'
+import path from 'path'
 
 // Shopify Configuration
 export const SHOPIFY_CONFIG: ShopifyConfig = {
@@ -282,49 +284,54 @@ export function formatShopifyDate(dateString: string): Date {
 }
 
 // Connection Management
-export function saveShopifyConnection(connection: ShopifyConnection): void {
+const connectionsFilePath = path.join(process.cwd(), 'shopify_connections.json')
+
+async function readConnectionsFile(): Promise<ShopifyConnection[]> {
   try {
-    const connections = getShopifyConnections()
-    const existingIndex = connections.findIndex(c => c.userId === connection.userId)
-    
-    if (existingIndex >= 0) {
-      connections[existingIndex] = connection
-    } else {
-      connections.push(connection)
+    const data = await fs.readFile(connectionsFilePath, 'utf-8')
+    return JSON.parse(data)
+  } catch (error: any) {
+    if (error.code === 'ENOENT') {
+      return [] // File doesn't exist, return empty array
     }
-    
-    localStorage.setItem('shopify_connections', JSON.stringify(connections))
-  } catch (error) {
-    console.error('Error saving Shopify connection:', error)
+    console.error('Error reading Shopify connections file:', error)
+    throw error // Re-throw other errors
   }
 }
 
-export function getShopifyConnection(userId: string): ShopifyConnection | null {
+async function writeConnectionsFile(connections: ShopifyConnection[]): Promise<void> {
   try {
-    const connections = getShopifyConnections()
-    return connections.find(c => c.userId === userId && c.isActive) || null
+    await fs.writeFile(connectionsFilePath, JSON.stringify(connections, null, 2))
   } catch (error) {
-    console.error('Error retrieving Shopify connection:', error)
-    return null
+    console.error('Error writing Shopify connections file:', error)
+    throw error
   }
 }
 
-export function getShopifyConnections(): ShopifyConnection[] {
-  try {
-    const data = localStorage.getItem('shopify_connections')
-    return data ? JSON.parse(data) : []
-  } catch (error) {
-    console.error('Error retrieving Shopify connections:', error)
-    return []
+export async function saveShopifyConnection(connection: ShopifyConnection): Promise<void> {
+  const connections = await readConnectionsFile()
+  const existingIndex = connections.findIndex(c => c.userId === connection.userId)
+  
+  if (existingIndex >= 0) {
+    connections[existingIndex] = connection
+  } else {
+    connections.push(connection)
   }
+  
+  await writeConnectionsFile(connections)
 }
 
-export function removeShopifyConnection(userId: string): void {
-  try {
-    const connections = getShopifyConnections()
-    const updatedConnections = connections.filter(c => c.userId !== userId)
-    localStorage.setItem('shopify_connections', JSON.stringify(updatedConnections))
-  } catch (error) {
-    console.error('Error removing Shopify connection:', error)
-  }
+export async function getShopifyConnection(userId: string): Promise<ShopifyConnection | null> {
+  const connections = await readConnectionsFile()
+  return connections.find(c => c.userId === userId && c.isActive) || null
+}
+
+export async function getShopifyConnections(): Promise<ShopifyConnection[]> {
+  return await readConnectionsFile()
+}
+
+export async function removeShopifyConnection(userId: string): Promise<void> {
+  let connections = await readConnectionsFile()
+  connections = connections.filter(c => c.userId !== userId)
+  await writeConnectionsFile(connections)
 } 
