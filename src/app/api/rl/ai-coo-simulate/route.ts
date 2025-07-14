@@ -56,6 +56,9 @@ export async function POST(request: NextRequest) {
     // Save to pending approvals
     await savePendingApproval(rlTask)
 
+    // Save recommendation to the format/location Slack script expects
+    await saveRecommendationForSlack(aiCOORecommendation)
+
     // Trigger Slack notification for approval
     await triggerSlackApproval()
 
@@ -234,6 +237,33 @@ async function savePendingApproval(task: any): Promise<void> {
     await writeFile(pendingApprovalsPath, JSON.stringify(pendingApprovals, null, 2))
   } catch (error) {
     console.error('Error saving pending approval:', error)
+  }
+}
+
+async function saveRecommendationForSlack(recommendation: AICOORecommendation): Promise<void> {
+  try {
+    // Save to the path the Slack script expects: rl-agent/recommendations.json
+    const rlAgentPath = join(process.cwd(), 'rl-agent', 'recommendations.json')
+    
+    // Convert AI COO recommendation to the format the Slack script expects
+    const slackRecommendation = {
+      action: recommendation.action,
+      quantity: recommendation.quantity || 0,
+      expected_roi: recommendation.expected_roi,
+      confidence: recommendation.confidence,
+      reasoning: recommendation.reasoning,
+      item: recommendation.category || 'Business Operations',
+      category: recommendation.category || 'business_operations',
+      timestamp: recommendation.timestamp,
+      generated_at: recommendation.timestamp,
+      predicted_profit_usd: recommendation.predicted_profit_usd,
+      alternative_actions: recommendation.alternative_actions || []
+    }
+    
+    await writeFile(rlAgentPath, JSON.stringify(slackRecommendation, null, 2))
+    console.log('✅ Saved recommendation for Slack to:', rlAgentPath)
+  } catch (error) {
+    console.error('Error saving recommendation for Slack:', error)
   }
 }
 

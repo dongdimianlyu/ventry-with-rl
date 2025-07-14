@@ -1,5 +1,5 @@
-[
-  {
+{
+  "0": {
     "id": "ai-coo-1752411794535-tnwoicb24",
     "userId": "test_user",
     "title": "Pricing Strategy: Offer 15% discount on slow-moving Smart Watches",
@@ -154,7 +154,7 @@
       }
     }
   },
-  {
+  "1": {
     "id": "ai-coo-1752412019461-ihmxge7s0",
     "userId": "1",
     "title": "Marketing Optimization: Increase ad spend by $1,500 for summer campaign",
@@ -309,7 +309,7 @@
       }
     }
   },
-  {
+  "2": {
     "id": "ai-coo-1752463056229-s0oohy7gz",
     "userId": "1",
     "title": "Operational Excellence: Conduct comprehensive expense audit",
@@ -464,7 +464,7 @@
       }
     }
   },
-  {
+  "3": {
     "id": "ai-coo-1752463396073-wjrv8j0xs",
     "userId": "1",
     "title": "Financial Operations: financial_invoice 8 units",
@@ -618,5 +618,317 @@
         ]
       }
     }
-  }
-]
+  },
+  "4": {
+    "id": "ai-coo-1752485321625-cdj43a5ap",
+    "userId": "1",
+    "title": "Financial Operations: financial_invoice 8 units",
+    "description": "Agent Recommends Send invoice reminders to 8 overdue customers with 15.8% expected ROI. Analysis covers 5 business functions with 0.85 diversity score.",
+    "action": "financial_invoice",
+    "category": "financial",
+    "quantity": 8,
+    "predicted_roi": "15.8%",
+    "predicted_profit_usd": 3200,
+    "confidence_score": "medium",
+    "explanation": "AI COO analysis identified financial optimization as highest impact opportunity. Send invoice reminders to 8 overdue customers shows 15.8% ROI based on comprehensive business analysis across 5 operational categories.",
+    "priority": "medium",
+    "completed": false,
+    "approved": null,
+    "dueDate": "2025-07-16T09:28:41.625Z",
+    "createdAt": "2025-07-14T09:28:41.625Z",
+    "rlData": {
+      "expected_roi": "15.8%",
+      "predicted_profit_usd": 3200,
+      "confidence": "medium",
+      "reasoning": "AI COO analysis identified financial optimization as highest impact opportunity. Send invoice reminders to 8 overdue customers shows 15.8% ROI based on comprehensive business analysis across 5 operational categories.",
+      "timestamp": "2025-07-14T17:28:41.330249",
+      "category": "financial",
+      "alternative_actions": [
+        {
+          "action": "inventory_restock",
+          "description": "Restock 150 units of Wireless Headphones",
+          "category": "inventory",
+          "quantity": 150,
+          "expected_roi": "18.5%",
+          "predicted_profit_usd": 2250,
+          "confidence": "high"
+        },
+        {
+          "action": "marketing_ad_spend",
+          "description": "Increase ad spend by $1,500 for summer campaign",
+          "category": "marketing",
+          "quantity": 0,
+          "expected_roi": "24.2%",
+          "predicted_profit_usd": 4500,
+          "confidence": "high"
+        },
+        {
+          "action": "pricing_discount",
+          "description": "Offer 15% discount on slow-moving Smart Watches",
+          "category": "pricing",
+          "quantity": 0,
+          "expected_roi": "12.3%",
+          "predicted_profit_usd": 1800,
+          "confidence": "medium"
+        }
+      ],
+      "ai_coo_model": true,
+      "comprehensive_analysis": true,
+      "business_analysis": {
+        "average_profit": "$2,450.00",
+        "recommendation_diversity": "0.85",
+        "total_recommendations": 5,
+        "categories_covered": [
+          "inventory",
+          "marketing",
+          "financial",
+          "pricing",
+          "operational"
+        ]
+      },
+      "recommendations_by_category": {
+        "inventory": [
+          {
+            "action": "inventory_restock",
+            "description": "Restock 150 units of Wireless Headphones",
+            "expected_roi": "18.5%",
+            "predicted_profit_usd": 2250
+          },
+          {
+            "action": "inventory_restock",
+            "description": "Restock 75 units of Bluetooth Speakers",
+            "expected_roi": "16.2%",
+            "predicted_profit_usd": 1650
+          }
+        ],
+        "marketing": [
+          {
+            "action": "marketing_ad_spend",
+            "description": "Increase ad spend by $1,500 for summer campaign",
+            "expected_roi": "24.2%",
+            "predicted_profit_usd": 4500
+          },
+          {
+            "action": "marketing_campaign",
+            "description": "Pause underperforming back-to-school campaign",
+            "expected_roi": "8.5%",
+            "predicted_profit_usd": 850
+          }
+        ],
+        "financial": [
+          {
+            "action": "financial_invoice",
+            "description": "Send invoice reminders to 8 overdue customers",
+            "expected_roi": "15.8%",
+            "predicted_profit_usd": 3200
+          },
+          {
+            "action": "financial_cost_review",
+            "description": "Schedule comprehensive cost review",
+            "expected_roi": "19.4%",
+            "predicted_profit_usd": 3800
+          }
+        ]
+      },
+      "comprehensive_plan": {
+        "immediate_actions": [
+          {
+            "category": "marketing",
+            "action": "Increase ad spend by $1,500 for summer campaign",
+            "roi": "24.2%",
+            "priority": "high"
+          },
+          {
+            "category": "operational",
+            "action": "Conduct comprehensive expense audit",
+            "roi": "22.1%",
+            "priority": "high"
+          }
+        ],
+        "short_term_initiatives": [
+          {
+            "category": "inventory",
+            "action": "Restock 150 units of Wireless Headphones",
+            "roi": "18.5%",
+            "priority": "medium"
+          },
+          {
+            "category": "financial",
+            "action": "Send invoice reminders to 8 overdue customers",
+            "roi": "15.8%",
+            "priority": "medium"
+          }
+        ],
+        "strategic_priorities": [
+          {
+            "category": "pricing",
+            "focus": "Long-term pricing optimization",
+            "priority": "strategic"
+          },
+          {
+            "category": "operational",
+            "focus": "Long-term operational optimization",
+            "priority": "strategic"
+          }
+        ]
+      }
+    }
+  },
+  "5": "approved",
+  "6": {
+    "id": "ai-coo-1752485373200-0f246h54c",
+    "userId": "1",
+    "title": "Pricing Strategy: Offer 15% discount on slow-moving Smart Watches",
+    "description": "Agent Recommends Offer 15% discount on slow-moving Smart Watches with 12.3% expected ROI. Analysis covers 5 business functions with 0.85 diversity score.",
+    "action": "pricing_discount",
+    "category": "pricing",
+    "quantity": 0,
+    "predicted_roi": "12.3%",
+    "predicted_profit_usd": 1800,
+    "confidence_score": "medium",
+    "explanation": "AI COO analysis identified pricing optimization as highest impact opportunity. Offer 15% discount on slow-moving Smart Watches shows 12.3% ROI based on comprehensive business analysis across 5 operational categories.",
+    "priority": "medium",
+    "completed": false,
+    "approved": null,
+    "dueDate": "2025-07-16T09:29:33.200Z",
+    "createdAt": "2025-07-14T09:29:33.201Z",
+    "rlData": {
+      "expected_roi": "12.3%",
+      "predicted_profit_usd": 1800,
+      "confidence": "medium",
+      "reasoning": "AI COO analysis identified pricing optimization as highest impact opportunity. Offer 15% discount on slow-moving Smart Watches shows 12.3% ROI based on comprehensive business analysis across 5 operational categories.",
+      "timestamp": "2025-07-14T17:29:32.917254",
+      "category": "pricing",
+      "alternative_actions": [
+        {
+          "action": "inventory_restock",
+          "description": "Restock 150 units of Wireless Headphones",
+          "category": "inventory",
+          "quantity": 150,
+          "expected_roi": "18.5%",
+          "predicted_profit_usd": 2250,
+          "confidence": "high"
+        },
+        {
+          "action": "marketing_ad_spend",
+          "description": "Increase ad spend by $1,500 for summer campaign",
+          "category": "marketing",
+          "quantity": 0,
+          "expected_roi": "24.2%",
+          "predicted_profit_usd": 4500,
+          "confidence": "high"
+        },
+        {
+          "action": "financial_invoice",
+          "description": "Send invoice reminders to 8 overdue customers",
+          "category": "financial",
+          "quantity": 8,
+          "expected_roi": "15.8%",
+          "predicted_profit_usd": 3200,
+          "confidence": "medium"
+        }
+      ],
+      "ai_coo_model": true,
+      "comprehensive_analysis": true,
+      "business_analysis": {
+        "average_profit": "$2,450.00",
+        "recommendation_diversity": "0.85",
+        "total_recommendations": 5,
+        "categories_covered": [
+          "inventory",
+          "marketing",
+          "financial",
+          "pricing",
+          "operational"
+        ]
+      },
+      "recommendations_by_category": {
+        "inventory": [
+          {
+            "action": "inventory_restock",
+            "description": "Restock 150 units of Wireless Headphones",
+            "expected_roi": "18.5%",
+            "predicted_profit_usd": 2250
+          },
+          {
+            "action": "inventory_restock",
+            "description": "Restock 75 units of Bluetooth Speakers",
+            "expected_roi": "16.2%",
+            "predicted_profit_usd": 1650
+          }
+        ],
+        "marketing": [
+          {
+            "action": "marketing_ad_spend",
+            "description": "Increase ad spend by $1,500 for summer campaign",
+            "expected_roi": "24.2%",
+            "predicted_profit_usd": 4500
+          },
+          {
+            "action": "marketing_campaign",
+            "description": "Pause underperforming back-to-school campaign",
+            "expected_roi": "8.5%",
+            "predicted_profit_usd": 850
+          }
+        ],
+        "financial": [
+          {
+            "action": "financial_invoice",
+            "description": "Send invoice reminders to 8 overdue customers",
+            "expected_roi": "15.8%",
+            "predicted_profit_usd": 3200
+          },
+          {
+            "action": "financial_cost_review",
+            "description": "Schedule comprehensive cost review",
+            "expected_roi": "19.4%",
+            "predicted_profit_usd": 3800
+          }
+        ]
+      },
+      "comprehensive_plan": {
+        "immediate_actions": [
+          {
+            "category": "marketing",
+            "action": "Increase ad spend by $1,500 for summer campaign",
+            "roi": "24.2%",
+            "priority": "high"
+          },
+          {
+            "category": "operational",
+            "action": "Conduct comprehensive expense audit",
+            "roi": "22.1%",
+            "priority": "high"
+          }
+        ],
+        "short_term_initiatives": [
+          {
+            "category": "inventory",
+            "action": "Restock 150 units of Wireless Headphones",
+            "roi": "18.5%",
+            "priority": "medium"
+          },
+          {
+            "category": "financial",
+            "action": "Send invoice reminders to 8 overdue customers",
+            "roi": "15.8%",
+            "priority": "medium"
+          }
+        ],
+        "strategic_priorities": [
+          {
+            "category": "pricing",
+            "focus": "Long-term pricing optimization",
+            "priority": "strategic"
+          },
+          {
+            "category": "operational",
+            "focus": "Long-term operational optimization",
+            "priority": "strategic"
+          }
+        ]
+      }
+    }
+  },
+  "status": "approved"
+}
