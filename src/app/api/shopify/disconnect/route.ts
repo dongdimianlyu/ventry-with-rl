@@ -40,19 +40,6 @@ export async function POST(request: NextRequest) {
     // Remove connection from storage
     removeShopifyConnection(userId)
 
-    // Clean up stored insights and summaries
-    try {
-      const existingInsights = JSON.parse(localStorage.getItem('shopify_insights') || '[]')
-      const filteredInsights = existingInsights.filter((i: any) => i.userId !== userId)
-      localStorage.setItem('shopify_insights', JSON.stringify(filteredInsights))
-
-      const existingSummaries = JSON.parse(localStorage.getItem('shopify_insight_summaries') || '[]')
-      const filteredSummaries = existingSummaries.filter((s: any) => s.userId !== userId)
-      localStorage.setItem('shopify_insight_summaries', JSON.stringify(filteredSummaries))
-    } catch (error) {
-      console.warn('Failed to clean up stored data:', error)
-    }
-
     return NextResponse.json({
       success: true,
       message: 'Shopify connection disconnected successfully'

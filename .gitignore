@@ -40,3 +40,32 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .env
+
+# Secret configuration files (allow template files with ${ENV_VAR} placeholders)
+# slack_config.json - now contains only ${ENV_VAR} placeholders
+# quickbooks_config.json - now contains only ${ENV_VAR} placeholders
+*.log
+*.pid
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
