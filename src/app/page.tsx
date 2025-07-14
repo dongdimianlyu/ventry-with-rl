@@ -186,7 +186,8 @@ export default function LandingPage() {
   }
 
   const handleFooterDemoSubmit = async () => {
-    if (!footerEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(footerEmail)) {
+    const email = footerEmail.trim();
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       setSubmitStatus('error');
       setTimeout(() => setSubmitStatus(null), 3000);
       return;
@@ -198,7 +199,7 @@ export default function LandingPage() {
       const response = await fetch('/api/demo-request', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: footerEmail, type: 'book_demo' })
+        body: JSON.stringify({ email, type: 'book_demo' })
       });
 
       if (response.ok) {
