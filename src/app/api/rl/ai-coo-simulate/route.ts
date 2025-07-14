@@ -272,7 +272,8 @@ async function triggerSlackApproval(): Promise<{ success: boolean; error?: strin
     const slackScript = join(process.cwd(), 'simple_slack_approval.py')
     
     return new Promise((resolve) => {
-      const slackProcess = spawn('python3', [slackScript], {
+      // Call with --send argument to actually send the notification
+      const slackProcess = spawn('python3', [slackScript, '--send'], {
         cwd: process.cwd(),
         stdio: ['pipe', 'pipe', 'pipe']
       })
@@ -281,24 +282,33 @@ async function triggerSlackApproval(): Promise<{ success: boolean; error?: strin
       let stderr = ''
       
       slackProcess.stdout.on('data', (data) => {
-        stdout += data.toString()
+        const output = data.toString()
+        stdout += output
+        console.log('[SLACK STDOUT]:', output.trim())
       })
       
       slackProcess.stderr.on('data', (data) => {
-        stderr += data.toString()
+        const output = data.toString()
+        stderr += output
+        console.log('[SLACK STDERR]:', output.trim())
       })
       
       slackProcess.on('close', (code) => {
+        console.log(`[SLACK PROCESS] Finished with code: ${code}`)
+        console.log(`[SLACK STDOUT FULL]:`, stdout.trim())
+        if (stderr) console.log(`[SLACK STDERR FULL]:`, stderr.trim())
+        
         if (code === 0) {
+          console.log('✅ Slack notification sent successfully')
           resolve({ success: true })
         } else {
-          console.error('Slack notification failed:', stderr)
-          resolve({ success: false, error: stderr })
+          console.error('❌ Slack notification failed with code:', code)
+          resolve({ success: false, error: stderr.trim() || `Process exited with code ${code}` })
         }
       })
       
       slackProcess.on('error', (error) => {
-        console.error('Failed to start Slack process:', error)
+        console.error('❌ Failed to start Slack process:', error)
         resolve({ success: false, error: error.message })
       })
     })

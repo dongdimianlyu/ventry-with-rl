@@ -118,7 +118,7 @@ export function RLTaskCard({ task, onComplete, onApprove, onReject }: RLTaskCard
               <div className="flex items-center gap-2 mb-3">
                 <div className="flex items-center gap-2 px-3 py-1 bg-[#9B0E8D] text-white rounded-full text-xs font-semibold">
                   <Boxes className="h-3 w-3" />
-                  Smart Suggestion
+                  Agent suggests
                 </div>
                 {task.category && (
                   <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${getCategoryColor(task.category)}`}>
@@ -243,7 +243,7 @@ export function RLTaskCard({ task, onComplete, onApprove, onReject }: RLTaskCard
                     <div className="flex items-center gap-3 mb-3">
                       <div className="flex items-center gap-2 px-3 py-1 bg-[#9B0E8D] text-white rounded-full text-xs font-semibold">
                         <Boxes className="h-3 w-3" />
-                        Smart Suggestion
+                        Agent suggests
                       </div>
                       <span className="text-sm text-gray-600">
                         {formatCompactDateTime(task.dueDate)}
