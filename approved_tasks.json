@@ -168,5 +168,55 @@
     },
     "completed": true,
     "completed_at": "2025-07-14T09:35:37.489Z"
+  },
+  {
+    "id": "ai-coo-1752485980907-y41mo7o0p",
+    "status": "approved",
+    "approved_at": "2025-07-14T09:40:12.729Z",
+    "approved_by": "1",
+    "approved_via": "UI",
+    "recommendation": {
+      "action": "financial_invoice",
+      "quantity": 8,
+      "expected_roi": "15.8%",
+      "confidence": "medium",
+      "reasoning": "Agent analysis identified financial optimization as highest impact opportunity. Send invoice reminders to 8 overdue customers shows 15.8% ROI based on comprehensive business analysis across 5 operational categories.",
+      "item": "financial",
+      "category": "financial",
+      "timestamp": "2025-07-14T17:39:40.585753",
+      "generated_at": "2025-07-14T17:39:40.585753",
+      "predicted_profit_usd": 3200,
+      "alternative_actions": [
+        {
+          "action": "inventory_restock",
+          "description": "Restock 150 units of Wireless Headphones",
+          "category": "inventory",
+          "quantity": 150,
+          "expected_roi": "18.5%",
+          "predicted_profit_usd": 2250,
+          "confidence": "high"
+        },
+        {
+          "action": "marketing_ad_spend",
+          "description": "Increase ad spend by $1,500 for summer campaign",
+          "category": "marketing",
+          "quantity": 0,
+          "expected_roi": "24.2%",
+          "predicted_profit_usd": 4500,
+          "confidence": "high"
+        },
+        {
+          "action": "pricing_discount",
+          "description": "Offer 15% discount on slow-moving Smart Watches",
+          "category": "pricing",
+          "quantity": 0,
+          "expected_roi": "12.3%",
+          "predicted_profit_usd": 1800,
+          "confidence": "medium"
+        }
+      ]
+    },
+    "completed": true,
+    "completed_at": "2025-07-14T09:40:15.521Z"
   }
 ]

@@ -1,15 +1,24 @@
 {
-  "action": "inventory_restock",
-  "quantity": 150,
-  "expected_roi": "18.5%",
-  "confidence": "high",
-  "reasoning": "AI COO analysis identified inventory optimization as highest impact opportunity. Restock 150 units of Wireless Headphones shows 18.5% ROI based on comprehensive business analysis across 5 operational categories.",
-  "item": "inventory",
-  "category": "inventory",
-  "timestamp": "2025-07-14T17:33:20.071426",
-  "generated_at": "2025-07-14T17:33:20.071426",
-  "predicted_profit_usd": 2250,
+  "action": "pricing_discount",
+  "quantity": 0,
+  "expected_roi": "12.3%",
+  "confidence": "medium",
+  "reasoning": "Agent analysis identified pricing optimization as highest impact opportunity. Offer 15% discount on slow-moving Smart Watches shows 12.3% ROI based on comprehensive business analysis across 5 operational categories.",
+  "item": "pricing",
+  "category": "pricing",
+  "timestamp": "2025-07-14T18:11:29.705028",
+  "generated_at": "2025-07-14T18:11:29.705028",
+  "predicted_profit_usd": 1800,
   "alternative_actions": [
+    {
+      "action": "inventory_restock",
+      "description": "Restock 150 units of Wireless Headphones",
+      "category": "inventory",
+      "quantity": 150,
+      "expected_roi": "18.5%",
+      "predicted_profit_usd": 2250,
+      "confidence": "high"
+    },
     {
       "action": "marketing_ad_spend",
       "description": "Increase ad spend by $1,500 for summer campaign",
@@ -26,15 +35,6 @@
       "quantity": 8,
       "expected_roi": "15.8%",
       "predicted_profit_usd": 3200,
-      "confidence": "medium"
-    },
-    {
-      "action": "pricing_discount",
-      "description": "Offer 15% discount on slow-moving Smart Watches",
-      "category": "pricing",
-      "quantity": 0,
-      "expected_roi": "12.3%",
-      "predicted_profit_usd": 1800,
       "confidence": "medium"
     }
   ]

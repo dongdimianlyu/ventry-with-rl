@@ -484,5 +484,101 @@
         }
       ]
     }
+  },
+  {
+    "id": "ai-coo-1752485958353-etfaj3opc",
+    "status": "rejected",
+    "rejected_at": "2025-07-14T09:39:23.387Z",
+    "rejected_by": "1",
+    "rejected_via": "UI",
+    "recommendation": {
+      "action": "inventory_restock",
+      "quantity": 150,
+      "expected_roi": "18.5%",
+      "confidence": "high",
+      "reasoning": "AI COO analysis identified inventory optimization as highest impact opportunity. Restock 150 units of Wireless Headphones shows 18.5% ROI based on comprehensive business analysis across 5 operational categories.",
+      "item": "inventory",
+      "category": "inventory",
+      "timestamp": "2025-07-14T17:39:18.010273",
+      "generated_at": "2025-07-14T17:39:18.010273",
+      "predicted_profit_usd": 2250,
+      "alternative_actions": [
+        {
+          "action": "marketing_ad_spend",
+          "description": "Increase ad spend by $1,500 for summer campaign",
+          "category": "marketing",
+          "quantity": 0,
+          "expected_roi": "24.2%",
+          "predicted_profit_usd": 4500,
+          "confidence": "high"
+        },
+        {
+          "action": "financial_invoice",
+          "description": "Send invoice reminders to 8 overdue customers",
+          "category": "financial",
+          "quantity": 8,
+          "expected_roi": "15.8%",
+          "predicted_profit_usd": 3200,
+          "confidence": "medium"
+        },
+        {
+          "action": "pricing_discount",
+          "description": "Offer 15% discount on slow-moving Smart Watches",
+          "category": "pricing",
+          "quantity": 0,
+          "expected_roi": "12.3%",
+          "predicted_profit_usd": 1800,
+          "confidence": "medium"
+        }
+      ]
+    }
+  },
+  {
+    "id": "ai-coo-1752486643789-pty90fee9",
+    "status": "rejected",
+    "rejected_at": "2025-07-14T09:51:04.877Z",
+    "rejected_by": "1",
+    "rejected_via": "UI",
+    "recommendation": {
+      "action": "inventory_restock",
+      "quantity": 150,
+      "expected_roi": "18.5%",
+      "confidence": "high",
+      "reasoning": "AI COO analysis identified inventory optimization as highest impact opportunity. Restock 150 units of Wireless Headphones shows 18.5% ROI based on comprehensive business analysis across 5 operational categories.",
+      "item": "inventory",
+      "category": "inventory",
+      "timestamp": "2025-07-14T17:50:43.469003",
+      "generated_at": "2025-07-14T17:50:43.469003",
+      "predicted_profit_usd": 2250,
+      "alternative_actions": [
+        {
+          "action": "marketing_ad_spend",
+          "description": "Increase ad spend by $1,500 for summer campaign",
+          "category": "marketing",
+          "quantity": 0,
+          "expected_roi": "24.2%",
+          "predicted_profit_usd": 4500,
+          "confidence": "high"
+        },
+        {
+          "action": "financial_invoice",
+          "description": "Send invoice reminders to 8 overdue customers",
+          "category": "financial",
+          "quantity": 8,
+          "expected_roi": "15.8%",
+          "predicted_profit_usd": 3200,
+          "confidence": "medium"
+        },
+        {
+          "action": "pricing_discount",
+          "description": "Offer 15% discount on slow-moving Smart Watches",
+          "category": "pricing",
+          "quantity": 0,
+          "expected_roi": "12.3%",
+          "predicted_profit_usd": 1800,
+          "confidence": "medium"
+        }
+      ]
+    }
   }
 ]
