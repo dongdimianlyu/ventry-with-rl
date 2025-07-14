@@ -592,9 +592,9 @@ export default function LandingPage() {
             <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
               See It In Action
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              [Description of live demo showing AI task generation, Slack approvals, and QuickBooks execution]
-            </p>
+            
+            
+
           </motion.div>
           
           <div className="grid lg:grid-cols-2 gap-8 mb-12">
@@ -747,7 +747,7 @@ export default function LandingPage() {
               Powerful Features for Your Business
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Advanced AI capabilities designed to optimize your operations and maximize ROI
+              Advanced reinforcement learning model designed to optimize your operations and maximize ROI, and a robust combination of LLM and RAG to to create actionable tasks for your business daily.
             </p>
           </motion.div>
           
