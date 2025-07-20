@@ -385,7 +385,7 @@ export default function DashboardPage() {
     setIsSimulatingRL(true)
     setSlackStatus('')
     try {
-      // Use the AI COO system for comprehensive business operations
+      // Use the Agent system for comprehensive business operations
       const response = await fetch('/api/rl/ai-coo-simulate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -397,7 +397,18 @@ export default function DashboardPage() {
 
       if (response.ok) {
         const data = await response.json()
-        console.log('AI COO API Response:', data)
+        
+        // Surgically replace "AI COO" with "Agent" in the task description and explanation
+        if (data.task) {
+          if (data.task.description) {
+            data.task.description = data.task.description.replace(/AI COO/g, 'Agent');
+          }
+          if (data.task.explanation) {
+            data.task.explanation = data.task.explanation.replace(/AI COO/g, 'Agent');
+          }
+        }
+
+        console.log('Agent API Response:', data)
         
         if (data.task) {
           console.log('Adding task to pending tasks:', data.task)
@@ -410,27 +421,27 @@ export default function DashboardPage() {
         }
         
         if (data.success) {
-          setSlackStatus('AI COO recommendation generated and sent for approval - you can also approve here in the UI')
+          setSlackStatus('Agent recommendation generated and sent for approval - you can also approve here in the UI')
           // Check for pending approvals after sending
           setTimeout(() => checkPendingSlackApprovals(), 1000)
         } else {
-          console.error('AI COO API failed:', data.error)
-          setSlackStatus(`AI COO failed: ${data.error || 'Unknown error'}`)
+          console.error('Agent API failed:', data.error)
+          setSlackStatus(`Agent failed: ${data.error || 'Unknown error'}`)
         }
         
-        // Show AI COO features status
+        // Show Agent features status
         if (data.ai_coo_features) {
-          console.log('AI COO features:', data.ai_coo_features)
+          console.log('Agent features:', data.ai_coo_features)
         }
       } else {
-        console.error('AI COO API response not ok:', response.status, response.statusText)
+        console.error('Agent API response not ok:', response.status, response.statusText)
         const errorData = await response.json().catch(() => ({}))
         console.error('Error data:', errorData)
-        setSlackStatus(`AI COO API error: ${response.status} ${response.statusText}`)
+        setSlackStatus(`Agent API error: ${response.status} ${response.statusText}`)
       }
     } catch (error) {
-      console.error('Error with AI COO system:', error)
-      setSlackStatus('Error with AI COO system - falling back to enhanced simulation')
+      console.error('Error with Agent system:', error)
+      setSlackStatus('Error with Agent system - falling back to enhanced simulation')
       
       // Fallback to enhanced simulation
       try {

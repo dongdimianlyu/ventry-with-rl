@@ -60,14 +60,14 @@ def generate_ai_coo_recommendation(user_id: str, use_ai_coo: bool = True) -> Dic
         if 'confidence' not in recommendation:
             recommendation['confidence'] = 'medium'
         if 'reasoning' not in recommendation:
-            recommendation['reasoning'] = 'AI COO analysis of current business conditions'
+            recommendation['reasoning'] = 'Agent analysis of current business conditions'
         if 'timestamp' not in recommendation:
             recommendation['timestamp'] = datetime.now().isoformat()
         
         return recommendation
         
     except Exception as e:
-        print(f"Error generating AI COO recommendation: {e}", file=sys.stderr)
+        print(f"Error generating Agent recommendation: {e}", file=sys.stderr)
         
         # Return fallback recommendation
         return {
@@ -78,7 +78,7 @@ def generate_ai_coo_recommendation(user_id: str, use_ai_coo: bool = True) -> Dic
             'expected_roi': '0%',
             'predicted_profit_usd': 0,
             'confidence': 'low',
-            'reasoning': f'Unable to generate AI COO recommendation: {str(e)}',
+            'reasoning': f'Unable to generate Agent recommendation: {str(e)}',
             'timestamp': datetime.now().isoformat(),
             'error': str(e)
         }
@@ -249,13 +249,14 @@ def create_mock_comprehensive_recommendation(user_id: str) -> Dict[str, Any]:
         'expected_roi': primary_op['expected_roi'],
         'predicted_profit_usd': primary_op['predicted_profit_usd'],
         'confidence': primary_op['confidence'],
-        'reasoning': f"AI COO analysis identified {primary_op['category']} optimization as highest impact opportunity. {primary_op['description']} shows {primary_op['expected_roi']} ROI based on comprehensive business analysis across 5 operational categories.",
+        'reasoning': f"Agent analysis identified {primary_op['category']} optimization as highest impact opportunity. {primary_op['description']} shows {primary_op['expected_roi']} ROI based on comprehensive business analysis across 5 operational categories.",
         'timestamp': datetime.now().isoformat(),
         'model_version': 'ai_coo_v1',
+        'user_id': user_id,
+        'alternative_actions': alternative_actions,
         'business_analysis': business_analysis,
         'recommendations_by_category': recommendations_by_category,
-        'comprehensive_plan': comprehensive_plan,
-        'alternative_actions': alternative_actions
+        'comprehensive_plan': comprehensive_plan
     }
 
 
