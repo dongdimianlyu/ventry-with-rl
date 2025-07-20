@@ -1,14 +1,14 @@
 {
-  "action": "pricing_discount",
+  "action": "operational_expense_check",
   "quantity": 0,
-  "expected_roi": "12.3%",
-  "confidence": "medium",
-  "reasoning": "Agent analysis identified pricing optimization as highest impact opportunity. Offer 15% discount on slow-moving Smart Watches shows 12.3% ROI based on comprehensive business analysis across 5 operational categories.",
-  "item": "pricing",
-  "category": "pricing",
-  "timestamp": "2025-07-14T18:11:29.705028",
-  "generated_at": "2025-07-14T18:11:29.705028",
-  "predicted_profit_usd": 1800,
+  "expected_roi": "22.1%",
+  "confidence": "high",
+  "reasoning": "AI COO analysis identified operational optimization as highest impact opportunity. Conduct comprehensive expense audit shows 22.1% ROI based on comprehensive business analysis across 5 operational categories.",
+  "item": "operational",
+  "category": "operational",
+  "timestamp": "2025-07-20T21:08:55.116963",
+  "generated_at": "2025-07-20T21:08:55.116963",
+  "predicted_profit_usd": 2800,
   "alternative_actions": [
     {
       "action": "inventory_restock",

@@ -580,5 +580,53 @@
         }
       ]
     }
+  },
+  {
+    "id": "ai-coo-1752502249722-4jaqyn55v",
+    "status": "rejected",
+    "rejected_at": "2025-07-14T14:10:54.056Z",
+    "rejected_by": "1",
+    "rejected_via": "UI",
+    "recommendation": {
+      "action": "operational_expense_check",
+      "quantity": 0,
+      "expected_roi": "22.1%",
+      "confidence": "high",
+      "reasoning": "AI COO analysis identified operational optimization as highest impact opportunity. Conduct comprehensive expense audit shows 22.1% ROI based on comprehensive business analysis across 5 operational categories.",
+      "item": "operational",
+      "category": "operational",
+      "timestamp": "2025-07-14T22:10:49.470020",
+      "generated_at": "2025-07-14T22:10:49.470020",
+      "predicted_profit_usd": 2800,
+      "alternative_actions": [
+        {
+          "action": "inventory_restock",
+          "description": "Restock 150 units of Wireless Headphones",
+          "category": "inventory",
+          "quantity": 150,
+          "expected_roi": "18.5%",
+          "predicted_profit_usd": 2250,
+          "confidence": "high"
+        },
+        {
+          "action": "marketing_ad_spend",
+          "description": "Increase ad spend by $1,500 for summer campaign",
+          "category": "marketing",
+          "quantity": 0,
+          "expected_roi": "24.2%",
+          "predicted_profit_usd": 4500,
+          "confidence": "high"
+        },
+        {
+          "action": "financial_invoice",
+          "description": "Send invoice reminders to 8 overdue customers",
+          "category": "financial",
+          "quantity": 8,
+          "expected_roi": "15.8%",
+          "predicted_profit_usd": 3200,
+          "confidence": "medium"
+        }
+      ]
+    }
   }
 ]

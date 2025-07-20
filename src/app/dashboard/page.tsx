@@ -21,7 +21,6 @@ export default function DashboardPage() {
   const [user, setUser] = useState<User | null>(null)
   const [goals, setGoals] = useState<Goal[]>([])
   const [tasks, setTasks] = useState<Task[]>([])
-  const [rlTasks, setRlTasks] = useState<RLTask[]>([])
   const [pendingRlTasks, setPendingRlTasks] = useState<RLTask[]>([])
   const [team, setTeam] = useState<TeamMember[]>([])
   const [, setTeamTasks] = useState<Record<string, TeamTask[]>>({})
@@ -104,8 +103,7 @@ export default function DashboardPage() {
       setTeamTasks(JSON.parse(savedTeamTasks))
     }
 
-    // Load approved RL tasks and check for pending approvals
-    loadApprovedRLTasks(parsedUser.id)
+    // Check for pending approvals
     checkPendingSlackApprovals()
     
     // Set up periodic sync for Slack status updates
@@ -273,20 +271,7 @@ export default function DashboardPage() {
     sessionStorage.setItem(`tasks_${user.id}`, JSON.stringify(updatedTasks))
   }
 
-  const loadApprovedRLTasks = async (userId: string) => {
-    try {
-      const response = await fetch(`/api/rl/approved-tasks?userId=${userId}`)
-      if (response.ok) {
-        const data = await response.json()
-        if (data.tasks && data.tasks.length > 0) {
-          setRlTasks(data.tasks)
-          // Don't save to localStorage - these should only show when freshly approved
-        }
-      }
-    } catch (error) {
-      console.error('Error loading approved RL tasks:', error)
-    }
-  }
+  // Removed loadApprovedRLTasks - no longer needed since tasks disappear after approval
 
   const checkPendingSlackApprovals = async () => {
     try {
@@ -315,10 +300,9 @@ export default function DashboardPage() {
         const data = await response.json()
         
         if (data.hasUpdates) {
-          // Add new approved tasks from Slack
+          // Track approved tasks from Slack (tasks execute automatically after approval)
           if (data.newApprovals.length > 0) {
-            setRlTasks(prev => [...prev, ...data.newApprovals])
-            setSlackStatus(`✅ ${data.newApprovals.length} task(s) approved via Slack`)
+            setSlackStatus(`✅ ${data.newApprovals.length} task(s) approved via Slack and executed automatically`)
           }
           
           // Remove pending tasks if they were rejected via Slack
@@ -357,20 +341,12 @@ export default function DashboardPage() {
       })
 
       if (response.ok) {
-        // Move task from pending to approved
-        const taskToApprove = pendingRlTasks.find(task => task.id === taskId)
-        if (taskToApprove) {
-          const approvedTask = { ...taskToApprove, approved: true }
-          const updatedPendingTasks = pendingRlTasks.filter(task => task.id !== taskId)
-          const updatedApprovedTasks = [...rlTasks, approvedTask]
-          
-          setPendingRlTasks(updatedPendingTasks)
-          setRlTasks(updatedApprovedTasks)
-          
-          // Don't save RL tasks to localStorage
-          
-          setSlackStatus('Task approved via UI - notification sent to Slack')
-        }
+        // Remove task from pending entirely after approval
+        const updatedPendingTasks = pendingRlTasks.filter(task => task.id !== taskId)
+        setPendingRlTasks(updatedPendingTasks)
+        
+        // Don't move to approved section - remove completely after approval
+        setSlackStatus('Task approved via UI - notification sent to Slack. Task executed and completed.')
       }
     } catch (error) {
       console.error('Error approving RL task:', error)
@@ -388,40 +364,20 @@ export default function DashboardPage() {
       })
 
       if (response.ok) {
-        // Remove task from pending
+        // Remove task from pending entirely after rejection
         const updatedPendingTasks = pendingRlTasks.filter(task => task.id !== taskId)
         setPendingRlTasks(updatedPendingTasks)
         
         // Don't save RL tasks to localStorage
         
-        setSlackStatus('Task rejected via UI - notification sent to Slack')
+        setSlackStatus('Task rejected via UI - notification sent to Slack. Task discarded.')
       }
     } catch (error) {
       console.error('Error rejecting RL task:', error)
     }
   }
 
-  const handleRLComplete = async (taskId: string) => {
-    if (!user) return
-
-    try {
-      const response = await fetch('/api/rl/approved-tasks', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'complete', taskId })
-      })
-
-      if (response.ok) {
-        // Remove the completed task from the list entirely
-        const updatedRlTasks = rlTasks.filter(task => task.id !== taskId)
-        setRlTasks(updatedRlTasks)
-        
-        // Don't save RL tasks to sessionStorage
-      }
-    } catch (error) {
-      console.error('Error completing RL task:', error)
-    }
-  }
+  // Removed handleRLComplete - no longer needed since tasks disappear after approval
 
   const simulateRLEvent = async () => {
     if (!user) return
@@ -573,7 +529,6 @@ export default function DashboardPage() {
               <Button
                 onClick={() => {
                   if (user) {
-                    loadApprovedRLTasks(user.id)
                     checkPendingSlackApprovals()
                     syncSlackStatus()
                   }
@@ -681,29 +636,7 @@ export default function DashboardPage() {
                 </div>
               )}
 
-              {/* Approved Agent Suggestions */}
-              {rlTasks.length > 0 && (
-                <div className="space-y-6 mb-8">
-                  <h4 className="text-lg font-semibold text-gray-900 flex items-center mb-4">
-                    <div className="w-6 h-6 bg-green-500 rounded-lg flex items-center justify-center mr-3">
-                      <CheckCircle className="h-3 w-3 text-white" />
-                    </div>
-                    Approved Tasks
-                  </h4>
-                  <div className="space-y-6 transition-all duration-500">
-                    {rlTasks.map((rlTask) => (
-                      <div key={rlTask.id} className="transition-all duration-500">
-                        <RLTaskCard 
-                          task={rlTask} 
-                          onComplete={handleRLComplete}
-                        />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {(tasks.length === 0 && rlTasks.length === 0 && pendingRlTasks.length === 0) ? (
+              {(tasks.length === 0 && pendingRlTasks.length === 0) ? (
                 <Card className="refined-card text-center py-16 bg-gradient-to-br from-white to-gray-50">
                   <CardContent>
                                       <div className="w-16 h-16 bg-brand-accent/20 rounded-2xl flex items-center justify-center mx-auto mb-6">

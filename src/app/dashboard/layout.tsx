@@ -29,24 +29,33 @@ export default function DashboardLayout({
     const parsedUser = JSON.parse(userData)
     setUser(parsedUser)
 
-    // Check if onboarding is complete
-    const onboardingData = localStorage.getItem(`onboarding_${parsedUser.id}`)
-    const integrationsData = localStorage.getItem(`integrations_onboarding_${parsedUser.id}`)
+    // Check if we're on localhost - if so, always show onboarding
+    const isLocalhost = typeof window !== 'undefined' && 
+      (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
     
-    if (!onboardingData) {
+    if (isLocalhost) {
+      // Force onboarding flow on localhost
       setShowOnboarding(true)
     } else {
-      try {
-        const profile = JSON.parse(onboardingData) as CompanyProfile
-        if (!profile.isOnboardingComplete) {
-          setShowOnboarding(true)
-        } else if (!integrationsData) {
-          // Main onboarding complete, but integrations onboarding not shown yet
-          setShowIntegrationsOnboarding(true)
-        }
-      } catch (error) {
-        console.error('Error parsing onboarding data:', error)
+      // Normal onboarding logic for production
+      const onboardingData = localStorage.getItem(`onboarding_${parsedUser.id}`)
+      const integrationsData = localStorage.getItem(`integrations_onboarding_${parsedUser.id}`)
+      
+      if (!onboardingData) {
         setShowOnboarding(true)
+      } else {
+        try {
+          const profile = JSON.parse(onboardingData) as CompanyProfile
+          if (!profile.isOnboardingComplete) {
+            setShowOnboarding(true)
+          } else if (!integrationsData) {
+            // Main onboarding complete, but integrations onboarding not shown yet
+            setShowIntegrationsOnboarding(true)
+          }
+        } catch (error) {
+          console.error('Error parsing onboarding data:', error)
+          setShowOnboarding(true)
+        }
       }
     }
 
