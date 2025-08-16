@@ -35,40 +35,42 @@ export default function DashboardLayout({
         id: userProfile.uid,
         email: userProfile.email,
         name: userProfile.name,
+        createdAt: userProfile.createdAt,
       }
       setUser(convertedUser)
 
-    // Check if we're on localhost - if so, always show onboarding
-    const isLocalhost = typeof window !== 'undefined' && 
-      (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-    
-    if (isLocalhost) {
-      // Force onboarding flow on localhost
-      setShowOnboarding(true)
-    } else {
-      // Normal onboarding logic for production
-      const onboardingData = localStorage.getItem(`onboarding_${userProfile.uid}`)
-      const integrationsData = localStorage.getItem(`integrations_onboarding_${userProfile.uid}`)
+      // Check if we're on localhost - if so, always show onboarding
+      const isLocalhost = typeof window !== 'undefined' && 
+        (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
       
-      if (!onboardingData) {
+      if (isLocalhost) {
+        // Force onboarding flow on localhost
         setShowOnboarding(true)
       } else {
-        try {
-          const profile = JSON.parse(onboardingData) as CompanyProfile
-          if (!profile.isOnboardingComplete) {
-            setShowOnboarding(true)
-          } else if (!integrationsData) {
-            // Main onboarding complete, but integrations onboarding not shown yet
-            setShowIntegrationsOnboarding(true)
-          }
-        } catch (error) {
-          console.error('Error parsing onboarding data:', error)
+        // Normal onboarding logic for production
+        const onboardingData = localStorage.getItem(`onboarding_${userProfile.uid}`)
+        const integrationsData = localStorage.getItem(`integrations_onboarding_${userProfile.uid}`)
+        
+        if (!onboardingData) {
           setShowOnboarding(true)
+        } else {
+          try {
+            const profile = JSON.parse(onboardingData) as CompanyProfile
+            if (!profile.isOnboardingComplete) {
+              setShowOnboarding(true)
+            } else if (!integrationsData) {
+              // Main onboarding complete, but integrations onboarding not shown yet
+              setShowIntegrationsOnboarding(true)
+            }
+          } catch (error) {
+            console.error('Error parsing onboarding data:', error)
+            setShowOnboarding(true)
+          }
         }
       }
-    }
 
-    setLoading(false)
+      setLoading(false)
+    }
   }, [authLoading, firebaseUser, userProfile, router])
 
   const handleOnboardingComplete = (profile: CompanyProfile) => {

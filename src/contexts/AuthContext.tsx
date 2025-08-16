@@ -52,10 +52,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!auth) {
+      console.warn('Firebase Auth not initialized');
+      setLoading(false);
+      return;
+    }
+
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setUser(user);
       
-      if (user) {
+      if (user && db) {
         // Fetch user profile from Firestore
         try {
           const userDocRef = doc(db, 'users', user.uid);
@@ -106,6 +112,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const signup = async (email: string, password: string, name: string) => {
+    if (!auth || !db) {
+      throw new Error('Firebase not initialized');
+    }
+    
     try {
       const { user } = await createUserWithEmailAndPassword(auth, email, password);
       
@@ -131,6 +141,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const login = async (email: string, password: string) => {
+    if (!auth) {
+      throw new Error('Firebase not initialized');
+    }
+    
     try {
       await signInWithEmailAndPassword(auth, email, password);
     } catch (error: any) {
@@ -140,6 +154,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const logout = async () => {
+    if (!auth) {
+      throw new Error('Firebase not initialized');
+    }
+    
     try {
       await signOut(auth);
     } catch (error) {
@@ -149,6 +167,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const resetPassword = async (email: string) => {
+    if (!auth) {
+      throw new Error('Firebase not initialized');
+    }
+    
     try {
       await sendPasswordResetEmail(auth, email);
     } catch (error: any) {
@@ -159,6 +181,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const updateUserProfile = async (data: Partial<UserProfile>) => {
     if (!user) throw new Error('No user logged in');
+    if (!db) throw new Error('Firebase not initialized');
     
     try {
       const userDocRef = doc(db, 'users', user.uid);

@@ -55,6 +55,7 @@ export default function DashboardPage() {
         id: userProfile.uid,
         email: userProfile.email,
         name: userProfile.name,
+        createdAt: userProfile.createdAt,
       }
       setUser(convertedUser)
 
