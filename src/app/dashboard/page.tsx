@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { useAuth } from '@/contexts/AuthContext'
 import { Goal, Task, User, TeamMember, TeamTask, TaskSuggestion, TeamTaskSuggestion, AutoModeSettings, RLTask } from '@/types'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -18,6 +19,7 @@ import Link from 'next/link'
 
 
 export default function DashboardPage() {
+  const { user: firebaseUser, userProfile, logout } = useAuth()
   const [user, setUser] = useState<User | null>(null)
   const [goals, setGoals] = useState<Goal[]>([])
   const [tasks, setTasks] = useState<Task[]>([])
@@ -47,15 +49,14 @@ export default function DashboardPage() {
   const router = useRouter()
 
   useEffect(() => {
-    // Check if user is authenticated
-    const userData = localStorage.getItem('user')
-    if (!userData) {
-      router.push('/auth/signin')
-      return
-    }
-
-    const parsedUser = JSON.parse(userData)
-    setUser(parsedUser)
+    // Convert Firebase user profile to local User type
+    if (userProfile) {
+      const convertedUser: User = {
+        id: userProfile.uid,
+        email: userProfile.email,
+        name: userProfile.name,
+      }
+      setUser(convertedUser)
 
     // Check Shopify Connection Status
     const checkShopifyStatus = async (userId: string) => {
@@ -69,21 +70,21 @@ export default function DashboardPage() {
       }
     }
 
-    checkShopifyStatus(parsedUser.id)
+      checkShopifyStatus(userProfile.uid)
 
 
-    // Clean up existing stored tasks from localStorage (move to session-based storage)
-    localStorage.removeItem(`tasks_${parsedUser.id}`)
-    localStorage.removeItem(`rlTasks_${parsedUser.id}`)
-    localStorage.removeItem(`employeeTasks_${parsedUser.id}`)
+      // Clean up existing stored tasks from localStorage (move to session-based storage)
+      localStorage.removeItem(`tasks_${userProfile.uid}`)
+      localStorage.removeItem(`rlTasks_${userProfile.uid}`)
+      localStorage.removeItem(`employeeTasks_${userProfile.uid}`)
 
-    // Load goals and team from localStorage (persistent across sessions)
-    const savedGoals = localStorage.getItem(`goals_${parsedUser.id}`)
-    const savedTeam = localStorage.getItem(`team_${parsedUser.id}`)
+      // Load goals and team from localStorage (persistent across sessions)
+      const savedGoals = localStorage.getItem(`goals_${userProfile.uid}`)
+      const savedTeam = localStorage.getItem(`team_${userProfile.uid}`)
 
-    // Load tasks and team tasks from sessionStorage (only persist during session)
-    const savedTasks = sessionStorage.getItem(`tasks_${parsedUser.id}`)
-    const savedTeamTasks = sessionStorage.getItem(`employeeTasks_${parsedUser.id}`)
+      // Load tasks and team tasks from sessionStorage (only persist during session)
+      const savedTasks = sessionStorage.getItem(`tasks_${userProfile.uid}`)
+      const savedTeamTasks = sessionStorage.getItem(`employeeTasks_${userProfile.uid}`)
 
     if (savedGoals) {
       setGoals(JSON.parse(savedGoals))
@@ -103,16 +104,17 @@ export default function DashboardPage() {
       setTeamTasks(JSON.parse(savedTeamTasks))
     }
 
-    // Check for pending approvals
-    checkPendingSlackApprovals()
-    
-    // Set up periodic sync for Slack status updates
-    const syncInterval = setInterval(() => {
-      syncSlackStatus()
-    }, 10000) // Check every 10 seconds
-    
-    return () => clearInterval(syncInterval)
-  }, [router, lastSyncCheck])
+      // Check for pending approvals
+      checkPendingSlackApprovals()
+      
+      // Set up periodic sync for Slack status updates
+      const syncInterval = setInterval(() => {
+        syncSlackStatus()
+      }, 10000) // Check every 10 seconds
+      
+      return () => clearInterval(syncInterval)
+    }
+  }, [userProfile, lastSyncCheck])
 
   // Debug pending tasks
   useEffect(() => {
@@ -470,9 +472,13 @@ export default function DashboardPage() {
 
 
 
-  const handleLogout = () => {
-    localStorage.removeItem('user')
-    router.push('/')
+  const handleLogout = async () => {
+    try {
+      await logout()
+      router.push('/')
+    } catch (error) {
+      console.error('Logout error:', error)
+    }
   }
 
   if (!user) {

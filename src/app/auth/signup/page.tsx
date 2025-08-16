@@ -7,44 +7,52 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useAuth } from '@/contexts/AuthContext'
 
-export default function SignInPage() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+export default function SignUpPage() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  })
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
-  const [showResetPassword, setShowResetPassword] = useState(false)
   const router = useRouter()
-  const { login, resetPassword } = useAuth()
+  const { signup } = useAuth()
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }))
+    // Clear error when user starts typing
+    if (error) setError('')
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
     setError('')
 
+    // Validation
+    if (formData.password !== formData.confirmPassword) {
+      setError('Passwords do not match')
+      setIsLoading(false)
+      return
+    }
+
+    if (formData.password.length < 6) {
+      setError('Password must be at least 6 characters')
+      setIsLoading(false)
+      return
+    }
+
     try {
-      await login(email, password)
+      await signup(formData.email, formData.password, formData.name)
       router.push('/dashboard')
     } catch (error: any) {
       setError(error.message)
     } finally {
       setIsLoading(false)
-    }
-  }
-
-  const handleResetPassword = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!email) {
-      setError('Please enter your email address first')
-      return
-    }
-
-    try {
-      await resetPassword(email)
-      setError('')
-      alert('Password reset email sent! Check your inbox.')
-      setShowResetPassword(false)
-    } catch (error: any) {
-      setError(error.message)
     }
   }
 
@@ -66,47 +74,76 @@ export default function SignInPage() {
             />
             <span className="text-3xl font-bold text-slate-900">Ventry</span>
           </Link>
-          <p className="text-slate-600 mt-2">Sign in to your account</p>
+          <p className="text-slate-600 mt-2">Create your account</p>
         </div>
 
         <Card>
           <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl text-center">Welcome back</CardTitle>
+            <CardTitle className="text-2xl text-center">Get started</CardTitle>
             <CardDescription className="text-center">
-              Enter your email and password to access your dashboard
+              Create your account to access your dashboard
             </CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="space-y-2">
+                <label htmlFor="name" className="text-sm font-medium">
+                  Full Name
+                </label>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  value={formData.name}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="John Doe"
+                  required
+                />
+              </div>
+              
               <div className="space-y-2">
                 <label htmlFor="email" className="text-sm font-medium">
                   Email
                 </label>
                 <input
                   id="email"
+                  name="email"
                   type="email"
-                  value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value)
-                    if (error) setError('')
-                  }}
+                  value={formData.email}
+                  onChange={handleChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                   placeholder="you@example.com"
                   required
                 />
               </div>
+              
               <div className="space-y-2">
                 <label htmlFor="password" className="text-sm font-medium">
                   Password
                 </label>
                 <input
                   id="password"
+                  name="password"
                   type="password"
-                  value={password}
-                  onChange={(e) => {
-                    setPassword(e.target.value)
-                    if (error) setError('')
-                  }}
+                  value={formData.password}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="••••••••"
+                  required
+                />
+              </div>
+              
+              <div className="space-y-2">
+                <label htmlFor="confirmPassword" className="text-sm font-medium">
+                  Confirm Password
+                </label>
+                <input
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  type="password"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                   placeholder="••••••••"
                   required
@@ -118,47 +155,21 @@ export default function SignInPage() {
                   {error}
                 </div>
               )}
-
+              
               <Button 
                 type="submit" 
                 className="w-full" 
                 disabled={isLoading}
               >
-                {isLoading ? 'Signing in...' : 'Sign In'}
+                {isLoading ? 'Creating account...' : 'Create Account'}
               </Button>
             </form>
 
-            <div className="mt-4 text-center">
-              <button
-                type="button"
-                onClick={() => setShowResetPassword(!showResetPassword)}
-                className="text-sm text-blue-600 hover:underline"
-              >
-                Forgot your password?
-              </button>
-            </div>
-
-            {showResetPassword && (
-              <div className="mt-4 p-4 bg-gray-50 rounded-md">
-                <p className="text-sm text-gray-600 mb-2">
-                  Enter your email address and we&apos;ll send you a reset link.
-                </p>
-                <Button
-                  onClick={handleResetPassword}
-                  variant="outline"
-                  className="w-full"
-                  disabled={!email}
-                >
-                  Send Reset Email
-                </Button>
-              </div>
-            )}
-
             <div className="mt-6 text-center">
               <p className="text-sm text-slate-600">
-                Don&apos;t have an account?{' '}
-                <Link href="/auth/signup" className="text-blue-600 hover:underline">
-                  Sign up
+                Already have an account?{' '}
+                <Link href="/auth/signin" className="text-blue-600 hover:underline">
+                  Sign in
                 </Link>
               </p>
             </div>
@@ -173,4 +184,4 @@ export default function SignInPage() {
       </div>
     </div>
   )
-} 
+}

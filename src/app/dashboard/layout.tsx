@@ -7,6 +7,7 @@ import OnboardingFlow from '@/components/onboarding/OnboardingFlow'
 import IntegrationsOnboardingFlow from '@/components/onboarding/IntegrationsOnboardingFlow'
 import { User, CompanyProfile } from '@/types'
 import { Building2 } from 'lucide-react'
+import { useAuth } from '@/contexts/AuthContext'
 
 export default function DashboardLayout({
   children,
@@ -14,20 +15,28 @@ export default function DashboardLayout({
   children: React.ReactNode
 }) {
   const router = useRouter()
+  const { user: firebaseUser, userProfile, loading: authLoading } = useAuth()
   const [user, setUser] = useState<User | null>(null)
   const [showOnboarding, setShowOnboarding] = useState(false)
   const [showIntegrationsOnboarding, setShowIntegrationsOnboarding] = useState(false)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const userData = localStorage.getItem('user')
-    if (!userData) {
+    if (authLoading) return
+
+    if (!firebaseUser) {
       router.push('/auth/signin')
       return
     }
 
-    const parsedUser = JSON.parse(userData)
-    setUser(parsedUser)
+    // Convert Firebase user profile to local User type
+    if (userProfile) {
+      const convertedUser: User = {
+        id: userProfile.uid,
+        email: userProfile.email,
+        name: userProfile.name,
+      }
+      setUser(convertedUser)
 
     // Check if we're on localhost - if so, always show onboarding
     const isLocalhost = typeof window !== 'undefined' && 
@@ -38,8 +47,8 @@ export default function DashboardLayout({
       setShowOnboarding(true)
     } else {
       // Normal onboarding logic for production
-      const onboardingData = localStorage.getItem(`onboarding_${parsedUser.id}`)
-      const integrationsData = localStorage.getItem(`integrations_onboarding_${parsedUser.id}`)
+      const onboardingData = localStorage.getItem(`onboarding_${userProfile.uid}`)
+      const integrationsData = localStorage.getItem(`integrations_onboarding_${userProfile.uid}`)
       
       if (!onboardingData) {
         setShowOnboarding(true)
@@ -60,7 +69,7 @@ export default function DashboardLayout({
     }
 
     setLoading(false)
-  }, [router])
+  }, [authLoading, firebaseUser, userProfile, router])
 
   const handleOnboardingComplete = (profile: CompanyProfile) => {
     if (!user) return

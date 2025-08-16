@@ -1,14 +1,14 @@
 {
-  "action": "pricing_discount",
-  "quantity": 0,
-  "expected_roi": "12.3%",
+  "action": "financial_invoice",
+  "quantity": 8,
+  "expected_roi": "15.8%",
   "confidence": "medium",
-  "reasoning": "Agent analysis identified pricing optimization as highest impact opportunity. Offer 15% discount on slow-moving Smart Watches shows 12.3% ROI based on comprehensive business analysis across 5 operational categories.",
-  "item": "pricing",
-  "category": "pricing",
-  "timestamp": "2025-07-20T21:44:30.045821",
-  "generated_at": "2025-07-20T21:44:30.045821",
-  "predicted_profit_usd": 1800,
+  "reasoning": "Agent analysis identified financial optimization as highest impact opportunity. Send invoice reminders to 8 overdue customers shows 15.8% ROI based on comprehensive business analysis across 5 operational categories.",
+  "item": "financial",
+  "category": "financial",
+  "timestamp": "2025-07-22T00:50:36.411948",
+  "generated_at": "2025-07-22T00:50:36.411948",
+  "predicted_profit_usd": 3200,
   "alternative_actions": [
     {
       "action": "inventory_restock",
@@ -29,12 +29,12 @@
       "confidence": "high"
     },
     {
-      "action": "financial_invoice",
-      "description": "Send invoice reminders to 8 overdue customers",
-      "category": "financial",
-      "quantity": 8,
-      "expected_roi": "15.8%",
-      "predicted_profit_usd": 3200,
+      "action": "pricing_discount",
+      "description": "Offer 15% discount on slow-moving Smart Watches",
+      "category": "pricing",
+      "quantity": 0,
+      "expected_roi": "12.3%",
+      "predicted_profit_usd": 1800,
       "confidence": "medium"
     }
   ]
