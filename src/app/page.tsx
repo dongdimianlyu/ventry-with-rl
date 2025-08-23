@@ -629,6 +629,156 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Performance Metrics Dashboard Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+              Real Results, Measured Impact
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Track your business transformation with comprehensive analytics and ROI insights
+            </p>
+          </motion.div>
+
+          {/* Dashboard Mock-up */}
+          <motion.div
+            initial={{ opacity: 0, y: 30, scale: 0.95 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ delay: 0.2, duration: 0.8 }}
+            className="bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden"
+          >
+            {/* Dashboard Header */}
+            <div className="bg-[#1A4231] px-6 py-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                  <div className="text-white font-semibold">Ventry Analytics</div>
+                  <div className="flex space-x-2">
+                    <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                  </div>
+                </div>
+                <div className="text-[#C9F223] text-sm font-medium">Live Dashboard</div>
+              </div>
+            </div>
+
+            {/* Dashboard Content */}
+            <div className="p-6">
+              {/* Top Metrics Row */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.3, duration: 0.5 }}
+                  className="bg-gradient-to-br from-[#1A4231] to-[#2D5A44] rounded-xl p-4 text-white"
+                >
+                  <div className="text-2xl font-bold text-[#C9F223]">$847K</div>
+                  <div className="text-sm text-white/80">Revenue Impact</div>
+                  <div className="text-xs text-[#C9F223] font-semibold">+47% ↗</div>
+                </motion.div>
+                
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.4, duration: 0.5 }}
+                  className="bg-white border-2 border-[#C9F223]/20 rounded-xl p-4"
+                >
+                  <div className="text-2xl font-bold text-[#1A4231]">156</div>
+                  <div className="text-sm text-gray-600">Tasks Completed</div>
+                  <div className="text-xs text-green-600 font-semibold">92% success</div>
+                </motion.div>
+                
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.5, duration: 0.5 }}
+                  className="bg-white border-2 border-[#C9F223]/20 rounded-xl p-4"
+                >
+                  <div className="text-2xl font-bold text-[#1A4231]">23hrs</div>
+                  <div className="text-sm text-gray-600">Time Saved/Week</div>
+                  <div className="text-xs text-green-600 font-semibold">+312% ↗</div>
+                </motion.div>
+                
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.6, duration: 0.5 }}
+                  className="bg-gradient-to-br from-[#9b0e8d] to-[#c41e3a] rounded-xl p-4 text-white"
+                >
+                  <div className="text-2xl font-bold">4.2x</div>
+                  <div className="text-sm text-white/80">ROI Multiple</div>
+                  <div className="text-xs text-yellow-300 font-semibold">Growing</div>
+                </motion.div>
+              </div>
+
+              {/* Charts Row */}
+              <div className="grid lg:grid-cols-2 gap-6">
+                {/* Revenue Chart Mock */}
+                <motion.div
+                  initial={{ opacity: 0, x: -30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.7, duration: 0.6 }}
+                  className="bg-gray-50 rounded-xl p-6"
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="font-semibold text-gray-900">Revenue Growth</h3>
+                    <div className="text-sm text-green-600 font-semibold">+47% this quarter</div>
+                  </div>
+                  <div className="h-32 flex items-end space-x-2">
+                    {[40, 65, 45, 80, 60, 95, 75, 120, 85, 140, 110, 180].map((height, i) => (
+                      <motion.div
+                        key={i}
+                        initial={{ height: 0 }}
+                        whileInView={{ height: `${height/2}px` }}
+                        transition={{ delay: 0.8 + i * 0.1, duration: 0.5 }}
+                        className={`flex-1 rounded-t ${
+                          i >= 8 ? 'bg-[#C9F223]' : 'bg-[#1A4231]'
+                        }`}
+                      ></motion.div>
+                    ))}
+                  </div>
+                </motion.div>
+
+                {/* Task Success Rate */}
+                <motion.div
+                  initial={{ opacity: 0, x: 30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.7, duration: 0.6 }}
+                  className="bg-gray-50 rounded-xl p-6"
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="font-semibold text-gray-900">Task Success Rate</h3>
+                    <div className="text-sm text-green-600 font-semibold">92% accuracy</div>
+                  </div>
+                  <div className="relative h-32 flex items-center justify-center">
+                    <div className="relative w-24 h-24">
+                      <motion.div
+                        initial={{ rotate: 0 }}
+                        whileInView={{ rotate: 331 }} // 92% of 360 degrees
+                        transition={{ delay: 1.0, duration: 1.5, ease: "easeOut" }}
+                        className="absolute inset-0 rounded-full border-8 border-gray-200"
+                        style={{
+                          background: `conic-gradient(from 0deg, #C9F223 0deg, #C9F223 331deg, #e5e7eb 331deg)`
+                        }}
+                      ></motion.div>
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <span className="text-2xl font-bold text-[#1A4231]">92%</span>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* How It Works Section */}
       <section id="how-it-works" className="py-20 bg-white relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-gray-50 to-white"></div>
@@ -871,156 +1021,6 @@ export default function LandingPage() {
               </motion.div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Performance Metrics Dashboard Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-              Real Results, Measured Impact
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Track your business transformation with comprehensive analytics and ROI insights
-            </p>
-          </motion.div>
-
-          {/* Dashboard Mock-up */}
-          <motion.div
-            initial={{ opacity: 0, y: 30, scale: 0.95 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ delay: 0.2, duration: 0.8 }}
-            className="bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden"
-          >
-            {/* Dashboard Header */}
-            <div className="bg-[#1A4231] px-6 py-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-4">
-                  <div className="text-white font-semibold">Ventry Analytics</div>
-                  <div className="flex space-x-2">
-                    <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                    <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                  </div>
-                </div>
-                <div className="text-[#C9F223] text-sm font-medium">Live Dashboard</div>
-              </div>
-            </div>
-
-            {/* Dashboard Content */}
-            <div className="p-6">
-              {/* Top Metrics Row */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.3, duration: 0.5 }}
-                  className="bg-gradient-to-br from-[#1A4231] to-[#2D5A44] rounded-xl p-4 text-white"
-                >
-                  <div className="text-2xl font-bold text-[#C9F223]">$847K</div>
-                  <div className="text-sm text-white/80">Revenue Impact</div>
-                  <div className="text-xs text-[#C9F223] font-semibold">+47% ↗</div>
-                </motion.div>
-                
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.4, duration: 0.5 }}
-                  className="bg-white border-2 border-[#C9F223]/20 rounded-xl p-4"
-                >
-                  <div className="text-2xl font-bold text-[#1A4231]">156</div>
-                  <div className="text-sm text-gray-600">Tasks Completed</div>
-                  <div className="text-xs text-green-600 font-semibold">92% success</div>
-                </motion.div>
-                
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.5, duration: 0.5 }}
-                  className="bg-white border-2 border-[#C9F223]/20 rounded-xl p-4"
-                >
-                  <div className="text-2xl font-bold text-[#1A4231]">23hrs</div>
-                  <div className="text-sm text-gray-600">Time Saved/Week</div>
-                  <div className="text-xs text-green-600 font-semibold">+312% ↗</div>
-                </motion.div>
-                
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.6, duration: 0.5 }}
-                  className="bg-gradient-to-br from-[#9b0e8d] to-[#c41e3a] rounded-xl p-4 text-white"
-                >
-                  <div className="text-2xl font-bold">4.2x</div>
-                  <div className="text-sm text-white/80">ROI Multiple</div>
-                  <div className="text-xs text-yellow-300 font-semibold">Growing</div>
-                </motion.div>
-              </div>
-
-              {/* Charts Row */}
-              <div className="grid lg:grid-cols-2 gap-6">
-                {/* Revenue Chart Mock */}
-                <motion.div
-                  initial={{ opacity: 0, x: -30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.7, duration: 0.6 }}
-                  className="bg-gray-50 rounded-xl p-6"
-                >
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="font-semibold text-gray-900">Revenue Growth</h3>
-                    <div className="text-sm text-green-600 font-semibold">+47% this quarter</div>
-                  </div>
-                  <div className="h-32 flex items-end space-x-2">
-                    {[40, 65, 45, 80, 60, 95, 75, 120, 85, 140, 110, 180].map((height, i) => (
-                      <motion.div
-                        key={i}
-                        initial={{ height: 0 }}
-                        whileInView={{ height: `${height/2}px` }}
-                        transition={{ delay: 0.8 + i * 0.1, duration: 0.5 }}
-                        className={`flex-1 rounded-t ${
-                          i >= 8 ? 'bg-[#C9F223]' : 'bg-[#1A4231]'
-                        }`}
-                      ></motion.div>
-                    ))}
-                  </div>
-                </motion.div>
-
-                {/* Task Success Rate */}
-                <motion.div
-                  initial={{ opacity: 0, x: 30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.7, duration: 0.6 }}
-                  className="bg-gray-50 rounded-xl p-6"
-                >
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="font-semibold text-gray-900">Task Success Rate</h3>
-                    <div className="text-sm text-green-600 font-semibold">92% accuracy</div>
-                  </div>
-                  <div className="relative h-32 flex items-center justify-center">
-                    <div className="relative w-24 h-24">
-                      <motion.div
-                        initial={{ rotate: 0 }}
-                        whileInView={{ rotate: 331 }} // 92% of 360 degrees
-                        transition={{ delay: 1.0, duration: 1.5, ease: "easeOut" }}
-                        className="absolute inset-0 rounded-full border-8 border-gray-200"
-                        style={{
-                          background: `conic-gradient(from 0deg, #C9F223 0deg, #C9F223 331deg, #e5e7eb 331deg)`
-                        }}
-                      ></motion.div>
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-2xl font-bold text-[#1A4231]">92%</span>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              </div>
-            </div>
-          </motion.div>
         </div>
       </section>
 
