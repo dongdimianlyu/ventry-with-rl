@@ -157,8 +157,7 @@ export default function LandingPage() {
     description: ''
   })
   const { scrollYProgress } = useScroll()
-  const heroY = useTransform(scrollYProgress, [0, 1], [0, -20])
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0.3])
+  // Removed problematic scroll transforms that were causing text to disappear
 
   useEffect(() => {
     const handleScroll = () => {
@@ -244,9 +243,10 @@ export default function LandingPage() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+        className={`fixed top-0 w-full z-[9999] transition-all duration-300 ${
           isScrolled ? 'bg-white/95 backdrop-blur-lg shadow-sm' : 'bg-transparent'
         }`}
+        style={{ position: 'fixed', top: 0, left: 0, right: 0 }}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
@@ -349,7 +349,7 @@ export default function LandingPage() {
       </motion.nav>
 
       {/* Hero Section */}
-      <section className="min-h-screen bg-[#1A4231] relative overflow-hidden">
+      <section className="h-[60vh] min-h-[600px] bg-[#1A4231] relative overflow-hidden">
         {/* Animated Background Gradient */}
         <div className="absolute inset-0">
           <motion.div
@@ -372,85 +372,91 @@ export default function LandingPage() {
         <GeometricDecorations />
         
         <motion.div 
-          style={{ y: heroY, opacity: heroOpacity }}
-          className="max-w-7xl mx-auto px-6 lg:px-8 pt-24 pb-16"
+          className="max-w-7xl mx-auto px-6 lg:px-8 pt-20 pb-8 h-full relative z-10"
         >
-          <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[80vh]">
-            <div className="space-y-8">
-              {/* Badge */}
+          <div className="grid lg:grid-cols-2 gap-8 items-center h-full">
+            <div className="space-y-6">
+              {/* Hook */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2, duration: 0.6 }}
-                className="inline-flex items-center px-4 py-2 bg-[#C9F223]/10 border border-[#C9F223]/20 rounded-full"
+                transition={{ delay: 0.1, duration: 0.6 }}
+                className="text-[#C9F223] text-sm font-semibold tracking-wide"
               >
-                <Database className="h-4 w-4 text-[#C9F223] mr-2" />
-                <span className="text-[#C9F223] text-sm font-medium">
-                Your AI Operations Partner
-                </span>
-                <ArrowRight className="ml-2 h-3 w-3 text-[#C9F223]" />
+                Helping small businesses optimize operations with AI insights
               </motion.div>
               
               {/* Main Headline */}
               <motion.h1 
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.8 }}
-                className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight tracking-tight"
+                transition={{ delay: 0.2, duration: 0.8 }}
+                className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight tracking-tight"
               >
-                Eliminate
+                Stop Guessing.
                 <br />
-                <span className="text-[#C9F223]">Guesswork.</span>
-                <br />
-                <span className="text-[#C9F223]">Accelerate</span> Growth.
+                <span className="text-[#C9F223]">Start Growing.</span>
               </motion.h1>
               
               {/* Subheadline */}
               <motion.p 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6, duration: 0.6 }}
-                className="text-lg sm:text-xl text-white/80 leading-relaxed max-w-xl"
+                transition={{ delay: 0.3, duration: 0.6 }}
+                className="text-lg text-white/90 leading-relaxed max-w-xl"
               >
-                Our AI operations engine analyzes your business data in real-time, identifies the highest-ROI decisions, and automatically executes them. <span className="text-[#C9F223] font-semibold">Average 18% margin improvement in 90 days.</span>
+                AI that turns your Shopify and QuickBooks data into profitable decisions - automatically.
               </motion.p>
+              
+              {/* Social Proof */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4, duration: 0.6 }}
+                className="text-sm text-white/60 font-medium"
+              >
+                Trusted by 200+ e-commerce businesses
+              </motion.div>
               
               {/* CTA Buttons */}
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8, duration: 0.6 }}
-                className="flex flex-col sm:flex-row gap-4"
+                transition={{ delay: 0.5, duration: 0.6 }}
+                className="flex flex-row gap-4"
               >
                 <motion.div 
-                  whileHover={{ scale: 1.05 }}
+                  whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(201, 242, 35, 0.4)" }}
                   whileTap={{ scale: 0.95 }}
                   onClick={openGetDemoModal}
-                  className="bg-[#C9F223] hover:bg-[#b8e01f] text-[#1A4231] px-8 py-4 font-semibold rounded-lg cursor-pointer inline-flex items-center justify-center shadow-lg hover:shadow-xl transition-all"
+                  className="bg-[#C9F223] hover:bg-[#b8e01f] text-[#1A4231] px-8 py-3 font-bold rounded-lg cursor-pointer inline-flex items-center justify-center shadow-lg hover:shadow-2xl transition-all"
                 >
                   <CalendarDays className="h-5 w-5 mr-2" />
-                  Book a Demo
+                  Get a Demo
                 </motion.div>
                 <Link href="/auth/signin">
                   <motion.div 
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="bg-white/10 backdrop-blur-sm border border-white/20 text-white px-8 py-4 font-semibold rounded-lg cursor-pointer inline-flex items-center justify-center hover:bg-white/20 transition-all"
+                    className="bg-white/10 backdrop-blur-sm border border-white/30 text-white px-6 py-3 font-semibold rounded-lg cursor-pointer inline-flex items-center justify-center hover:bg-white/20 transition-all"
                   >
-                    Start Free Trial
-                    <ArrowRight className="h-5 w-5 ml-2" />
+                    Start Free
+                    <ArrowRight className="h-4 w-4 ml-2" />
                   </motion.div>
                 </Link>
               </motion.div>
             </div>
             
-                         {/* Single AI Task Card */}
+                         {/* Enhanced AI Task Card */}
              <div className="relative">
                <motion.div
                  initial={{ opacity: 0, y: 20, scale: 0.9 }}
                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                 transition={{ delay: 1.0, duration: 0.6, ease: "easeOut" }}
-                 className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-6"
+                 transition={{ delay: 0.6, duration: 0.6, ease: "easeOut" }}
+                 className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-5 shadow-2xl"
+                 style={{
+                   boxShadow: "0 0 40px rgba(201, 242, 35, 0.15), 0 20px 40px rgba(0, 0, 0, 0.3)"
+                 }}
                >
                  <div className="flex items-center justify-between mb-4">
                    <div className="flex items-center space-x-2">
@@ -475,7 +481,23 @@ export default function LandingPage() {
                  </div>
                  
                  <div className="flex items-center justify-between">
-                   <span className="text-[#C9F223] text-sm font-medium">ROI: +27%</span>
+                   <motion.span 
+                     animate={{ 
+                       boxShadow: [
+                         "0 0 10px rgba(201, 242, 35, 0.3)",
+                         "0 0 20px rgba(201, 242, 35, 0.6)",
+                         "0 0 10px rgba(201, 242, 35, 0.3)"
+                       ]
+                     }}
+                     transition={{
+                       duration: 2,
+                       repeat: Infinity,
+                       ease: "easeInOut"
+                     }}
+                     className="text-[#C9F223] text-sm font-bold bg-[#C9F223]/10 px-3 py-1 rounded-full border border-[#C9F223]/30"
+                   >
+                     ROI: +27%
+                   </motion.span>
                    <div className="flex space-x-2">
                      <button className="bg-[#C9F223] text-[#1A4231] px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#b8e01f] transition-colors">
                        Approve
@@ -491,25 +513,45 @@ export default function LandingPage() {
                <motion.div
                  initial={{ opacity: 0, scale: 0.9 }}
                  animate={{ opacity: 1, scale: 1 }}
-                 transition={{ delay: 1.4, duration: 0.6 }}
-                 className="mt-8 grid grid-cols-2 gap-4"
+                 transition={{ delay: 0.8, duration: 0.6 }}
+                 className="mt-6 grid grid-cols-2 gap-3"
                >
-                 <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4">
-                   <div className="text-2xl font-bold text-[#C9F223]">24%</div>
-                   <div className="text-sm text-white/60">Avg ROI Increase</div>
+                 <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-3">
+                   <div className="text-xl font-bold text-[#C9F223]">18%</div>
+                   <div className="text-xs text-white/60">Avg Margin Boost</div>
                  </div>
-                 <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4">
-                   <div className="text-2xl font-bold text-[#C9F223]">87%</div>
-                   <div className="text-sm text-white/60">Task Accuracy</div>
+                 <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-3">
+                   <div className="text-xl font-bold text-[#C9F223]">87%</div>
+                   <div className="text-xs text-white/60">Task Accuracy</div>
                  </div>
                </motion.div>
              </div>
           </div>
         </motion.div>
+        
+        {/* Scroll Indicator */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.2, duration: 0.6 }}
+          className="absolute bottom-6 left-1/2 transform -translate-x-1/2"
+        >
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center"
+          >
+            <motion.div
+              animate={{ y: [0, 12, 0] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              className="w-1 h-3 bg-[#C9F223] rounded-full mt-2"
+            />
+          </motion.div>
+        </motion.div>
       </section>
 
       {/* Social Proof Section */}
-      <section className="py-16 bg-white border-b border-gray-100">
+      <section className="py-12 bg-white border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           {/* Trust Indicators */}
           <motion.div
