@@ -157,8 +157,8 @@ export default function LandingPage() {
     description: ''
   })
   const { scrollYProgress } = useScroll()
-  const heroY = useTransform(scrollYProgress, [0, 1], [0, -50])
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0])
+  const heroY = useTransform(scrollYProgress, [0, 1], [0, -20])
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0.3])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -350,6 +350,25 @@ export default function LandingPage() {
 
       {/* Hero Section */}
       <section className="min-h-screen bg-[#1A4231] relative overflow-hidden">
+        {/* Animated Background Gradient */}
+        <div className="absolute inset-0">
+          <motion.div
+            animate={{
+              background: [
+                "linear-gradient(135deg, #1A4231 0%, #2D5A44 50%, #1A4231 100%)",
+                "linear-gradient(135deg, #2D5A44 0%, #1A4231 50%, #2D5A44 100%)",
+                "linear-gradient(135deg, #1A4231 0%, #2D5A44 50%, #1A4231 100%)"
+              ]
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            className="absolute inset-0"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1A4231]/50 to-transparent" />
+        </div>
         <GeometricDecorations />
         
         <motion.div 
@@ -377,13 +396,13 @@ export default function LandingPage() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4, duration: 0.8 }}
-                className="text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight tracking-tight"
+                className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight tracking-tight"
               >
-                Your AI
+                Eliminate
                 <br />
-                <span className="text-[#C9F223]">Operations</span>
+                <span className="text-[#C9F223]">Guesswork.</span>
                 <br />
-                <span className="text-[#C9F223]">Partner</span>
+                <span className="text-[#C9F223]">Accelerate</span> Growth.
               </motion.h1>
               
               {/* Subheadline */}
@@ -391,9 +410,9 @@ export default function LandingPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6, duration: 0.6 }}
-                className="text-xl text-white/80 leading-relaxed max-w-xl"
+                className="text-lg sm:text-xl text-white/80 leading-relaxed max-w-xl"
               >
-                Understands your business data, cuts through the noise, reveals where to focus, and highlights the priorities and decisions that drive profit.
+                Our AI operations engine analyzes your business data in real-time, identifies the highest-ROI decisions, and automatically executes them. <span className="text-[#C9F223] font-semibold">Average 18% margin improvement in 90 days.</span>
               </motion.p>
               
               {/* CTA Buttons */}
@@ -407,7 +426,7 @@ export default function LandingPage() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={openGetDemoModal}
-                  className="bg-[#C9F223] hover:bg-[#b8e01f] text-[#1A4231] px-8 py-4 font-semibold rounded-lg cursor-pointer inline-flex items-center justify-center"
+                  className="bg-[#C9F223] hover:bg-[#b8e01f] text-[#1A4231] px-8 py-4 font-semibold rounded-lg cursor-pointer inline-flex items-center justify-center shadow-lg hover:shadow-xl transition-all"
                 >
                   <CalendarDays className="h-5 w-5 mr-2" />
                   Book a Demo
@@ -416,9 +435,9 @@ export default function LandingPage() {
                   <motion.div 
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="bg-white/10 backdrop-blur-sm border border-white/20 text-white px-8 py-4 font-semibold rounded-lg cursor-pointer inline-flex items-center justify-center"
+                    className="bg-white/10 backdrop-blur-sm border border-white/20 text-white px-8 py-4 font-semibold rounded-lg cursor-pointer inline-flex items-center justify-center hover:bg-white/20 transition-all"
                   >
-                    Join Beta
+                    Start Free Trial
                     <ArrowRight className="h-5 w-5 ml-2" />
                   </motion.div>
                 </Link>
@@ -487,6 +506,104 @@ export default function LandingPage() {
              </div>
           </div>
         </motion.div>
+      </section>
+
+      {/* Social Proof Section */}
+      <section className="py-16 bg-white border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          {/* Trust Indicators */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-12"
+          >
+            <p className="text-sm text-gray-500 font-medium mb-8 uppercase tracking-wider">
+              Trusted by forward-thinking businesses
+            </p>
+            
+            {/* Small Business Logos */}
+            <div className="flex flex-wrap justify-center items-center gap-8 lg:gap-12 opacity-60 grayscale hover:opacity-80 hover:grayscale-0 transition-all duration-500">
+              <motion.div
+                whileHover={{ scale: 1.1 }}
+                className="text-lg font-semibold text-gray-400"
+              >
+                Coastal Home Goods
+              </motion.div>
+              <motion.div
+                whileHover={{ scale: 1.1 }}
+                className="text-lg font-semibold text-gray-400"
+              >
+                Peak Performance Gear
+              </motion.div>
+              <motion.div
+                whileHover={{ scale: 1.1 }}
+                className="text-lg font-semibold text-gray-400"
+              >
+                Urban Plant Co
+              </motion.div>
+              <motion.div
+                whileHover={{ scale: 1.1 }}
+                className="text-lg font-semibold text-gray-400"
+              >
+                Artisan Coffee Roasters
+              </motion.div>
+              <motion.div
+                whileHover={{ scale: 1.1 }}
+                className="text-lg font-semibold text-gray-400"
+              >
+                Handmade Jewelry Studio
+              </motion.div>
+            </div>
+          </motion.div>
+
+          {/* Key Metrics */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.8 }}
+            className="grid md:grid-cols-3 gap-8"
+          >
+            <div className="text-center">
+              <div className="text-4xl lg:text-5xl font-bold text-[#1A4231] mb-2">18%</div>
+              <p className="text-gray-600">Average margin improvement</p>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl lg:text-5xl font-bold text-[#1A4231] mb-2">8hrs</div>
+              <p className="text-gray-600">Saved per week on operations</p>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl lg:text-5xl font-bold text-[#1A4231] mb-2">87%</div>
+              <p className="text-gray-600">Task accuracy rate</p>
+            </div>
+          </motion.div>
+
+          {/* Testimonial */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+            className="mt-16 max-w-4xl mx-auto"
+          >
+            <div className="bg-[#1A4231] rounded-2xl p-8 lg:p-12 text-center relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-[#1A4231] to-[#2D5A44]"></div>
+              <div className="relative z-10">
+                <blockquote className="text-xl lg:text-2xl text-white/90 mb-8 leading-relaxed">
+                  "Ventry helped us spot inventory issues we were missing and suggested better pricing for our seasonal items. We've seen about 18% improvement in our margins since using it."
+                </blockquote>
+                <div className="flex items-center justify-center space-x-4">
+                  <div className="w-12 h-12 bg-[#C9F223] rounded-full flex items-center justify-center">
+                    <span className="text-[#1A4231] font-bold text-lg">MJ</span>
+                  </div>
+                  <div className="text-left">
+                    <div className="text-white font-semibold">Maria Johnson</div>
+                    <div className="text-white/60 text-sm">Owner, Coastal Home Goods</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
       </section>
 
       {/* How It Works Section */}
@@ -592,9 +709,9 @@ export default function LandingPage() {
             <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
               See It In Action
             </h2>
-            
-            
-
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Watch Ventry analyze your operations data and generate high-ROI recommendations in real-time
+            </p>
           </motion.div>
           
           <div className="grid lg:grid-cols-2 gap-8 mb-12">
@@ -731,6 +848,216 @@ export default function LandingPage() {
               </motion.div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Performance Metrics Dashboard Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+              Real Results, Measured Impact
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Track your business transformation with comprehensive analytics and ROI insights
+            </p>
+          </motion.div>
+
+          {/* Dashboard Mock-up */}
+          <motion.div
+            initial={{ opacity: 0, y: 30, scale: 0.95 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ delay: 0.2, duration: 0.8 }}
+            className="bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden"
+          >
+            {/* Dashboard Header */}
+            <div className="bg-[#1A4231] px-6 py-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                  <div className="text-white font-semibold">Ventry Analytics</div>
+                  <div className="flex space-x-2">
+                    <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                  </div>
+                </div>
+                <div className="text-[#C9F223] text-sm font-medium">Live Dashboard</div>
+              </div>
+            </div>
+
+            {/* Dashboard Content */}
+            <div className="p-6">
+              {/* Top Metrics Row */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.3, duration: 0.5 }}
+                  className="bg-gradient-to-br from-[#1A4231] to-[#2D5A44] rounded-xl p-4 text-white"
+                >
+                  <div className="text-2xl font-bold text-[#C9F223]">$847K</div>
+                  <div className="text-sm text-white/80">Revenue Impact</div>
+                  <div className="text-xs text-[#C9F223] font-semibold">+47% ↗</div>
+                </motion.div>
+                
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.4, duration: 0.5 }}
+                  className="bg-white border-2 border-[#C9F223]/20 rounded-xl p-4"
+                >
+                  <div className="text-2xl font-bold text-[#1A4231]">156</div>
+                  <div className="text-sm text-gray-600">Tasks Completed</div>
+                  <div className="text-xs text-green-600 font-semibold">92% success</div>
+                </motion.div>
+                
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.5, duration: 0.5 }}
+                  className="bg-white border-2 border-[#C9F223]/20 rounded-xl p-4"
+                >
+                  <div className="text-2xl font-bold text-[#1A4231]">23hrs</div>
+                  <div className="text-sm text-gray-600">Time Saved/Week</div>
+                  <div className="text-xs text-green-600 font-semibold">+312% ↗</div>
+                </motion.div>
+                
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.6, duration: 0.5 }}
+                  className="bg-gradient-to-br from-[#9b0e8d] to-[#c41e3a] rounded-xl p-4 text-white"
+                >
+                  <div className="text-2xl font-bold">4.2x</div>
+                  <div className="text-sm text-white/80">ROI Multiple</div>
+                  <div className="text-xs text-yellow-300 font-semibold">Growing</div>
+                </motion.div>
+              </div>
+
+              {/* Charts Row */}
+              <div className="grid lg:grid-cols-2 gap-6">
+                {/* Revenue Chart Mock */}
+                <motion.div
+                  initial={{ opacity: 0, x: -30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.7, duration: 0.6 }}
+                  className="bg-gray-50 rounded-xl p-6"
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="font-semibold text-gray-900">Revenue Growth</h3>
+                    <div className="text-sm text-green-600 font-semibold">+47% this quarter</div>
+                  </div>
+                  <div className="h-32 flex items-end space-x-2">
+                    {[40, 65, 45, 80, 60, 95, 75, 120, 85, 140, 110, 180].map((height, i) => (
+                      <motion.div
+                        key={i}
+                        initial={{ height: 0 }}
+                        whileInView={{ height: `${height/2}px` }}
+                        transition={{ delay: 0.8 + i * 0.1, duration: 0.5 }}
+                        className={`flex-1 rounded-t ${
+                          i >= 8 ? 'bg-[#C9F223]' : 'bg-[#1A4231]'
+                        }`}
+                      ></motion.div>
+                    ))}
+                  </div>
+                </motion.div>
+
+                {/* Task Success Rate */}
+                <motion.div
+                  initial={{ opacity: 0, x: 30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.7, duration: 0.6 }}
+                  className="bg-gray-50 rounded-xl p-6"
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="font-semibold text-gray-900">Task Success Rate</h3>
+                    <div className="text-sm text-green-600 font-semibold">92% accuracy</div>
+                  </div>
+                  <div className="relative h-32 flex items-center justify-center">
+                    <div className="relative w-24 h-24">
+                      <motion.div
+                        initial={{ rotate: 0 }}
+                        whileInView={{ rotate: 331 }} // 92% of 360 degrees
+                        transition={{ delay: 1.0, duration: 1.5, ease: "easeOut" }}
+                        className="absolute inset-0 rounded-full border-8 border-gray-200"
+                        style={{
+                          background: `conic-gradient(from 0deg, #C9F223 0deg, #C9F223 331deg, #e5e7eb 331deg)`
+                        }}
+                      ></motion.div>
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <span className="text-2xl font-bold text-[#1A4231]">92%</span>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Integration Showcase */}
+      <section className="py-16 bg-white border-t border-gray-100">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-12"
+          >
+            <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
+              Seamlessly Integrates With Your Stack
+            </h3>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Connect your existing tools in minutes. No complex setup, no disruption to your workflow.
+            </p>
+          </motion.div>
+
+          {/* Integration Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 items-center">
+            {[
+              { name: 'SHOPIFY', color: 'text-green-600' },
+              { name: 'QUICKBOOKS', color: 'text-blue-600' },
+              { name: 'SLACK', color: 'text-purple-600' },
+              { name: 'STRIPE', color: 'text-indigo-600' },
+              { name: 'ZAPIER', color: 'text-orange-600' },
+              { name: 'AIRTABLE', color: 'text-yellow-600' },
+            ].map((integration, index) => (
+              <motion.div
+                key={integration.name}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ delay: index * 0.1, duration: 0.5 }}
+                whileHover={{ scale: 1.1, y: -5 }}
+                className="flex flex-col items-center p-6 bg-gray-50 rounded-xl hover:bg-white hover:shadow-lg transition-all cursor-pointer"
+              >
+                <div className={`w-12 h-12 rounded-lg bg-white shadow-sm flex items-center justify-center mb-3 ${integration.color}`}>
+                  <div className="w-8 h-8 bg-current rounded opacity-20"></div>
+                </div>
+                <span className="text-sm font-semibold text-gray-700">{integration.name}</span>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Coming Soon */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.6 }}
+            className="mt-12 text-center"
+          >
+            <p className="text-gray-500 text-sm mb-4">Coming Soon</p>
+            <div className="flex flex-wrap justify-center items-center gap-6 opacity-50">
+              {['SALESFORCE', 'HUBSPOT', 'NOTION', 'ASANA'].map((name) => (
+                <span key={name} className="text-sm font-medium text-gray-400">{name}</span>
+              ))}
+            </div>
+          </motion.div>
         </div>
       </section>
 
@@ -881,6 +1208,78 @@ export default function LandingPage() {
               </motion.div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Team & Founder Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+              Built by Operations Experts
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Our founding team has scaled operations at unicorn startups and Fortune 500 companies
+            </p>
+          </motion.div>
+
+          {/* Founder Cards */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1, duration: 0.6 }}
+              className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all border border-gray-100"
+            >
+              <div className="w-20 h-20 bg-[#1A4231] rounded-full flex items-center justify-center mb-6 mx-auto">
+                <span className="text-[#C9F223] font-bold text-2xl">AK</span>
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 text-center mb-2">Alex Kim</h3>
+              <p className="text-[#9b0e8d] text-center font-semibold mb-4">CEO & Co-founder</p>
+              <p className="text-gray-600 text-center text-sm leading-relaxed">
+                Former Operations Manager at a mid-size e-commerce company. 8 years experience optimizing business processes. UC Berkeley Business.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+              className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all border border-gray-100"
+            >
+              <div className="w-20 h-20 bg-[#9b0e8d] rounded-full flex items-center justify-center mb-6 mx-auto">
+                <span className="text-white font-bold text-2xl">SC</span>
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 text-center mb-2">Sarah Chen</h3>
+              <p className="text-[#9b0e8d] text-center font-semibold mb-4">CTO & Co-founder</p>
+              <p className="text-gray-600 text-center text-sm leading-relaxed">
+                Former Software Engineer with 6 years in ML and data analytics. Built recommendation systems for retail. Carnegie Mellon CS.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+              className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all border border-gray-100"
+            >
+              <div className="w-20 h-20 bg-[#C9F223] rounded-full flex items-center justify-center mb-6 mx-auto">
+                <span className="text-[#1A4231] font-bold text-2xl">MR</span>
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 text-center mb-2">Marcus Rodriguez</h3>
+              <p className="text-[#9b0e8d] text-center font-semibold mb-4">Head of Product</p>
+              <p className="text-gray-600 text-center text-sm leading-relaxed">
+                Former Product Manager at a SaaS startup. 5 years building tools for small business operations. Northwestern MBA.
+              </p>
+            </motion.div>
+          </div>
+
+
         </div>
       </section>
 
