@@ -1234,75 +1234,240 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Team & Founder Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      {/* Meet the Founder Section */}
+      <section className="py-20 bg-gradient-to-br from-gray-50 to-gray-100 relative overflow-hidden">
+        {/* Background Decorations */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+            className="absolute top-10 right-10 w-64 h-64 border border-[#C9F223]/10 rounded-full"
+          />
+          <motion.div
+            animate={{ y: [0, -20, 0], scale: [1, 1.1, 1] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute bottom-20 left-10 w-8 h-8 bg-[#C9F223]/20 rounded-full"
+          />
+          <motion.div
+            animate={{ x: [0, 20, 0] }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-1/2 right-20 w-4 h-4 bg-[#9b0e8d]/30 rounded-full"
+          />
+          <div className="absolute top-20 left-1/4 w-px h-32 bg-gradient-to-b from-[#C9F223]/30 to-transparent" />
+          <div className="absolute bottom-32 right-1/3 w-32 h-px bg-gradient-to-r from-[#9b0e8d]/30 to-transparent" />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-              Built by Operations Experts
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Our founding team has scaled operations at unicorn startups and Fortune 500 companies
-            </p>
-          </motion.div>
-
-          {/* Founder Cards */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1, duration: 0.6 }}
-              className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all border border-gray-100"
+              className="text-[#9b0e8d] text-sm font-semibold tracking-wide mb-4"
             >
-              <div className="w-20 h-20 bg-[#1A4231] rounded-full flex items-center justify-center mb-6 mx-auto">
-                <span className="text-[#C9F223] font-bold text-2xl">AK</span>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 text-center mb-2">Alex Kim</h3>
-              <p className="text-[#9b0e8d] text-center font-semibold mb-4">CEO & Co-founder</p>
-              <p className="text-gray-600 text-center text-sm leading-relaxed">
-                Former Operations Manager at a mid-size e-commerce company. 8 years experience optimizing business processes. UC Berkeley Business.
-              </p>
+              Leadership & Vision
             </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
+            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+              Meet the Founder
+            </h2>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.6 }}
-              className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all border border-gray-100"
+              className="text-xl text-gray-600 max-w-3xl mx-auto"
             >
-              <div className="w-20 h-20 bg-[#9b0e8d] rounded-full flex items-center justify-center mb-6 mx-auto">
-                <span className="text-white font-bold text-2xl">SC</span>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 text-center mb-2">Sarah Chen</h3>
-              <p className="text-[#9b0e8d] text-center font-semibold mb-4">CTO & Co-founder</p>
-              <p className="text-gray-600 text-center text-sm leading-relaxed">
-                Former Software Engineer with 6 years in ML and data analytics. Built recommendation systems for retail. Carnegie Mellon CS.
-              </p>
-            </motion.div>
+              Building the future of AI-powered business optimization
+            </motion.p>
+          </motion.div>
 
+          {/* Enhanced Founder Card */}
+          <div className="flex justify-center">
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.6 }}
-              className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all border border-gray-100"
+              initial={{ opacity: 0, y: 50, scale: 0.9 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
+              whileHover={{ y: -10, boxShadow: "0 25px 50px rgba(0, 0, 0, 0.15)" }}
+              className="bg-white/80 backdrop-blur-sm rounded-3xl p-12 lg:p-16 shadow-2xl border border-white/50 max-w-4xl w-full relative"
+              style={{
+                background: "linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%)",
+                boxShadow: "0 20px 40px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255,255,255,0.3)"
+              }}
             >
-              <div className="w-20 h-20 bg-[#C9F223] rounded-full flex items-center justify-center mb-6 mx-auto">
-                <span className="text-[#1A4231] font-bold text-2xl">MR</span>
+              {/* Floating Orbs */}
+              <div className="absolute top-6 right-6 w-3 h-3 bg-[#C9F223] rounded-full animate-pulse"></div>
+              <div className="absolute bottom-8 left-8 w-2 h-2 bg-[#9b0e8d] rounded-full animate-pulse" style={{ animationDelay: "1s" }}></div>
+
+              <div className="grid lg:grid-cols-2 gap-12 items-center">
+                {/* Left: Photo and Basic Info */}
+                <div className="text-center lg:text-left">
+                  {/* Professional Photo */}
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.4, duration: 0.6 }}
+                    whileHover={{ scale: 1.05 }}
+                    className="relative mb-8 inline-block"
+                  >
+                    <div className="relative">
+                      <img 
+                        src="/myphoto.jpg" 
+                        alt="Jiaren Lyu - Founder & CEO"
+                        className="w-64 h-64 object-cover rounded-2xl shadow-2xl"
+                        style={{
+                          filter: "drop-shadow(0 0 20px rgba(26, 66, 49, 0.3))"
+                        }}
+                      />
+                      <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-[#1A4231]/20 to-transparent"></div>
+                    </div>
+                    {/* Animated Border */}
+                    <motion.div
+                      animate={{ 
+                        boxShadow: [
+                          "0 0 20px rgba(201, 242, 35, 0.3)",
+                          "0 0 40px rgba(201, 242, 35, 0.6)",
+                          "0 0 20px rgba(201, 242, 35, 0.3)"
+                        ]
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                      }}
+                      className="absolute -inset-2 rounded-3xl border-2 border-[#C9F223]/30 pointer-events-none"
+                    />
+                  </motion.div>
+                  
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5, duration: 0.6 }}
+                  >
+                    <h3 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">Jiaren Lyu</h3>
+                    <p className="text-[#9b0e8d] font-semibold text-2xl mb-6">Founder & CEO</p>
+                  </motion.div>
+                </div>
+
+                {/* Right: Fundraising & Contact */}
+                <div className="space-y-8">
+                  {/* Fundraising Status */}
+                  <motion.div
+                    initial={{ opacity: 0, x: 30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.6, duration: 0.6 }}
+                    className="relative"
+                  >
+                    <div className="bg-gradient-to-br from-[#1A4231] to-[#2D5A44] rounded-2xl p-8 text-white relative overflow-hidden">
+                      <div className="absolute inset-0 bg-gradient-to-br from-[#C9F223]/10 to-transparent"></div>
+                      <div className="relative z-10">
+                        <motion.div
+                          animate={{ scale: [1, 1.1, 1] }}
+                          transition={{ duration: 2, repeat: Infinity }}
+                          className="w-12 h-12 bg-[#C9F223] rounded-full flex items-center justify-center mb-6 mx-auto lg:mx-0"
+                        >
+                          <span className="text-[#1A4231] text-2xl">🚀</span>
+                        </motion.div>
+                        <h4 className="text-2xl font-bold mb-4 text-center lg:text-left">Currently Raising Seed Round</h4>
+                        <div className="space-y-3 text-center lg:text-left">
+                          <p className="text-[#C9F223] font-semibold text-lg">
+                            $200K - $1M Investment Range
+                          </p>
+                          <p className="text-white/80">
+                            $3M Post-Money Valuation
+                          </p>
+                          <motion.div
+                            animate={{ 
+                              boxShadow: [
+                                "0 0 10px rgba(201, 242, 35, 0.3)",
+                                "0 0 20px rgba(201, 242, 35, 0.6)",
+                                "0 0 10px rgba(201, 242, 35, 0.3)"
+                              ]
+                            }}
+                            transition={{
+                              duration: 2,
+                              repeat: Infinity,
+                              ease: "easeInOut"
+                            }}
+                            className="inline-block bg-[#C9F223]/20 text-[#C9F223] px-4 py-2 rounded-full text-sm font-bold border border-[#C9F223]/50"
+                          >
+                            Open for Investors
+                          </motion.div>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+
+                  {/* Contact Links */}
+                  <motion.div
+                    initial={{ opacity: 0, x: 30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.7, duration: 0.6 }}
+                    className="space-y-4"
+                  >
+                    <h4 className="text-xl font-bold text-gray-900 text-center lg:text-left mb-6">Connect & Learn More</h4>
+                    
+                    <div className="space-y-3">
+                      <motion.a 
+                        href="https://jiaren-iota.vercel.app/" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        whileHover={{ scale: 1.05, x: 10 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="flex items-center gap-4 p-4 bg-[#1A4231] text-white rounded-xl hover:bg-[#2a5d42] transition-all shadow-lg group"
+                      >
+                        <div className="w-12 h-12 bg-[#C9F223] rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                          <Globe className="h-6 w-6 text-[#1A4231]" />
+                        </div>
+                        <div>
+                          <div className="font-semibold">Personal Website</div>
+                          <div className="text-sm text-white/70">jiaren-iota.vercel.app</div>
+                        </div>
+                        <ChevronRight className="h-5 w-5 ml-auto group-hover:translate-x-1 transition-transform" />
+                      </motion.a>
+                      
+                      <motion.a 
+                        href="mailto:jiarenlyu@gmail.com"
+                        whileHover={{ scale: 1.05, x: 10 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="flex items-center gap-4 p-4 bg-[#9b0e8d] text-white rounded-xl hover:bg-[#7a0b6f] transition-all shadow-lg group"
+                      >
+                        <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                          <span className="text-[#9b0e8d] text-xl">✉️</span>
+                        </div>
+                        <div>
+                          <div className="font-semibold">Email Direct</div>
+                          <div className="text-sm text-white/70">jiarenlyu@gmail.com</div>
+                        </div>
+                        <ChevronRight className="h-5 w-5 ml-auto group-hover:translate-x-1 transition-transform" />
+                      </motion.a>
+                      
+                      <motion.a 
+                        href="https://www.instagram.com/pascaldamonpacino/" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        whileHover={{ scale: 1.05, x: 10 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="flex items-center gap-4 p-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl hover:from-purple-600 hover:to-pink-600 transition-all shadow-lg group"
+                      >
+                        <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                          <span className="text-purple-500 text-xl">📷</span>
+                        </div>
+                        <div>
+                          <div className="font-semibold">Instagram</div>
+                          <div className="text-sm text-white/70">@pascaldamonpacino</div>
+                        </div>
+                        <ChevronRight className="h-5 w-5 ml-auto group-hover:translate-x-1 transition-transform" />
+                      </motion.a>
+                    </div>
+                  </motion.div>
+                </div>
               </div>
-              <h3 className="text-xl font-bold text-gray-900 text-center mb-2">Marcus Rodriguez</h3>
-              <p className="text-[#9b0e8d] text-center font-semibold mb-4">Head of Product</p>
-              <p className="text-gray-600 text-center text-sm leading-relaxed">
-                Former Product Manager at a SaaS startup. 5 years building tools for small business operations. Northwestern MBA.
-              </p>
             </motion.div>
           </div>
-
-
         </div>
       </section>
 
