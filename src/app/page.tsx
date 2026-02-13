@@ -57,7 +57,7 @@ const FloatingTaskCard = ({ delay = 0, className = "" }: { delay?: number; class
     <div className="flex items-center justify-between">
       <span className="text-[#C9F223] text-xs font-medium">ROI: +27%</span>
       <div className="flex space-x-2">
-        <button className="bg-[#C9F223] text-[#1A4231] px-3 py-1 rounded text-xs font-medium">
+        <button className="bg-[#C9F223] text-[#142E24] px-3 py-1 rounded text-xs font-medium">
           Approve
         </button>
         <button className="bg-white/10 text-white/80 px-3 py-1 rounded text-xs font-medium">
@@ -68,26 +68,14 @@ const FloatingTaskCard = ({ delay = 0, className = "" }: { delay?: number; class
   </motion.div>
 )
 
-// Geometric Background Decorations
-const GeometricDecorations = () => (
+// Subtle grid texture for premium hero background
+const HeroTexture = () => (
   <div className="absolute inset-0 overflow-hidden pointer-events-none">
-    <motion.div
-      animate={{ rotate: 360 }}
-      transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-      className="absolute top-20 right-20 w-32 h-32 border border-[#C9F223]/10 rounded-full"
-    />
-    <motion.div
-      animate={{ y: [0, -10, 0] }}
-      transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-      className="absolute bottom-40 left-20 w-4 h-4 bg-[#C9F223]/20 rounded-full"
-    />
-    <motion.div
-      animate={{ x: [0, 10, 0] }}
-      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-      className="absolute top-1/2 right-40 w-2 h-2 bg-[#C9F223]/30 rounded-full"
-    />
-    <div className="absolute top-10 left-1/4 w-px h-20 bg-gradient-to-b from-[#C9F223]/20 to-transparent" />
-    <div className="absolute bottom-20 right-1/3 w-20 h-px bg-gradient-to-r from-[#C9F223]/20 to-transparent" />
+    <div className="absolute inset-0" style={{
+      backgroundImage: `radial-gradient(circle at 1px 1px, rgba(201, 242, 35, 0.04) 1px, transparent 0)`,
+      backgroundSize: '32px 32px'
+    }} />
+    <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0F2119] to-transparent" />
   </div>
 )
 
@@ -264,7 +252,7 @@ export default function LandingPage() {
                 }}
               />
               <span className={`text-2xl font-bold transition-colors ${
-                isScrolled ? 'text-[#1A4231]' : 'text-white'
+                isScrolled ? 'text-[#142E24]' : 'text-white'
               }`}>
                 Ventry
               </span>
@@ -273,23 +261,23 @@ export default function LandingPage() {
             {/* Desktop Nav */}
             <div className="hidden md:flex items-center space-x-8">
               <a href="#features" className={`transition-colors text-sm font-medium ${
-                isScrolled ? 'text-gray-600 hover:text-[#1A4231]' : 'text-white/80 hover:text-[#C9F223]'
+                isScrolled ? 'text-gray-600 hover:text-[#142E24]' : 'text-white/80 hover:text-[#C9F223]'
               }`}>
                 Features
               </a>
               <a href="#how-it-works" className={`transition-colors text-sm font-medium ${
-                isScrolled ? 'text-gray-600 hover:text-[#1A4231]' : 'text-white/80 hover:text-[#C9F223]'
+                isScrolled ? 'text-gray-600 hover:text-[#142E24]' : 'text-white/80 hover:text-[#C9F223]'
               }`}>
                 How it Works
               </a>
               <a href="#demo" className={`transition-colors text-sm font-medium ${
-                isScrolled ? 'text-gray-600 hover:text-[#1A4231]' : 'text-white/80 hover:text-[#C9F223]'
+                isScrolled ? 'text-gray-600 hover:text-[#142E24]' : 'text-white/80 hover:text-[#C9F223]'
               }`}>
                 Demo
               </a>
               <Link href="/auth/signin">
                 <Button variant="ghost" className={`text-sm ${
-                  isScrolled ? 'text-gray-600 hover:text-[#1A4231]' : 'text-white/80 hover:text-[#C9F223]'
+                  isScrolled ? 'text-gray-600 hover:text-[#142E24]' : 'text-white/80 hover:text-[#C9F223]'
                 }`}>
                   Login
                 </Button>
@@ -297,7 +285,7 @@ export default function LandingPage() {
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Button 
                   onClick={openGetDemoModal}
-                  className="bg-[#C9F223] hover:bg-[#b8e01f] text-[#1A4231] px-6 py-2 text-sm font-semibold rounded-md"
+                  className="bg-[#C9F223] hover:bg-[#b8e01f] text-[#142E24] px-6 py-2 text-sm font-semibold rounded-md"
                 >
                   Get Demo
                 </Button>
@@ -306,7 +294,7 @@ export default function LandingPage() {
 
             {/* Mobile Menu Button */}
             <button 
-              className={`md:hidden p-2 ${isScrolled ? 'text-[#1A4231]' : 'text-white'}`}
+              className={`md:hidden p-2 ${isScrolled ? 'text-[#142E24]' : 'text-white'}`}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -324,21 +312,21 @@ export default function LandingPage() {
               className="md:hidden bg-white border-t border-gray-100"
             >
               <div className="px-6 py-4 space-y-4">
-                <a href="#features" className="block text-gray-600 hover:text-[#1A4231] text-sm font-medium">
+                <a href="#features" className="block text-gray-600 hover:text-[#142E24] text-sm font-medium">
                   Features
                 </a>
-                <a href="#how-it-works" className="block text-gray-600 hover:text-[#1A4231] text-sm font-medium">
+                <a href="#how-it-works" className="block text-gray-600 hover:text-[#142E24] text-sm font-medium">
                   How it Works
                 </a>
-                <a href="#demo" className="block text-gray-600 hover:text-[#1A4231] text-sm font-medium">
+                <a href="#demo" className="block text-gray-600 hover:text-[#142E24] text-sm font-medium">
                   Demo
                 </a>
-                <Link href="/auth/signin" className="block text-gray-600 hover:text-[#1A4231] text-sm font-medium">
+                <Link href="/auth/signin" className="block text-gray-600 hover:text-[#142E24] text-sm font-medium">
                   Login
                 </Link>
                 <Button 
                   onClick={openGetDemoModal}
-                  className="w-full bg-[#C9F223] hover:bg-[#b8e01f] text-[#1A4231] text-sm font-semibold"
+                  className="w-full bg-[#C9F223] hover:bg-[#b8e01f] text-[#142E24] text-sm font-semibold"
                 >
                   Get Demo
                 </Button>
@@ -349,238 +337,94 @@ export default function LandingPage() {
       </motion.nav>
 
       {/* Hero Section */}
-      <section className="h-[60vh] min-h-[600px] bg-[#1A4231] relative overflow-hidden">
-        {/* Animated Background Gradient */}
-        <div className="absolute inset-0">
-          <motion.div
-            animate={{
-              background: [
-                "linear-gradient(135deg, #1A4231 0%, #2D5A44 50%, #1A4231 100%)",
-                "linear-gradient(135deg, #2D5A44 0%, #1A4231 50%, #2D5A44 100%)",
-                "linear-gradient(135deg, #1A4231 0%, #2D5A44 50%, #1A4231 100%)"
-              ]
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-            className="absolute inset-0"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#1A4231]/50 to-transparent" />
-        </div>
-        <GeometricDecorations />
+      <section className="min-h-[85vh] bg-[#142E24] relative overflow-hidden flex items-center">
+        {/* Subtle texture background */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#142E24] via-[#1A3A2D] to-[#142E24]" />
+        <HeroTexture />
         
         <motion.div 
-          className="max-w-7xl mx-auto px-6 lg:px-8 pt-20 pb-8 h-full relative z-10"
+          className="max-w-5xl mx-auto px-6 lg:px-8 py-32 relative z-10 w-full"
         >
-          <div className="grid lg:grid-cols-2 gap-8 items-center h-full">
-            <div className="space-y-6">
-              {/* Hook */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1, duration: 0.6 }}
-                className="text-[#C9F223] text-sm font-semibold tracking-wide"
-              >
-                Helping small businesses optimize operations with AI insights
-              </motion.div>
-              
-              {/* Main Headline */}
-              <motion.h1 
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2, duration: 0.8 }}
-                className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight tracking-tight"
-              >
-                Stop Guessing.
-                <br />
-                <span className="text-[#C9F223]">Start Growing.</span>
-              </motion.h1>
-              
-              {/* Subheadline */}
-              <motion.p 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3, duration: 0.6 }}
-                className="text-lg text-white/90 leading-relaxed max-w-xl"
-              >
-                AI that turns your Shopify and QuickBooks data into profitable decisions - automatically.
-              </motion.p>
-              
-              {/* Social Proof */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.6 }}
-                className="text-sm text-white/60 font-medium"
-              >
-                Trusted by 200+ e-commerce businesses
-              </motion.div>
-              
-              {/* CTA Buttons */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5, duration: 0.6 }}
-                className="flex flex-row gap-4"
-              >
-                <motion.div 
-                  whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(201, 242, 35, 0.4)" }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={openGetDemoModal}
-                  className="bg-[#C9F223] hover:bg-[#b8e01f] text-[#1A4231] px-8 py-3 font-bold rounded-lg cursor-pointer inline-flex items-center justify-center shadow-lg hover:shadow-2xl transition-all"
-                >
-                  <CalendarDays className="h-5 w-5 mr-2" />
-                  Get a Demo
-                </motion.div>
-                <Link href="/auth/signin">
-                  <motion.div 
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="bg-white/10 backdrop-blur-sm border border-white/30 text-white px-6 py-3 font-semibold rounded-lg cursor-pointer inline-flex items-center justify-center hover:bg-white/20 transition-all"
-                  >
-                    Start Free
-                    <ArrowRight className="h-4 w-4 ml-2" />
-                  </motion.div>
-                </Link>
-              </motion.div>
-            </div>
+          <div className="text-center space-y-8">
+            {/* Tagline */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1, duration: 0.6 }}
+              className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-5 py-2 text-sm text-white/70 font-medium tracking-wide"
+            >
+              <span className="w-1.5 h-1.5 bg-[#C9F223] rounded-full"></span>
+              AI-powered operations for small businesses
+            </motion.div>
             
-                         {/* Enhanced AI Task Card */}
-             <div className="relative">
-               <motion.div
-                 initial={{ opacity: 0, y: 20, scale: 0.9 }}
-                 animate={{ opacity: 1, y: 0, scale: 1 }}
-                 transition={{ delay: 0.6, duration: 0.6, ease: "easeOut" }}
-                 className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-5 shadow-2xl"
-                 style={{
-                   boxShadow: "0 0 40px rgba(201, 242, 35, 0.15), 0 20px 40px rgba(0, 0, 0, 0.3)"
-                 }}
-               >
-                 <div className="flex items-center justify-between mb-4">
-                   <div className="flex items-center space-x-2">
-                     <div className="w-2 h-2 bg-[#C9F223] rounded-full"></div>
-                     <span className="text-white/80 text-sm font-medium">AI Suggestion</span>
-                   </div>
-                   <span className="text-[#C9F223] text-xs font-semibold">HIGH ROI</span>
-                 </div>
-                 
-                 <h4 className="text-white font-semibold text-lg mb-3">
-                   Restock 25 units of Smart Light Bulbs
-                 </h4>
-                 
-                 <p className="text-white/70 text-sm mb-4 leading-relaxed">
-                   AI recommends immediate restock of 25 units for Home Automation category (Smart Light Bulbs) to optimize inventory levels and maximize revenue.
-                 </p>
-                 
-                 <div className="bg-white/5 rounded-lg p-3 mb-4">
-                   <p className="text-white/60 text-xs leading-relaxed">
-                     <span className="text-[#C9F223] font-medium">Reasoning:</span> Seasonal uptick detected for smart home devices category. Machine learning model predicts ~3x sales increase over next 14 days based on historical patterns.
-                   </p>
-                 </div>
-                 
-                 <div className="flex items-center justify-between">
-                   <motion.span 
-                     animate={{ 
-                       boxShadow: [
-                         "0 0 10px rgba(201, 242, 35, 0.3)",
-                         "0 0 20px rgba(201, 242, 35, 0.6)",
-                         "0 0 10px rgba(201, 242, 35, 0.3)"
-                       ]
-                     }}
-                     transition={{
-                       duration: 2,
-                       repeat: Infinity,
-                       ease: "easeInOut"
-                     }}
-                     className="text-[#C9F223] text-sm font-bold bg-[#C9F223]/10 px-3 py-1 rounded-full border border-[#C9F223]/30"
-                   >
-                     ROI: +27%
-                   </motion.span>
-                   <div className="flex space-x-2">
-                     <button className="bg-[#C9F223] text-[#1A4231] px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#b8e01f] transition-colors">
-                       Approve
-                     </button>
-                     <button className="bg-white/10 text-white/80 px-4 py-2 rounded-lg text-sm font-medium hover:bg-white/20 transition-colors">
-                       Reject
-                     </button>
-                   </div>
-                 </div>
-               </motion.div>
-               
-               {/* Stats Cards */}
-               <motion.div
-                 initial={{ opacity: 0, scale: 0.9 }}
-                 animate={{ opacity: 1, scale: 1 }}
-                 transition={{ delay: 0.8, duration: 0.6 }}
-                 className="mt-6 grid grid-cols-2 gap-3"
-               >
-                 <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-3">
-                   <div className="text-xl font-bold text-[#C9F223]">18%</div>
-                   <div className="text-xs text-white/60">Avg Margin Boost</div>
-                 </div>
-                 <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-3">
-                   <div className="text-xl font-bold text-[#C9F223]">87%</div>
-                   <div className="text-xs text-white/60">Task Accuracy</div>
-                 </div>
-               </motion.div>
-             </div>
+            {/* Main Headline */}
+            <motion.h1 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.8 }}
+              className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-[1.1] tracking-tight"
+            >
+              Stop Guessing.
+              <br />
+              <span className="text-[#C9F223]">Start Growing.</span>
+            </motion.h1>
+            
+            {/* Subheadline */}
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+              className="text-lg lg:text-xl text-white/70 leading-relaxed max-w-2xl mx-auto"
+            >
+              Ventry connects to your Shopify and QuickBooks data, then uses reinforcement learning to surface the decisions that actually move your margins.
+            </motion.p>
+            
+            {/* CTA Buttons */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.6 }}
+              className="flex flex-row gap-4 justify-center"
+            >
+              <motion.div 
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                onClick={openGetDemoModal}
+                className="bg-[#C9F223] hover:bg-[#b8e01f] text-[#142E24] px-8 py-3.5 font-semibold rounded-lg cursor-pointer inline-flex items-center justify-center transition-all"
+              >
+                <CalendarDays className="h-5 w-5 mr-2" />
+                Get a Demo
+              </motion.div>
+              <Link href="/auth/signin">
+                <motion.div 
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="bg-white/[0.06] border border-white/15 text-white px-8 py-3.5 font-semibold rounded-lg cursor-pointer inline-flex items-center justify-center hover:bg-white/10 transition-all"
+                >
+                  Start Free
+                  <ArrowRight className="h-4 w-4 ml-2" />
+                </motion.div>
+              </Link>
+            </motion.div>
+
+            {/* Minimal trust line */}
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.7, duration: 0.8 }}
+              className="text-sm text-white/40 pt-4"
+            >
+              Currently in early access — built for Shopify & QuickBooks merchants
+            </motion.p>
           </div>
         </motion.div>
 
       </section>
 
-      {/* Social Proof Section */}
-      <section className="py-12 bg-white border-b border-gray-100">
+      {/* Key Metrics Section */}
+      <section className="py-16 bg-white border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          {/* Trust Indicators */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-12"
-          >
-            <p className="text-sm text-gray-500 font-medium mb-8 uppercase tracking-wider">
-              Trusted by forward-thinking businesses
-            </p>
-            
-            {/* Small Business Logos */}
-            <div className="flex flex-wrap justify-center items-center gap-8 lg:gap-12 opacity-60 grayscale hover:opacity-80 hover:grayscale-0 transition-all duration-500">
-              <motion.div
-                whileHover={{ scale: 1.1 }}
-                className="text-lg font-semibold text-gray-400"
-              >
-                Coastal Home Goods
-              </motion.div>
-              <motion.div
-                whileHover={{ scale: 1.1 }}
-                className="text-lg font-semibold text-gray-400"
-              >
-                Peak Performance Gear
-              </motion.div>
-              <motion.div
-                whileHover={{ scale: 1.1 }}
-                className="text-lg font-semibold text-gray-400"
-              >
-                Urban Plant Co
-              </motion.div>
-              <motion.div
-                whileHover={{ scale: 1.1 }}
-                className="text-lg font-semibold text-gray-400"
-              >
-                Artisan Coffee Roasters
-              </motion.div>
-              <motion.div
-                whileHover={{ scale: 1.1 }}
-                className="text-lg font-semibold text-gray-400"
-              >
-                Handmade Jewelry Studio
-              </motion.div>
-            </div>
-          </motion.div>
-
-          {/* Key Metrics */}
+          {/* Metrics */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -588,42 +432,16 @@ export default function LandingPage() {
             className="grid md:grid-cols-3 gap-8"
           >
             <div className="text-center">
-              <div className="text-4xl lg:text-5xl font-bold text-[#1A4231] mb-2">18%</div>
-              <p className="text-gray-600">Average margin improvement</p>
+              <div className="text-4xl lg:text-5xl font-bold text-[#142E24] mb-2">3</div>
+              <p className="text-gray-600">Live integrations — Shopify, QuickBooks, Slack</p>
             </div>
             <div className="text-center">
-              <div className="text-4xl lg:text-5xl font-bold text-[#1A4231] mb-2">8hrs</div>
-              <p className="text-gray-600">Saved per week on operations</p>
+              <div className="text-4xl lg:text-5xl font-bold text-[#142E24] mb-2">RL + LLM</div>
+              <p className="text-gray-600">Reinforcement learning paired with RAG for task generation</p>
             </div>
             <div className="text-center">
-              <div className="text-4xl lg:text-5xl font-bold text-[#1A4231] mb-2">87%</div>
-              <p className="text-gray-600">Task accuracy rate</p>
-            </div>
-          </motion.div>
-
-          {/* Testimonial */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
-            className="mt-16 max-w-4xl mx-auto"
-          >
-            <div className="bg-[#1A4231] rounded-2xl p-8 lg:p-12 text-center relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#1A4231] to-[#2D5A44]"></div>
-              <div className="relative z-10">
-                <blockquote className="text-xl lg:text-2xl text-white/90 mb-8 leading-relaxed">
-                  "Ventry helped us spot inventory issues we were missing and suggested better pricing for our seasonal items. We've seen about 18% improvement in our margins since using it."
-                </blockquote>
-                <div className="flex items-center justify-center space-x-4">
-                  <div className="w-12 h-12 bg-[#C9F223] rounded-full flex items-center justify-center">
-                    <span className="text-[#1A4231] font-bold text-lg">MJ</span>
-                  </div>
-                  <div className="text-left">
-                    <div className="text-white font-semibold">Maria Johnson</div>
-                    <div className="text-white/60 text-sm">Owner, Coastal Home Goods</div>
-                  </div>
-                </div>
-              </div>
+              <div className="text-4xl lg:text-5xl font-bold text-[#142E24] mb-2">100%</div>
+              <p className="text-gray-600">Human-in-the-loop — every action requires your approval</p>
             </div>
           </motion.div>
         </div>
@@ -654,7 +472,7 @@ export default function LandingPage() {
             className="bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden"
           >
             {/* Dashboard Header */}
-            <div className="bg-[#1A4231] px-6 py-4">
+            <div className="bg-[#142E24] px-6 py-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4">
                   <div className="text-white font-semibold">Ventry Analytics</div>
@@ -676,11 +494,11 @@ export default function LandingPage() {
                   initial={{ opacity: 0, scale: 0.9 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.3, duration: 0.5 }}
-                  className="bg-gradient-to-br from-[#1A4231] to-[#2D5A44] rounded-xl p-4 text-white"
+                  className="bg-gradient-to-br from-[#142E24] to-[#2D5A44] rounded-xl p-4 text-white"
                 >
-                  <div className="text-2xl font-bold text-[#C9F223]">$847K</div>
-                  <div className="text-sm text-white/80">Revenue Impact</div>
-                  <div className="text-xs text-[#C9F223] font-semibold">+47% ↗</div>
+                  <div className="text-2xl font-bold text-[#C9F223]">24</div>
+                  <div className="text-sm text-white/80">Tasks Generated</div>
+                  <div className="text-xs text-[#C9F223] font-semibold">This week</div>
                 </motion.div>
                 
                 <motion.div
@@ -689,9 +507,9 @@ export default function LandingPage() {
                   transition={{ delay: 0.4, duration: 0.5 }}
                   className="bg-white border-2 border-[#C9F223]/20 rounded-xl p-4"
                 >
-                  <div className="text-2xl font-bold text-[#1A4231]">156</div>
-                  <div className="text-sm text-gray-600">Tasks Completed</div>
-                  <div className="text-xs text-green-600 font-semibold">92% success</div>
+                  <div className="text-2xl font-bold text-[#142E24]">3</div>
+                  <div className="text-sm text-gray-600">Integrations Active</div>
+                  <div className="text-xs text-green-600 font-semibold">Shopify · QB · Slack</div>
                 </motion.div>
                 
                 <motion.div
@@ -700,9 +518,9 @@ export default function LandingPage() {
                   transition={{ delay: 0.5, duration: 0.5 }}
                   className="bg-white border-2 border-[#C9F223]/20 rounded-xl p-4"
                 >
-                  <div className="text-2xl font-bold text-[#1A4231]">23hrs</div>
-                  <div className="text-sm text-gray-600">Time Saved/Week</div>
-                  <div className="text-xs text-green-600 font-semibold">+312% ↗</div>
+                  <div className="text-2xl font-bold text-[#142E24]">RL</div>
+                  <div className="text-sm text-gray-600">Decision Engine</div>
+                  <div className="text-xs text-green-600 font-semibold">Active</div>
                 </motion.div>
                 
                 <motion.div
@@ -711,9 +529,9 @@ export default function LandingPage() {
                   transition={{ delay: 0.6, duration: 0.5 }}
                   className="bg-gradient-to-br from-[#9b0e8d] to-[#c41e3a] rounded-xl p-4 text-white"
                 >
-                  <div className="text-2xl font-bold">4.2x</div>
-                  <div className="text-sm text-white/80">ROI Multiple</div>
-                  <div className="text-xs text-yellow-300 font-semibold">Growing</div>
+                  <div className="text-2xl font-bold">ROI</div>
+                  <div className="text-sm text-white/80">Per-Task Prediction</div>
+                  <div className="text-xs text-yellow-300 font-semibold">Enabled</div>
                 </motion.div>
               </div>
 
@@ -727,8 +545,8 @@ export default function LandingPage() {
                   className="bg-gray-50 rounded-xl p-6"
                 >
                   <div className="flex items-center justify-between mb-4">
-                    <h3 className="font-semibold text-gray-900">Revenue Growth</h3>
-                    <div className="text-sm text-green-600 font-semibold">+47% this quarter</div>
+                    <h3 className="font-semibold text-gray-900">Task Generation Trend</h3>
+                    <div className="text-sm text-green-600 font-semibold">Growing weekly</div>
                   </div>
                   <div className="h-32 flex items-end space-x-2">
                     {[40, 65, 45, 80, 60, 95, 75, 120, 85, 140, 110, 180].map((height, i) => (
@@ -738,7 +556,7 @@ export default function LandingPage() {
                         whileInView={{ height: `${height/2}px` }}
                         transition={{ delay: 0.8 + i * 0.1, duration: 0.5 }}
                         className={`flex-1 rounded-t ${
-                          i >= 8 ? 'bg-[#C9F223]' : 'bg-[#1A4231]'
+                          i >= 8 ? 'bg-[#C9F223]' : 'bg-[#142E24]'
                         }`}
                       ></motion.div>
                     ))}
@@ -753,8 +571,8 @@ export default function LandingPage() {
                   className="bg-gray-50 rounded-xl p-6"
                 >
                   <div className="flex items-center justify-between mb-4">
-                    <h3 className="font-semibold text-gray-900">Task Success Rate</h3>
-                    <div className="text-sm text-green-600 font-semibold">92% accuracy</div>
+                    <h3 className="font-semibold text-gray-900">Approval Rate</h3>
+                    <div className="text-sm text-green-600 font-semibold">Sample data</div>
                   </div>
                   <div className="relative h-32 flex items-center justify-center">
                     <div className="relative w-24 h-24">
@@ -768,7 +586,7 @@ export default function LandingPage() {
                         }}
                       ></motion.div>
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-2xl font-bold text-[#1A4231]">92%</span>
+                        <span className="text-2xl font-bold text-[#142E24]">—</span>
                       </div>
                     </div>
                   </div>
@@ -1158,7 +976,7 @@ export default function LandingPage() {
                 <div className="space-y-6">
                   <div className="flex items-start space-x-4">
                     <div className="bg-[#C9F223]/20 rounded-full p-2 mt-1">
-                      <CheckCircle className="h-5 w-5 text-[#1A4231]" />
+                      <CheckCircle className="h-5 w-5 text-[#142E24]" />
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900 mb-2">Choose Your Tasks</h3>
@@ -1168,7 +986,7 @@ export default function LandingPage() {
                   
                   <div className="flex items-start space-x-4">
                     <div className="bg-[#C9F223]/20 rounded-full p-2 mt-1">
-                      <CheckCircle className="h-5 w-5 text-[#1A4231]" />
+                      <CheckCircle className="h-5 w-5 text-[#142E24]" />
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900 mb-2">Manual or Automatic</h3>
@@ -1178,7 +996,7 @@ export default function LandingPage() {
                   
                   <div className="flex items-start space-x-4">
                     <div className="bg-[#C9F223]/20 rounded-full p-2 mt-1">
-                      <CheckCircle className="h-5 w-5 text-[#1A4231]" />
+                      <CheckCircle className="h-5 w-5 text-[#142E24]" />
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900 mb-2">Full Transparency</h3>
@@ -1213,7 +1031,7 @@ export default function LandingPage() {
                       Market analysis suggests 8% price increase for premium products
                     </p>
                     <div className="flex space-x-2">
-                      <button className="flex-1 bg-[#C9F223] text-[#1A4231] py-2 px-4 rounded-lg text-sm font-medium">
+                      <button className="flex-1 bg-[#C9F223] text-[#142E24] py-2 px-4 rounded-lg text-sm font-medium">
                         ✓ You Approve
                       </button>
                       <button className="flex-1 bg-gray-100 text-gray-700 py-2 px-4 rounded-lg text-sm font-medium">
@@ -1322,7 +1140,7 @@ export default function LandingPage() {
                           filter: "drop-shadow(0 0 20px rgba(26, 66, 49, 0.3))"
                         }}
                       />
-                      <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-[#1A4231]/20 to-transparent"></div>
+                      <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-[#142E24]/20 to-transparent"></div>
                     </div>
                     {/* Animated Border */}
                     <motion.div
@@ -1361,7 +1179,7 @@ export default function LandingPage() {
                     transition={{ delay: 0.6, duration: 0.6 }}
                     className="relative"
                   >
-                    <div className="bg-gradient-to-br from-[#1A4231] to-[#2D5A44] rounded-2xl p-8 text-white relative overflow-hidden">
+                    <div className="bg-gradient-to-br from-[#142E24] to-[#2D5A44] rounded-2xl p-8 text-white relative overflow-hidden">
                       <div className="absolute inset-0 bg-gradient-to-br from-[#C9F223]/10 to-transparent"></div>
                       <div className="relative z-10">
                         <motion.div
@@ -1369,7 +1187,7 @@ export default function LandingPage() {
                           transition={{ duration: 2, repeat: Infinity }}
                           className="w-12 h-12 bg-[#C9F223] rounded-full flex items-center justify-center mb-6 mx-auto lg:mx-0"
                         >
-                          <span className="text-[#1A4231] text-2xl">🚀</span>
+                          <span className="text-[#142E24] text-2xl">🚀</span>
                         </motion.div>
                         <h4 className="text-2xl font-bold mb-4 text-center lg:text-left">Currently Raising Seed Round</h4>
                         <div className="space-y-3 text-center lg:text-left">
@@ -1417,10 +1235,10 @@ export default function LandingPage() {
                         rel="noopener noreferrer"
                         whileHover={{ scale: 1.05, x: 10 }}
                         whileTap={{ scale: 0.95 }}
-                        className="flex items-center gap-4 p-4 bg-[#1A4231] text-white rounded-xl hover:bg-[#2a5d42] transition-all shadow-lg group"
+                        className="flex items-center gap-4 p-4 bg-[#142E24] text-white rounded-xl hover:bg-[#2a5d42] transition-all shadow-lg group"
                       >
                         <div className="w-12 h-12 bg-[#C9F223] rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                          <Globe className="h-6 w-6 text-[#1A4231]" />
+                          <Globe className="h-6 w-6 text-[#142E24]" />
                         </div>
                         <div>
                           <div className="font-semibold">Personal Website</div>
@@ -1472,7 +1290,7 @@ export default function LandingPage() {
       </section>
 
              {/* Large VENTRY Section - Aviato Style */}
-       <section className="bg-[#1A4231]">
+       <section className="bg-[#142E24]">
          {/* Content Section */}
          <div className="py-12">
            <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -1497,7 +1315,7 @@ export default function LandingPage() {
                      <Button 
                        onClick={handleFooterDemoSubmit}
                        disabled={isSubmitting}
-                       className="bg-[#C9F223] hover:bg-[#b8e01f] text-[#1A4231] px-6 py-3 font-semibold rounded-lg whitespace-nowrap w-full sm:w-auto"
+                       className="bg-[#C9F223] hover:bg-[#b8e01f] text-[#142E24] px-6 py-3 font-semibold rounded-lg whitespace-nowrap w-full sm:w-auto"
                      >
                        {isSubmitting ? 'Submitting...' : 'Book a demo'}
                      </Button>

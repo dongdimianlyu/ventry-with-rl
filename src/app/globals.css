@@ -127,7 +127,7 @@ body {
 }
 
 .brand-gradient {
-  background: linear-gradient(135deg, #1A4231 0%, #2D5A44 100%);
+  background: linear-gradient(135deg, #142E24 0%, #2D5A44 100%);
 }
 
 .accent-glow {
@@ -281,7 +281,7 @@ body {
 
 /* Custom brand utilities for landing page */
 .brand-gradient-hero {
-  background: linear-gradient(135deg, #2F5249 0%, #1a332b 50%, #2F5249 100%);
+  background: linear-gradient(135deg, #1F4435 0%, #142E24 50%, #1F4435 100%);
 }
 
 .brand-gradient-text {
@@ -338,7 +338,7 @@ body {
 /* Navigation enhancements */
 .nav-blur {
   backdrop-filter: blur(20px);
-  background: rgba(47, 82, 73, 0.9);
+  background: rgba(20, 46, 36, 0.9);
 }
 
 /* Custom scrollbar for dark sections */

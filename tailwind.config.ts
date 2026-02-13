@@ -16,10 +16,10 @@ const config: Config = {
         foreground: 'hsl(var(--foreground))',
         // Custom brand colors
         brand: {
-          primary: '#1A4231', // Deep green
+          primary: '#142E24', // Deep green
           accent: 'rgb(201, 242, 35)', // Lime yellow
           'primary-light': '#2D5A44',
-          'primary-dark': '#143529',
+          'primary-dark': '#0F2119',
           'accent-muted': 'rgba(201, 242, 35, 0.1)',
           'accent-soft': 'rgba(201, 242, 35, 0.2)',
         },
